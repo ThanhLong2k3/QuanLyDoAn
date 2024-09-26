@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Menu, Dropdown, Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, MenuOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
 
@@ -19,13 +19,18 @@ const AppHeader: React.FC = () => {
   );
 
   return (
-    <Header className="site-layout-background" style={{ padding: 0, background: '#fff' }}>
-      <div className="logo" style={{ float: 'left', width: 120, height: 31, margin: '16px 24px 16px 0', background: 'rgba(255, 255, 255, 0.3)' }}>
-        <img src="/utehy-logo.png" alt="UTEHY Logo" style={{ height: '100%', marginRight: '10px' }} />
+    <Header className="site-layout-background" style={{ padding: 0, background: '#fff', position: 'relative', zIndex: 1 }}>
+      {/* Tên hệ thống */}
+      <div style={{ float: 'left', color: '#1e88e5', fontSize: '18px', fontWeight: 'bold', marginLeft: '20px' }}>
+        Hệ thống Quản lý Đồ án 
       </div>
-      <div style={{ float: 'left', color: '#1e88e5', fontSize: '18px', fontWeight: 'bold' }}>
-        Hệ thống Quản lý Đồ án - UTEHY
+      
+      {/* Nút Hamburger chỉ hiện trên mobile */}
+      <div className="menu-button" style={{ position: 'absolute', left: '15px', top: '15px', zIndex: 10,display:'none' }}>
+        <MenuOutlined style={{ fontSize: '24px' }} />
       </div>
+
+      {/* Dropdown của avatar admin */}
       <div style={{ float: 'right', marginRight: '20px' }}>
         <Dropdown overlay={menu} trigger={['click']}>
           <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
@@ -38,5 +43,3 @@ const AppHeader: React.FC = () => {
 }
 
 export default AppHeader;
-
-export {};

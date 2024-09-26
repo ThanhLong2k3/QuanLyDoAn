@@ -4,3 +4,29 @@
     margin: 16px;
     background: rgba(255, 255, 255, 0.3);
   }
+  @media (max-width: 768px) {
+    .logo div {
+      font-size: 16px;
+    }
+  
+    .logo img {
+      height: 40%;
+    }
+  
+    .ant-menu-item {
+      font-size: 14px;
+    }
+  }
+  
+  .ant-menu-item a {
+    text-decoration: none;
+  }
+  .menu-button {
+    display: none; /* Mặc định không hiển thị */
+  }
+  
+  @media (max-width: 768px) {
+    .menu-button {
+      display: block; /* Chỉ hiển thị khi màn hình nhỏ hơn 768px */
+    }
+  }
