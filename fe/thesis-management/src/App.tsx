@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Layout, ConfigProvider } from 'antd';
 import Header from './components/layout/Header';
 import Sidebar from './components/layout/Sidebar';
@@ -9,10 +9,14 @@ import Projects from './pages/Projects';
 import Students from './pages/students';
 import Supervisors from './pages/Supervisors';
 import Departments from './pages/Departments';
+import Login from './pages/Login/Login';
 
 const { Content } = Layout;
 
 const App: React.FC = () => {
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/login'; // Kiểm tra nếu đang ở trang login
+
   return (
     <ConfigProvider
       theme={{
@@ -22,25 +26,34 @@ const App: React.FC = () => {
         },
       }}
     >
-      <Layout style={{ minHeight: '100vh' }}>
-        <Sidebar />
-        <Layout className="site-layout">
-          <Header />
-          <Content style={{ margin: '0 16px' }}>
-            <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/students" element={<Students />} />
-                <Route path="/supervisors" element={<Supervisors />} />
-                <Route path="/department" element={<Departments/>} />
-
-              </Routes>
-            </div>
-          </Content>
-          <Footer />
+      {/* Nếu không phải trang login thì hiển thị Layout với Sidebar, Header và Footer */}
+      {!isLoginPage && (
+        <Layout style={{ minHeight: '100vh' }}>
+          <Sidebar />
+          <Layout className="site-layout">
+            <Header />
+            <Content style={{ margin: '0 16px' }}>
+              <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/students" element={<Students />} />
+                  <Route path="/supervisors" element={<Supervisors />} />
+                  <Route path="/department" element={<Departments />} />
+                </Routes>
+              </div>
+            </Content>
+            <Footer />
+          </Layout>
         </Layout>
-      </Layout>
+      )}
+      
+      {/* Trang login sẽ không có Sidebar, Header, Footer */}
+      {isLoginPage && (
+        <Routes>
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      )}
     </ConfigProvider>
   );
 }

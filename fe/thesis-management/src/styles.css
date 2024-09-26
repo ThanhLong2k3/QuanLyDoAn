@@ -18,15 +18,15 @@
     }
   }
   
-  .ant-menu-item a {
+  a {
     text-decoration: none;
   }
   .menu-button {
-    display: none; /* Mặc định không hiển thị */
+    display: none; 
   }
   
   @media (max-width: 768px) {
     .menu-button {
-      display: block; /* Chỉ hiển thị khi màn hình nhỏ hơn 768px */
+      display: block; 
     }
   }

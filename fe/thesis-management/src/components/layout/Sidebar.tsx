@@ -12,7 +12,7 @@ const Sidebar: React.FC = () => {
   const onCollapse = (collapsed: boolean) => {
     setCollapsed(collapsed);
   };
-
+  
   const showDrawer = () => {
     setDrawerVisible(true);
   };
@@ -65,7 +65,7 @@ const Sidebar: React.FC = () => {
         type="primary" 
         icon={<MenuOutlined />} 
         onClick={showDrawer} 
-        style={{ position: 'fixed', top: '15px', left: '15px', zIndex: 1000, display: collapsed ? 'block' : 'none' }} 
+        style={{ position: 'fixed', top: '5px', left: '5px', zIndex: 1000, display: collapsed ? 'block' : 'none' }} 
       />
       
       {/* Drawer for mobile navigation */}

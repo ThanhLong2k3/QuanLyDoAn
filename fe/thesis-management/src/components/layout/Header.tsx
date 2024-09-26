@@ -21,14 +21,11 @@ const AppHeader: React.FC = () => {
   return (
     <Header className="site-layout-background" style={{ padding: 0, background: '#fff', position: 'relative', zIndex: 1 }}>
       {/* Tên hệ thống */}
-      <div style={{ float: 'left', color: '#1e88e5', fontSize: '18px', fontWeight: 'bold', marginLeft: '20px' }}>
+      <div style={{ float: 'left', color: '#1e88e5', fontSize: '18px', fontWeight: 'bold', marginLeft: '50px' }}>
         Hệ thống Quản lý Đồ án 
       </div>
       
-      {/* Nút Hamburger chỉ hiện trên mobile */}
-      <div className="menu-button" style={{ position: 'absolute', left: '15px', top: '15px', zIndex: 10,display:'none' }}>
-        <MenuOutlined style={{ fontSize: '24px' }} />
-      </div>
+      
 
       {/* Dropdown của avatar admin */}
       <div style={{ float: 'right', marginRight: '20px' }}>
