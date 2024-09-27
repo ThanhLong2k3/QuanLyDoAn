@@ -25,7 +25,10 @@ const AppHeader: React.FC = () => {
         Hệ thống Quản lý Đồ án 
       </div>
       
-      
+      {/* Nút Hamburger chỉ hiện trên mobile */}
+      <div className="menu-button" style={{ position: 'absolute', left: '15px', top: '15px', zIndex: 10,display:"none" }}>
+        <MenuOutlined style={{ fontSize: '24px' }} />
+      </div>
 
       {/* Dropdown của avatar admin */}
       <div style={{ float: 'right', marginRight: '20px' }}>

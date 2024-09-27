@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./Style_Login.css";
+import ROUTERS from "../../router/Part";
 
 
 interface Account {
@@ -24,8 +25,8 @@ const Login: React.FC = () => {
     console.log(account);
     if (account.masv === '1' && account.password === '1') {
       localStorage.setItem("user", account.userType);
-      if (account.userType === "student") {
-        navigate("/");
+      if (account.userType === "1") {
+        navigate(ROUTERS.HOME.DEFAULT.PART);
       } 
     }
   };
@@ -76,9 +77,10 @@ const Login: React.FC = () => {
                   required
                 >
                   <option value="">Chọn loại tài khoản</option>
-                  <option value="admin">Quản trị viên</option>
-                  <option value="student">Sinh viên</option>
-                  <option value="teacher">Giáo viên</option>
+                  <option value="1">Giáo vụ khoa</option>
+                  <option value="2">Trưởng bộ môn</option>
+                  <option value="3">Giảng viên</option>
+                  <option value="4">Sinh viên</option>
                 </Form.Select>
               </Form.Group>
             <Form onSubmit={handleLogin}>

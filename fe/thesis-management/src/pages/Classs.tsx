@@ -64,7 +64,7 @@ const data = [
   },
 ];
 
-const Departments: React.FC = () => {
+const Class: React.FC = () => {
   return (
     <div>
       <Title level={2}>Quản lý Khoa</Title>
@@ -73,6 +73,6 @@ const Departments: React.FC = () => {
   );
 }
 
-export default Departments;
+export default Class;
 
 export {};
