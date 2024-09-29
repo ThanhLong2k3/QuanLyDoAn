@@ -8,12 +8,8 @@ type router = {
   
   // ROUTERS định nghĩa chỉ chứa các đường dẫn là chuỗi
   const ROUTERS: { [key: string]: routerSection } = {
-    HOME: { 
-       DEFAULT : {
-         PART: "/"
-       }
-       
-     },
+    HOME: { DEFAULT : {PART: "/home"}},
+    AUTH: { DEFAULT : {PART:"/"}},
     GIAOVU: {
       STUDENTS: { PART: "giaovu/sinhvien" },
       PROJECTWORK: { PART: "giaovu/project" },

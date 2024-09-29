@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Dashboard from '../pages/Dashboard';
+import QuanLyHocVi from '../pages/QL_DanhMuc/QL_HocVi';
 import Projects from '../pages/Projects';
 import Students from '../pages/students';
 import Supervisors from '../pages/Supervisors';
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",  
-        element: <Dashboard />,
+        element: <QuanLyHocVi />,
       },
       {
         path: ROUTERS.GIAOVU.STUDENTS.PART,
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/login",  
+    path: ROUTERS.AUTH.DEFAULT.PART,  
     element: <Login />,
   }
 ]);
