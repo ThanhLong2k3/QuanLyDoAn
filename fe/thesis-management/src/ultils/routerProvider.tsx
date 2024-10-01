@@ -9,7 +9,8 @@ import ROUTERS from "../router/Path";
 import Login from '../pages/Login/Login';
 import App from "../App";
 import QuanLyNguoiDung from "../pages/QL_HeThong/QL_NguoiDung";
-console.log(ROUTERS.GIAOVU.STUDENTS.PATH);
+import QuanLyNhomQuuyen from "../pages/QL_HeThong/QL_NhomQuyen";
+
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,11 @@ const router = createBrowserRouter([
       {
         path: ROUTERS.GIAOVU.USER.PATH,
         element: <QuanLyNguoiDung />,
-      }
+      },
+      {
+        path: ROUTERS.GIAOVU.PHANQUYEN.PATH,
+        element:<QuanLyNhomQuuyen/>,
+      },
     ],
   },
   {

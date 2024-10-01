@@ -11,6 +11,7 @@ type router = {
     HOME: { DEFAULT : {PATH: "/home"}},
     AUTH: { DEFAULT : {PATH:"/"}},
     GIAOVU: {
+      PHANQUYEN:{PATH:"admin/nhomquyen"},
       USER:{PATH:"admin/user"},
       STUDENTS: { PATH: "giaovu/sinhvien" },
       PROJECTWORK: { PATH: "giaovu/project" },

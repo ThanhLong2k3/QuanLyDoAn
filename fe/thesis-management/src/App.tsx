@@ -21,7 +21,7 @@ const App: React.FC = () => {
           <Sidebar />
           <Layout className="site-layout">
             <Header />
-            <Content className='  mt-2 shadow ' style={{ margin: '0 16px', backgroundColor:'white' }}>
+            <Content className='  mt-2 shadow ' style={{ margin: '0 6px', backgroundColor:'white' }}>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                <Outlet/>
               </div>

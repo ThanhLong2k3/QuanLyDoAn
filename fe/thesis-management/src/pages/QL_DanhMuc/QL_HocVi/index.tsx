@@ -74,9 +74,10 @@ const QuanLyHocVi: React.FC = () => {
     <div className="bg-gray-100 min-h-screen p-6">
       <Card className="shadow-lg rounded-lg overflow-hidden">
         <div className="p-6">
-          <Title level={2} className="text-center  mb-8">
-            Quản lý danh mục học vị
-          </Title>
+        <Title level={2} className="text-center custom-blue mb-8" style={{color: '#1e88e5', fontSize: '25px', fontWeight: 'bold'}}>
+            QUẢN LÝ HỌC VỊ
+        </Title>
+        <hr></hr>
           <Row gutter={16} className="mb-6">
             <Col xs={24} sm={24} md={16} lg={18} xl={18}>
               <Input

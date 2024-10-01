@@ -14,13 +14,13 @@ interface ReusableModalProps {
 const ReusableModal: React.FC<ReusableModalProps> = ({ visible, onOk, onCancel, keyDangSua, children,update_Titel,add_Titel }) => {
   return (
     <Modal
-      title={keyDangSua !== null ? update_Titel : add_Titel}
-      open={visible}
-      onOk={onOk}
-      onCancel={onCancel}
-    >
-      {children} {/* Hiển thị form được truyền vào */}
-    </Modal>
+  title={<span style={{ color: '#1e88e5', fontSize: '20px', fontWeight: 'bold' }}>{keyDangSua !== null ? update_Titel : add_Titel}</span>}
+  open={visible}
+  onOk={onOk}
+  onCancel={onCancel}
+>
+  {children} {/* Hiển thị form được truyền vào */}
+</Modal>
   );
 };
 

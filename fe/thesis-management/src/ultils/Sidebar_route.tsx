@@ -35,6 +35,8 @@ import {
       COUNCIL: { KEY: '4', ICON: <BookOutlined />, LINK: ROUTERS.GIAOVU.SUPERVISORS.PATH, TEXT: "Quản lý hội đồng" },
       PROJECTWORK: { KEY: '5', ICON: <ProjectOutlined />, LINK: ROUTERS.GIAOVU.PROJECTWORK.PATH, TEXT: 'Đợt làm đồ án tốt nghiệp' },
       USER: { KEY: '6', ICON: <TeamOutlined />, LINK: ROUTERS.GIAOVU.USER.PATH, TEXT: "Quản lý người dùng" },
+      PHANQUYEN: { KEY: '7', ICON: <TeamOutlined />, LINK: ROUTERS.GIAOVU.PHANQUYEN.PATH, TEXT: "Quản lý nhóm quyền" },
+
 
     },
     TBM: {

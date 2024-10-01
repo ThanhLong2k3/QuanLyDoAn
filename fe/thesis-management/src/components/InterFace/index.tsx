@@ -17,3 +17,11 @@ export interface NguoiDung extends DuLieuItem {
     moTa:string;
     trangThai?:string,
 }
+export interface NhomQuyen extends DuLieuItem{
+    key:number;
+    maNhomQuyen:string;
+    tenNhomQuyen:string;
+    loai:string;
+    moTa: string;
+    soLuong?:number;
+}

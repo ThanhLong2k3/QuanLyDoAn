@@ -1,42 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { Card, Table, Button, Popconfirm, Row, Col, Input, Select, Space, Typography, Divider } from "antd";
-import { NguoiDung } from "../../../components/InterFace";
+import { NhomQuyen } from "../../../components/InterFace";
 import ReusableModal from "../../../components/UI/Modal";
-import { FormNguoiDung } from "../../../components/QLHeThong/QL_NguoiDung/QL_NguoiDungForm";
-import { CoLumNguoiDung } from "../../../components/UI/Table";
-import { ColumLop } from "../../../components/QLHeThong/QL_NguoiDung/TableNguoiDung";
+import { FormNhomQuyen } from "../../../components/QLHeThong/QLNhomQuyen/form";
+import { COLUMS } from "../../../components/UI/Table";
+import { columNhomQuyen } from "../../../components/QLHeThong/QLNhomQuyen/table";
 import { DeleteOutlined, SearchOutlined, UserAddOutlined, FilterOutlined } from "@ant-design/icons";
 import { useQuanLyDuLieu } from '../../../ultils/hook';
 
 const { Option } = Select;
 const { Title } = Typography;
 
-const nguoiDungBanDau: NguoiDung[] = [
-  {
-    key: 1,
-    tk: '10621306',
-    ten: 'Phạm Thanh Long',
-    ngaySinh: new Date(2003, 3, 30),
-    gioiTinh: 'Nam',
-    email: 'jaykergg@gmail.com',
-    moTa: 'Sinh Viên',
-    trangThai: "Đã Xét Duyệt"
-  },
-  {
-    key: 2,
-    tk: '10621307',
-    ten: 'Nguyễn Thanh Huy',
-    ngaySinh: new Date(2002, 11, 15),
-    gioiTinh: 'Nam',
-    email: 'phong.nguyen@gmail.com',
-    moTa: 'Sinh Viên',
-    trangThai: "Đã Xét Duyệt"
-  },
-];
-
-const QuanLyNguoiDung: React.FC = () => {
+const nhomQuyenBanDau: NhomQuyen[] = [
+    {
+      key: 1,
+      maNhomQuyen: 'Q01',
+      tenNhomQuyen: 'Quản trị hệ thống',
+      loai: 'Quản trị',
+      moTa: 'Quyền quản trị toàn bộ hệ thống',
+      soLuong: 5
+    },
+    {
+      key: 2,
+      maNhomQuyen: 'Q02',
+      tenNhomQuyen: 'Người dùng thông thường',
+      loai: 'Người dùng',
+      moTa: 'Quyền sử dụng các tính năng cơ bản của hệ thống',
+      soLuong: 50
+    }
+  ];
+  
+const QuanLyNhomQuuyen: React.FC = () => {
   const {
-    duLieu: nguoiDung,
+    duLieu: nhomQuyen,
     hienModal,
     setHienModal,
     form,
@@ -47,30 +43,30 @@ const QuanLyNguoiDung: React.FC = () => {
     xuLyXoa,
     xuLyXoaNhieu,
     chonDong,
-  } = useQuanLyDuLieu<NguoiDung>({
-    duLieuBanDau: nguoiDungBanDau,
-    khoaLuuTru: 'utehy_nguoidung',
+  } = useQuanLyDuLieu<NhomQuyen>({
+    duLieuBanDau: nhomQuyenBanDau,
+    khoaLuuTru: 'utehy_nhomquyen',
   });
 
   const [timKiem, setTimKiem] = useState("");
   const [trangThai, setTrangThai] = useState<string | null>(null);
-  const [duLieuLoc, setDuLieuLoc] = useState(nguoiDung);
+  const [duLieuLoc, setDuLieuLoc] = useState(nhomQuyen);
 
   useEffect(() => {
-    document.title = 'Quản lý người dùng';
+    document.title = 'Quản lý nhóm quyền';
   }, []);
 
   useEffect(() => {
-    const ketQuaLoc = nguoiDung.filter(
-      (nguoi) =>
-        (nguoi.ten.toLowerCase().includes(timKiem.toLowerCase()) ||
-         nguoi.tk.toLowerCase().includes(timKiem.toLowerCase())) &&
-        (trangThai === null || nguoi.trangThai === trangThai)
+    const ketQuaLoc = nhomQuyen.filter(
+      (quyen) =>
+        (quyen.tenNhomQuyen.toLowerCase().includes(timKiem.toLowerCase()) ||
+      quyen.maNhomQuyen.toLowerCase().includes(timKiem.toLowerCase())) &&
+        (trangThai === null || quyen.trangThai === trangThai)
     );
     setDuLieuLoc(ketQuaLoc);
-  }, [nguoiDung, timKiem, trangThai]);
+  }, [nhomQuyen, timKiem, trangThai]);
 
-  const cotBang = CoLumNguoiDung(ColumLop, hienThiModal, xuLyXoa);
+  const cotBang = COLUMS(columNhomQuyen, hienThiModal, xuLyXoa);
 
   const luaChonDong = {
     selectedRowKeys: cacDongDaChon,
@@ -81,10 +77,10 @@ const QuanLyNguoiDung: React.FC = () => {
     <>
       <Card className="  overflow-hidden">
         <div className="p-6">
-        <Title level={2} className="text-center custom-blue mb-8" style={{color: '#1e88e5', fontSize: '25px', fontWeight: 'bold'}}>
-            QUẢN LÝ NGƯỜI DÙNG
+        <Title level={2} className="text-center custom-blue mb-8" style={{color: '#1e88e5', fontSize: '25px', fontWeight: 'bold' }}>
+            QUẢN LÝ NHÓM QUYỀN
         </Title>
-        <hr></hr>
+        <hr />
           <Row gutter={16} className="mb-6">
             <Col xs={24} sm={24} md={12} lg={8} xl={8}>
               <Input
@@ -128,7 +124,7 @@ const QuanLyNguoiDung: React.FC = () => {
                   onClick={() => hienThiModal()}
                   className="bg-green-500 hover:bg-green-600 border-green-500 hover:border-green-600"
                 >
-                  Thêm người dùng
+                  Thêm nhóm quyền
                 </Button>
               </Space>
             </Col>
@@ -155,13 +151,14 @@ const QuanLyNguoiDung: React.FC = () => {
         onOk={xuLyDongY}
         onCancel={() => setHienModal(false)}
         keyDangSua={keyDangSua}
-        add_Titel="Thêm Người Dùng"
-        update_Titel="Chỉnh Sửa Người Dùng"
+        add_Titel="Thêm Nhóm Quyền"
+        update_Titel="Chỉnh Sửa Nhóm Quyền"
+        
       >
-        <FormNguoiDung formdulieu={form} />
+        <FormNhomQuyen formdulieu={form} />
       </ReusableModal>
       </>
   );
 };
 
-export default QuanLyNguoiDung;
+export default QuanLyNhomQuuyen;
