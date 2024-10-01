@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./Style_Login.css";
-import ROUTERS from "../../router/Part";
+import ROUTERS from "../../router/Path";
 
 
 interface Account {
@@ -26,7 +26,7 @@ const Login: React.FC = () => {
     if (account.masv === '1' && account.password === '1') {
       localStorage.setItem("user", account.userType);
       if (account.userType === "1") {
-        navigate(ROUTERS.HOME.DEFAULT.PART);
+        navigate(ROUTERS.HOME.DEFAULT.PATH);
       } 
     }
   };

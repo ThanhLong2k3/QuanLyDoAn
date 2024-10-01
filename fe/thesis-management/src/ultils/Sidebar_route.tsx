@@ -13,7 +13,7 @@ import {
     FileDoneOutlined,
     DashboardOutlined
   } from '@ant-design/icons';
-  import ROUTERS from "../router/Part";
+  import ROUTERS from "../router/Path";
 
   type SidebarItem = {
     KEY: string;
@@ -28,12 +28,14 @@ import {
   
   const Sidebar_router: { [key: string]: SidebarSection } = {
     GIAOVU: {
-      HOME: { KEY: '0', ICON: <DashboardOutlined />, LINK: ROUTERS.HOME.DEFAULT.PART, TEXT: "Trang chủ" },
-      CLASS: { KEY: '1', ICON: <TeamOutlined />, LINK: ROUTERS.GIAOVU.CLASS.PART, TEXT: "Quản lý lớp" },
-      SUPERVISORS: { KEY: '2', ICON: <UserOutlined />, LINK:ROUTERS.GIAOVU.SUPERVISORS.PART , TEXT: "Quản lý giảng viên" },
-      STUDENTS: { KEY: '3', ICON: <UserOutlined />, LINK: ROUTERS.GIAOVU.STUDENTS.PART, TEXT: "Quản lý sinh viên" },
-      COUNCIL: { KEY: '4', ICON: <BookOutlined />, LINK: ROUTERS.GIAOVU.SUPERVISORS.PART, TEXT: "Quản lý hội đồng" },
-      PROJECTWORK: { KEY: '5', ICON: <ProjectOutlined />, LINK: ROUTERS.GIAOVU.PROJECTWORK.PART, TEXT: 'Đợt làm đồ án tốt nghiệp' }
+      HOME: { KEY: '0', ICON: <DashboardOutlined />, LINK: ROUTERS.HOME.DEFAULT.PATH, TEXT: "Trang chủ" },
+      CLASS: { KEY: '1', ICON: <TeamOutlined />, LINK: ROUTERS.GIAOVU.CLASS.PATH, TEXT: "Quản lý lớp" },
+      SUPERVISORS: { KEY: '2', ICON: <UserOutlined />, LINK:ROUTERS.GIAOVU.SUPERVISORS.PATH , TEXT: "Quản lý giảng viên" },
+      STUDENTS: { KEY: '3', ICON: <UserOutlined />, LINK: ROUTERS.GIAOVU.STUDENTS.PATH, TEXT: "Quản lý sinh viên" },
+      COUNCIL: { KEY: '4', ICON: <BookOutlined />, LINK: ROUTERS.GIAOVU.SUPERVISORS.PATH, TEXT: "Quản lý hội đồng" },
+      PROJECTWORK: { KEY: '5', ICON: <ProjectOutlined />, LINK: ROUTERS.GIAOVU.PROJECTWORK.PATH, TEXT: 'Đợt làm đồ án tốt nghiệp' },
+      USER: { KEY: '6', ICON: <TeamOutlined />, LINK: ROUTERS.GIAOVU.USER.PATH, TEXT: "Quản lý người dùng" },
+
     },
     TBM: {
       HOME: { KEY: '0', ICON: <DashboardOutlined />, LINK: "", TEXT: "Trang chủ" },

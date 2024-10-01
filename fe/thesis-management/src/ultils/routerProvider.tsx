@@ -5,15 +5,15 @@ import Projects from '../pages/Projects';
 import Students from '../pages/students';
 import Supervisors from '../pages/Supervisors';
 import Class from "../pages/Classs";
-import ROUTERS from "../router/Part";
+import ROUTERS from "../router/Path";
 import Login from '../pages/Login/Login';
 import App from "../App";
-
-console.log(ROUTERS.GIAOVU.STUDENTS.PART);
+import QuanLyNguoiDung from "../pages/QL_HeThong/QL_NguoiDung";
+console.log(ROUTERS.GIAOVU.STUDENTS.PATH);
 
 const router = createBrowserRouter([
   {
-    path: ROUTERS.HOME.DEFAULT.PART,  
+    path: ROUTERS.HOME.DEFAULT.PATH,  
     element: <App />,
     children: [
       {
@@ -21,25 +21,29 @@ const router = createBrowserRouter([
         element: <QuanLyHocVi />,
       },
       {
-        path: ROUTERS.GIAOVU.STUDENTS.PART,
+        path: ROUTERS.GIAOVU.STUDENTS.PATH,
         element: <Students />,
       },
       {
-        path: ROUTERS.GIAOVU.PROJECTWORK.PART,
+        path: ROUTERS.GIAOVU.PROJECTWORK.PATH,
         element: <Projects />,
       },
       {
-        path: ROUTERS.GIAOVU.SUPERVISORS.PART,
+        path: ROUTERS.GIAOVU.SUPERVISORS.PATH,
         element: <Supervisors />,
       },
       {
-        path: ROUTERS.GIAOVU.CLASS.PART,
+        path: ROUTERS.GIAOVU.CLASS.PATH,
         element: <Class />,
       },
+      {
+        path: ROUTERS.GIAOVU.USER.PATH,
+        element: <QuanLyNguoiDung />,
+      }
     ],
   },
   {
-    path: ROUTERS.AUTH.DEFAULT.PART,  
+    path: ROUTERS.AUTH.DEFAULT.PATH,  
     element: <Login />,
   }
 ]);

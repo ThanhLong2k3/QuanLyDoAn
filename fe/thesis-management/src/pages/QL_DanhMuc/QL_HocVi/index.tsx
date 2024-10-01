@@ -1,157 +1,69 @@
-import React, { useState, useEffect } from "react";
-import {
-  Card,
-  Table,
-  Button,
-  Form,
-  Space,
-  Popconfirm,
-  message,
-  Row,
-  Col,
-} from "antd";
-import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from 'react';
+import { Card, Table, Button, Popconfirm, Row, Col, Input, Space, Typography, Divider } from 'antd';
+import { DeleteOutlined, SearchOutlined, PlusOutlined } from '@ant-design/icons';
+import { useQuanLyDuLieu } from '../../../ultils/hook';
+import ReusableModal from '../../../components/UI/Modal';
+import { COLUMS } from '../../../components/UI/Table';
+import { FormHocVi } from '../../../components/QLDanhMuc/QL_HocVi/QL_HocViForm';
+import { cotHocVi } from '../../../components/QLDanhMuc/QL_HocVi/TableHocVi';
 import { HocVi } from "../../../components/InterFace";
-import ReusableModal from "../../../components/UI/Modal";
-import formHocVi from "../../../components/QLDanhMuc/QL_HocVi/QL_HocViForm";
+
+const { Title } = Typography;
 
 const hocViBanDau: HocVi[] = [
   {
     key: 1,
-    ma: "TS",
-    ten: "Tiến sĩ",
-    kyHieu: "Dr.",
-    moTa: "Bậc học vị cao nhất",
+    ma: 'TS',
+    ten: 'Tiến sĩ',
+    kyHieu: 'Dr.',
+    moTa: 'Bậc học vị cao nhất',
     soLuongHuongDan: 10,
   },
   {
     key: 2,
-    ma: "ThS",
-    ten: "Thạc sĩ",
-    kyHieu: "M.",
-    moTa: "Bậc học vị sau đại học",
+    ma: 'ThS',
+    ten: 'Thạc sĩ',
+    kyHieu: 'M.',
+    moTa: 'Bậc học vị sau đại học',
     soLuongHuongDan: 5,
   },
 ];
 
 const QuanLyHocVi: React.FC = () => {
-  const [hocVi, setHocVi] = useState<HocVi[]>(hocViBanDau);
-  const [hienModal, setHienModal] = useState(false);
-  const [form] = Form.useForm();
-  const [keyDangSua, setKeyDangSua] = useState<number | null>(null);
-  const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
+  const {
+    duLieu: hocVi,
+    hienModal,
+    setHienModal,
+    form,
+    keyDangSua,
+    cacDongDaChon,
+    hienThiModal,
+    xuLyDongY,
+    xuLyXoa,
+    xuLyXoaNhieu,
+    chonDong,
+  } = useQuanLyDuLieu<HocVi>({
+    duLieuBanDau: hocViBanDau,
+    khoaLuuTru: 'utehy_hocvi',
+  });
+
+  const [timKiem, setTimKiem] = useState("");
+  const [duLieuLoc, setDuLieuLoc] = useState(hocVi);
 
   useEffect(() => {
-    const hocViLuuTru = localStorage.getItem("utehy_hocvi");
-    if (hocViLuuTru) {
-      setHocVi(JSON.parse(hocViLuuTru));
-    }
+    document.title = 'Quản lý học vị';
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("utehy_hocvi", JSON.stringify(hocVi));
-  }, [hocVi]);
-
-  const hienThiModal = (banGhi?: HocVi) => {
-    form.resetFields();
-    if (banGhi) {
-      form.setFieldsValue(banGhi);
-      setKeyDangSua(banGhi.key);
-    } else {
-      setKeyDangSua(null);
-    }
-    setHienModal(true);
-  };
-
-  const xuLyDongY = () => {
-    form.validateFields().then((giaTri) => {
-      if (keyDangSua !== null) {
-        setHocVi((hocViCu) =>
-          hocViCu.map((item) =>
-            item.key === keyDangSua ? { ...item, ...giaTri } : item
-          )
-        );
-      } else {
-        const hocViMoi: HocVi = {
-          key: Date.now(),
-          ...giaTri,
-        };
-        setHocVi((hocViCu) => [...hocViCu, hocViMoi]);
-      }
-      setHienModal(false);
-      form.resetFields();
-      setKeyDangSua(null);
-      message.success("Học vị đã được lưu thành công!");
-    });
-  };
-
-  const xuLyXoa = (key: number) => {
-    setHocVi((hocViCu) => hocViCu.filter((item) => item.key !== key));
-    message.success("Học vị đã được xóa thành công!");
-  };
-
-  const xuLyXoaNhieu = () => {
-    setHocVi((hocViCu) =>
-      hocViCu.filter((item) => !cacDongDaChon.includes(item.key))
+    const ketQuaLoc = hocVi.filter(
+      (hv) =>
+        hv.ten.toLowerCase().includes(timKiem.toLowerCase()) ||
+        hv.kyHieu.toLowerCase().includes(timKiem.toLowerCase())
     );
-    setCacDongDaChon([]);
-    message.success(`${cacDongDaChon.length} học vị đã được xóa thành công!`);
-  };
+    setDuLieuLoc(ketQuaLoc);
+  }, [hocVi, timKiem]);
 
-  const cotBang = [
-    {
-      title: "Mã học vị",
-      dataIndex: "ma",
-      key: "ma",
-    },
-    {
-      title: "Tên học vị",
-      dataIndex: "ten",
-      key: "ten",
-    },
-    {
-      title: "Ký hiệu",
-      dataIndex: "kyHieu",
-      key: "kyHieu",
-    },
-    {
-      title: "Mô tả",
-      dataIndex: "moTa",
-      key: "moTa",
-    },
-    {
-      title: "Số lượng hướng dẫn",
-      dataIndex: "soLuongHuongDan",
-      key: "soLuongHuongDan",
-    },
-    {
-      title: "Thao tác",
-      key: "action",
-      render: (_: any, banGhi: HocVi) => (
-        <Space size="middle">
-          <Button
-            type="primary"
-            icon={<EditOutlined />}
-            onClick={() => hienThiModal(banGhi)}
-          >
-            Sửa
-          </Button>
-          <Popconfirm
-            title="Bạn có chắc chắn muốn xóa?"
-            onConfirm={() => xuLyXoa(banGhi.key)}
-          >
-            <Button type="primary" danger icon={<DeleteOutlined />}>
-              Xóa
-            </Button>
-          </Popconfirm>
-        </Space>
-      ),
-    },
-  ];
-
-  const chonDong = (cacKeyChon: React.Key[]) => {
-    setCacDongDaChon(cacKeyChon);
-  };
+  const cotBang = COLUMS(cotHocVi, hienThiModal, xuLyXoa);
 
   const luaChonDong = {
     selectedRowKeys: cacDongDaChon,
@@ -159,42 +71,64 @@ const QuanLyHocVi: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: "24px" }}>
-      <Row gutter={16} justify="center" style={{ marginBottom: "24px" }}>
-        <Col xl={24} xs={24} sm={24} md={24} lg={24} >
-        <h1 style={{ textAlign: "center", color: "#1890ff",fontWeight:'bold' }}>Quản lý danh mục học vị</h1>
-        </Col>
-      </Row>
-      <Card
-        style={{ width: "100%" }}
-        title="Danh sách Học vị"
-        extra={
-          <Button
-            type="primary"
-            onClick={() => hienThiModal()}
-            icon={<PlusOutlined />}
-          >
-            Thêm Học vị mới
-          </Button>
-        }
-      >
-        {cacDongDaChon.length > 0 && (
-          <Popconfirm
-            title={`Bạn có chắc chắn muốn xóa ${cacDongDaChon.length} học vị đã chọn?`}
-            onConfirm={xuLyXoaNhieu}
-          >
-            <Button type="primary" danger>
-              Xóa {cacDongDaChon.length} mục đã chọn
-            </Button>
-          </Popconfirm>
-        )}
-        <Table
-          rowSelection={luaChonDong}
-          columns={cotBang}
-          dataSource={hocVi}
-          rowKey="key"
-          scroll={{ x: 768 }}
-        />
+    <div className="bg-gray-100 min-h-screen p-6">
+      <Card className="shadow-lg rounded-lg overflow-hidden">
+        <div className="p-6">
+          <Title level={2} className="text-center  mb-8">
+            Quản lý danh mục học vị
+          </Title>
+          <Row gutter={16} className="mb-6">
+            <Col xs={24} sm={24} md={16} lg={18} xl={18}>
+              <Input
+                placeholder="Tìm kiếm theo tên học vị hoặc ký hiệu"
+                value={timKiem}
+                
+                onChange={(e) => setTimKiem(e.target.value)}
+                prefix={<SearchOutlined className="text-gray-400" />}
+                className="w-full "
+              />
+            </Col>
+            <Col xs={24} sm={24} md={8} lg={6} xl={4} className="flex justify-end">
+              <Space>
+                {cacDongDaChon.length > 0 && (
+                  <Popconfirm
+                    title={`Bạn có chắc chắn muốn xóa ${cacDongDaChon.length} học vị đã chọn?`}
+                    onConfirm={xuLyXoaNhieu}
+                    okText="Đồng ý"
+                    cancelText="Hủy"
+                  >
+                    <Button type="primary" danger icon={<DeleteOutlined />}>
+                      Xóa {cacDongDaChon.length} mục
+                    </Button>
+                  </Popconfirm>
+                )}
+                <Button 
+                  type="primary" 
+                  icon={<PlusOutlined />} 
+                  onClick={() => hienThiModal()}
+                  className="bg-green-500 hover:bg-green-600 border-green-500 hover:border-green-600"
+                >
+                  Thêm Học Vị
+                </Button>
+              </Space>
+            </Col>
+          </Row>
+          <Divider className="my-6" />
+          <Table
+            rowSelection={luaChonDong}
+            columns={cotBang}
+            dataSource={duLieuLoc}
+            rowKey="key"
+            scroll={{ x: 768 }}
+            className="shadow-sm rounded-md overflow-hidden"
+            pagination={{
+              pageSize: 10,
+              showSizeChanger: true,
+              showQuickJumper: true,
+              showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} mục`,
+            }}
+          />
+        </div>
       </Card>
       <ReusableModal
         visible={hienModal}
@@ -204,8 +138,8 @@ const QuanLyHocVi: React.FC = () => {
         add_Titel="Thêm Học vị mới"
         update_Titel="Chỉnh sửa Học vị"
       >
-        <formHocVi formdulieu={form} />
-      </ReusableModal> 
+        <FormHocVi formdulieu={form} />
+      </ReusableModal>
     </div>
   );
 };

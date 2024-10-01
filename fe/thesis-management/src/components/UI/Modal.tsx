@@ -7,7 +7,6 @@ interface ReusableModalProps {
   onCancel: () => void;
   keyDangSua: number | null;
   children: React.ReactNode;
-    // Nhận form dưới dạng children
     add_Titel:string;
     update_Titel:string;
 }

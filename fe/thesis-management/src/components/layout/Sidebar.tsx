@@ -51,8 +51,8 @@ const Sidebar: React.FC = () => {
     }
 
     return Object.entries(roleItems).map(([key, item]) => (
-      <Menu.Item key={item.KEY} icon={item.ICON}>
-        <Link to={item.LINK} style={{ textDecoration: 'none' }}>{item.TEXT}</Link>
+      <Menu.Item  key={item.KEY} icon={item.ICON}>
+        <Link  to={item.LINK} style={{ textDecoration: 'none' }}>{item.TEXT}</Link>
       </Menu.Item>
     ));
   };
@@ -67,7 +67,6 @@ const Sidebar: React.FC = () => {
         onCollapse={onCollapse} 
         style={{ background: '#fff' }} 
         breakpoint="md"  
-        className='col-12'
         collapsedWidth={0}  
       >
         <div className="logo" style={{ display:'flex', alignItems: 'center', justifyContent: 'center', height: '64px', background: 'rgba(255, 255, 255, 0.3)' }}>
@@ -78,7 +77,7 @@ const Sidebar: React.FC = () => {
             </div>
           )}
         </div>
-        <Menu theme="light" defaultSelectedKeys={['1']} className='col-12' mode="inline">
+        <Menu theme="light"  defaultSelectedKeys={['1']}  mode="inline">
           {menuItems}
         </Menu>
       </Sider>

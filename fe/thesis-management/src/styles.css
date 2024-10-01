@@ -29,3 +29,6 @@
       display: block; 
     }
   }
+  .custom-blue {
+    color: #1e3a8a; /* Màu blue 600 của Tailwind */
+  }

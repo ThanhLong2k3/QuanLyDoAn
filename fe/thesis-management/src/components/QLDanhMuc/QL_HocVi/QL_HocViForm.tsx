@@ -6,7 +6,7 @@ interface ReusableFormProps {
   formdulieu: FormInstance<any> | undefined;
 }
 
-const FormHocVi: React.FC<ReusableFormProps> = ({ formdulieu }) => (
+export const FormHocVi: React.FC<ReusableFormProps> = ({ formdulieu }) => (
   <Form form={formdulieu} layout="vertical">
     <Form.Item
       name="ma"
@@ -42,4 +42,4 @@ const FormHocVi: React.FC<ReusableFormProps> = ({ formdulieu }) => (
   </Form>
 );
 
-export default FormHocVi; 
+ 
