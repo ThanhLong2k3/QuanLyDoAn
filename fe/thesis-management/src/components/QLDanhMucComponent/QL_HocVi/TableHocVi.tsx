@@ -1,4 +1,4 @@
-import {ColumnType} from '../../QLDanhMuc/types';
+import {ColumnType} from '../types';
 export const cotHocVi: ColumnType[] = [
     {
       title: 'Mã học vị',

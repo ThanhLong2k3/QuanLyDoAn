@@ -4,8 +4,8 @@ import { DeleteOutlined, SearchOutlined, PlusOutlined } from '@ant-design/icons'
 import { useQuanLyDuLieu } from '../../../ultils/hook';
 import ReusableModal from '../../../components/UI/Modal';
 import { COLUMS } from '../../../components/UI/Table';
-import { FormHocVi } from '../../../components/QLDanhMuc/QL_HocVi/QL_HocViForm';
-import { cotHocVi } from '../../../components/QLDanhMuc/QL_HocVi/TableHocVi';
+import { FormHocVi } from '../../../components/QLDanhMucComponent/QL_HocVi/QL_HocViForm';
+import { cotHocVi } from '../../../components/QLDanhMucComponent/QL_HocVi/TableHocVi';
 import { HocVi } from "../../../components/InterFace";
 
 const { Title } = Typography;
@@ -72,7 +72,7 @@ const QuanLyHocVi: React.FC = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen p-6">
-      <Card className="shadow-lg rounded-lg overflow-hidden">
+      <Card className="shadow rounded-lg overflow-hidden">
         <div className="p-6">
         <Title level={2} className="text-center custom-blue mb-8" style={{color: '#1e88e5', fontSize: '25px', fontWeight: 'bold'}}>
             QUẢN LÝ HỌC VỊ

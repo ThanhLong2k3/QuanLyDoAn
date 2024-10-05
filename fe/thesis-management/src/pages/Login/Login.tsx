@@ -43,10 +43,10 @@ const Login: React.FC = () => {
       <div className="d-flex flex-column  bg-light">
             <header className="bg-primary text-white shadow-lg">
                 <div className="container px-4 py-3 d-flex align-items-center justify-content-center">
-                    <img src="./utehy-logo.png"  alt="Logo UTEHY" className="me-3" style={{ height: "50px", width: "50px" }} />
+                    <img src="./utehy-logo.png"  alt="Logo UTEHY" className="me-3" style={{ height: "80px", width: "80px" }} />
                     <div>
                         <h1 className="fs-3 fw-bold">UTEHY</h1>
-                        <p className="fs-6">Đại học Sư phạm Kỹ thuật Hưng Yên</p>
+                        <p className="fs-6">ĐẠI HỌC SƯ PHẠM KỸ THUẬT HƯNG YÊN</p>
                     </div>
                 </div>
             </header>

@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Card, Table, Button, Popconfirm, Row, Col, Input, Select, Space, Typography, Divider } from "antd";
 import { NhomQuyen } from "../../../components/InterFace";
 import ReusableModal from "../../../components/UI/Modal";
-import { FormNhomQuyen } from "../../../components/QLHeThong/QLNhomQuyen/form";
-import { COLUMS } from "../../../components/UI/Table";
-import { columNhomQuyen } from "../../../components/QLHeThong/QLNhomQuyen/table";
+import { FormNhomQuyen } from "../../../components/QLHeThongComponent/QLNhomQuyen/form";
+import { columNhomQuyen } from "../../../components/QLHeThongComponent/QLNhomQuyen/table";
 import { DeleteOutlined, SearchOutlined, UserAddOutlined, FilterOutlined } from "@ant-design/icons";
 import { useQuanLyDuLieu } from '../../../ultils/hook';
 
@@ -66,7 +65,7 @@ const QuanLyNhomQuuyen: React.FC = () => {
     setDuLieuLoc(ketQuaLoc);
   }, [nhomQuyen, timKiem, trangThai]);
 
-  const cotBang = COLUMS(columNhomQuyen, hienThiModal, xuLyXoa);
+  const cotBang = columNhomQuyen( hienThiModal, xuLyXoa);
 
   const luaChonDong = {
     selectedRowKeys: cacDongDaChon,

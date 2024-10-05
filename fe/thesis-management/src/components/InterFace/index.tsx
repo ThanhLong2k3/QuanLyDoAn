@@ -10,6 +10,7 @@ export interface HocVi extends DuLieuItem {
 export interface NguoiDung extends DuLieuItem {
     key:number;
     tk:string;
+    mk:string;
     ten:string;
     ngaySinh:Date;
     gioiTinh: string;
@@ -24,4 +25,11 @@ export interface NhomQuyen extends DuLieuItem{
     loai:string;
     moTa: string;
     soLuong?:number;
+}
+export interface Lop extends DuLieuItem{
+    key:number;
+    maLop:number;
+    tenLop:string;
+    tenChuyenNganh:string;
+    khoaHoc: string;
 }

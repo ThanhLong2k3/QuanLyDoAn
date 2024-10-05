@@ -5,6 +5,7 @@ import Projects from '../pages/Projects';
 import Students from '../pages/students';
 import Supervisors from '../pages/Supervisors';
 import Class from "../pages/Classs";
+import QuanLyLop from "../pages/QL_DoAn/QL_Lop";
 import ROUTERS from "../router/Path";
 import Login from '../pages/Login/Login';
 import App from "../App";
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTERS.GIAOVU.CLASS.PATH,
-        element: <Class />,
+        element: <QuanLyLop />,
       },
       {
         path: ROUTERS.GIAOVU.USER.PATH,

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Card, Table, Button, Popconfirm, Row, Col, Input, Select, Space, Typography, Divider } from "antd";
 import { NguoiDung } from "../../../components/InterFace";
 import ReusableModal from "../../../components/UI/Modal";
-import { FormNguoiDung } from "../../../components/QLHeThong/QL_NguoiDung/QL_NguoiDungForm";
-import { CoLumNguoiDung } from "../../../components/UI/Table";
-import { ColumLop } from "../../../components/QLHeThong/QL_NguoiDung/TableNguoiDung";
+import { FormNguoiDung } from "../../../components/QLHeThongComponent/QL_NguoiDung/QL_NguoiDungForm";
+import { CoLumNguoiDung } from "../../../components/QLHeThongComponent/QL_NguoiDung/TableNguoiDung";
+
 import { DeleteOutlined, SearchOutlined, UserAddOutlined, FilterOutlined } from "@ant-design/icons";
 import { useQuanLyDuLieu } from '../../../ultils/hook';
 
@@ -15,6 +15,7 @@ const nguoiDungBanDau: NguoiDung[] = [
   {
     key: 1,
     tk: '10621306',
+    mk:'123456',
     ten: 'Phạm Thanh Long',
     ngaySinh: new Date(2003, 3, 30),
     gioiTinh: 'Nam',
@@ -25,6 +26,7 @@ const nguoiDungBanDau: NguoiDung[] = [
   {
     key: 2,
     tk: '10621307',
+    mk:'123456',
     ten: 'Nguyễn Thanh Huy',
     ngaySinh: new Date(2002, 11, 15),
     gioiTinh: 'Nam',
@@ -70,7 +72,7 @@ const QuanLyNguoiDung: React.FC = () => {
     setDuLieuLoc(ketQuaLoc);
   }, [nguoiDung, timKiem, trangThai]);
 
-  const cotBang = CoLumNguoiDung(ColumLop, hienThiModal, xuLyXoa);
+  const cotBang = CoLumNguoiDung( hienThiModal, xuLyXoa);
 
   const luaChonDong = {
     selectedRowKeys: cacDongDaChon,

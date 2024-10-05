@@ -1,6 +1,6 @@
 import { Button, Space, Popconfirm } from 'antd';
 import { EditOutlined, DeleteOutlined,EyeOutlined,UnlockOutlined  } from '@ant-design/icons';
-import {ColumnType} from '../QLDanhMuc/types';
+import {ColumnType} from '../QLDanhMucComponent/types';
 
 
  const taoCotBang = (
