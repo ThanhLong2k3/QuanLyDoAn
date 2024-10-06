@@ -1,4 +1,4 @@
-import { Button, Space, Popconfirm } from 'antd';
+import { Button, Space, Popconfirm,Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined,EyeOutlined,UnlockOutlined  } from '@ant-design/icons';
 import {ColumnType} from '../QLDanhMucComponent/types';
 
@@ -15,14 +15,14 @@ import {ColumnType} from '../QLDanhMucComponent/types';
     key: 'action',
     render: (_: any, banGhi: any) => (
       <Space size="middle">
-        <Button type="primary" icon={<EditOutlined />} onClick={() => hienThiModal(banGhi)}>
-          Sửa
-        </Button>
-        <Popconfirm title="Bạn có chắc chắn muốn xóa?" onConfirm={() => xuLyXoa(banGhi.key)}>
-          <Button type="primary" danger icon={<DeleteOutlined />}>
-            Xóa
-          </Button>
-        </Popconfirm>
+        <Tooltip title="Sửa">
+          <Button type="primary" icon={<EditOutlined />} onClick={() => hienThiModal(banGhi)}/>
+        </Tooltip>
+        <Tooltip title="Xóa">
+          <Popconfirm title="Bạn có chắc chắn muốn xóa?" onConfirm={() => xuLyXoa(banGhi.key)}>
+            <Button type="primary" danger icon={<DeleteOutlined />}/>
+          </Popconfirm>
+        </Tooltip>
       </Space>
     ),
   });

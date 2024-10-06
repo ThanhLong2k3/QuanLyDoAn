@@ -33,3 +33,25 @@ export interface Lop extends DuLieuItem{
     tenChuyenNganh:string;
     khoaHoc: string;
 }
+export interface GiangVien extends DuLieuItem{
+    key:number;
+    maGiangVien:number;
+    tenGiangVien:string;
+    tenBoMon:string;
+    chucVu?: string;
+    tenHocVi?:string;
+    tenHocHam?:string;
+    SDT:string;
+    email:string;
+}
+export interface SinhVien extends DuLieuItem{
+    key:number;
+    maSinhVien:number;
+    tenSinhVien:string;
+    maLop:string;
+    tenTrangThai?: string;
+    ngaySinh:Date;
+    email:string;
+    gioiTinh:string;
+    SDT:string;
+}
