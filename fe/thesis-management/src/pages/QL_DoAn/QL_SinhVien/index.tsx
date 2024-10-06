@@ -18,10 +18,10 @@ const SinhVienBatDau: SinhVien[] = [
       tenSinhVien: "Nguyễn Văn A",
       maLop: "CNTT2023",
       tenTrangThai: "Đang học",
-      ngaySinh: new Date("2002-05-15"),
+      ngaySinh: "15-05-2002",
       email: "nguyenvana@example.com",
       gioiTinh: "Nam",
-      SDT: "0901234567"
+      SDT: "0901234567",
     },
     {
       key: 2,
@@ -29,10 +29,10 @@ const SinhVienBatDau: SinhVien[] = [
       tenSinhVien: "Trần Thị B",
       maLop: "CNTT2023",
       tenTrangThai: "Đang học",
-      ngaySinh: new Date("2002-08-22"),
+      ngaySinh: "22-08-2002",
       email: "tranthib@example.com",
       gioiTinh: "Nữ",
-      SDT: "0912345678"
+      SDT: "0912345678",
     },
 ]
 

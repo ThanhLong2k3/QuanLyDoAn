@@ -50,7 +50,7 @@ export interface SinhVien extends DuLieuItem{
     tenSinhVien:string;
     maLop:string;
     tenTrangThai?: string;
-    ngaySinh:Date;
+    ngaySinh:string;
     email:string;
     gioiTinh:string;
     SDT:string;

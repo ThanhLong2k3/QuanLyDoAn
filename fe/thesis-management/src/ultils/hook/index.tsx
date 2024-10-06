@@ -56,6 +56,7 @@ export function useQuanLyDuLieu<T extends DuLieuItem>({
           )
         );
       } else {
+        console.log(giaTri);
         const duLieuMoi: T = {
           key: Date.now(),
           ...giaTri,
