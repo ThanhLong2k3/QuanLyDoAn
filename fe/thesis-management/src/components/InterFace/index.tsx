@@ -55,3 +55,23 @@ export interface SinhVien extends DuLieuItem{
     gioiTinh:string;
     SDT:string;
 }
+export interface DotLamDoAn extends DuLieuItem{
+    key:number;
+    maDot:string;
+    tenDot: string;
+    ngayBatDau: string;
+    namApDung:string;
+    dangKyDeTai?:boolean;
+    choPhepSinhVienDangKyGiangVienKhacBoMon?:boolean;
+    choPhepSinhVienBaoCaoKhacTuanHienTai?:boolean;
+    choPhepGiangVienBaoCaoKhacTuanHienTai?:boolean;
+    ChoPhepGiangVienSuaDeTai?:boolean;
+    trangThai:boolean;
+}
+export interface HoiDong extends DuLieuItem{
+    tenHoiDong:string;
+    maDot:string;
+    thuocLop:string;
+    phong?:string;
+    ngayDuKien:string;
+}
