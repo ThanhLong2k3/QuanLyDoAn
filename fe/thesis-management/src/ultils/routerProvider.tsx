@@ -13,6 +13,8 @@ import QuanLyNguoiDung from "../pages/QL_HeThong/QL_NguoiDung"
 import QuanLyNhomQuuyen from "../pages/QL_HeThong/QL_NhomQuyen"
 import QuanLygiangvien from "../pages/QL_DoAn/QL_GiangVien"
 import QuanLySinhVien from "../pages/QL_DoAn/QL_SinhVien"
+import QuanLyDotLamDoAn from "../pages/QL_DoAn/QL_DotLamDoAn"
+
 
 
 const router = createBrowserRouter([
@@ -22,7 +24,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",  
-        element: <QuanLyHocVi />,
+        element: <Dashboard />,
       },
       {
         path: ROUTERS.GIAOVU.STUDENTS.PATH,
@@ -51,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: ROUTERS.GIAOVU.GIANGVIEN.PATH,
         element: <QuanLygiangvien />,
+      },
+      {
+        path: ROUTERS.GIAOVU.DOTLAMDOAN.PATH,
+        element: <QuanLyDotLamDoAn />,
       },
     ],
   },

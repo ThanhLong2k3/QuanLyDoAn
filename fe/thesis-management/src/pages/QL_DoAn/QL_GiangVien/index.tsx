@@ -108,7 +108,7 @@ export default function QuanLygiangvien() {
            </Title>
           <hr />
           <Row gutter={16} className="mb-6">
-            <Col xs={24} sm={24} md={16} lg={18} xl={18}>
+            <Col xs={22} sm={22} md={14} lg={16} xl={16}>
               <Input
                 placeholder="Tìm kiếm theo tên lớp hoặc chuyên ngành"
                 value={timKiem}

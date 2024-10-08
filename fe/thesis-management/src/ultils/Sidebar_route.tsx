@@ -41,9 +41,10 @@ import {
       SUPERVISORS: { KEY: '2', ICON: <UserOutlined />, LINK:ROUTERS.GIAOVU.GIANGVIEN.PATH , TEXT: "Quản lý giảng viên" },
       STUDENTS: { KEY: '3', ICON: <UserOutlined />, LINK: ROUTERS.GIAOVU.STUDENTS.PATH, TEXT: "Quản lý sinh viên" },
       COUNCIL: { KEY: '4', ICON: <BookOutlined />, LINK: ROUTERS.GIAOVU.SUPERVISORS.PATH, TEXT: "Quản lý hội đồng" },
-      PROJECTWORK: { KEY: '5', ICON: <ProjectOutlined />, LINK: ROUTERS.GIAOVU.PROJECTWORK.PATH, TEXT: 'Đợt làm đồ án tốt nghiệp' },
       USER: { KEY: '6', ICON: <TeamOutlined />, LINK: ROUTERS.GIAOVU.USER.PATH, TEXT: "Quản lý người dùng" },
       PHANQUYEN: { KEY: '7', ICON: <TeamOutlined />, LINK: ROUTERS.GIAOVU.PHANQUYEN.PATH, TEXT: "Quản lý nhóm quyền" },
+      DƠLAMDOAN: { KEY: '8', ICON: <ProjectOutlined />, LINK: ROUTERS.GIAOVU.DOTLAMDOAN.PATH, TEXT: "Quản lý đợt làm đồ án" },
+
 
 
     },

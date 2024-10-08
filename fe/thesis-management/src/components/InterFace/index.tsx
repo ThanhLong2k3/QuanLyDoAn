@@ -45,7 +45,7 @@ export interface GiangVien extends DuLieuItem{
     email:string;
 }
 export interface SinhVien extends DuLieuItem{
-    key:number;
+ 
     maSinhVien:number;
     tenSinhVien:string;
     maLop:string;
@@ -69,6 +69,8 @@ export interface DotLamDoAn extends DuLieuItem{
     trangThai:boolean;
 }
 export interface HoiDong extends DuLieuItem{
+    key:number;
+    maHoDong?:string;
     tenHoiDong:string;
     maDot:string;
     thuocLop:string;

@@ -47,7 +47,6 @@ export function useQuanLyDuLieu<T extends DuLieuItem>({
   };
 
   const xuLyDongY = () => {
-    debugger;
     form.validateFields().then((giaTri) => {
       if (keyDangSua !== null) {
         setDuLieu((duLieuCu) =>

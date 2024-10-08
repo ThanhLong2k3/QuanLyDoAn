@@ -16,22 +16,22 @@ export const CotGiangVien: ColumnType[] = [
       key: 'tenBoMon',
     },
     {
-      title: 'Chức vụ quản lý',
+      title: 'Chức vụ',
       dataIndex: 'chucVu',
       key: 'chucVu',
     },
     {
-        title: 'Tên học vị',
+        title: 'Học vị',
         dataIndex: 'tenHocVi',
         key: 'tenHocVi',
     },
     {
-        title: 'Tên học hàm',
+        title: 'Học hàm',
         dataIndex: 'tenHocHam',
         key: 'tenHocHam',
     },
     {
-        title: 'Số điện thoại',
+        title: 'SDT',
         dataIndex: 'SDT',
         key: 'SDT',
     },

@@ -2,7 +2,7 @@ import { ColumnType } from '../types';
 import { Button, Space, Popconfirm, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined, UserAddOutlined, TeamOutlined, FileExcelOutlined } from '@ant-design/icons';
 
-export const DotLamDoAn: ColumnType[] = [
+export const ColumDotLamDoAn: ColumnType[] = [
   {
     title: 'Mã đợt',
     dataIndex: 'maDot',
@@ -30,7 +30,7 @@ export const DotLamDoAn: ColumnType[] = [
   },
 ];
 
-const taoCotBangnguoidung = (
+const taocotbangdotlamdoan = (
   danhSachCot: Array<ColumnType>, 
   hienThiModal: (banGhi: any) => void, 
   xuLyXoa: (key: number) => void
@@ -66,5 +66,5 @@ const taoCotBangnguoidung = (
   return cotCoBan;
 };
 
-export const columNhomQuyen = (hienThiModal: (banGhi: any) => void, xuLyXoa: (key: number) => void) =>
-  taoCotBangnguoidung(DotLamDoAn, hienThiModal, xuLyXoa);
+export const columDotLamDoAn = (hienThiModal: (banGhi: any) => void, xuLyXoa: (key: number) => void) =>
+  taocotbangdotlamdoan(ColumDotLamDoAn, hienThiModal, xuLyXoa);
