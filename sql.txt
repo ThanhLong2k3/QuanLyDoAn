@@ -1,0 +1,54 @@
+CREATE TABLE DotLamDoAn (
+    MaDot VARCHAR(50) PRIMARY KEY,
+    TenDot NVARCHAR(255),
+    NgayBatDau DATE,
+    NamApDung VARCHAR(4),
+    DangKyDeTai BIT,
+    ChoPhepSinhVienDangKyGiangVienKhacBoMon BIT,
+    ChoPhepSinhVienBaoCaoKhacTuanHienTai BIT,
+    ChoPhepGiangVienBaoCaoKhacTuanHienTai BIT,
+    ChoPhepGiangVienSuaDeTai BIT,
+    TrangThai BIT
+);
+CREATE TABLE HoiDong (
+    MaHoiDong VARCHAR(50) PRIMARY KEY,
+    TenHoiDong NVARCHAR(255),
+    MaDot VARCHAR(50),
+    ThuocLop NVARCHAR(100),
+    Phong NVARCHAR(50),
+    NgayDuKien DATE,
+    FOREIGN KEY (MaDot) REFERENCES DotLamDoAn(MaDot)
+);
+CREATE TABLE GiangVien (
+    MaGiangVien INT PRIMARY KEY,
+    TenGiangVien NVARCHAR(255),
+    TenBoMon NVARCHAR(255),
+    ChucVu NVARCHAR(100),
+    TenHocVi NVARCHAR(100),
+    TenHocHam NVARCHAR(100),
+    SDT VARCHAR(15),
+    Email NVARCHAR(255)
+);
+CREATE TABLE SinhVien (
+    MaSinhVien INT PRIMARY KEY,
+    TenSinhVien NVARCHAR(255),
+    MaLop NVARCHAR(50),
+    NgaySinh DATE,
+    GioiTinh NVARCHAR(10),
+    SDT VARCHAR(15),
+    Email NVARCHAR(255)
+);
+CREATE TABLE HoiDong_GiangVien (
+    MaHoiDong VARCHAR(50),
+    MaGiangVien INT,
+    PRIMARY KEY (MaHoiDong, MaGiangVien),
+    FOREIGN KEY (MaHoiDong) REFERENCES HoiDong(MaHoiDong),
+    FOREIGN KEY (MaGiangVien) REFERENCES GiangVien(MaGiangVien)
+);
+CREATE TABLE HoiDong_SinhVien (
+    MaHoiDong VARCHAR(50),
+    MaSinhVien INT,
+    PRIMARY KEY (MaHoiDong, MaSinhVien),
+    FOREIGN KEY (MaHoiDong) REFERENCES HoiDong(MaHoiDong),
+    FOREIGN KEY (MaSinhVien) REFERENCES SinhVien(MaSinhVien)
+);

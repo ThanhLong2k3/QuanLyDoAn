@@ -1,0 +1,6 @@
+@Back_end_QLDoAn_HostAddress = http://localhost:5043
+
+GET {{Back_end_QLDoAn_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
