@@ -29,7 +29,6 @@ export const add=async (giatri:NguoiDung, callBack:()=> void)=>{
 export const edit=async (giatri:NguoiDung, callBack:()=> void)=>{
     try{
         await axios.post(URL.QLHETHONG.QLNGUOIDUNG.UPDATE,giatri);
-        message.success("Cập nhật dữ liệu thành công !");
         callBack();
     }
     catch(error){

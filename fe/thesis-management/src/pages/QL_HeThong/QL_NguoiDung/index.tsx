@@ -44,13 +44,13 @@ const QuanLyNguoiDung: React.FC = () => {
   };
 
   useEffect(() => {
-    // const ketQuaLoc = nguoiDung.filter(
-    //   (nguoi) =>
-    //     (nguoi.ten.toLowerCase().includes(timKiem.toLowerCase()) ||
-    //       nguoi.tk.toLowerCase().includes(timKiem.toLowerCase())) &&
-    //     (trangThai === null || nguoi.trangThai === trangThai)
-    // );
-    // setDuLieuLoc(ketQuaLoc);
+    const ketQuaLoc = nguoiDung.filter(
+      (nguoi) =>
+        (nguoi.hoTen.toLowerCase().includes(timKiem.toLowerCase()) ||
+          nguoi.trangThai.toLowerCase().includes(timKiem.toLowerCase())) &&
+        (trangThai === null || nguoi.trangThai === trangThai)
+    );
+    setDuLieuLoc(ketQuaLoc);
   }, [nguoiDung, timKiem, trangThai]);
 
   const xuLyDongY =async () => {
@@ -58,6 +58,8 @@ const QuanLyNguoiDung: React.FC = () => {
 
       if (keyDangSua !== null) {
           await edit(giatri,getllNguoiDung);
+       message.success(`Tài khoản ${giatri.taiKhoan} đã được sửa thành công!`);
+
       } else {
         await add(giatri,getllNguoiDung);
       }
@@ -67,17 +69,17 @@ const QuanLyNguoiDung: React.FC = () => {
     
   };
 
-  const xuLyXoa = (taiKhoan: string) => {
-    setNguoiDung((duLieuCu) => duLieuCu.filter((item) => item.taiKhoan !== taiKhoan));
-    message.success("Dữ liệu đã được xóa thành công!");
-  };
+  const xuLykichhoat =async () => {
+    let a=cacDongDaChon.length;
+    for (const taiKhoan of cacDongDaChon) {
+      const banGhi = nguoiDung.find(user => user.taiKhoan === taiKhoan);
+      if (banGhi) {
+        const newStatus =  "Đã Xét Duyệt";
+        await edit({ ...banGhi, trangThai: newStatus }, getllNguoiDung);
+      }
+    }
+    message.success(`${a} tài khoản đã được  "Xét Duyệt" !`);
 
-  const xuLyXoaNhieu = () => {
-    setNguoiDung((duLieuCu) =>
-      duLieuCu.filter((item) => !cacDongDaChon.includes(item.taiKhoan))
-    );
-    setCacDongDaChon([]);
-    message.success(`${cacDongDaChon.length} mục đã được xóa thành công!`);
   };
 
   const chonDong = (cacKeyChon: React.Key[]) => {
@@ -85,14 +87,14 @@ const QuanLyNguoiDung: React.FC = () => {
   };
 
   const kichHoat = async(banGhi: NguoiDung) => {
-    if(banGhi.trangThai==="Hủy kích hoạt")
+    if(banGhi.trangThai==="Chưa Xét Duyệt")
     {
-      let giatri={...banGhi,trangThai:"Kích hoạt"};
+      let giatri={...banGhi,trangThai:"Đã Xét Duyệt"};
       await edit(giatri,getllNguoiDung);
        message.success(`Tài khoản ${banGhi.taiKhoan} đã được kích hoạt thành công!`);
     }
     else{
-      let giatri={...banGhi,trangThai:"Hủy kích hoạt"};
+      let giatri={...banGhi,trangThai:"Chưa Xét Duyệt"};
       await edit(giatri,getllNguoiDung);
       message.success(`Tài khoản ${banGhi.taiKhoan} đã được hủy kích hoạt!`);
     }
@@ -149,13 +151,13 @@ const QuanLyNguoiDung: React.FC = () => {
               <Space>
                 {cacDongDaChon.length > 0 && (
                   <Popconfirm
-                    title={`Bạn có chắc chắn muốn xóa ${cacDongDaChon.length} người dùng đã chọn?`}
-                    onConfirm={xuLyXoaNhieu}
+                    title={`Bạn có chắc chắn muốn kích hoạt ${cacDongDaChon.length} người dùng đã chọn?`}
+                    onConfirm={xuLykichhoat}
                     okText="Đồng ý"
                     cancelText="Hủy"
                   >
                     <Button type="primary" danger icon={<DeleteOutlined />}>
-                      Xóa {cacDongDaChon.length} mục
+                      Kích Hoạt {cacDongDaChon.length} mục
                     </Button>
                   </Popconfirm>
                 )}
@@ -174,8 +176,8 @@ const QuanLyNguoiDung: React.FC = () => {
           <Table
             rowSelection={luaChonDong}
             columns={cotBang}
-            dataSource={nguoiDung}
-            rowKey="key"
+            dataSource={duLieuLoc}
+            rowKey="taiKhoan"
             scroll={{ x: 768 }}
             className="shadow-sm rounded-md overflow-hidden"
             pagination={{
