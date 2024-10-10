@@ -7,11 +7,10 @@ export interface HocVi extends DuLieuItem {
     soLuongHuongDan: number;
   }
   
-export interface NguoiDung extends DuLieuItem {
-    key:number;
-    tk:string;
-    mk:string;
-    ten:string;
+export interface NguoiDung  {
+    taiKhoan:string;
+    matKhau:string;
+    hoTen:string;
     ngaySinh:Date;
     gioiTinh: string;
     email:string;

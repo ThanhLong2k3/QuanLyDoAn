@@ -1,20 +1,20 @@
 import React from 'react';
 import { Form, Input, DatePicker, Radio, FormInstance } from 'antd';
 interface ReusableFormProps {
-  formdulieu: FormInstance<any> | undefined;
+  form : FormInstance<any> | undefined;
 }
 
-export const FormNguoiDung: React.FC<ReusableFormProps> = ({ formdulieu }) => (
-  <Form form={formdulieu} layout="vertical">
+export const FormNguoiDung: React.FC<ReusableFormProps> = ({ form  }) => (
+  <Form form={form } layout="vertical">
     <Form.Item
-      name="tk"
+      name="taiKhoan"
       label="Tài khoản"
       rules={[{ required: true, message: 'Vui lòng nhập tài khoản!' }]}
     >
       <Input />
     </Form.Item>
     <Form.Item
-      name="ten"
+      name="hoTen"
       label="Tên người dùng"
       rules={[{ required: true, message: 'Vui lòng nhập tên người dùng!' }]}
     >
@@ -25,7 +25,9 @@ export const FormNguoiDung: React.FC<ReusableFormProps> = ({ formdulieu }) => (
       label="Ngày sinh"
       rules={[{ required: true, message: 'Vui lòng chọn ngày sinh!' }]}
     >
-      <DatePicker style={{ width: '100%' }} />
+      <DatePicker style={{ width: '100%' }}
+         format="YYYY-MM-DD"
+      />
     </Form.Item>
     <Form.Item
       name="gioiTinh"

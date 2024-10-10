@@ -1,16 +1,16 @@
 import {ColumnType} from '../../QLDanhMucComponent/types';
 import { Button, Space, Popconfirm,Tooltip } from 'antd';
-import { EditOutlined, DeleteOutlined,EyeOutlined,UnlockOutlined  } from '@ant-design/icons';
+import { EditOutlined, UnlockOutlined,EyeOutlined,CheckOutlined  } from '@ant-design/icons';
 export const ColumLop: ColumnType[] = [
     {
       title: 'Tài Khoản',
-      dataIndex: 'tk',
-      key: 'tk',
+      dataIndex: 'taiKhoan',
+      key: 'taiKhoan',
     },
     {
       title: 'Họ Tên',
-      dataIndex: 'ten',
-      key: 'ten',
+      dataIndex: 'hoTen',
+      key: 'hoTen',
     },
     {
       title: 'Mô Tả',
@@ -26,7 +26,8 @@ export const ColumLop: ColumnType[] = [
   const taoCotBangnguoidung = (
     danhSachCot: Array<ColumnType>, 
     hienThiModal: (banGhi: any) => void, 
-    xuLyXoa: (key: number) => void
+    kichHoat: (banGhi: any) => void, 
+    khoiPhucMatKhau: (banGhi: any) => void
   ) => {
     const cotCoBan = [...danhSachCot];
   
@@ -39,14 +40,14 @@ export const ColumLop: ColumnType[] = [
             <Button type="primary" icon={<EyeOutlined />} />
           </Tooltip>
           <Tooltip title="Khôi phục mật khẩu">
-            <Button type="primary" icon={<UnlockOutlined  />} />
+            <Button type="primary" icon={<UnlockOutlined  />} onClick={()=>khoiPhucMatKhau(banGhi)}/>
           </Tooltip>
           <Tooltip title="Chỉnh sửa">
             <Button type="primary" icon={<EditOutlined />} onClick={() => hienThiModal(banGhi)}/>
           </Tooltip>
-          <Tooltip title="Xóa">
-            <Popconfirm title="Bạn có chắc chắn muốn xóa?" onConfirm={() => xuLyXoa(banGhi.key)}>
-              <Button type="primary" danger icon={<DeleteOutlined />}/>
+          <Tooltip title={banGhi.trangThai === "Đã kích hoạt" ? "Hủy kích hoạt" : "Kích hoạt"}>
+            <Popconfirm title={banGhi.trangThai ==="Đã kích hoạt" ? "Bạn có chắc chắn muốn hủy kích hoạt tài khoản?" : "Bạn có chắc chắn muốn kích hoạt tài khoản?" }  onConfirm={() => kichHoat(banGhi)}>
+              <Button type="primary" danger icon={<CheckOutlined />}/>
             </Popconfirm>
           </Tooltip>
         </Space>
@@ -55,5 +56,5 @@ export const ColumLop: ColumnType[] = [
   
     return cotCoBan;
   };
-  export const CoLumNguoiDung = (hienThiModal: (banGhi: any) => void, xuLyXoa: (key: number) => void) =>
-    taoCotBangnguoidung(ColumLop, hienThiModal, xuLyXoa);
+  export const CoLumNguoiDung = (hienThiModal: (banGhi: any) => void, kichHoat: (banGhi: any) => void,khoiPhucMatKhau: (banGhi: any) => void) =>
+    taoCotBangnguoidung(ColumLop, hienThiModal, kichHoat,khoiPhucMatKhau);

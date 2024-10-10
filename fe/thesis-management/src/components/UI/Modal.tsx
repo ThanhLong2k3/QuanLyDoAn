@@ -7,7 +7,7 @@ interface ReusableModalProps {
   visible: boolean;
   onOk: () => void;
   onCancel: () => void;
-  keyDangSua: number | null;
+  keyDangSua: string |number| null;
   children: React.ReactNode;
   add_Titel: string;
   update_Titel: string;

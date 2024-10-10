@@ -1,78 +1,110 @@
 import React, { useEffect, useState } from "react";
-import { Card, Table, Button, Popconfirm, Row, Col, Input, Select, Space, Typography, Divider } from "antd";
+import { Card, Table, Button, Popconfirm, Row, Col, Input, Select, Space, Typography, Divider, Form, message } from "antd";
 import { NguoiDung } from "../../../components/InterFace";
 import ReusableModal from "../../../components/UI/Modal";
 import { FormNguoiDung } from "../../../components/QLHeThongComponent/QL_NguoiDung/QL_NguoiDungForm";
 import { CoLumNguoiDung } from "../../../components/QLHeThongComponent/QL_NguoiDung/TableNguoiDung";
-
 import { DeleteOutlined, SearchOutlined, UserAddOutlined, FilterOutlined } from "@ant-design/icons";
-import { useQuanLyDuLieu } from '../../../ultils/hook';
-
+import { getall,add,edit } from "../../../sevices/Api/nguoiDung-servives";
+import moment from 'moment';
 const { Option } = Select;
 const { Title } = Typography;
 
-const nguoiDungBanDau: NguoiDung[] = [
-  {
-    key: 1,
-    tk: '10621306',
-    mk:'123456',
-    ten: 'Phạm Thanh Long',
-    ngaySinh: new Date(2003, 3, 30),
-    gioiTinh: 'Nam',
-    email: 'jaykergg@gmail.com',
-    moTa: 'Sinh Viên',
-    trangThai: "Đã Xét Duyệt"
-  },
-  {
-    key: 2,
-    tk: '10621307',
-    mk:'123456',
-    ten: 'Nguyễn Thanh Huy',
-    ngaySinh: new Date(2002, 11, 15),
-    gioiTinh: 'Nam',
-    email: 'phong.nguyen@gmail.com',
-    moTa: 'Sinh Viên',
-    trangThai: "Đã Xét Duyệt"
-  },
-];
 
 const QuanLyNguoiDung: React.FC = () => {
-  const {
-    duLieu: nguoiDung,
-    hienModal,
-    setHienModal,
-    form,
-    keyDangSua,
-    cacDongDaChon,
-    hienThiModal,
-    xuLyDongY,
-    xuLyXoa,
-    xuLyXoaNhieu,
-    chonDong,
-  } = useQuanLyDuLieu<NguoiDung>({
-    duLieuBanDau: nguoiDungBanDau,
-    khoaLuuTru: 'utehy_nguoidung',
-  });
-
+  const [nguoiDung, setNguoiDung] = useState<NguoiDung[]>([]);
+  const [hienModal, setHienModal] = useState<boolean>(false);
+  const [formdulieu] = Form.useForm();
+  const [keyDangSua, setKeyDangSua] = useState<string | null>(null);
+  const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [timKiem, setTimKiem] = useState("");
   const [trangThai, setTrangThai] = useState<string | null>(null);
-  const [duLieuLoc, setDuLieuLoc] = useState(nguoiDung);
+  const [duLieuLoc, setDuLieuLoc] = useState<NguoiDung[]>([]);
 
   useEffect(() => {
-    document.title = 'Quản lý người dùng';
+    document.title = "Quản lý người dùng";
+    getllNguoiDung();
   }, []);
 
+  const getllNguoiDung = async () => {
+      let data = await getall();
+      setNguoiDung(data);
+  };
+
+  const hienThiModal = (banGhi?: NguoiDung) => {
+    formdulieu.resetFields();
+    if (banGhi) {
+        const ngaySinhValue = banGhi.ngaySinh ? moment(banGhi.ngaySinh) : null;
+        formdulieu.setFieldsValue({ ...banGhi, ngaySinh: ngaySinhValue });
+        setKeyDangSua(banGhi.taiKhoan);
+    } else {
+        setKeyDangSua(null);
+    }
+    setHienModal(true);
+  };
+
   useEffect(() => {
-    const ketQuaLoc = nguoiDung.filter(
-      (nguoi) =>
-        (nguoi.ten.toLowerCase().includes(timKiem.toLowerCase()) ||
-         nguoi.tk.toLowerCase().includes(timKiem.toLowerCase())) &&
-        (trangThai === null || nguoi.trangThai === trangThai)
-    );
-    setDuLieuLoc(ketQuaLoc);
+    // const ketQuaLoc = nguoiDung.filter(
+    //   (nguoi) =>
+    //     (nguoi.ten.toLowerCase().includes(timKiem.toLowerCase()) ||
+    //       nguoi.tk.toLowerCase().includes(timKiem.toLowerCase())) &&
+    //     (trangThai === null || nguoi.trangThai === trangThai)
+    // );
+    // setDuLieuLoc(ketQuaLoc);
   }, [nguoiDung, timKiem, trangThai]);
 
-  const cotBang = CoLumNguoiDung( hienThiModal, xuLyXoa);
+  const xuLyDongY =async () => {
+     const giatri= await formdulieu.validateFields();
+
+      if (keyDangSua !== null) {
+          await edit(giatri,getllNguoiDung);
+      } else {
+        await add(giatri,getllNguoiDung);
+      }
+      setHienModal(false);
+      formdulieu.resetFields();
+      setKeyDangSua(null);
+    
+  };
+
+  const xuLyXoa = (taiKhoan: string) => {
+    setNguoiDung((duLieuCu) => duLieuCu.filter((item) => item.taiKhoan !== taiKhoan));
+    message.success("Dữ liệu đã được xóa thành công!");
+  };
+
+  const xuLyXoaNhieu = () => {
+    setNguoiDung((duLieuCu) =>
+      duLieuCu.filter((item) => !cacDongDaChon.includes(item.taiKhoan))
+    );
+    setCacDongDaChon([]);
+    message.success(`${cacDongDaChon.length} mục đã được xóa thành công!`);
+  };
+
+  const chonDong = (cacKeyChon: React.Key[]) => {
+    setCacDongDaChon(cacKeyChon);
+  };
+
+  const kichHoat = async(banGhi: NguoiDung) => {
+    if(banGhi.trangThai==="Hủy kích hoạt")
+    {
+      let giatri={...banGhi,trangThai:"Kích hoạt"};
+      await edit(giatri,getllNguoiDung);
+       message.success(`Tài khoản ${banGhi.taiKhoan} đã được kích hoạt thành công!`);
+    }
+    else{
+      let giatri={...banGhi,trangThai:"Hủy kích hoạt"};
+      await edit(giatri,getllNguoiDung);
+      message.success(`Tài khoản ${banGhi.taiKhoan} đã được hủy kích hoạt!`);
+    }
+    
+  };
+  const khoiPhucMatKhau = async(banGhi: NguoiDung) => {
+    const mk="123456";
+    let giatri={...banGhi,matKhau:mk};
+    await edit(giatri,getllNguoiDung);
+    message.success(`Mật khẩu của tài khoản ${banGhi.taiKhoan} đã được khôi phục thành công!`);
+  };
+  const cotBang = CoLumNguoiDung(hienThiModal, kichHoat,khoiPhucMatKhau);
 
   const luaChonDong = {
     selectedRowKeys: cacDongDaChon,
@@ -81,12 +113,16 @@ const QuanLyNguoiDung: React.FC = () => {
 
   return (
     <>
-      <Card className="  overflow-hidden">
+      <Card className="overflow-hidden">
         <div className="p-6">
-        <Title level={2} className="text-center custom-blue mb-8" style={{color: '#1e88e5', fontSize: '25px', fontWeight: 'bold'}}>
+          <Title
+            level={2}
+            className="text-center custom-blue mb-8"
+            style={{ color: "#1e88e5", fontSize: "25px", fontWeight: "bold" }}
+          >
             QUẢN LÝ NGƯỜI DÙNG
-        </Title>
-        <hr></hr>
+          </Title>
+          <hr />
           <Row gutter={16} className="mb-6">
             <Col xs={24} sm={24} md={12} lg={8} xl={8}>
               <Input
@@ -104,7 +140,6 @@ const QuanLyNguoiDung: React.FC = () => {
                 allowClear
                 onChange={(value) => setTrangThai(value)}
                 suffixIcon={<FilterOutlined className="text-gray-400" />}
-
               >
                 <Option value="Đã Xét Duyệt">Đã Xét Duyệt</Option>
                 <Option value="Chưa Xét Duyệt">Chưa Xét Duyệt</Option>
@@ -124,9 +159,9 @@ const QuanLyNguoiDung: React.FC = () => {
                     </Button>
                   </Popconfirm>
                 )}
-                <Button 
-                  type="primary" 
-                  icon={<UserAddOutlined />} 
+                <Button
+                  type="primary"
+                  icon={<UserAddOutlined />}
                   onClick={() => hienThiModal()}
                   className="bg-green-500 hover:bg-green-600 border-green-500 hover:border-green-600"
                 >
@@ -139,7 +174,7 @@ const QuanLyNguoiDung: React.FC = () => {
           <Table
             rowSelection={luaChonDong}
             columns={cotBang}
-            dataSource={duLieuLoc}
+            dataSource={nguoiDung}
             rowKey="key"
             scroll={{ x: 768 }}
             className="shadow-sm rounded-md overflow-hidden"
@@ -157,12 +192,12 @@ const QuanLyNguoiDung: React.FC = () => {
         onOk={xuLyDongY}
         onCancel={() => setHienModal(false)}
         keyDangSua={keyDangSua}
-        add_Titel="Thêm Người Dùng"
-        update_Titel="Chỉnh Sửa Người Dùng"
+        add_Titel="Thêm mới người dùng"
+        update_Titel="Chỉnh sửa người dùng"
       >
-        <FormNguoiDung formdulieu={form} />
+        <FormNguoiDung form={formdulieu} />
       </ReusableModal>
-      </>
+    </>
   );
 };
 
