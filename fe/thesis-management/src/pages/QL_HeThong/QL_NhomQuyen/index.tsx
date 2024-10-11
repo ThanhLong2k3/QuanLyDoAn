@@ -1,77 +1,126 @@
 import React, { useEffect, useState } from "react";
-import { Card, Table, Button, Popconfirm, Row, Col, Input, Select, Space, Typography, Divider } from "antd";
-import { NhomQuyen } from "../../../components/InterFace";
+import { Card, Table, Button, Popconfirm, Row, Col, Input, Select, Space, Typography, Divider,Form ,message,Modal,List} from "antd";
+import { NhomQuyen,NguoiDung } from "../../../components/InterFace";
 import ReusableModal from "../../../components/UI/Modal";
 import { FormNhomQuyen } from "../../../components/QLHeThongComponent/QLNhomQuyen/form";
 import { columNhomQuyen } from "../../../components/QLHeThongComponent/QLNhomQuyen/table";
 import { DeleteOutlined, SearchOutlined, UserAddOutlined, FilterOutlined } from "@ant-design/icons";
-import { useQuanLyDuLieu } from '../../../ultils/hook';
+import { getall,add,edit,Delete } from "../../../sevices/Api/nguoiDung-servives";
+import {URL} from "../../../sevices/Url"
 
 const { Option } = Select;
 const { Title } = Typography;
 
-const nhomQuyenBanDau: NhomQuyen[] = [
-    {
-      key: 1,
-      maNhomQuyen: 'Q01',
-      tenNhomQuyen: 'Quản trị hệ thống',
-      loai: 'Quản trị',
-      moTa: 'Quyền quản trị toàn bộ hệ thống',
-      soLuong: 5
-    },
-    {
-      key: 2,
-      maNhomQuyen: 'Q02',
-      tenNhomQuyen: 'Người dùng thông thường',
-      loai: 'Người dùng',
-      moTa: 'Quyền sử dụng các tính năng cơ bản của hệ thống',
-      soLuong: 50
-    }
-  ];
+
   
 const QuanLyNhomQuuyen: React.FC = () => {
-  const {
-    duLieu: nhomQuyen,
-    hienModal,
-    setHienModal,
-    form,
-    keyDangSua,
-    cacDongDaChon,
-    hienThiModal,
-    xuLyDongY,
-    xuLyXoa,
-    xuLyXoaNhieu,
-    chonDong,
-  } = useQuanLyDuLieu<NhomQuyen>({
-    duLieuBanDau: nhomQuyenBanDau,
-    khoaLuuTru: 'utehy_nhomquyen',
-  });
-
+  const [nguoiDung,setNguoiDung]=useState<NguoiDung[]>([]);
+  const [nhomQuyen, setNhomQuyen] = useState<NhomQuyen[]>([]);
   const [timKiem, setTimKiem] = useState("");
+  const [hienModal, setHienModal] = useState(false);
+  const [hienmodalnguoidung, setHienModalNguoiDung] = useState(false);
+
+  const [form] = Form.useForm();
+  const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [trangThai, setTrangThai] = useState<string | null>(null);
+  const [keyDangSua, setKeyDangSua] = useState<string | null>(null);
   const [duLieuLoc, setDuLieuLoc] = useState(nhomQuyen);
+  const [selectedUsers, setSelectedUsers] = useState<NguoiDung[]>([]);
 
   useEffect(() => {
     document.title = 'Quản lý nhóm quyền';
+    getAllNhomQuyen();
   }, []);
 
+  const getAllNhomQuyen = async()=>{
+    try {
+      const res = await getall(URL.QLHETHONG.QLNHOMQUYEN.GETALL);
+      setNhomQuyen(res);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
-    const ketQuaLoc = nhomQuyen.filter(
-      (quyen) =>
-        (quyen.tenNhomQuyen.toLowerCase().includes(timKiem.toLowerCase()) ||
-      quyen.maNhomQuyen.toLowerCase().includes(timKiem.toLowerCase())) &&
-        (trangThai === null || quyen.trangThai === trangThai)
-    );
-    setDuLieuLoc(ketQuaLoc);
+    // const ketQuaLoc = nhomQuyen.filter(
+    //   (quyen) =>
+    //     (quyen.tenNhomQuyen.toLowerCase().includes(timKiem.toLowerCase()) ||
+    //   quyen.maNhomQuyen.toLowerCase().includes(timKiem.toLowerCase())) &&
+    //     (trangThai === null || quyen.trangThai === trangThai)
+    // );
+    // setDuLieuLoc(ketQuaLoc);
   }, [nhomQuyen, timKiem, trangThai]);
 
-  const cotBang = columNhomQuyen( hienThiModal, xuLyXoa);
+  const themNguoiDung=()=>{
+    console.log("Người dùng đã chọn:", selectedUsers);
+    setHienModalNguoiDung(false);
+  }
+  const capNhapNguoiDung = () => {
+    debugger;
+  };
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      if (hienmodalnguoidung) {
+        try {
+          const data = await getall(URL.QLHETHONG.QLNGUOIDUNG.GETALL);
+          setNguoiDung(data);
+        } catch (error) {
+          console.error('Error fetching users:', error);
+        }
+      }
+    };
+    fetchUsers();
+  }, [hienmodalnguoidung]); 
+
+  const hienThiModal = (banGhi?: NhomQuyen) => {
+    form.resetFields();
+    if (banGhi) {
+      form.setFieldsValue(banGhi);
+      setKeyDangSua(banGhi.maNhomQuyen);
+    } else {
+      setKeyDangSua(null);
+    }
+    setHienModal(true);
+  };
+  const xuLyXoa = async (maNhomQuyen: string) => {
+    debugger;
+        await Delete(URL.QLHETHONG.QLNHOMQUYEN.DELETE(maNhomQuyen),getAllNhomQuyen);
+        message.success(`xóa thành công!`);
+  }
+  const xuLyXoaNhieu =()=>{
+
+  }
+  const xuLyDongY =async () => {
+    const giatri= await form.validateFields();
+     if (keyDangSua !== null) {
+         await edit(URL.QLHETHONG.QLNHOMQUYEN.UPDATE,giatri,getAllNhomQuyen);
+         message.success(` sửa thành công!`);
+
+     } else {
+       await add(URL.QLHETHONG.QLNHOMQUYEN.ADD,giatri,getAllNhomQuyen);
+     }
+     setHienModal(false);
+     form.resetFields();
+     setKeyDangSua(null);
+   
+ };
+  const cotBang = columNhomQuyen( hienThiModal, xuLyXoa,capNhapNguoiDung);
+  const chonDong = (cacKeyChon: React.Key[]) => {
+    setCacDongDaChon(cacKeyChon);
+  };
 
   const luaChonDong = {
     selectedRowKeys: cacDongDaChon,
     onChange: chonDong,
   };
+  const handleAddUser = (user: typeof nguoiDung[0]) => {
+    setSelectedUsers(prev => [...prev, user]);
+  };
 
+  const handleRemoveUser = (userId: string) => {
+    setSelectedUsers(prev => prev.filter(user => user.taiKhoan !== userId));
+  };
   return (
     <>
       <Card className="  overflow-hidden">
@@ -132,8 +181,8 @@ const QuanLyNhomQuuyen: React.FC = () => {
           <Table
             rowSelection={luaChonDong}
             columns={cotBang}
-            dataSource={duLieuLoc}
-            rowKey="key"
+            dataSource={nhomQuyen}
+            rowKey="maNhomQuyen"
             scroll={{ x: 768 }}
             className="shadow-sm rounded-md overflow-hidden"
             pagination={{
@@ -145,6 +194,57 @@ const QuanLyNhomQuuyen: React.FC = () => {
           />
         </div>
       </Card>
+      <Modal
+        title="Thêm người dùng vào nhóm quyền"
+        open={hienmodalnguoidung}
+        onOk={themNguoiDung}
+        onCancel={() => setHienModal(false)}
+        width={800}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Card title="Danh sách người dùng" style={{ width: '48%' }}>
+            <List
+              dataSource={nguoiDung}
+              renderItem={user => (
+                <List.Item
+                  key={user.taiKhoan}
+                  actions={[
+                    <Button
+                      type="link"
+                      onClick={() => handleAddUser(user)}
+                      disabled={selectedUsers.some(u => u.taiKhoan === user.taiKhoan)}
+                    >
+                      Thêm
+                    </Button>
+                  ]}
+                >
+                  {user.hoTen}
+                </List.Item>
+              )}
+            />
+          </Card>
+          <Card title="Người dùng đã chọn" style={{ width: '48%' }}>
+            <List
+              dataSource={selectedUsers}
+              renderItem={user => (
+                <List.Item
+                  key={user.taiKhoan}
+                  actions={[
+                    <Button
+                      type="link"
+                      danger
+                      icon={<DeleteOutlined />}
+                      onClick={() => handleRemoveUser(user.taiKhoan)}
+                    />
+                  ]}
+                >
+                  {user.hoTen}
+                </List.Item>
+              )}
+            />
+          </Card>
+        </div>
+      </Modal>
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}

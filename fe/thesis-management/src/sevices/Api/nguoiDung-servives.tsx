@@ -1,9 +1,7 @@
 import axios from "axios";
-import {URL} from "../../sevices/Url"
-import { NguoiDung } from "../../components/InterFace";
 import { message } from "antd";
-export const getall=async()=>{
-    let data=await axios.get(URL.QLHETHONG.QLNGUOIDUNG.GETALL);
+export const getall=async(url:string)=>{
+    let data=await axios.get(url);
     if(data)
     {
         return data.data;
@@ -13,9 +11,9 @@ export const getall=async()=>{
     }
 }
 
-export const add=async (giatri:NguoiDung, callBack:()=> void)=>{
+export const add=async (url:string,giatri:{}, callBack:()=> void)=>{
    try{
-        await axios.post(URL.QLHETHONG.QLNGUOIDUNG.ADD,giatri);
+        await axios.post(url,giatri);
         message.success("Thêm dữ liệu thành công !");
         callBack();
    }
@@ -26,9 +24,20 @@ export const add=async (giatri:NguoiDung, callBack:()=> void)=>{
    
 }
 
-export const edit=async (giatri:NguoiDung, callBack:()=> void)=>{
+export const edit=async (url:string,giatri:{}, callBack:()=> void)=>{
     try{
-        await axios.post(URL.QLHETHONG.QLNGUOIDUNG.UPDATE,giatri);
+        await axios.post(url,giatri);
+        callBack();
+    }
+    catch(error){
+        message.error("Cập nhật dữ liệu thất bại !");
+        throw error;
+    }
+}
+
+export const Delete=async (url:string, callBack:()=> void)=>{
+    try{
+        await axios.delete(url);
         callBack();
     }
     catch(error){

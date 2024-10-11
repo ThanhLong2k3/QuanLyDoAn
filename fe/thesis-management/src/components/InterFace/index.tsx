@@ -17,8 +17,7 @@ export interface NguoiDung {
     moTa:string;
     trangThai:string,
 }
-export interface NhomQuyen extends DuLieuItem{
-    key:number;
+export interface NhomQuyen {
     maNhomQuyen:string;
     tenNhomQuyen:string;
     loai:string;

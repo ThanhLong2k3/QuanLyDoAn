@@ -45,8 +45,8 @@ export const ColumLop: ColumnType[] = [
           <Tooltip title="Chỉnh sửa">
             <Button type="primary" icon={<EditOutlined />} onClick={() => hienThiModal(banGhi)}/>
           </Tooltip>
-          <Tooltip title={banGhi.trangThai === "Đã Xét Duyệt" ? "Hủy kích hoạt" : "Kích hoạt"}>
-            <Popconfirm title={banGhi.trangThai ==="Đã Xét Duyệt" ? "Bạn có chắc chắn muốn hủy kích hoạt tài khoản?" : "Bạn có chắc chắn muốn kích hoạt tài khoản?" }  onConfirm={() => kichHoat(banGhi)}>
+          <Tooltip title={banGhi.trangThai === "Đã xét duyệt" ? "Hủy kích hoạt" : "Kích hoạt"}>
+            <Popconfirm title={banGhi.trangThai ==="Đã xét duyệt" ? "Bạn có chắc chắn muốn hủy kích hoạt tài khoản?" : "Bạn có chắc chắn muốn kích hoạt tài khoản?" }  onConfirm={() => kichHoat(banGhi)}>
               <Button type="primary" danger icon={<CheckOutlined />}/>
             </Popconfirm>
           </Tooltip>

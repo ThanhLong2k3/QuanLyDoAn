@@ -22,7 +22,7 @@ export const FormNhomQuyen: React.FC<ReusableFormProps> = ({ formdulieu }) => (
       <Input />
     </Form.Item>
     <Form.Item
-      name="Loai"
+      name="loai"
       label="Loại"
       rules={[{ required: true, message: 'Vui lòng chọn loại!' }]}
     >

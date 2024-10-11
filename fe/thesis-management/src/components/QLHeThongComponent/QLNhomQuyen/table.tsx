@@ -33,7 +33,8 @@ export const COLUMS: ColumnType[] = [
   const taoCotBangnguoidung = (
     danhSachCot: Array<ColumnType>, 
     hienThiModal: (banGhi: any) => void, 
-    xuLyXoa: (key: number) => void
+    xuLyXoa: (maNhomQuyen: string) => void,
+    capNhapNguoiDung:()=>void
   ) => {
     const cotCoBan = [...danhSachCot];
   
@@ -43,7 +44,7 @@ export const COLUMS: ColumnType[] = [
       render: (_: any, banGhi: any) => (
         <Space size="middle">
           <Tooltip title="Thêm người dùng">
-            <Button type="primary" icon={<UserAddOutlined />} />
+            <Button type="primary" icon={<UserAddOutlined />}  onClick={()=>capNhapNguoiDung}/>
           </Tooltip>
           <Tooltip title="Thành viên nhóm">
             <Button type="primary" icon={<TeamOutlined />} />
@@ -51,7 +52,7 @@ export const COLUMS: ColumnType[] = [
           <Tooltip title="Chỉnh sửa">
             <Button type="primary" icon={<EditOutlined />} onClick={() => hienThiModal(banGhi)}/>
           </Tooltip>
-          <Popconfirm title="Bạn có chắc chắn muốn xóa?" onConfirm={() => xuLyXoa(banGhi.key)}>
+          <Popconfirm title="Bạn có chắc chắn muốn xóa?" onConfirm={() => xuLyXoa(banGhi.maNhomQuyen)}>
             <Tooltip title="Xóa">
               <Button type="primary" danger icon={<DeleteOutlined />} />
             </Tooltip>
@@ -63,5 +64,5 @@ export const COLUMS: ColumnType[] = [
     return cotCoBan;
   
   };
-  export const columNhomQuyen = (hienThiModal: (banGhi: any) => void, xuLyXoa: (key: number) => void) =>
-    taoCotBangnguoidung(COLUMS, hienThiModal, xuLyXoa);
+  export const columNhomQuyen = (hienThiModal: (banGhi: any) => void, xuLyXoa: (maNhomQuyen: string) => void,capNhapNguoiDung:()=> void) =>
+    taoCotBangnguoidung(COLUMS, hienThiModal, xuLyXoa,capNhapNguoiDung);

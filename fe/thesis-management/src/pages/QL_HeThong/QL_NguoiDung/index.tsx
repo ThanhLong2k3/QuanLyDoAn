@@ -6,6 +6,8 @@ import { FormNguoiDung } from "../../../components/QLHeThongComponent/QL_NguoiDu
 import { CoLumNguoiDung } from "../../../components/QLHeThongComponent/QL_NguoiDung/TableNguoiDung";
 import { DeleteOutlined, SearchOutlined, UserAddOutlined, FilterOutlined } from "@ant-design/icons";
 import { getall,add,edit } from "../../../sevices/Api/nguoiDung-servives";
+import {URL} from "../../../sevices/Url"
+
 import moment from 'moment';
 const { Option } = Select;
 const { Title } = Typography;
@@ -27,7 +29,7 @@ const QuanLyNguoiDung: React.FC = () => {
   }, []);
 
   const getllNguoiDung = async () => {
-      let data = await getall();
+      let data = await getall(URL.QLHETHONG.QLNGUOIDUNG.GETALL);
       setNguoiDung(data);
   };
 
@@ -57,11 +59,11 @@ const QuanLyNguoiDung: React.FC = () => {
      const giatri= await formdulieu.validateFields();
 
       if (keyDangSua !== null) {
-          await edit(giatri,getllNguoiDung);
+          await edit(URL.QLHETHONG.QLNGUOIDUNG.UPDATE,giatri,getllNguoiDung);
        message.success(`Tài khoản ${giatri.taiKhoan} đã được sửa thành công!`);
 
       } else {
-        await add(giatri,getllNguoiDung);
+        await add(URL.QLHETHONG.QLNGUOIDUNG.ADD,giatri,getllNguoiDung);
       }
       setHienModal(false);
       formdulieu.resetFields();
@@ -74,28 +76,25 @@ const QuanLyNguoiDung: React.FC = () => {
     for (const taiKhoan of cacDongDaChon) {
       const banGhi = nguoiDung.find(user => user.taiKhoan === taiKhoan);
       if (banGhi) {
-        const newStatus =  "Đã Xét Duyệt";
-        await edit({ ...banGhi, trangThai: newStatus }, getllNguoiDung);
+        const newStatus =  "Đã xét duyệt";
+        await edit(URL.QLHETHONG.QLNGUOIDUNG.UPDATE,{ ...banGhi, trangThai: newStatus }, getllNguoiDung);
       }
     }
-    message.success(`${a} tài khoản đã được  "Xét Duyệt" !`);
+    message.success(`${a} tài khoản đã được  "xét duyệt" !`);
 
   };
 
-  const chonDong = (cacKeyChon: React.Key[]) => {
-    setCacDongDaChon(cacKeyChon);
-  };
-
+  
   const kichHoat = async(banGhi: NguoiDung) => {
-    if(banGhi.trangThai==="Chưa Xét Duyệt")
+    if(banGhi.trangThai==="Chưa xét duyệt")
     {
-      let giatri={...banGhi,trangThai:"Đã Xét Duyệt"};
-      await edit(giatri,getllNguoiDung);
+      let giatri={...banGhi,trangThai:"Đã xét duyệt"};
+      await edit(URL.QLHETHONG.QLNGUOIDUNG.UPDATE,giatri,getllNguoiDung);
        message.success(`Tài khoản ${banGhi.taiKhoan} đã được kích hoạt thành công!`);
     }
     else{
-      let giatri={...banGhi,trangThai:"Chưa Xét Duyệt"};
-      await edit(giatri,getllNguoiDung);
+      let giatri={...banGhi,trangThai:"Chưa xét duyệt"};
+      await edit(URL.QLHETHONG.QLNGUOIDUNG.UPDATE,giatri,getllNguoiDung);
       message.success(`Tài khoản ${banGhi.taiKhoan} đã được hủy kích hoạt!`);
     }
     
@@ -103,10 +102,13 @@ const QuanLyNguoiDung: React.FC = () => {
   const khoiPhucMatKhau = async(banGhi: NguoiDung) => {
     const mk="123456";
     let giatri={...banGhi,matKhau:mk};
-    await edit(giatri,getllNguoiDung);
+    await edit(URL.QLHETHONG.QLNGUOIDUNG.UPDATE,giatri,getllNguoiDung);
     message.success(`Mật khẩu của tài khoản ${banGhi.taiKhoan} đã được khôi phục thành công!`);
   };
   const cotBang = CoLumNguoiDung(hienThiModal, kichHoat,khoiPhucMatKhau);
+  const chonDong = (cacKeyChon: React.Key[]) => {
+    setCacDongDaChon(cacKeyChon);
+  };
 
   const luaChonDong = {
     selectedRowKeys: cacDongDaChon,
