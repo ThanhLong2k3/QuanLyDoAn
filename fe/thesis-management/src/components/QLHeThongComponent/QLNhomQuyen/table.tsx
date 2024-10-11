@@ -44,7 +44,7 @@ export const COLUMS: ColumnType[] = [
       render: (_: any, banGhi: any) => (
         <Space size="middle">
           <Tooltip title="Thêm người dùng">
-            <Button type="primary" icon={<UserAddOutlined />}  onClick={()=>capNhapNguoiDung}/>
+            <Button type="primary" icon={<UserAddOutlined />} onClick={()=>capNhapNguoiDung()}/>
           </Tooltip>
           <Tooltip title="Thành viên nhóm">
             <Button type="primary" icon={<TeamOutlined />} />

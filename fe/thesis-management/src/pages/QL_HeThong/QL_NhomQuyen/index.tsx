@@ -7,7 +7,7 @@ import { columNhomQuyen } from "../../../components/QLHeThongComponent/QLNhomQuy
 import { DeleteOutlined, SearchOutlined, UserAddOutlined, FilterOutlined } from "@ant-design/icons";
 import { getall,add,edit,Delete } from "../../../sevices/Api/nguoiDung-servives";
 import {URL} from "../../../sevices/Url"
-
+import ModalThemNguoiDung from "../../../components/QLHeThongComponent/QLNhomQuyen/modalADDNguoiDung"
 const { Option } = Select;
 const { Title } = Typography;
 
@@ -56,7 +56,7 @@ const QuanLyNhomQuuyen: React.FC = () => {
     setHienModalNguoiDung(false);
   }
   const capNhapNguoiDung = () => {
-    debugger;
+    setHienModalNguoiDung(true);
   };
 
   useEffect(() => {
@@ -194,57 +194,16 @@ const QuanLyNhomQuuyen: React.FC = () => {
           />
         </div>
       </Card>
-      <Modal
-        title="Thêm người dùng vào nhóm quyền"
-        open={hienmodalnguoidung}
-        onOk={themNguoiDung}
-        onCancel={() => setHienModal(false)}
-        width={800}
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Card title="Danh sách người dùng" style={{ width: '48%' }}>
-            <List
-              dataSource={nguoiDung}
-              renderItem={user => (
-                <List.Item
-                  key={user.taiKhoan}
-                  actions={[
-                    <Button
-                      type="link"
-                      onClick={() => handleAddUser(user)}
-                      disabled={selectedUsers.some(u => u.taiKhoan === user.taiKhoan)}
-                    >
-                      Thêm
-                    </Button>
-                  ]}
-                >
-                  {user.hoTen}
-                </List.Item>
-              )}
-            />
-          </Card>
-          <Card title="Người dùng đã chọn" style={{ width: '48%' }}>
-            <List
-              dataSource={selectedUsers}
-              renderItem={user => (
-                <List.Item
-                  key={user.taiKhoan}
-                  actions={[
-                    <Button
-                      type="link"
-                      danger
-                      icon={<DeleteOutlined />}
-                      onClick={() => handleRemoveUser(user.taiKhoan)}
-                    />
-                  ]}
-                >
-                  {user.hoTen}
-                </List.Item>
-              )}
-            />
-          </Card>
-        </div>
-      </Modal>
+      <ModalThemNguoiDung  
+          hienmodalnguoidung={hienmodalnguoidung}
+          setHienModal={setHienModalNguoiDung}
+          nguoiDung={nguoiDung}
+          selectedUsers={selectedUsers}
+          handleAddUser={handleAddUser}
+          handleRemoveUser={handleRemoveUser}
+          themNguoiDung={themNguoiDung}
+      />
+
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}
