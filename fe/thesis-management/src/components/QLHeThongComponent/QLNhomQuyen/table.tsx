@@ -34,7 +34,7 @@ export const COLUMS: ColumnType[] = [
     danhSachCot: Array<ColumnType>, 
     hienThiModal: (banGhi: any) => void, 
     xuLyXoa: (maNhomQuyen: string) => void,
-    capNhapNguoiDung:()=>void
+    capNhapNguoiDung:(maNhomQuyen: string)=>void
   ) => {
     const cotCoBan = [...danhSachCot];
   
@@ -44,7 +44,7 @@ export const COLUMS: ColumnType[] = [
       render: (_: any, banGhi: any) => (
         <Space size="middle">
           <Tooltip title="Thêm người dùng">
-            <Button type="primary" icon={<UserAddOutlined />} onClick={()=>capNhapNguoiDung()}/>
+            <Button type="primary" icon={<UserAddOutlined />} onClick={()=>capNhapNguoiDung(banGhi.maNhomQuyen)}/>
           </Tooltip>
           <Tooltip title="Thành viên nhóm">
             <Button type="primary" icon={<TeamOutlined />} />
@@ -64,5 +64,5 @@ export const COLUMS: ColumnType[] = [
     return cotCoBan;
   
   };
-  export const columNhomQuyen = (hienThiModal: (banGhi: any) => void, xuLyXoa: (maNhomQuyen: string) => void,capNhapNguoiDung:()=> void) =>
+  export const columNhomQuyen = (hienThiModal: (banGhi: any) => void, xuLyXoa: (maNhomQuyen: string) => void,capNhapNguoiDung:(maNhomQuyen: string)=> void) =>
     taoCotBangnguoidung(COLUMS, hienThiModal, xuLyXoa,capNhapNguoiDung);

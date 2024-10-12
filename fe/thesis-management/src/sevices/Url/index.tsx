@@ -14,6 +14,11 @@ export const URL = {
             ADD: "https://localhost:7204/api/nhomQuyen_CTRL/create-nhomQuyen",
             UPDATE: LocalHot + "api/nhomQuyen_CTRL/update-nhomQuyen",
             DELETE: (key: string) =>  LocalHot+`api/nhomQuyen_CTRL/delete-nhomQuyen?ma=${key}`,
+        },
+        NGUOIDUNG_NHOMQUYEN:{
+            ADD:LocalHot+"api/nguoiDung_NhomQuyen_CTRL/create-nguoiDung_NhomQuyen",
+            GETBYMANHOMQUYEN:(maNhomQuyen:string)=> LocalHot+`api/nguoiDung_NhomQuyen_CTRL/getall?ma=${maNhomQuyen}`,
+            DELETE:LocalHot+"api/nguoiDung_NhomQuyen_CTRL/delete-nguoiDung_NhomQuyen",
         }
     }
 };

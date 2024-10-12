@@ -45,3 +45,15 @@ export const Delete=async (url:string, callBack:()=> void)=>{
         throw error;
     }
 }
+
+export const add_Quyen=async (url:string,giatri:{})=>{
+    try{
+         await axios.post(url,giatri);
+         message.success("Thêm dữ liệu thành công !");
+    }
+    catch(error){
+         message.error("Thêm dữ liệu thất bại !");
+         throw error;
+    }
+    
+ }

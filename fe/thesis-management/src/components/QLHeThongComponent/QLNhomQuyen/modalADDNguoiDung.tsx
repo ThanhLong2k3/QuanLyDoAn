@@ -115,7 +115,6 @@ const ModalThemNguoiDung: React.FC<ModalProps> = ({
       onOk={themNguoiDung}
       onCancel={() => setHienModal(false)}
       width={1200}
-      bodyStyle={{ padding: '24px' }}
       okText="Xác nhận"
       cancelText="Hủy"
     >
@@ -130,7 +129,6 @@ const ModalThemNguoiDung: React.FC<ModalProps> = ({
           <Card
             title={<Title level={4}>Danh sách người dùng</Title>}
             style={{ width: '50%' }}
-            bodyStyle={{ padding: 0 }}
           >
             <Table
               dataSource={filteredNguoiDung}
@@ -143,7 +141,6 @@ const ModalThemNguoiDung: React.FC<ModalProps> = ({
           <Card
             title={<Title level={4}>Người dùng đã chọn</Title>}
             style={{ width: '50%' }}
-            bodyStyle={{ padding: 0 }}
           >
             <Table
               dataSource={selectedUsers}

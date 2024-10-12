@@ -5,21 +5,23 @@ import ReusableModal from "../../../components/UI/Modal";
 import { FormNhomQuyen } from "../../../components/QLHeThongComponent/QLNhomQuyen/form";
 import { columNhomQuyen } from "../../../components/QLHeThongComponent/QLNhomQuyen/table";
 import { DeleteOutlined, SearchOutlined, UserAddOutlined, FilterOutlined } from "@ant-design/icons";
-import { getall,add,edit,Delete } from "../../../sevices/Api/nguoiDung-servives";
+import { getall,add,edit,Delete,add_Quyen } from "../../../sevices/Api/nguoiDung-servives";
 import {URL} from "../../../sevices/Url"
 import ModalThemNguoiDung from "../../../components/QLHeThongComponent/QLNhomQuyen/modalADDNguoiDung"
 const { Option } = Select;
 const { Title } = Typography;
 
 
-  
+interface User {
+  taiKhoan: string;
+}
 const QuanLyNhomQuuyen: React.FC = () => {
   const [nguoiDung,setNguoiDung]=useState<NguoiDung[]>([]);
   const [nhomQuyen, setNhomQuyen] = useState<NhomQuyen[]>([]);
   const [timKiem, setTimKiem] = useState("");
   const [hienModal, setHienModal] = useState(false);
+  const [manhomquyen,setmanhomquyen]=useState("");
   const [hienmodalnguoidung, setHienModalNguoiDung] = useState(false);
-
   const [form] = Form.useForm();
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [trangThai, setTrangThai] = useState<string | null>(null);
@@ -51,19 +53,50 @@ const QuanLyNhomQuuyen: React.FC = () => {
     // setDuLieuLoc(ketQuaLoc);
   }, [nhomQuyen, timKiem, trangThai]);
 
-  const themNguoiDung=()=>{
-    console.log("Người dùng đã chọn:", selectedUsers);
+  const themNguoiDung = async () => {
     setHienModalNguoiDung(false);
-  }
-  const capNhapNguoiDung = () => {
+  
+    // Lấy danh sách người dùng hiện tại theo mã nhóm quyền
+    const existingUsers = await getall(URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.GETBYMANHOMQUYEN(manhomquyen));
+  
+    // Duyệt qua danh sách người dùng đã chọn để thêm
+    for (let i = 0; i < selectedUsers.length; i++) {
+      const giatri = {
+        manhomquyen: manhomquyen,
+        taiKhoan: selectedUsers[i].taiKhoan
+      };
+  
+      // Kiểm tra xem người dùng này đã tồn tại trong danh sách chưa
+      const isExisting = existingUsers.some((user:User) => user.taiKhoan === giatri.taiKhoan);
+  
+      if (!isExisting) {
+        // Nếu chưa tồn tại, tiến hành thêm người dùng
+        await add_Quyen(URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.ADD, giatri);
+        message.success(`Thêm người dùng ${giatri.taiKhoan} thành công!`);
+      }
+    }
+  
+    message.success("Thêm người dùng thành công!");
+  };
+  
+  
+
+  const capNhapNguoiDung = async (maNhomQuyen: string) => {
+    setmanhomquyen(maNhomQuyen);
+    const nguoiDungOnNhom = await getall(URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.GETBYMANHOMQUYEN(maNhomQuyen));
+    setSelectedUsers(nguoiDungOnNhom);
     setHienModalNguoiDung(true);
   };
 
+  const handleRemoveUser = (userId: string) => {
+    setSelectedUsers(prev => prev.filter(user => user.taiKhoan !== userId));
+  };
   useEffect(() => {
     const fetchUsers = async () => {
       if (hienmodalnguoidung) {
         try {
           const data = await getall(URL.QLHETHONG.QLNGUOIDUNG.GETALL);
+
           setNguoiDung(data);
         } catch (error) {
           console.error('Error fetching users:', error);
@@ -84,7 +117,6 @@ const QuanLyNhomQuuyen: React.FC = () => {
     setHienModal(true);
   };
   const xuLyXoa = async (maNhomQuyen: string) => {
-    debugger;
         await Delete(URL.QLHETHONG.QLNHOMQUYEN.DELETE(maNhomQuyen),getAllNhomQuyen);
         message.success(`xóa thành công!`);
   }
@@ -118,9 +150,6 @@ const QuanLyNhomQuuyen: React.FC = () => {
     setSelectedUsers(prev => [...prev, user]);
   };
 
-  const handleRemoveUser = (userId: string) => {
-    setSelectedUsers(prev => prev.filter(user => user.taiKhoan !== userId));
-  };
   return (
     <>
       <Card className="  overflow-hidden">
