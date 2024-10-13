@@ -10,9 +10,6 @@ namespace DAL.InterFace.QL_HeThong
     public partial interface IPhanQuyenRepository
     {
         public List<phanQuyen_DTO> GetAll();
-        public List<phanQuyen_DTO> GetById(int id);
-        int Create(phanQuyen_DTO model);
-        bool Update(phanQuyen_DTO model);
-        bool Delete(int id);
+       
     }
 }

@@ -9,10 +9,8 @@ namespace DAL.InterFace.QL_HeThong
 {
     public partial interface InguoiDung_nhomQuyenRepository
     {
-        public List<NguoiDungNhomQuyen_DTO> GetAll();
-        public List<NguoiDungNhomQuyen_DTO> GetById(string taikhoan,int manhomquyen);
-        int Create(NguoiDungNhomQuyen_DTO model);
-        bool Update(NguoiDungNhomQuyen_DTO model);
-        bool Delete(string taikhoan, int manhomquyen);
+        public List<NguoiDung_NhomQuyen_DTO> GetByMaNhomQuyen(string manhomquyen);
+        string Create(NguoiDungNhomQuyen_DTO model);
+        bool Delete(NguoiDungNhomQuyen_DTO model);
     }
 }

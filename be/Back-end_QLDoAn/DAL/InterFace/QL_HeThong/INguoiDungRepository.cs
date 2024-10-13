@@ -13,6 +13,6 @@ namespace DAL.InterFace.QL_HeThong
         public List<nguoiDung_DTO> GetById(string tk);
         string Create(nguoiDung_DTO model);
         bool Update(nguoiDung_DTO model);
-        bool Delete(string id);
+        int DangNhap(DangNhapDTO model);
     }
 }

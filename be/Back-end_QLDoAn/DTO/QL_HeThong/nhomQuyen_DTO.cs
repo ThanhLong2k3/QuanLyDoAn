@@ -8,14 +8,14 @@ namespace DTO.QL_HeThong
 {
     public class nhomQuyen_DTO
     {
-        public int MaNhomQuyen { get; set; }
+        public string maNhomQuyen { get; set; }
 
-        public string TenNhomQuyen { get; set; }
+        public string tenNhomQuyen { get; set; }
 
-        public string Loai { get; set; }
+        public string loai { get; set; }
 
-        public string MoTa { get; set; }
+        public string moTa { get; set; }
 
-        public int? SoLuong { get; set; }
+        public int? soLuong { get; set; }
     }
 }

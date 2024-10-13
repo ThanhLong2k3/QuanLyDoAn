@@ -1,0 +1,12 @@
+C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\DTO\bin\Debug\net8.0\DTO.deps.json
+C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\DTO\bin\Debug\net8.0\DTO.dll
+C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\DTO\bin\Debug\net8.0\DTO.pdb
+C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\DTO\obj\Debug\net8.0\DTO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\DTO\obj\Debug\net8.0\DTO.AssemblyInfoInputs.cache
+C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\DTO\obj\Debug\net8.0\DTO.AssemblyInfo.cs
+C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\DTO\obj\Debug\net8.0\DTO.csproj.CoreCompileInputs.cache
+C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\DTO\obj\Debug\net8.0\DTO.sourcelink.json
+C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\DTO\obj\Debug\net8.0\DTO.dll
+C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\DTO\obj\Debug\net8.0\refint\DTO.dll
+C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\DTO\obj\Debug\net8.0\DTO.pdb
+C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\DTO\obj\Debug\net8.0\ref\DTO.dll

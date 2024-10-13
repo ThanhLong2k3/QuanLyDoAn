@@ -1,0 +1,23 @@
+{
+  "Version": 1,
+  "Hash": "LMCEr/uehpMwgnHUiAvCpCosHiEHU9wC1G6YPeH3sC0=",
+  "Source": "quanLyDoAn",
+  "BasePath": "_content/quanLyDoAn",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Users\\plong\\Desktop\\QLDOAN\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj",
+      "Version": 2,
+      "Source": "Back-end_QLDoAn",
+      "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;Configuration;Platform;TargetFramework",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;Configuration;Platform;TargetFramework"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

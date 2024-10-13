@@ -8,8 +8,15 @@ namespace DTO.QL_HeThong
 {
     public class NguoiDungNhomQuyen_DTO
     {
-        public string TaiKhoan { get; set; }
+        public string taiKhoan { get; set; }
 
-        public int MaNhomQuyen { get; set; }
+        public string maNhomQuyen { get; set; }
+    }
+
+    public class NguoiDung_NhomQuyen_DTO
+    {
+        public string taiKhoan { get; set; }
+        public string hoTen { get; set; }
+        public string moTa { get; set; }
     }
 }

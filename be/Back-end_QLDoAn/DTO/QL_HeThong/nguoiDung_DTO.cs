@@ -8,19 +8,26 @@ namespace DTO.QL_HeThong
 {
     public class nguoiDung_DTO
     {
-        public string TaiKhoan { get; set; }
+        public string ?taiKhoan { get; set; }
 
-        public string MatKhau { get; set; }
+        public string ?matKhau { get; set; }
 
-        public string HoTen { get; set; }
+        public string ?hoTen { get; set; }
 
-        public DateTime NgaySinh { get; set; }
+        public DateTime ?ngaySinh { get; set; }
 
-        public string Email { get; set; }
+        public string ?gioiTinh { get; set; }
+        public string ?email { get; set; }
 
-        public string MoTa { get; set; }
+        public string ?moTa { get; set; }
 
-        public string TrangThai { get; set; }
+        public string ?TrangThai { get; set; }
 
+    }
+
+    public class DangNhapDTO
+    {
+        public string? taiKhoan { get; set; }
+        public string? matKhau { get; set; }
     }
 }
