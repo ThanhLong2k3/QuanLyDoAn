@@ -49,7 +49,6 @@ export const Delete=async (url:string, callBack:()=> void)=>{
 export const add_Quyen=async (url:string,giatri:{})=>{
     try{
          await axios.post(url,giatri);
-         message.success("Thêm dữ liệu thành công !");
     }
     catch(error){
          message.error("Thêm dữ liệu thất bại !");
@@ -57,3 +56,13 @@ export const add_Quyen=async (url:string,giatri:{})=>{
     }
     
  }
+ 
+export const Delete_Quyen=async (url:string, giatri:{})=>{
+    try{
+        await axios.delete(url,giatri);
+    }
+    catch(error){
+        message.error("Cập nhật dữ liệu thất bại !");
+        throw error;
+    }
+}

@@ -146,7 +146,7 @@ const ModalThemNguoiDung: React.FC<ModalProps> = ({
               dataSource={selectedUsers}
               columns={columnsSelected}
               rowKey="taiKhoan"
-              pagination={{ pageSize: 5 }}
+              pagination={{ pageSize: 6 }}
               size="small"
             />
           </Card>
