@@ -19,6 +19,13 @@ export const URL = {
             ADD:LocalHot+"api/nguoiDung_NhomQuyen_CTRL/create-nguoiDung_NhomQuyen",
             GETBYMANHOMQUYEN:(maNhomQuyen:string)=> LocalHot+`api/nguoiDung_NhomQuyen_CTRL/getall?ma=${maNhomQuyen}`,
             DELETE:LocalHot+"api/nguoiDung_NhomQuyen_CTRL/delete-nguoiDung_NhomQuyen",
+        },
+        PHANQUYEN:{
+            GETALL:LocalHot+"api/PhanQuyen_CTRL/getall",
+        },
+        NHOMQUYENPHANQUYEN:{
+            ADD:LocalHot+"api/nhomQuyen_PhanQuyen_CTRL/create-nhomquyen_phanquyen",
+            DELETE:LocalHot+"api/nhomQuyen_PhanQuyen_CTRL/delete-nhomquyen_phanquyen",
         }
     }
 };

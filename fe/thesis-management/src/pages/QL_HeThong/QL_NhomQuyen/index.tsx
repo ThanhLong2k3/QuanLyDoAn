@@ -1,36 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState ,useMemo} from "react";
 import { Card, Table, Button, Popconfirm, Row, Col, Input, Select, Space, Typography, Divider, Form, message } from "antd";
 import { DeleteOutlined, SearchOutlined, UserAddOutlined, FilterOutlined } from "@ant-design/icons";
-import { NhomQuyen, NguoiDung } from "../../../components/InterFace";
+import { NhomQuyen, NguoiDung,Quyen } from "../../../components/InterFace";
 import ReusableModal from "../../../components/UI/Modal";
 import { FormNhomQuyen } from "../../../components/QLHeThongComponent/QLNhomQuyen/form";
 import { columNhomQuyen } from "../../../components/QLHeThongComponent/QLNhomQuyen/table";
 import { getall, add, edit, Delete, add_Quyen, Delete_Quyen } from "../../../sevices/Api/nguoiDung-servives";
 import { URL } from "../../../sevices/Url";
 import ModalThemNguoiDung from "../../../components/QLHeThongComponent/QLNhomQuyen/modalADDNguoiDung";
-
+import ModalQLPhanQuyen from "../../../components/QLHeThongComponent/QLNhomQuyen/modalQLPhanQuyen"
 const { Option } = Select;
 const { Title } = Typography;
 
 const QuanLyNhomQuyen: React.FC = () => {
   const [nguoiDung, setNguoiDung] = useState<NguoiDung[]>([]);
   const [nhomQuyen, setNhomQuyen] = useState<NhomQuyen[]>([]);
+  const [quyen, setQuyen] = useState<Quyen[]>([]);
+
   const [timKiem, setTimKiem] = useState("");
   const [hienModal, setHienModal] = useState(false);
   const [manhomquyen, setMaNhomQuyen] = useState("");
   const [hienModalNguoiDung, setHienModalNguoiDung] = useState(false);
+  const [hienModalPhanQuyen, setHienModalPhanQuyen] = useState(false);
+
   const [form] = Form.useForm();
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [trangThai, setTrangThai] = useState<string | null>(null);
   const [keyDangSua, setKeyDangSua] = useState<string | null>(null);
   const [selectedUsers, setSelectedUsers] = useState<NguoiDung[]>([]);
+  const [selectedQuyen, setSelectedQuyen] = useState<Quyen[]>([]);
+
 
   useEffect(() => {
     document.title = 'Quản lý nhóm quyền';
     getAllNhomQuyen();
   }, []);
 
-  const getAllNhomQuyen = async () => {
+  const getAllNhomQuyen =useCallback( async () => {
     try {
       const res = await getall(URL.QLHETHONG.QLNHOMQUYEN.GETALL);
       console.log(res);
@@ -38,6 +44,11 @@ const QuanLyNhomQuyen: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
+  },[]);
+
+  const themQuyen = async () => {
+    setHienModalPhanQuyen(false);
+    console.log(selectedQuyen);
   };
 
   const themNguoiDung = async () => {
@@ -61,12 +72,12 @@ const QuanLyNhomQuyen: React.FC = () => {
     getAllNhomQuyen();
   };
 
-  const capNhapNguoiDung = async (maNhomQuyen: string) => {
+  const capNhapNguoiDung =useCallback( async (maNhomQuyen: string) => {
     setMaNhomQuyen(maNhomQuyen);
     const nguoiDungOnNhom = await getall(URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.GETBYMANHOMQUYEN(maNhomQuyen));
     setSelectedUsers(nguoiDungOnNhom);
-    setHienModalNguoiDung(true);
-  };
+    setHienModalNguoiDung(true); 
+  },[]);
 
   const handleRemoveUser = async (userId: string) => {
     setSelectedUsers(prev => prev.filter(user => user.taiKhoan !== userId));
@@ -91,7 +102,7 @@ const QuanLyNhomQuyen: React.FC = () => {
     fetchUsers();
   }, [hienModalNguoiDung]);
 
-  const hienThiModal = (banGhi?: NhomQuyen) => {
+  const hienThiModal =useCallback( (banGhi?: NhomQuyen) => {
     form.resetFields();
     if (banGhi) {
       form.setFieldsValue(banGhi);
@@ -100,12 +111,12 @@ const QuanLyNhomQuyen: React.FC = () => {
       setKeyDangSua(null);
     }
     setHienModal(true);
-  };
+  },[form]);
 
-  const xuLyXoa = async (maNhomQuyen: string) => {
+  const xuLyXoa = useCallback( async (maNhomQuyen: string) => {
     await Delete(URL.QLHETHONG.QLNHOMQUYEN.DELETE(maNhomQuyen), getAllNhomQuyen);
     message.success(`Xóa thành công!`);
-  };
+  },[getAllNhomQuyen]);
 
   const xuLyDongY = async () => {
     try {
@@ -124,13 +135,25 @@ const QuanLyNhomQuyen: React.FC = () => {
       console.error('Form validation failed:', error);
     }
   };
-
-  const cotBang = columNhomQuyen(hienThiModal, xuLyXoa, capNhapNguoiDung);
+  const PhanQuyen = useCallback( async (maNhomQuyen: string) => {
+    setMaNhomQuyen(maNhomQuyen);
+    const listquyen = await getall(URL.QLHETHONG.PHANQUYEN.GETALL);
+    setQuyen(listquyen);
+    setHienModalPhanQuyen(true); 
+  },[]);
+  
+  const cotBang = useMemo(() => columNhomQuyen(hienThiModal, xuLyXoa, capNhapNguoiDung, PhanQuyen), [hienThiModal, xuLyXoa, capNhapNguoiDung, PhanQuyen]);
 
   const handleAddUser = (user: NguoiDung) => {
     setSelectedUsers(prev => [...prev, user]);
   };
-
+  const handleAddQuyen = (quyen: Quyen) => {
+    setSelectedQuyen(prev => [...prev, quyen]);
+  };
+  const handleRemoveQuyen = async (maQuyen: string) => {
+    setSelectedQuyen(prev => prev.filter(quyen => quyen.maQuyen !== maQuyen));
+   
+  };
   return (
     <>
       <Card className="overflow-hidden">
@@ -207,14 +230,24 @@ const QuanLyNhomQuyen: React.FC = () => {
         </div>
       </Card>
       <ModalThemNguoiDung  
-        hienmodalnguoidung={hienModalNguoiDung}
-        setHienModal={setHienModalNguoiDung}
-        nguoiDung={nguoiDung}
-        selectedUsers={selectedUsers}
-        handleAddUser={handleAddUser}
-        handleRemoveUser={handleRemoveUser}
-        themNguoiDung={themNguoiDung}
-      />
+  hienmodalnguoidung={hienModalNguoiDung}
+  setHienModal={setHienModalNguoiDung}
+  nguoiDung={nguoiDung}
+  selectedUsers={selectedUsers}
+  handleAddUser={handleAddUser}
+  handleRemoveUser={handleRemoveUser}
+  themNguoiDung={themNguoiDung}
+/>
+
+<ModalQLPhanQuyen
+  hienmodalphanquyen={hienModalPhanQuyen}
+  setHienModal={setHienModalPhanQuyen}
+  quyenn={quyen}
+  selectedQuyen={selectedQuyen}
+  handleAddQuyen={handleAddQuyen}
+  handleRemoveQuyen={handleRemoveQuyen}
+  themQuyen={themQuyen}
+/>
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}

@@ -17,6 +17,10 @@ export interface NguoiDung {
     moTa:string;
     trangThai:string,
 }
+export interface Quyen{
+    maQuyen:string;
+    tenQuyen:string;
+}
 export interface NhomQuyen {
     maNhomQuyen:string;
     tenNhomQuyen:string;

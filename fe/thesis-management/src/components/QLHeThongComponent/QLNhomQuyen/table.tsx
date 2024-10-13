@@ -34,6 +34,7 @@ export const COLUMS: ColumnType[] = [
     danhSachCot: Array<ColumnType>, 
     hienThiModal: (banGhi: any) => void, 
     xuLyXoa: (maNhomQuyen: string) => void,
+    PhanQuyen:(maNhomQuyen: string)=>void,
     capNhapNguoiDung:(maNhomQuyen: string)=>void
   ) => {
     const cotCoBan = [...danhSachCot];
@@ -43,11 +44,11 @@ export const COLUMS: ColumnType[] = [
       key: 'action',
       render: (_: any, banGhi: any) => (
         <Space size="middle">
-          <Tooltip title="Thêm người dùng">
+          <Tooltip title="Thêm người dùng vào nhóm quyền">
             <Button type="primary" icon={<UserAddOutlined />} onClick={()=>capNhapNguoiDung(banGhi.maNhomQuyen)}/>
           </Tooltip>
-          <Tooltip title="Thành viên nhóm">
-            <Button type="primary" icon={<TeamOutlined />} />
+          <Tooltip title="Phân Quyền">
+            <Button type="primary" icon={<TeamOutlined />} onClick={()=> PhanQuyen(banGhi.maNhomQuyen)} />
           </Tooltip>
           <Tooltip title="Chỉnh sửa">
             <Button type="primary" icon={<EditOutlined />} onClick={() => hienThiModal(banGhi)}/>
@@ -64,5 +65,5 @@ export const COLUMS: ColumnType[] = [
     return cotCoBan;
   
   };
-  export const columNhomQuyen = (hienThiModal: (banGhi: any) => void, xuLyXoa: (maNhomQuyen: string) => void,capNhapNguoiDung:(maNhomQuyen: string)=> void) =>
-    taoCotBangnguoidung(COLUMS, hienThiModal, xuLyXoa,capNhapNguoiDung);
+  export const columNhomQuyen = (hienThiModal: (banGhi: any) => void, xuLyXoa: (maNhomQuyen: string) => void,capNhapNguoiDung:(maNhomQuyen: string)=> void,PhanQuyen:(maNhomQuyen:string)=>void)=>
+    taoCotBangnguoidung(COLUMS, hienThiModal, xuLyXoa,capNhapNguoiDung,PhanQuyen);
