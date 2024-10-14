@@ -34,8 +34,8 @@ export const COLUMS: ColumnType[] = [
     danhSachCot: Array<ColumnType>, 
     hienThiModal: (banGhi: any) => void, 
     xuLyXoa: (maNhomQuyen: string) => void,
-    PhanQuyen:(maNhomQuyen: string)=>void,
-    capNhapNguoiDung:(maNhomQuyen: string)=>void
+    capNhapNguoiDung:(maNhomQuyen: string)=>void,
+    PhanQuyen:(maNhomQuyen: string)=>void
   ) => {
     const cotCoBan = [...danhSachCot];
   

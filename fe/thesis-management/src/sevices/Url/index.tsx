@@ -22,6 +22,7 @@ export const URL = {
         },
         PHANQUYEN:{
             GETALL:LocalHot+"api/PhanQuyen_CTRL/getall",
+            GETBYMANHOMQUYEN:(maNhomQuyen:string)=>LocalHot+`api/PhanQuyen_CTRL/get_phanquyen_manhomquyen?ma=${maNhomQuyen}`
         },
         NHOMQUYENPHANQUYEN:{
             ADD:LocalHot+"api/nhomQuyen_PhanQuyen_CTRL/create-nhomquyen_phanquyen",

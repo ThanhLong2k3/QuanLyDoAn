@@ -58,6 +58,7 @@ export const add_Quyen=async (url:string,giatri:{})=>{
  }
  
 export const Delete_Quyen=async (url:string, giatri:{})=>{
+    console.log(giatri);
     try{
         await axios.delete(url,giatri);
     }
