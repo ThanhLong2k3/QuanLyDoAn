@@ -5,16 +5,20 @@ import { MenuOutlined } from '@ant-design/icons';
 import Sidebar_router from '../../ultils/Sidebar_route';
 const { Sider } = Layout;
 
-
-
 const Sidebar: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
-  const [userRole, setUserRole] = useState<string | null>(null);
-
+  const [userPermissions, setUserPermissions] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    setUserRole(user);
+    try {
+      const permissions = JSON.parse(localStorage.getItem("ListQuyen") || "[]");
+      setUserPermissions(permissions);
+    } catch (error) {
+      console.error("Failed to load permissions", error);
+    } finally {
+      setLoading(false); // Set loading to false after fetching
+    }
   }, []);
 
   const onCollapse = (collapsed: boolean) => {
@@ -30,32 +34,20 @@ const Sidebar: React.FC = () => {
   };
 
   const renderMenuItems = () => {
-    if (!userRole) return null;
-
-    let roleItems;
-    switch (userRole) {
-      case '1':
-        roleItems = Sidebar_router.GIAOVU;
-        break;
-      case '2':
-        roleItems = Sidebar_router.TBM;
-        break;
-      case '3':
-        roleItems = Sidebar_router.GIANGVIEN;
-        break;
-      case '4':
-        roleItems = Sidebar_router.SINHVIEN;
-        break;
-      default:
-        return null;
-    }
-
-    return Object.entries(roleItems).map(([key, item]) => (
-      <Menu.Item  key={item.KEY} icon={item.ICON}>
-        <Link  to={item.LINK} style={{ textDecoration: 'none' }}>{item.TEXT}</Link>
-      </Menu.Item>
-    ));
+    if (userPermissions.length === 0) return null;
+  
+    return Object.entries(Sidebar_router).map(([key, item]) => {
+      if (item.PERMISSION.some(permission => userPermissions.includes(permission))) {
+        return (
+          <Menu.Item key={item.KEY} icon={item.ICON}>
+            <Link to={item.LINK} style={{ textDecoration: 'none' }}>{item.TEXT}</Link>
+          </Menu.Item>
+        );
+      }
+      return null;
+    });
   };
+  
 
   const menuItems = renderMenuItems();
 
@@ -77,7 +69,7 @@ const Sidebar: React.FC = () => {
             </div>
           )}
         </div>
-        <Menu theme="light"  defaultSelectedKeys={['1']}  mode="inline">
+        <Menu theme="light" defaultSelectedKeys={['1']} mode="inline">
           {menuItems}
         </Menu>
       </Sider>

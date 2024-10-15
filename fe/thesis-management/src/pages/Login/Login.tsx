@@ -3,33 +3,50 @@ import { Form, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./Style_Login.css";
 import ROUTERS from "../../router/Path";
-
+import { DangNhap,getall } from '../../sevices/Api/nguoiDung-servives'
+import { URL } from "../../sevices/Url/index"
 
 interface Account {
-  masv: string;
-  password: string;
-  userType: string;
+  taiKhoan: string;
+  matKhau: string;
 }
 
 const Login: React.FC = () => {
   const [account, setAccount] = useState<Account>({
-    masv: "",
-    password: "",
-    userType: "",
+    taiKhoan: "",
+    matKhau: "",
   });
   const navigate = useNavigate();
-
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Xử lý đăng nhập
-    console.log(account);
-    if (account.masv === '1' && account.password === '1') {
-      localStorage.setItem("user", account.userType);
-      if (account.userType === "1") {
-        navigate(ROUTERS.HOME.DEFAULT.PATH);
-      } 
+    try {
+        localStorage.setItem('taiKhoan', account.taiKhoan);
+
+        
+            const listQuyen = await getall(URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.GETBYTAIKHOAN(account.taiKhoan));
+            
+            console.log("listQuyen:", listQuyen);
+
+            if (Array.isArray(listQuyen) && listQuyen.length > 0) {
+                const maQuyenArray = listQuyen.map(item => item.maQuyen);
+
+                const existingPermissions = localStorage.getItem('ListQuyen') || '[]';
+                const parsedPermissions = JSON.parse(existingPermissions);
+                const updatedPermissions = [...parsedPermissions, ...maQuyenArray];
+
+                localStorage.setItem('ListQuyen', JSON.stringify(updatedPermissions));
+
+                navigate(ROUTERS.HOME.DEFAULT.PATH);
+            } else {
+                alert("Tài khoản không có quyền truy cập!");
+            }
+    } catch (error) {
+        console.error("Login error:", error);
+        alert("Đã xảy ra lỗi khi đăng nhập. Vui lòng thử lại.");
     }
-  };
+};
+
+
 
   const handleChange = (name: string, value: string) => {
     setAccount((prevAccount) => ({
@@ -41,16 +58,16 @@ const Login: React.FC = () => {
   return (
     <>
       <div className="d-flex flex-column  bg-light">
-            <header className="bg-primary text-white shadow-lg">
-                <div className="container px-4 py-3 d-flex align-items-center justify-content-center">
-                    <img src="./utehy-logo.png"  alt="Logo UTEHY" className="me-3" style={{ height: "80px", width: "80px" }} />
-                    <div>
-                        <h1 className="fs-3 fw-bold">UTEHY</h1>
-                        <p className="fs-6">ĐẠI HỌC SƯ PHẠM KỸ THUẬT HƯNG YÊN</p>
-                    </div>
-                </div>
-            </header>
-        </div>
+        <header className="bg-primary text-white shadow-lg">
+          <div className="container px-4 py-3 d-flex align-items-center justify-content-center">
+            <img src="./utehy-logo.png" alt="Logo UTEHY" className="me-3" style={{ height: "80px", width: "80px" }} />
+            <div>
+              <h1 className="fs-3 fw-bold">UTEHY</h1>
+              <p className="fs-6">ĐẠI HỌC SƯ PHẠM KỸ THUẬT HƯNG YÊN</p>
+            </div>
+          </div>
+        </header>
+      </div>
       <div className="d-flex flex-grow-1 justify-content-center align-items-center py-4  heigh_login" >
         <Card
           className="w-100"
@@ -68,40 +85,25 @@ const Login: React.FC = () => {
             </p>
           </Card.Header>
           <Card.Body>
-          <Form.Group controlId="userType" className="mb-3">
-                <Form.Label>Loại tài khoản</Form.Label>
-                <Form.Select
-                  name="userType"
-                  value={account.userType}
-                  onChange={(e)=>handleChange("userType",e.target.value)}
-                  required
-                >
-                  <option value="">Chọn loại tài khoản</option>
-                  <option value="1">Giáo vụ khoa</option>
-                  <option value="2">Trưởng bộ môn</option>
-                  <option value="3">Giảng viên</option>
-                  <option value="4">Sinh viên</option>
-                </Form.Select>
-              </Form.Group>
             <Form onSubmit={handleLogin}>
-              <Form.Group controlId="masv" className="mb-3">
+              <Form.Group controlId="taiKhoan" className="mb-3">
                 <Form.Label>Mã Sinh Viên</Form.Label>
                 <Form.Control
-                  type="masv"
-                  name="masv"
+                  type="taiKhoan"
+                  name="taiKhoan"
                   placeholder="Mã sinh viên"
-                  value={account.masv}
-                  onChange={(e)=>handleChange("masv",e.target.value)}
+                  value={account.taiKhoan}
+                  onChange={(e) => handleChange("taiKhoan", e.target.value)}
                   required
                 />
               </Form.Group>
-              <Form.Group controlId="password" className="mb-3">
+              <Form.Group controlId="matKhau" className="mb-3">
                 <Form.Label>Mật khẩu</Form.Label>
                 <Form.Control
                   type="password"
-                  name="password"
-                  value={account.password}
-                  onChange={(e)=>handleChange("password",e.target.value)}
+                  name="matKhau"
+                  value={account.matKhau}
+                  onChange={(e) => handleChange("matKhau", e.target.value)}
                   required
                 />
               </Form.Group>
@@ -119,11 +121,10 @@ const Login: React.FC = () => {
         </Card>
       </div>
       <footer className="bg-primary text-white">
-            <div className="container text-center py-3">
-                <p>&copy; Đại học Sư phạm Kỹ thuật Hưng Yên. Bảo lưu mọi quyền.</p>
-            </div>
-        </footer>  
-
+        <div className="container text-center py-3">
+          <p>&copy; Đại học Sư phạm Kỹ thuật Hưng Yên. Bảo lưu mọi quyền.</p>
+        </div>
+      </footer>  
     </>
   );
 };

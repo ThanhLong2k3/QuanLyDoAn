@@ -1,5 +1,16 @@
 import axios from "axios";
 import { message } from "antd";
+export const DangNhap=async(url:string,giatri:{})=>
+{
+    try{
+        let data=await axios.post(url,giatri);
+        return data.data;
+    }
+    catch(error){
+        message.error("Đăng nhập thất bại!");
+        throw error;
+    }
+}
 export const getall=async(url:string)=>{
     let data=await axios.get(url);
     if(data)
@@ -58,12 +69,18 @@ export const add_Quyen=async (url:string,giatri:{})=>{
  }
  
 export const Delete_Quyen=async (url:string, giatri:{})=>{
-    console.log(giatri);
     try{
-        await axios.delete(url,giatri);
+        await axios.delete(url,{
+            headers: {
+                'Content-Type': 'application/json',  
+                'Authorization': 'Bearer <token>',  
+                'Accept': 'application/json'
+              },
+              data: giatri 
+            })
     }
     catch(error){
-        message.error("Cập nhật dữ liệu thất bại !");
+        message.error("Xóa dữ liệu thất bại !");
         throw error;
     }
 }
