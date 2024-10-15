@@ -22,7 +22,7 @@ namespace DAL.QL_DoAnRepository
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "GetAllNguoiDung");
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "GetAllGiangVien");
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<GiangVienDTO>().ToList();
@@ -47,6 +47,8 @@ namespace DAL.QL_DoAnRepository
                    "@chucVu",model.chucVu,
                    "@tenHocVi",model.tenHocVi,
                    "@tenHocHam",model.tenHocHam,
+                   "@ngaySinh",model.ngaySinh,
+                   "@gioiTinh",model.gioiTinh,
                    "@sdt",model.sDT,
                    "@email",model.email
                 );
@@ -71,13 +73,15 @@ namespace DAL.QL_DoAnRepository
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "SuaGiangVien",
-                    "@taiKhoan", taiKhoan,
+                  "@taiKhoan", taiKhoan,
                     "@maGiangVien", model.maGiangVien,
                    "@tenGiangVien", model.tenGiangVien,
                    "@tenBoMon", model.tenBoMon,
                    "@chucVu", model.chucVu,
                    "@tenHocVi", model.tenHocVi,
                    "@tenHocHam", model.tenHocHam,
+                   "@ngaySinh", model.ngaySinh,
+                   "@gioiTinh", model.gioiTinh,
                    "@sdt", model.sDT,
                    "@email", model.email
                 );

@@ -42,10 +42,9 @@ namespace quanLyDoAn.Controllers.QL_HeThong
         }
         [Route("dangnhap-nguoiDung")]
         [HttpPost]
-        public DangNhapDTO DangNhap([FromBody] DangNhapDTO model)
+        public int DangNhap([FromBody] DangNhapDTO model)
         {
-            _nguoiDungBLL.DangNhap(model);
-            return model;
+            return _nguoiDungBLL.DangNhap(model);
         }
 
     }

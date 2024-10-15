@@ -32,6 +32,22 @@ namespace DAL.QL_HethongRepository
                 throw ex;
             }
         }
+        public List<phanQuyen_DTO> GetByMaNhomQuyen(string ma)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "getphanquyenbymanhomquyen",
+                    "@maNhomQuyen",ma);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<phanQuyen_DTO>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
 

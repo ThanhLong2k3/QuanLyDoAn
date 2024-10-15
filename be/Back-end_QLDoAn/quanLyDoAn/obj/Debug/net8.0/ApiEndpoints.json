@@ -247,7 +247,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.QL_HeThong.DangNhapDTO",
+        "Type": "System.Int32",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -476,6 +476,120 @@
     "ReturnTypes": [
       {
         "Type": "DTO.QL_HeThong.nhomQuyen_DTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_HeThong.nhomQuyen_PhanQuyen_CTRL",
+    "Method": "CreateItem",
+    "RelativePath": "api/nhomQuyen_PhanQuyen_CTRL/create-nhomquyen_phanquyen",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_HeThong.NhomQuyenPhanQuyen_DTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DTO.QL_HeThong.NhomQuyenPhanQuyen_DTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_HeThong.nhomQuyen_PhanQuyen_CTRL",
+    "Method": "DeleteItem",
+    "RelativePath": "api/nhomQuyen_PhanQuyen_CTRL/delete-nhomquyen_phanquyen",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ma",
+        "Type": "DTO.QL_HeThong.NhomQuyenPhanQuyen_DTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_HeThong.nhomQuyen_PhanQuyen_CTRL",
+    "Method": "GETPHANQUYENBYTAIKHOAN",
+    "RelativePath": "api/nhomQuyen_PhanQuyen_CTRL/getquyen_taikhoan",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_HeThong.NhomQuyenPhanQuyen_DTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_HeThong.PhanQuyen_CTRL",
+    "Method": "GetByMaNhomQuyen",
+    "RelativePath": "api/PhanQuyen_CTRL/get_phanquyen_manhomquyen",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ma",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_HeThong.phanQuyen_DTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_HeThong.PhanQuyen_CTRL",
+    "Method": "Getall",
+    "RelativePath": "api/PhanQuyen_CTRL/getall",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_HeThong.phanQuyen_DTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

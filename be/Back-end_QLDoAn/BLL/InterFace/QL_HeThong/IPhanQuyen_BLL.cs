@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.InterFace.QL_HeThong
+namespace BLL.InterFace.QL_HeThong
 {
-    public partial interface IPhanQuyenRepository
+    public partial interface IPhanQuyen_BLL
     {
         public List<phanQuyen_DTO> GetAll();
-        public List<phanQuyen_DTO> GetByMaNhomQuyen( string ma);
+        public List<phanQuyen_DTO> GetByMaNhomQuyen(string ma);
 
     }
 }

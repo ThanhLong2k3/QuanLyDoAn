@@ -124,20 +124,18 @@ namespace DAL.QL_HethongRepository
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
 
-                // Kiểm tra xem DataTable có dữ liệu không
                 if (result != null && result.Rows.Count > 0)
                 {
-                    // Lấy giá trị từ DataTable, giả sử cột "Role" chứa kết quả
-                    return Convert.ToInt32(result.Rows[0]["Role"]); // Truy cập vào cột Role
+                    return Convert.ToInt32(result.Rows[0]["Role"]);
                 }
                 else
                 {
-                    return 0; // Trả về 0 nếu không có dữ liệu
+                    return 0; 
                 }
             }
             catch (Exception ex)
             {
-                throw ex; // Bạn có thể muốn ghi log lỗi ở đây
+                throw ex; 
             }
         }
 

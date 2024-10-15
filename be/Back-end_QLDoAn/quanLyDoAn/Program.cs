@@ -1,7 +1,11 @@
+using BLL.InterFace.QL_DoAn;
 using BLL.InterFace.QL_HeThong;
 using BLL.QL_HeThong;
+using BLL.QL_NguoiDung;
 using DAL;
+using DAL.InterFace.QL_DoAn;
 using DAL.InterFace.QL_HeThong;
+using DAL.QL_DoAnRepository;
 using DAL.QL_HethongRepository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +26,16 @@ builder.Services.AddTransient<INhomQuyenRepository, nhomQuyenRepository>();
 builder.Services.AddTransient<INhomQuyen_BLL, nhomQuyen_BLL>();
 builder.Services.AddTransient<InguoiDung_nhomQuyenRepository, nguoiDung_NhomQuyenReposiory>();
 builder.Services.AddTransient<INguoiDung_NhomQuyen_BLL, NguoiDung_NhomQuyen_BLL>();
+builder.Services.AddTransient<ILopRepository, LopRepository>();
+builder.Services.AddTransient<ILop_BLL, Lop_BLL>();
+builder.Services.AddTransient<ISinhVienRepository, SinhVienRepository>();
+builder.Services.AddTransient<ISinhVien_BLL, SinhVien_BLL>();
+builder.Services.AddTransient<IGiangVienReposirooty, GiangVienRepository>();
+builder.Services.AddTransient<IGiangVien_BLL, GiangVien_BLL>();
+builder.Services.AddTransient<INhomQuyenPhanQuyenRepository, NhomQuyenPhanQuyenRepository>();
+builder.Services.AddTransient<InhomQuyen_PhanQuyen_BLL, nhomQuyen_PhanQuyen_BLL>();
+builder.Services.AddTransient<IPhanQuyenRepository, phanQuyenRepository>();
+builder.Services.AddTransient<IPhanQuyen_BLL, phanQuyen_BLL>();
 
 
 builder.Services.AddControllers();
