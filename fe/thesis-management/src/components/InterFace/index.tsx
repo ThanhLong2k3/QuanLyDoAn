@@ -28,9 +28,8 @@ export interface NhomQuyen {
     moTa: string;
     soLuong?:number;
 }
-export interface Lop extends DuLieuItem{
-    key:number;
-    maLop:number;
+export interface Lop {
+    maLop:string;
     tenLop:string;
     tenChuyenNganh:string;
     khoaHoc: string;

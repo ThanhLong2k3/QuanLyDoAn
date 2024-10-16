@@ -1,74 +1,67 @@
-import React, { useEffect, useState } from 'react'
-import { Card, Table, Button, Popconfirm, Row, Col, Input, Space, Typography, Divider, message, Upload } from 'antd'
-import { DeleteOutlined, SearchOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons'
-import { useQuanLyDuLieu } from '../../../ultils/hook'
+import React, { useEffect, useState, useCallback } from 'react'
+import { Card, Table, Button, Popconfirm, Row, Col, Input, Space, Typography, Divider, message, Upload, Form } from 'antd'
+import { DeleteOutlined, SearchOutlined, PlusOutlined, UploadOutlined, DownloadOutlined } from '@ant-design/icons'
 import ReusableModal from '../../../components/UI/Modal'
-import { COLUMS } from '../../../components/UI/Table'
+import { COLUMS } from '../../../components/QLDoAnComponent/QLLop/Table'
 import { FormLop } from '../../../components/QLDoAnComponent/QLLop/form'
-import { cotLop } from '../../../components/QLDoAnComponent/QLLop/Table'
 import { Lop } from "../../../components/InterFace"
+import { getAll, addLop, delLop, editLop } from "../../../sevices/Api/QL_Lop-servives"
 import * as XLSX from 'xlsx'
 
 const { Title } = Typography
 
-const lopBatDau: Lop[] = [
-  {
-    key: 1,
-    maLop: 125217,
-    tenLop: "SEK19.7",
-    tenChuyenNganh: "Công nghệ web",
-    khoaHoc: "2021-2025",
-  },
-  {
-    key: 2,
-    maLop: 125211,
-    tenLop: "SEK19.1",
-    tenChuyenNganh: "Công nghệ web",
-    khoaHoc: "2021-2025",
-  },
-]
-
 export default function QuanLyLop() {
-  const {
-    duLieu: lop,
-    setDuLieu: setLop,
-    hienModal,
-    setHienModal,
-    form,
-    keyDangSua,
-    cacDongDaChon,
-    hienThiModal,
-    xuLyDongY,
-    xuLyXoa,
-    xuLyXoaNhieu,
-    chonDong,
-  } = useQuanLyDuLieu<Lop>({
-    duLieuBanDau: lopBatDau,
-    khoaLuuTru: 'utehy_lop',
-  })
-
-  const [timKiem, setTimKiem] = useState("")
-  const [duLieuLoc, setDuLieuLoc] = useState(lop)
+  const [lop, setLop] = useState<Lop[]>([]);
+  const [form] = Form.useForm();
+  const [hienModal, setHienModal] = useState(false);
+  const [keyDangSua, setKeyDangSua] = useState<string | null>(null);
+  const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
+  const [timKiem, setTimKiem] = useState('');
 
   useEffect(() => {
     document.title = 'Quản lý lớp'
+    getAllLop()
   }, [])
 
-  useEffect(() => {
-    const ketQuaLoc = lop.filter(
-      (hv) =>
-        hv.tenLop.toLowerCase().includes(timKiem.toLowerCase()) ||
-        hv.tenChuyenNganh.toLowerCase().includes(timKiem.toLowerCase())
-    )
-    setDuLieuLoc(ketQuaLoc)
-  }, [lop, timKiem])
-
-  const cotBang = COLUMS(cotLop, hienThiModal, xuLyXoa)
-
-  const luaChonDong = {
-    selectedRowKeys: cacDongDaChon,
-    onChange: chonDong,
+  const getAllLop = () => {
+    getAll().then((data) => setLop(data))
   }
+
+  const xuLyXoa = async (maLop: string) => {
+    let kq = await delLop(maLop, getAllLop);
+    message.success(kq.data);
+  };
+
+  const hienThiModal = useCallback(
+    (banGhi?: Lop) => {
+      form.resetFields();
+      if (banGhi) {
+        form.setFieldsValue(banGhi);
+        setKeyDangSua(banGhi.maLop);
+      } else {
+        setKeyDangSua(null);
+      }
+      setHienModal(true);
+    },
+    [form]
+  );
+
+  const xuLyDongY = async () => {
+    const giatri = await form.validateFields();
+    if (keyDangSua !== null) {
+      let kq = await editLop(giatri, getAllLop);
+      message.success(kq.data);
+    }
+    else {
+      let kq = await addLop(giatri, getAllLop);
+      message.success(kq.data);
+    }
+    setHienModal(false);
+    form.resetFields();
+    setKeyDangSua(null);
+  };
+
+  const cotBang = COLUMS(hienThiModal, xuLyXoa);
 
   const xuLyNhapExcel = (file: File) => {
     const reader = new FileReader()
@@ -79,18 +72,38 @@ export default function QuanLyLop() {
       const worksheet = workbook.Sheets[sheetName]
       const jsonData = XLSX.utils.sheet_to_json(worksheet) as Lop[]
 
-  
       const duLieuMoi = jsonData.map((item, index) => ({
         ...item,
         key: lop.length + index + 1,
       }))
-    
-      setLop((lopHienTai) => [...lopHienTai, ...duLieuMoi])
-      message.success(`Đã nhập ${duLieuMoi.length} lớp từ file Excel`)
+      
+      console.log(duLieuMoi);
     }
     reader.readAsArrayBuffer(file)
     return false 
   }
+
+  const chonDong = (cacKeyChon: React.Key[]) => {
+    setCacDongDaChon(cacKeyChon);
+  };
+
+  const luaChonDong = {
+    selectedRowKeys: cacDongDaChon,
+    onChange: chonDong,
+  };
+
+  const xulyXoaNhieu = () => {
+    
+    message.success(`Xóa thành công!`);
+  };
+
+  const xuLyXuatExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(lop);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Danh sách lớp");
+    XLSX.writeFile(workbook, "danh_sach_lop.xlsx");
+    message.success("Xuất Excel thành công!");
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen p-6">
@@ -101,7 +114,7 @@ export default function QuanLyLop() {
           </Title>
           <hr />
           <Row gutter={16} className="mb-6">
-            <Col xs={24} sm={24} md={16} lg={18} xl={18}>
+            <Col xs={16} sm={16} md={8} lg={6} xl={6}>
               <Input
                 placeholder="Tìm kiếm theo tên lớp hoặc chuyên ngành"
                 value={timKiem}
@@ -115,7 +128,7 @@ export default function QuanLyLop() {
                 {cacDongDaChon.length > 0 && (
                   <Popconfirm
                     title={`Bạn có chắc chắn muốn xóa ${cacDongDaChon.length} lớp đã chọn?`}
-                    onConfirm={xuLyXoaNhieu}
+                    onConfirm={xulyXoaNhieu}
                     okText="Đồng ý"
                     cancelText="Hủy"
                   >
@@ -139,6 +152,12 @@ export default function QuanLyLop() {
                 >
                   <Button icon={<UploadOutlined />}>Nhập Excel</Button>
                 </Upload>
+                <Button 
+                  icon={<DownloadOutlined />} 
+                  onClick={xuLyXuatExcel}
+                >
+                  Xuất Excel
+                </Button>
               </Space>
             </Col>
           </Row>
@@ -146,8 +165,8 @@ export default function QuanLyLop() {
           <Table
             rowSelection={luaChonDong}
             columns={cotBang}
-            dataSource={duLieuLoc}
-            rowKey="key"
+            dataSource={lop}
+            rowKey="maLop"
             scroll={{ x: 768 }}
             className="shadow-sm rounded-md overflow-hidden"
             pagination={{

@@ -15,13 +15,12 @@ import {
 } from '@ant-design/icons';
 import ROUTERS from "../router/Path";
 
-// Define SidebarItem type with explicit permission type
 type SidebarItem = {
   KEY: string;
   ICON: React.ReactNode;
   LINK: string;
   TEXT: string;
-  PERMISSION: string[]; // Define permission as an array of strings
+  PERMISSION: string[]; 
 };
 
 const Sidebar_router: { [key: string]: SidebarItem } = {
@@ -30,10 +29,10 @@ const Sidebar_router: { [key: string]: SidebarItem } = {
   GIANGVIEN: { KEY: '2', ICON: <UserOutlined />, LINK: ROUTERS.GIAOVU.GIANGVIEN.PATH, TEXT: "Quản lý giảng viên", PERMISSION: ["ADD_GIANGVIEN","UP_GIANGVIEN","DEL_GIANGVIEN"] },
   LOP: { KEY: '3', ICON: <TeamOutlined />, LINK: ROUTERS.GIAOVU.CLASS.PATH, TEXT: "Quản lý lớp", PERMISSION: ["ADD_LOP", "UP_LOP", "DEL_LOP"] },
   HOIDONG: { KEY: '4', ICON: <BookOutlined />, LINK: ROUTERS.GIAOVU.SUPERVISORS.PATH, TEXT: "Quản lý hội đồng", PERMISSION: ["MANAGE_HOIDONG"] },
-  SINHVIEN: { KEY: '5', ICON: <UserOutlined />, LINK: ROUTERS.GIAOVU.STUDENTS.PATH, TEXT: "Quản lý sinh viên", PERMISSION: ["MANAGE_SINHVIEN"] },
+  SINHVIEN: { KEY: '5', ICON: <UserOutlined />, LINK: ROUTERS.GIAOVU.STUDENTS.PATH, TEXT: "Quản lý sinh viên", PERMISSION: ["ADD_SINHVIEN","UP_SINHVIEN","DEL_SINHVIEN"] },
   DOTLAMDOAN: { KEY: '6', ICON: <ProjectOutlined />, LINK: ROUTERS.GIAOVU.PROJECTWORK.PATH, TEXT: 'Đợt làm đồ án tốt nghiệp', PERMISSION: ["MANAGE_DOTLAMDOAN"] },
-  PHANQUYEN: { KEY: '7', ICON: <TeamOutlined />, LINK: ROUTERS.GIAOVU.PHANQUYEN.PATH, TEXT: "Quản lý nhóm quyền", PERMISSION: ["MANAGE_PHANQUYEN"] },
-  USER: { KEY: '8', ICON: <TeamOutlined />, LINK: ROUTERS.GIAOVU.USER.PATH, TEXT: "Quản lý người dùng", PERMISSION: ["MANAGE_USER"] },
+  PHANQUYEN: { KEY: '7', ICON: <TeamOutlined />, LINK: ROUTERS.GIAOVU.PHANQUYEN.PATH, TEXT: "Quản lý nhóm quyền", PERMISSION: ["ADD_NHOMQUYEN","UP_NHOMQUYEN","DEL_NHOMQUYEN"] },
+  USER: { KEY: '8', ICON: <TeamOutlined />, LINK: ROUTERS.GIAOVU.USER.PATH, TEXT: "Quản lý người dùng", PERMISSION: ["ADD_NGUOIDUNG","UP_NGUOIDUNG","DEL_NGUOIDUNG"] },
   LISTSV: { KEY: '9', ICON: <OrderedListOutlined />, LINK: "", TEXT: "Danh sách sinh viên phản biện và hội đồng", PERMISSION: ["VIEW_LISTSV"] },
   REVIEWCOMMENT: { KEY: '10', ICON: <FileTextOutlined />, LINK: "", TEXT: "Giảng viên đánh giá, nhận xét báo cáo", PERMISSION: ["REVIEW_COMMENT"] },
   GV_COMFILMPROJECT: { KEY: '11', ICON: <CheckSquareOutlined />, LINK: "", TEXT: "Giảng viên xác nhận sinh viên đăng ký đề tài", PERMISSION: ["CONFIRM_PROJECT"] },

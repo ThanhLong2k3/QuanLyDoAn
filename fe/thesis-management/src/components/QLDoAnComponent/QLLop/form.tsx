@@ -16,7 +16,7 @@ export const FormLop: React.FC<ReusableFormProps> = ({ formdulieu }) => (
           label="Mã lớp"
           rules={[{ required: true, message: 'Vui lòng nhập mã lớp!' }]}
         >
-          <InputNumber min={0} style={{ width: '100%' }} />
+          <Input />
         </Form.Item>
       </Col>
       <Col span={12}>
