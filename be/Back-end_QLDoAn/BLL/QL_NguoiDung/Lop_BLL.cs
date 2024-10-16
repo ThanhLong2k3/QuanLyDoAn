@@ -26,11 +26,11 @@ namespace BLL.QL_NguoiDung
         {
             return _res.Create(model, taikhoan);
         }
-        public bool Update(LopDTO model,string taikhoan)
+        public string Update(LopDTO model,string taikhoan)
         {
             return _res.Update(model, taikhoan);
         }
-        public bool Delete(string ma,string taikhoan)
+        public string Delete(string ma,string taikhoan)
         {
             return _res.Delete(ma, taikhoan);
         }

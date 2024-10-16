@@ -189,7 +189,9 @@ INSERT INTO hoiDong_SinhVien (maHoiDong, maSinhVien) VALUES
 -- Thêm dữ liệu vào bảng nhomQuyen
 INSERT INTO nhomQuyen (maNhomQuyen, tenNhomQuyen, loai, moTa, soLuong) VALUES
 ('NQ01', N'Quản trị hệ thống', N'Hệ thống', N'Quản lý người dùng', 10),
-('NQ02', N'Người dùng', N'Người dùng', N'Truy cập thông thường', 100);
+('NQ02', N'Người dùng', N'Người dùng', N'Truy cập thông thường', 100),
+('ADMIN', N'Quản trị hệ thống', N'Hệ thống', N'Quản lý người dùng', 10);
+
 
 -- Thêm dữ liệu vào bảng phanQuyen
 INSERT INTO phanQuyen (maQuyen,tenQuyen)
@@ -202,7 +204,13 @@ VALUES
 	('DEL_SINHVIEN',N'Xóa Sinh Viên'),
 	('ADD_GIANGVIEN',N'Thêm Giảng Viên'),
 	('UP_GIANGVIEN',N'Sửa Giảng Viên'),
-	('DEL_GIANGVIEN',N'Xóa Giảng Viên');
+	('DEL_GIANGVIEN',N'Xóa Giảng Viên'),
+	('ADD_NGUOIDUNG',N'Thêm người dùng'),
+	('UP_NGUOIDUNG',N'Sửa người dùng'),
+	('DEL_NGUOIDUNG',N'Xóa người dùng'),
+	('ADD_NHOMQUYEN','Thêm nhóm quyền'),
+	('UP_NHOMQUYEN',N'Sửa nhóm quyền'),
+	('DEL_NHOMQUYEN',N'Xóa nhóm quyền');
 go
 
 -- Thêm dữ liệu vào bảng nguoiDung_nhomQuyen

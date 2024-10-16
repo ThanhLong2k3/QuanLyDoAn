@@ -123,7 +123,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.QL_DoAn.LopDTO",
+        "Type": "System.String",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -152,7 +152,17 @@
         "IsRequired": false
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.Lop_CTRL",
@@ -195,7 +205,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.QL_DoAn.LopDTO",
+        "Type": "System.String",
         "MediaTypes": [
           "text/plain",
           "application/json",

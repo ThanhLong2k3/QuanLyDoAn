@@ -11,7 +11,7 @@ namespace BLL.InterFace.QL_DoAn
     {
         public List<LopDTO> GetAll();
         string Create(LopDTO model, string taikhoan);
-        bool Update(LopDTO model, string taikhoan);
-        bool Delete(string ma, string taikhoan);
+        string Update(LopDTO model, string taikhoan);
+        string Delete(string ma, string taikhoan);
     }
 }

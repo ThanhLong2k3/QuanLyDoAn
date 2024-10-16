@@ -26,24 +26,22 @@ namespace quanLyDoAn.Controllers.QL_DoAn
 
         [Route("create-Lop")]
         [HttpPost]
-        public LopDTO CreateItem([FromBody] LopDTO model,string taikhoan)
+        public string CreateItem([FromBody] LopDTO model,string taikhoan)
         {
-            _LopBLL.Create(model, taikhoan);
-            return model;
+            return _LopBLL.Create(model, taikhoan);
         }
         [Route("update-Lop")]
         [HttpPost]
-        public LopDTO UpdateItem([FromBody] LopDTO model, string taikhoan)
+        public string UpdateItem([FromBody] LopDTO model, string taikhoan)
         {
-            _LopBLL.Update(model, taikhoan);
-            return model;
+
+            return _LopBLL.Update(model, taikhoan);
         }
         [Route("delete-Lop")]
         [HttpDelete]
-        public IActionResult DeleteItem(string ma,string taikhoan)
+        public string DeleteItem(string ma,string taikhoan)
         {
-            _LopBLL.Delete(ma, taikhoan);
-            return Ok(ma);
+            return _LopBLL.Delete(ma, taikhoan);
         }
 
     }
