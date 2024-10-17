@@ -11,7 +11,7 @@ namespace DAL.InterFace.QL_DoAn
     {
         public List<GiangVienDTO> GetAll();
         string Create(GiangVienDTO model,string taikhoan);
-        bool Update(GiangVienDTO model,string taikhoan);
-        bool Delete(string malop,string taikhoan);
+        string Update(GiangVienDTO model,string taikhoan);
+        string Delete(string malop,string taikhoan);
     }
 }

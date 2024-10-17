@@ -37,6 +37,7 @@ namespace DAL.QL_DoAnRepository
         public string Create(GiangVienDTO model, string taikhoan)
         {
             string msgError = "";
+            string kq = "";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "ThemGiangVien",
@@ -53,12 +54,15 @@ namespace DAL.QL_DoAnRepository
                    "@email",model.email
                 );
 
-                if (!string.IsNullOrEmpty(msgError))
+                if (result != null)
                 {
-                    throw new Exception(msgError);
+                    kq = result.ToString();
                 }
-
-                return Convert.ToString(result);
+                else
+                {
+                    kq = "Không có phản hồi từ server";
+                }
+                return kq;
             }
             catch (Exception ex)
             {
@@ -67,9 +71,10 @@ namespace DAL.QL_DoAnRepository
         }
 
 
-        public bool Update(GiangVienDTO model,string taiKhoan)
+        public string Update(GiangVienDTO model,string taiKhoan)
         {
             string msgError = "";
+            string kq = "";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "SuaGiangVien",
@@ -86,40 +91,38 @@ namespace DAL.QL_DoAnRepository
                    "@email", model.email
                 );
 
-                if (!string.IsNullOrEmpty(msgError))
+                if (result != null)
                 {
-                    throw new Exception(msgError);
+                    kq = result.ToString();
                 }
-
-                if (result != null && !string.IsNullOrEmpty(result.ToString()))
+                else
                 {
-                    return true;
+                    kq = "Không có phản hồi từ server";
                 }
-
-                return false;
+                return kq;
             }
             catch (Exception ex)
             {
                 throw new Exception("Đã xảy ra lỗi trong quá trình cập nhật người dùng: " + ex.Message, ex);
             }
         }
-        public bool Delete(string ma, string taikhoan)
+        public string Delete(string ma, string taikhoan)
         {
             string msgError = "";
-            bool kq;
+            string kq="";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedure(out msgError, "XoaGiangVien",
                     "@taiKhoan", taikhoan,
                     "@maGiangVien", ma);
 
-                if (result != null && result.ToString().Contains("thành công"))
+                if (result != null)
                 {
-                    kq = true;
+                    kq = result.ToString();
                 }
                 else
                 {
-                    kq = false;
+                    kq = "Không có phản hồi từ server";
                 }
                 return kq;
             }

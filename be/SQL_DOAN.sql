@@ -600,9 +600,10 @@ BEGIN
 
     IF @coQuyenThemGiangVien = 1
     BEGIN
+		EXEC ThemNguoiDung @taiKhoan = @maGiangVien, @hoTen = @tenGiangVien, @ngaySinh = @ngaySinh, @gioiTinh = @gioiTinh, @email = @email, @moTa = N'Giảng viên';
+
         INSERT INTO giangVien (maGiangVien, tenGiangVien, tenBoMon, chucVu, tenHocVi, tenHocHam,ngaySinh,gioiTinh, sDT, email)
         VALUES (@maGiangVien, @tenGiangVien, @tenBoMon, @chucVu, @tenHocVi, @tenHocHam,@ngaySinh,@gioiTinh, @sDT, @email);
-		EXEC ThemNguoiDung @taiKhoan = @maGiangVien, @hoTen = @tenGiangVien, @ngaySinh = @ngaySinh, @gioiTinh = @gioiTinh, @email = @email, @moTa = N'Giảng viên';
         SELECT N'Thêm giảng viên thành công' AS ThongBao;
     END
     ELSE
@@ -690,7 +691,7 @@ GO
 
 CREATE PROCEDURE ThemSinhVien
     @taiKhoan NVARCHAR(50),
-    @maSinhVien nvarchar(50),
+    @maSinhVien NVARCHAR(50),
     @tenSinhVien NVARCHAR(255),
     @maLop NVARCHAR(50),
     @ngaySinh DATE,
@@ -701,6 +702,7 @@ AS
 BEGIN
     DECLARE @coQuyenThemSinhVien BIT = 0;
 
+    -- Kiểm tra quyền thêm sinh viên
     IF EXISTS (
         SELECT 1
         FROM nguoiDung_nhomQuyen AS ndnq
@@ -713,10 +715,13 @@ BEGIN
 
     IF @coQuyenThemSinhVien = 1
     BEGIN
+        -- Thêm sinh viên vào bảng nguoiDung trước
+        EXEC ThemNguoiDung @taiKhoan = @maSinhVien, @hoTen = @tenSinhVien, @ngaySinh = @ngaySinh, @gioiTinh = @gioiTinh, @email = @email, @moTa = N'Sinh viên';
+
+        -- Sau đó thêm vào bảng sinhVien
         INSERT INTO sinhVien (maSinhVien, tenSinhVien, maLop, ngaySinh, gioiTinh, sDT, email)
         VALUES (@maSinhVien, @tenSinhVien, @maLop, @ngaySinh, @gioiTinh, @sDT, @email);
 
-		EXEC ThemNguoiDung @taiKhoan = @maSinhVien, @hoTen = @tenSinhVien, @ngaySinh = @ngaySinh, @gioiTinh = @gioiTinh, @email = @email, @moTa = N'Sinh viên';
         SELECT N'Thêm sinh viên thành công' AS ThongBao;
     END
     ELSE

@@ -45,16 +45,15 @@ export interface GiangVien extends DuLieuItem{
     SDT:string;
     email:string;
 }
-export interface SinhVien extends DuLieuItem{
- 
-    maSinhVien:number;
+export interface SinhVien {
+    maSinhVien:string;
     tenSinhVien:string;
     maLop:string;
     tenTrangThai?: string;
-    ngaySinh:string;
+    ngaySinh:Date;
     email:string;
     gioiTinh:string;
-    SDT:string;
+    sDT:string;
 }
 export interface DotLamDoAn extends DuLieuItem{
     key:number;

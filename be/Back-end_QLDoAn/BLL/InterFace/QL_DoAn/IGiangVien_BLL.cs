@@ -11,7 +11,7 @@ namespace BLL.InterFace.QL_DoAn
     {
         public List<GiangVienDTO> GetAll();
         string Create(GiangVienDTO model,string taikhoan);
-        bool Update(GiangVienDTO model, string taikhoan);
-        bool Delete(string ma, string taikhoan);
+        string  Update(GiangVienDTO model, string taikhoan);
+        string Delete(string ma, string taikhoan);
     }
 }
