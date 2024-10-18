@@ -1,5 +1,5 @@
 import { Button, Space, Popconfirm,Tooltip } from 'antd';
-import { EditOutlined, DeleteOutlined,EyeOutlined,UnlockOutlined  } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined  } from '@ant-design/icons';
 
 import {ColumnType} from '../types';
  const cotLop: ColumnType[] = [

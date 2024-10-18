@@ -1,81 +1,71 @@
-import React, { useEffect, useState } from 'react'
-import { Card, Table, Button, Popconfirm, Row, Col, Input, Space, Typography, Divider, message, Upload } from 'antd'
+import React, { useEffect, useState,useCallback } from 'react'
+import { Card, Table, Button, Popconfirm, Row, Col, Input, Space, Typography, Divider, message, Upload,Form } from 'antd'
 import { DeleteOutlined, SearchOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons'
-import { useQuanLyDuLieu } from '../../../ultils/hook'
 import ReusableModal from '../../../components/UI/Modal'
-import { COLUMS } from '../../../components/UI/Table'
 import { FormGiangVien } from '../../../components/QLDoAnComponent/QLGiangVien/form'
-import { CotGiangVien } from '../../../components/QLDoAnComponent/QLGiangVien/table'
+import { COLUMS } from '../../../components/QLDoAnComponent/QLGiangVien/table'
 import { GiangVien } from "../../../components/InterFace"
 import * as XLSX from 'xlsx'
+import {getAll,editGiangVien,addGiangVien,delGiangVien} from '../../../sevices/Api/QL_GiangVien-servives'
+import moment from 'moment';
 
 const { Title } = Typography
 
-const giangVienBatDau: GiangVien[] = [
-  {
-    key: 1,
-    maGiangVien:1689,
-    tenGiangVien:"Đặng Việt Hưng",
-    tenBoMon:"Khoa học máy tính",
-    chucVu:"Giảng viên",
-    tenHocVi:"Thạc sĩ",
-    SDT:"0966348117",
-    email:"dangviethung1107@gmail.com",
-  },
-  {
-    key: 2,
-    maGiangVien:1248,
-    tenGiangVien:"Nguyễn Minh Tiến",
-    tenBoMon:"Khoa học máy tính",
-    chucVu:"Giảng viên",
-    tenHocVi:"Tiến sĩ",
-    tenHocHam:"Phó giáo sư",
-    SDT:"0983860318",
-    email:"minhtienhy@gmail.com",
-  },
-]
 
 export default function QuanLygiangvien() {
-  const {
-    duLieu: giangvien,
-    setDuLieu: setgiangvien,
-    hienModal,
-    setHienModal,
-    form,
-    keyDangSua,
-    cacDongDaChon,
-    hienThiModal,
-    xuLyDongY,
-    xuLyXoa,
-    xuLyXoaNhieu,
-    chonDong,
-  } = useQuanLyDuLieu<GiangVien>({
-    duLieuBanDau: giangVienBatDau,
-    khoaLuuTru: 'utehy_giangvien',
-  })
-
-  const [timKiem, setTimKiem] = useState("")
-  const [duLieuLoc, setDuLieuLoc] = useState(giangvien)
+  const [giangVien, setGiangVien] = useState<GiangVien[]>([]);
+  const [form] = Form.useForm();
+  const [hienModal, setHienModal] = useState(false);
+  const [keyDangSua, setKeyDangSua] = useState<string | null>(null);
+  const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
+  const [timKiem, setTimKiem] = useState('');
 
   useEffect(() => {
     document.title = 'Quản lý cán bộ, giảng viên'
+    getAllGiangVien()
   }, [])
 
-  useEffect(() => {
-    const ketQuaLoc = giangvien.filter(
-      (hv) =>
-        hv.tenBoMon.toLowerCase().includes(timKiem.toLowerCase()) ||
-        hv.tenGiangVien.toLowerCase().includes(timKiem.toLowerCase())
-    )
-    setDuLieuLoc(ketQuaLoc)
-  }, [giangvien, timKiem])
-
-  const cotBang = COLUMS(CotGiangVien, hienThiModal, xuLyXoa)
-
-  const luaChonDong = {
-    selectedRowKeys: cacDongDaChon,
-    onChange: chonDong,
+  const getAllGiangVien = () => {
+    getAll().then((data) => setGiangVien(data))
   }
+
+  const xuLyXoa = async (maGiangVien: string) => {
+    let kq = await delGiangVien(maGiangVien, getAllGiangVien);
+    message.success(`Đã xóa thành công giảng viên ${kq.data}`);
+  };
+
+  const hienThiModal = useCallback(
+    (banGhi?: GiangVien) => {
+      form.resetFields();
+      if (banGhi) {
+        const ngaySinhValue = banGhi.ngaySinh ? moment(banGhi.ngaySinh) : null;
+        form.setFieldsValue({ ...banGhi, ngaySinh: ngaySinhValue });
+        setKeyDangSua(banGhi.maGiangVien);
+        
+      } else {
+        setKeyDangSua(null);
+      }
+      setHienModal(true);
+    },
+    [form]
+  );
+
+  const xuLyDongY = async () => {
+    const giatri = await form.validateFields();
+    if (keyDangSua !== null) {
+      let kq = await editGiangVien(giatri, getAllGiangVien);
+      message.success(kq.data);
+    }
+    else {
+      let kq = await addGiangVien(giatri, getAllGiangVien);
+      message.success(kq.data);
+    }
+    setHienModal(false);
+    form.resetFields();
+    setKeyDangSua(null);
+  };
+
+  const cotBang = COLUMS(hienThiModal, xuLyXoa);
 
   const xuLyNhapExcel = (file: File) => {
     const reader = new FileReader()
@@ -86,18 +76,32 @@ export default function QuanLygiangvien() {
       const worksheet = workbook.Sheets[sheetName]
       const jsonData = XLSX.utils.sheet_to_json(worksheet) as GiangVien[]
 
-  
       const duLieuMoi = jsonData.map((item, index) => ({
         ...item,
-        key: giangvien.length + index + 1,
+        key: giangVien.length + index + 1,
       }))
-    
-      setgiangvien((giangvienHienTai) => [...giangvienHienTai, ...duLieuMoi])
-      message.success(`Đã nhập ${duLieuMoi.length} lớp từ file Excel`)
+      
+      console.log(duLieuMoi);
     }
     reader.readAsArrayBuffer(file)
     return false 
   }
+
+  const chonDong = (cacKeyChon: React.Key[]) => {
+    setCacDongDaChon(cacKeyChon);
+  };
+
+  const luaChonDong = {
+    selectedRowKeys: cacDongDaChon,
+    onChange: chonDong,
+  };
+
+  const xuLyXoaNhieu = () => {
+    
+    message.success(`Xóa thành công!`);
+  };
+
+  
 
   return (
     <div className="bg-gray-100 min-h-screen p-6">
@@ -153,8 +157,8 @@ export default function QuanLygiangvien() {
           <Table
             rowSelection={luaChonDong}
             columns={cotBang}
-            dataSource={duLieuLoc}
-            rowKey="key"
+            dataSource={giangVien}
+            rowKey="maGiangVien"
             scroll={{ x: 768 }}
             className="shadow-sm rounded-md overflow-hidden"
             pagination={{

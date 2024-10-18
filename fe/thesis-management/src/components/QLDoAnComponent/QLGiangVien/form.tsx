@@ -1,5 +1,13 @@
 import React from "react";
-import { Form, Input, InputNumber, FormInstance, Select, Row, Col } from "antd";
+import {
+  Form,
+  Input,
+  FormInstance,
+  Select,
+  Row,
+  Col,
+  DatePicker,
+} from "antd";
 
 const { Option } = Select;
 
@@ -16,7 +24,7 @@ export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => (
           label="Mã giảng viên"
           rules={[{ required: true, message: "Vui lòng nhập mã giảng viên!" }]}
         >
-          <InputNumber min={0} style={{ width: "100%" }} />
+          <Input />
         </Form.Item>
       </Col>
       <Col span={12}>
@@ -87,26 +95,51 @@ export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => (
         </Form.Item>
       </Col>
     </Row>
-
-    <Form.Item
-      name="SDT"
-      label="Số điện thoại"
-      rules={[
-        { required: true, message: "Vui lòng nhập số điện thoại!" },
-        { pattern: /^[0-9]{10}$/, message: "Số điện thoại không hợp lệ!" },
-      ]}
-    >
-      <Input />
-    </Form.Item>
-    <Form.Item
-      name="email"
-      label="Email"
-      rules={[
-        { required: true, message: "Vui lòng nhập email!" },
-        { type: "email", message: "Email không hợp lệ!" },
-      ]}
-    >
-      <Input />
-    </Form.Item>
+    <Row gutter={16}>
+      <Col span={12}>
+        <Form.Item
+          name="ngaySinh"
+          label="Ngày sinh"
+          rules={[{ required: true, message: "Vui lòng chọn ngày sinh!" }]}
+        >
+          <DatePicker style={{ width: "100%" }} />
+        </Form.Item>
+      </Col>
+      <Col span={12}>
+        <Form.Item name="gioiTinh" label="Giới tính">
+          <Select placeholder="Giới tính">
+            <Option value="Nam">Nam</Option>
+            <Option value="Nữ">Nữ</Option>
+            <Option value="Khác">Khác</Option>
+          </Select>
+        </Form.Item>
+      </Col>
+    </Row>
+    <Row gutter={16}>
+      <Col span={12}>
+        <Form.Item
+          name="sDT"
+          label="Số điện thoại"
+          rules={[
+            { required: true, message: "Vui lòng nhập số điện thoại!" },
+            { pattern: /^[0-9]{10}$/, message: "Số điện thoại không hợp lệ!" },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+      </Col>
+      <Col span={12}>
+        <Form.Item
+          name="email"
+          label="Email"
+          rules={[
+            { required: true, message: "Vui lòng nhập email!" },
+            { type: "email", message: "Email không hợp lệ!" },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+      </Col>
+    </Row>
   </Form>
 );

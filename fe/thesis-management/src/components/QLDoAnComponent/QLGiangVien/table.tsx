@@ -1,3 +1,6 @@
+import { Button, Space, Popconfirm,Tooltip } from 'antd';
+import { EditOutlined, DeleteOutlined  } from '@ant-design/icons';
+
 import {ColumnType} from '../types';
 export const CotGiangVien: ColumnType[] = [
     {
@@ -32,8 +35,9 @@ export const CotGiangVien: ColumnType[] = [
     },
     {
         title: 'SDT',
-        dataIndex: 'SDT',
-        key: 'SDT',
+        dataIndex: 'sDT',
+        key: 'sDT',
+        align:'center'
     },
     {
         title: 'Email',
@@ -41,4 +45,33 @@ export const CotGiangVien: ColumnType[] = [
         key: 'email',
     },
   ];
+  const taoCotBang = (
+    danhSachCot: Array<ColumnType>, 
+    hienThiModal: (banGhi: any) => void, 
+    xuLyXoa: (maGiangVien: string) => void
+  ) => {
+    const cotCoBan = [...danhSachCot];
   
+    cotCoBan.push({
+      title: 'Thao tác',
+      key: 'action',
+      render: (_: any, banGhi: any) => (
+        <Space size="middle">
+          <Tooltip title="Sửa">
+            <Button type="primary" icon={<EditOutlined />} onClick={() => hienThiModal(banGhi)}/>
+          </Tooltip>
+          <Tooltip title="Xóa">
+            <Popconfirm title="Bạn có chắc chắn muốn xóa?" onConfirm={() => xuLyXoa(banGhi.maGiangVien)}>
+              <Button type="primary" danger icon={<DeleteOutlined />}/>
+            </Popconfirm>
+          </Tooltip>
+        </Space>
+      ),
+    });
+  
+    return cotCoBan;
+  };
+  
+   
+  export const COLUMS = (hienThiModal: (banGhi: any) => void, xuLyXoa: (maGiangVien: string) => void) =>
+    taoCotBang(CotGiangVien, hienThiModal, xuLyXoa);
