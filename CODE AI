@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ThumbsUp, ThumbsDown, Search, Filter } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Card, Tabs, Input, Select, Button, Rate, Tag, List, Typography, Slider, Avatar, message } from 'antd';
+import { SearchOutlined, LikeOutlined, DislikeOutlined } from '@ant-design/icons';
+import * as tf from '@tensorflow/tfjs';
+import natural from 'natural';
 
-// Du lieu phim mo rong
+const { TabPane } = Tabs;
+const { Title, Paragraph, Text } = Typography;
+
+// Expanded movie data
 const movies = [
   { 
     id: 1, 
@@ -15,7 +16,8 @@ const movies = [
     genres: ["Tam ly", "Toi pham"],
     year: 1994,
     features: [0.9, 0.1, 0.8, 0.2, 0.7, 0.5, 0.3],
-    description: "Mot nha ngan hang bi ket an tu chung than vi toi giet vo..."
+    description: "Mot nha ngan hang bi ket an tu chung than vi toi giet vo...",
+    image: "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_SX300.jpg"
   },
   { 
     id: 2, 
@@ -24,7 +26,8 @@ const movies = [
     genres: ["Toi pham", "Tam ly"],
     year: 1972,
     features: [0.8, 0.9, 0.3, 0.1, 0.6, 0.7, 0.4],
-    description: "Cau chuyen ve gia dinh mafia huyen thoai Corleone..."
+    description: "Cau chuyen ve gia dinh mafia huyen thoai Corleone...",
+    image: "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"
   },
   { 
     id: 3, 
@@ -33,35 +36,127 @@ const movies = [
     genres: ["Hanh dong", "Vien tuong"],
     year: 2008,
     features: [0.7, 0.8, 0.2, 0.9, 0.5, 0.6, 0.8],
-    description: "Batman doi dau voi ke thu nguy hiem - Joker..."
-  }
+    description: "Batman doi dau voi ke thu nguy hiem - Joker...",
+    image: "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg"
+  },
+  // Add more movies here...
 ];
 
 const genres = ["Tam ly", "Toi pham", "Hanh dong", "Tinh cam", "Vien tuong", "Phieu luu", "Hai"];
 
-// Neural Network class implementation remains the same as in your original code
-class EnhancedNeuralNetwork {
-  // ... copy the entire class implementation from the original code
+// TF-IDF for content-based filtering
+class TFIDF {
+  private documents: string[];
+  private tfidf: any;
+
+  constructor(documents: string[]) {
+    this.documents = documents;
+    this.tfidf = new natural.TfIdf();
+    documents.forEach(doc => this.tfidf.addDocument(doc));
+  }
+
+  getSimilarity(doc1: string, doc2: string): number {
+    const terms1 = this.tfidf.listTerms(this.documents.indexOf(doc1));
+    const terms2 = this.tfidf.listTerms(this.documents.indexOf(doc2));
+    
+    const vector1 = new Map(terms1.map(term => [term.term, term.tfidf]));
+    const vector2 = new Map(terms2.map(term => [term.term, term.tfidf]));
+    
+    let dotProduct = 0;
+    let magnitude1 = 0;
+    let magnitude2 = 0;
+
+    for (const [term, tfidf] of vector1) {
+      dotProduct += tfidf * (vector2.get(term) || 0);
+      magnitude1 += tfidf * tfidf;
+    }
+
+    for (const tfidf of vector2.values()) {
+      magnitude2 += tfidf * tfidf;
+    }
+
+    return dotProduct / (Math.sqrt(magnitude1) * Math.sqrt(magnitude2));
+  }
 }
 
-const MovieRecommender = () => {
-  const [userRatings, setUserRatings] = useState({});
-  const [recommendations, setRecommendations] = useState([]);
-  const [model, setModel] = useState(null);
-  const [feedback, setFeedback] = useState({});
+// Neural Network for collaborative filtering
+class NeuralCollaborativeFiltering {
+  private model: tf.LayersModel | null = null;
+
+  async createModel(numUsers: number, numMovies: number, embeddingSize: number = 50) {
+    const userInput = tf.input({shape: [1]});
+    const movieInput = tf.input({shape: [1]});
+
+    const userEmbedding = tf.layers.embedding({inputDim: numUsers, outputDim: embeddingSize}).apply(userInput);
+    const movieEmbedding = tf.layers.embedding({inputDim: numMovies, outputDim: embeddingSize}).apply(movieInput);
+
+    const dot = tf.layers.dot({axes: 2}).apply([userEmbedding, movieEmbedding]);
+    const flatten = tf.layers.flatten().apply(dot);
+
+    const dense1 = tf.layers.dense({units: 64, activation: 'relu'}).apply(flatten);
+    const dense2 = tf.layers.dense({units: 32, activation: 'relu'}).apply(dense1);
+    const output = tf.layers.dense({units: 1, activation: 'sigmoid'}).apply(dense2);
+
+    this.model = tf.model({inputs: [userInput, movieInput], outputs: output});
+    this.model.compile({optimizer: 'adam', loss: 'binaryCrossentropy', metrics: ['accuracy']});
+  }
+
+  async train(userIds: number[], movieIds: number[], ratings: number[], epochs: number = 10) {
+    if (!this.model) throw new Error("Model not created");
+
+    const userTensor = tf.tensor2d(userIds, [userIds.length, 1]);
+    const movieTensor = tf.tensor2d(movieIds, [movieIds.length, 1]);
+    const ratingTensor = tf.tensor2d(ratings, [ratings.length, 1]);
+
+    await this.model.fit([userTensor, movieTensor], ratingTensor, {
+      epochs: epochs,
+      batchSize: 32,
+      callbacks: {
+        onEpochEnd: (epoch, logs) => {
+          console.log(`Epoch ${epoch}: loss = ${logs?.loss}, accuracy = ${logs?.acc}`);
+        }
+      }
+    });
+  }
+
+  async predict(userId: number, movieId: number): Promise<number> {
+    if (!this.model) throw new Error("Model not trained");
+
+    const userTensor = tf.tensor2d([userId], [1, 1]);
+    const movieTensor = tf.tensor2d([movieId], [1, 1]);
+
+    const prediction = this.model.predict([userTensor, movieTensor]) as tf.Tensor;
+    const result = await prediction.data();
+    return result[0];
+  }
+}
+
+export default function Component() {
+  const [userRatings, setUserRatings] = useState<Record<number, number>>({});
+  const [recommendations, setRecommendations] = useState<(typeof movies[0] & { score: number })[]>([]);
+  const [neuralModel, setNeuralModel] = useState<NeuralCollaborativeFiltering | null>(null);
+  const [tfidf, setTfidf] = useState<TFIDF | null>(null);
   const [activeTab, setActiveTab] = useState("rate");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("name");
   const [userPreferences, setUserPreferences] = useState({
-    favoriteGenres: [],
+    favoriteGenres: [] as string[],
     minRating: 0,
-    watchHistory: []
+    watchHistory: [] as number[]
   });
 
   useEffect(() => {
-    const newModel = new EnhancedNeuralNetwork(7, 10, 1);
-    setModel(newModel);
+    const initializeModels = async () => {
+      const newNeuralModel = new NeuralCollaborativeFiltering();
+      await newNeuralModel.createModel(1, movies.length); // Assuming single user for simplicity
+      setNeuralModel(newNeuralModel);
+
+      const newTfidf = new TFIDF(movies.map(movie => `${movie.title} ${movie.engTitle} ${movie.description}`));
+      setTfidf(newTfidf);
+    };
+
+    initializeModels();
 
     const storedData = localStorage.getItem('moviePreferences');
     if (storedData) {
@@ -76,7 +171,20 @@ const MovieRecommender = () => {
       ratings: userRatings,
       preferences: userPreferences
     }));
-  }, [userRatings, userPreferences]);
+
+    // Train the neural model whenever ratings change
+    if (neuralModel && Object.keys(userRatings).length > 0) {
+      const userIds = [];
+      const movieIds = [];
+      const ratings = [];
+      for (const [movieId, rating] of Object.entries(userRatings)) {
+        userIds.push(0); // Assuming single user with ID 0
+        movieIds.push(parseInt(movieId) - 1); // Adjust for 0-based index
+        ratings.push(rating / 5); // Normalize ratings to [0, 1]
+      }
+      neuralModel.train(userIds, movieIds, ratings);
+    }
+  }, [userRatings, userPreferences, neuralModel]);
 
   const filteredMovies = movies.filter(movie => {
     const matchesSearch = movie.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -99,273 +207,242 @@ const MovieRecommender = () => {
     }
   });
 
-  const handleRating = (movieId, rating) => {
+  const handleRating = useCallback(async (movieId: number, rating: number) => {
     setUserRatings(prev => ({ ...prev, [movieId]: rating }));
     setUserPreferences(prev => ({
       ...prev,
       watchHistory: [...new Set([...prev.watchHistory, movieId])]
     }));
-  };
+  }, []);
 
-  const calculateMovieScore = (movie) => {
-    const predictedScore = model.forward(movie.features)[0];
-    const genreMatchScore = calculateGenreMatchScore(movie.genres);
-    return (predictedScore * 0.7) + (genreMatchScore * 0.3);
-  };
-
-  const calculateGenreMatchScore = (movieGenres) => {
-    const favoriteGenres = userPreferences.favoriteGenres;
-    if (favoriteGenres.length === 0) return 0.5;
-    return movieGenres.filter(genre => favoriteGenres.includes(genre)).length / favoriteGenres.length;
-  };
-
-  const handleRecommend = () => {
-    if (!model || Object.keys(userRatings).length < 3) {
-      alert("Vui long danh gia it nhat 3 bo phim de nhan goi y chinh xac hon!");
+  const handleRecommend = useCallback(async () => {
+    if (!neuralModel || !tfidf) {
+      message.error("Hệ thống gợi ý chưa sẵn sàng. Vui lòng thử lại sau.");
       return;
     }
 
+    if (Object.keys(userRatings).length < 3) {
+      message.warning("Vui lòng đánh giá ít nhất 3 bộ phim để nhận gợi ý chính xác hơn!");
+      return;
+    }
+
+    const collaborativeScores = await Promise.all(
+      movies.map(movie => neuralModel.predict(0, movie.id - 1))
+    );
+
+    const contentBasedScores = movies.map(movie => {
+      const userRatedMovies = Object.keys(userRatings).map(id => movies.find(m => m.id === parseInt(id))!);
+      const similarities = userRatedMovies.map(ratedMovie => 
+        tfidf.getSimilarity(
+          `${movie.title} ${movie.engTitle} ${movie.description}`,
+          `${ratedMovie.title} ${ratedMovie.engTitle} ${ratedMovie.description}`
+        )
+      );
+      return similarities.reduce((sum, sim) => sum + sim, 0) / similarities.length;
+    });
+
+    const hybridScores = collaborativeScores.map((collab, index) => 
+      (collab * 0.7) + (contentBasedScores[index] * 0.3)
+    );
+
     const recommendedMovies = movies
-      .filter(movie => !userRatings[movie.id])
-      .map(movie => ({
+      .map((movie, index) => ({
         ...movie,
-        score: calculateMovieScore(movie)
+        score: hybridScores[index]
       }))
       .sort((a, b) => b.score - a.score)
       .slice(0, 5);
 
     setRecommendations(recommendedMovies);
-  };
+    setActiveTab("recommend");
+    message.success("Đã tạo gợi ý phim dựa trên đánh giá và sở thích của bạn!");
+  }, [neuralModel, tfidf, userRatings]);
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">He Thong Goi Y Phim</h1>
+      <Title level={2}>Hệ Thống Gợi Ý Phim Nâng Cao</Title>
       
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="mb-4">
-          <TabsTrigger value="rate">Danh Gia Phim</TabsTrigger>
-          <TabsTrigger value="recommend">Goi Y Cho Ban</TabsTrigger>
-          <TabsTrigger value="preferences">Tuy Chon</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="rate">
+      <Tabs activeKey={activeTab} onChange={setActiveTab}>
+        <TabPane tab="Đánh Giá Phim" key="rate">
           <div className="mb-4 space-y-4">
-            <div className="flex items-center space-x-2">
-              <Search className="w-4 h-4" />
-              <Input
-                placeholder="Tim kiem phim..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full"
-              />
-            </div>
+            <Input
+              placeholder="Tìm kiếm phim..."
+              prefix={<SearchOutlined />}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
             
             <div className="flex space-x-4">
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Sap xep theo" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="name">Ten phim</SelectItem>
-                  <SelectItem value="year">Nam</SelectItem>
-                  <SelectItem value="rating">Diem danh gia</SelectItem>
-                </SelectContent>
+              <Select
+                style={{ width: 200 }}
+                placeholder="Sắp xếp theo"
+                value={sortBy}
+                onChange={setSortBy}
+              >
+                <Select.Option value="name">Tên phim</Select.Option>
+                <Select.Option value="year">Năm</Select.Option>
+                <Select.Option value="rating">Điểm đánh giá</Select.Option>
               </Select>
 
-              <Select value={selectedGenres} onValueChange={setSelectedGenres}>
-                <SelectTrigger>
-                  <SelectValue placeholder="The loai" />
-                </SelectTrigger>
-                <SelectContent>
-                  {genres.map(genre => (
-                    <SelectItem key={genre} value={genre}>{genre}</SelectItem>
-                  ))}
-                </SelectContent>
+              <Select
+                mode="multiple"
+                style={{ width: '100%' }}
+                placeholder="Thể loại"
+                value={selectedGenres}
+                onChange={setSelectedGenres}
+              >
+                {genres.map(genre => (
+                  <Select.Option key={genre} value={genre}>{genre}</Select.Option>
+                ))}
               </Select>
             </div>
           </div>
 
-          <div className="grid gap-4">
-            {sortedMovies.map(movie => (
-              <Card key={movie.id} className="p-4">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-lg font-semibold">{movie.title}</h3>
-                    <p className="text-sm text-gray-600">{movie.engTitle} ({movie.year})</p>
-                  </div>
-                  <div className="flex gap-1">
-                    {movie.genres.map(genre => (
-                      <span key={genre} className="px-2 py-1 bg-gray-100 rounded-full text-xs">
-                        {genre}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+          <List
+            itemLayout="vertical"
+            size="large"
+            dataSource={sortedMovies}
+            renderItem={movie => (
+              <List.Item
+                key={movie.id}
+                extra={
+                  <img
+                    width={200}
+                    alt={movie.title}
+                    src={movie.image}
+                  />
                 
-                <p className="mt-2 text-sm text-gray-700">{movie.description}</p>
-                
-                <div className="mt-4 flex items-center gap-2">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      onClick={() => handleRating(movie.id, star)}
-                      className={`text-2xl ${
-                        star <= (userRatings[movie.id] || 0)
-                          ? 'text-yellow-400'
-                          : 'text-gray-300'
-                      }`}
-                    >
-                      ★
-                    </button>
-                  ))}
-                </div>
-              </Card>
-            ))}
-          </div>
-
-          <Button 
-            onClick={handleRecommend}
-            className="mt-6"
-            disabled={Object.keys(userRatings).length < 3}
-          >
-            Nhan Goi Y Phim
-          </Button>
-        </TabsContent>
-
-        <TabsContent value="recommend">
-          {recommendations.length === 0 ? (
-            <div className="text-center py-8">
-              <p>Hay danh gia mot so bo phim de nhan goi y phu hop!</p>
-            </div>
-          ) : (
-            <div className="grid gap-4">
-              {recommendations.map(movie => (
-                <Card key={movie.id} className="p-4">
-                  <div className="flex justify-between items-start">
+                }
+              >
+                <List.Item.Meta
+                  title={<a href="#">{movie.title} ({movie.engTitle})</a>}
+                  description={
                     <div>
-                      <h3 className="text-lg font-semibold">{movie.title}</h3>
-                      <p className="text-sm text-gray-600">
-                        {movie.engTitle} ({movie.year})
-                      </p>
-                    </div>
-                    <div className="flex gap-1">
+                      <Text>{movie.year}</Text>
+                      <br />
                       {movie.genres.map(genre => (
-                        <span key={genre} className="px-2 py-1 bg-gray-100 rounded-full text-xs">
-                          {genre}
-                        </span>
+                        <Tag key={genre}>{genre}</Tag>
                       ))}
                     </div>
-                  </div>
+                  }
+                />
+                <Paragraph>{movie.description}</Paragraph>
+                <Rate 
+                  allowHalf 
+                  value={userRatings[movie.id] || 0} 
+                  onChange={(value) => handleRating(movie.id, value)}
+                />
+              </List.Item>
+            )}
+          />
 
-                  <p className="mt-2 text-sm text-gray-700">{movie.description}</p>
+          <Button 
+            type="primary"
+            onClick={handleRecommend}
+            disabled={Object.keys(userRatings).length < 3}
+            style={{ marginTop: '20px' }}
+          >
+            Nhận Gợi Ý Phim
+          </Button>
+        </TabPane>
 
-                  <div className="mt-4 flex items-center justify-between">
-                    <div>
-                      Do phu hop: <span className="font-semibold">{(movie.score * 100).toFixed(1)}%</span>
-                    </div>
-                    
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setFeedback(prev => ({ ...prev, [movie.id]: true }))}
-                      >
-                        <ThumbsUp className="w-4 h-4 mr-2" />
-                        Hay
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setFeedback(prev => ({ ...prev, [movie.id]: false }))}
-                      >
-                        <ThumbsDown className="w-4 h-4 mr-2" />
-                        Chua hay
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              ))}
+        <TabPane tab="Gợi Ý Cho Bạn" key="recommend">
+          {recommendations.length === 0 ? (
+            <div className="text-center py-8">
+              <Paragraph>Hãy đánh giá một số bộ phim để nhận gợi ý phù hợp!</Paragraph>
+              <Button onClick={() => setActiveTab("rate")}>Đánh giá phim ngay</Button>
             </div>
-          )}
-        </TabsContent>
-
-        <TabsContent value="preferences">
-          <Card className="p-4">
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold mb-2">The loai yeu thich</h3>
-                <Select
-                  value={userPreferences.favoriteGenres}
-                  onValueChange={(value) => setUserPreferences(prev => ({
-                    ...prev,
-                    favoriteGenres: Array.isArray(value) ? value : [value]
-                  }))}
+          ) : (
+            <List
+              itemLayout="vertical"
+              size="large"
+              dataSource={recommendations}
+              renderItem={movie => (
+                <List.Item
+                  key={movie.id}
+                  extra={
+                    <img
+                      width={200}
+                      alt={movie.title}
+                      src={movie.image}
+                    />
+                  }
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Chon the loai ban yeu thich" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {genres.map(genre => (
-                      <SelectItem key={genre} value={genre}>{genre}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold mb-2">Diem danh gia toi thieu</h3>
-                <div className="flex gap-2">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      onClick={() => setUserPreferences(prev => ({ ...prev, minRating: star }))}
-                      className={`text-2xl ${
-                        star <= userPreferences.minRating
-                          ? 'text-yellow-400'
-                          : 'text-gray-300'
-                      }`}
-                    >
-                      ★
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold mb-2">
-                  Lich su xem ({userPreferences.watchHistory.length} phim)
-                </h3>
-                <div className="space-y-2">
-                  {userPreferences.watchHistory.map(movieId => {
-                    const movie = movies.find(m => m.id === movieId);
-                    return movie ? (
-                      <div key={movieId} className="flex items-center justify-between">
-                        <span>{movie.title}</span>
-                        <div className="flex gap-1">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <span
-                              key={star}
-                              className={`text-xl ${
-                                star <= (userRatings[movieId] || 0)
-                                  ? 'text-yellow-400'
-                                  : 'text-gray-300'
-                              }`}
-                            >
-                              ★
-                            </span>
-                          ))}
-                        </div>
+                  <List.Item.Meta
+                    title={<a href="#">{movie.title} ({movie.engTitle})</a>}
+                    description={
+                      <div>
+                        <Text>{movie.year}</Text>
+                        <br />
+                        {movie.genres.map(genre => (
+                          <Tag key={genre}>{genre}</Tag>
+                        ))}
                       </div>
-                    ) : null;
-                  })}
-                </div>
-              </div>
-            </div>
+                    }
+                  />
+                  <Paragraph>{movie.description}</Paragraph>
+                  <Paragraph>Độ phù hợp: <Text strong>{(movie.score * 100).toFixed(1)}%</Text></Paragraph>
+                </List.Item>
+              )}
+            />
+          )}
+        </TabPane>
+
+        <TabPane tab="Tùy Chọn" key="preferences">
+          <Card>
+            <Title level={4}>Thể loại yêu thích</Title>
+            <Select
+              mode="multiple"
+              style={{ width: '100%' }}
+              placeholder="Chọn thể loại bạn yêu thích"
+              value={userPreferences.favoriteGenres}
+              onChange={(value) => setUserPreferences(prev => ({
+                ...prev,
+                favoriteGenres: value
+              }))}
+            >
+              {genres.map(genre => (
+                <Select.Option key={genre} value={genre}>{genre}</Select.Option>
+              ))}
+            </Select>
+
+            <Title level={4} style={{ marginTop: '20px' }}>Điểm đánh giá tối thiểu</Title>
+            <Slider
+              min={0}
+              max={5}
+              step={0.5}
+              value={userPreferences.minRating}
+              onChange={(value) => setUserPreferences(prev => ({ ...prev, minRating: value }))}
+            />
+
+            <Title level={4} style={{ marginTop: '20px' }}>
+              Lịch sử xem ({userPreferences.watchHistory.length} phim)
+            </Title>
+            <List
+              itemLayout="horizontal"
+              dataSource={userPreferences.watchHistory}
+              renderItem={movieId => {
+                const movie = movies.find(m => m.id === movieId);
+                return movie ? (
+                  <List.Item>
+                    <List.Item.Meta
+                      avatar={<Avatar src={movie.image} />}
+                      title={movie.title}
+                      description={
+                        <Rate 
+                          disabled 
+                          value={userRatings[movieId] || 0} 
+                        />
+                      }
+                    />
+                  </List.Item>
+                ) : null;
+              }}
+            />
           </Card>
-        </TabsContent>
+        </TabPane>
       </Tabs>
     </div>
   );
-};
-
-export default MovieRecommender;
+}
+npm install @tensorflow/tfjs natural
