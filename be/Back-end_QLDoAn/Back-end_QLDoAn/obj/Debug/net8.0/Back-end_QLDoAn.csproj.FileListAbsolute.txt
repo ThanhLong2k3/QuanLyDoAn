@@ -31,3 +31,36 @@ C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\
 C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.pdb
 C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.genruntimeconfig.cache
 C:\Users\plong\Desktop\QLDOAN\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\ref\Back-end_QLDoAn.dll
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\bin\Debug\net8.0\appsettings.json
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\bin\Debug\net8.0\Back-end_QLDoAn.exe
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\bin\Debug\net8.0\Back-end_QLDoAn.deps.json
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\bin\Debug\net8.0\Back-end_QLDoAn.runtimeconfig.json
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\bin\Debug\net8.0\Back-end_QLDoAn.dll
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\bin\Debug\net8.0\Back-end_QLDoAn.pdb
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.csproj.AssemblyReference.cache
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.AssemblyInfoInputs.cache
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.AssemblyInfo.cs
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.csproj.CoreCompileInputs.cache
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.sourcelink.json
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets\msbuild.Back-end_QLDoAn.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets\msbuild.build.Back-end_QLDoAn.props
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Back-end_QLDoAn.props
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Back-end_QLDoAn.props
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\scopedcss\bundle\Back-end_QLDoAn.styles.css
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end.D53BE0EA.Up2Date
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.dll
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\refint\Back-end_QLDoAn.dll
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.pdb
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.genruntimeconfig.cache
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\ref\Back-end_QLDoAn.dll

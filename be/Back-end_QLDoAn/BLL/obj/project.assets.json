@@ -9282,19 +9282,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\plong\\.nuget\\packages\\": {}
+    "C:\\Users\\Phuong Linh\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\plong\\Desktop\\QLDOAN\\QuanLyDoAn\\be\\Back-end_QLDoAn\\BLL\\BLL.csproj",
+      "projectUniqueName": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\BLL\\BLL.csproj",
       "projectName": "BLL",
-      "projectPath": "C:\\Users\\plong\\Desktop\\QLDOAN\\QuanLyDoAn\\be\\Back-end_QLDoAn\\BLL\\BLL.csproj",
-      "packagesPath": "C:\\Users\\plong\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\plong\\Desktop\\QLDOAN\\QuanLyDoAn\\be\\Back-end_QLDoAn\\BLL\\obj\\",
+      "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\BLL\\BLL.csproj",
+      "packagesPath": "C:\\Users\\Phuong Linh\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\BLL\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\plong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Phuong Linh\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9309,11 +9309,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\plong\\Desktop\\QLDOAN\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\DAL.csproj": {
-              "projectPath": "C:\\Users\\plong\\Desktop\\QLDOAN\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\DAL.csproj"
+            "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\DAL.csproj"
             },
-            "C:\\Users\\plong\\Desktop\\QLDOAN\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj": {
-              "projectPath": "C:\\Users\\plong\\Desktop\\QLDOAN\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj"
+            "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj": {
+              "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj"
             }
           }
         }
@@ -9348,7 +9348,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

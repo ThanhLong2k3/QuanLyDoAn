@@ -1,21 +1,21 @@
 {
   "Version": 1,
-  "Hash": "LMCEr/uehpMwgnHUiAvCpCosHiEHU9wC1G6YPeH3sC0=",
+  "Hash": "jAvZs/ev3A+aBgvwzSwtbH2WZ5XHONe5XQTmOojPuI8=",
   "Source": "quanLyDoAn",
   "BasePath": "_content/quanLyDoAn",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Users\\plong\\Desktop\\QLDOAN\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj",
+      "Identity": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj",
       "Version": 2,
       "Source": "Back-end_QLDoAn",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
-      "AdditionalPublishProperties": "",
-      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;Configuration;Platform;TargetFramework",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework",
       "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
-      "AdditionalBuildProperties": "",
-      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;Configuration;Platform;TargetFramework"
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework"
     }
   ],
   "DiscoveryPatterns": [],

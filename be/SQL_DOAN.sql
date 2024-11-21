@@ -800,12 +800,31 @@ BEGIN
     END
 END;
 GO
+SELECT *FROM nguoiDung
 select*from nguoiDung_nhomQuyen
 select*from nhomQuyen
 select*from nhomQuyen_phanQuyen
+SELECT *FROM phanQuyen
 CREATE PROCEDURE GETPHANQUYENBYTAIKHOAN
 @taiKhoan nvarchar(50)
 as
 	begin
 SELECT nhomQuyen_phanQuyen.maNhomQuyen,nhomQuyen_phanQuyen.maQuyen FROM nhomQuyen_phanQuyen INNER JOIN nguoiDung_nhomQuyen ON nhomQuyen_phanQuyen.maNhomQuyen=nguoiDung_nhomQuyen.maNhomQuyen WHERE nguoiDung_nhomQuyen.taiKhoan=@taiKhoan;
 end
+
+INSERT INTO nhomQuyen_phanQuyen (maNhomQuyen,maQuyen)VALUES
+('NQ01','ADD_GIANGVIEN'),
+('NQ01','ADD_LOP'),
+('NQ01','ADD_SINHVIEN'),
+('NQ01','DEL_GIANGVIEN'),
+('NQ01','DEL_LOP'),
+('NQ01','DEL_SINHVIEN'),
+('NQ01','UP_GIANGVIEN'),
+('NQ01','UP_LOP'),
+('NQ01','UP_SINHVIEN'),
+('NQ01','ADD_NGUOIDUNG'),
+('NQ01','ADD_NHOMQUYEN'),
+('NQ01','DEL_NGUOIDUNG'),
+('NQ01','DEL_NHOMQUYEN'),
+('NQ01','UP_NGUOIDUNG'),
+('NQ01','UP_NHOMQUYEN')

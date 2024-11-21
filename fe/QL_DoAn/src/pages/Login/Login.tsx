@@ -26,7 +26,7 @@ const Login: React.FC = () => {
             const listQuyen = await getall(URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.GETBYTAIKHOAN(account.taiKhoan));
             
             console.log("listQuyen:", listQuyen);
-
+            debugger;
             if (Array.isArray(listQuyen) && listQuyen.length > 0) {
                 const maQuyenArray = listQuyen.map(item => item.maQuyen);
 
