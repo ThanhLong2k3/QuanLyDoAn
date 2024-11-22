@@ -158,46 +158,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 5,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\quanLyDoAn\\appsettings.json",
-              "RelativeDocumentMoniker": "quanLyDoAn\\appsettings.json",
-              "ToolTip": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\quanLyDoAn\\appsettings.json",
-              "RelativeToolTip": "quanLyDoAn\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAACEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-11-19T06:50:55.365Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Lop_CTRL.cs",
-              "DocumentMoniker": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\quanLyDoAn\\Controllers\\QL_DoAn\\Lop_CTRL.cs",
-              "RelativeDocumentMoniker": "quanLyDoAn\\Controllers\\QL_DoAn\\Lop_CTRL.cs",
-              "ToolTip": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\quanLyDoAn\\Controllers\\QL_DoAn\\Lop_CTRL.cs",
-              "RelativeToolTip": "quanLyDoAn\\Controllers\\QL_DoAn\\Lop_CTRL.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAIBQwCgAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T14:48:19.619Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Lop_BLL.cs",
-              "DocumentMoniker": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\BLL\\QL_NguoiDung\\Lop_BLL.cs",
-              "RelativeDocumentMoniker": "BLL\\QL_NguoiDung\\Lop_BLL.cs",
-              "ToolTip": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\BLL\\QL_NguoiDung\\Lop_BLL.cs",
-              "RelativeToolTip": "BLL\\QL_NguoiDung\\Lop_BLL.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAA1wB4AAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T14:56:21.766Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             },
             {
               "$type": "Document",
@@ -209,8 +174,7 @@
               "RelativeToolTip": "BLL\\InterFace\\QL_DoAn\\ILop_BLL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T14:56:13.833Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-16T14:56:13.833Z"
             },
             {
               "$type": "Document",
@@ -222,8 +186,7 @@
               "RelativeToolTip": "DAL\\QL_DoAnRepository\\SinhVienRepository.cs",
               "ViewState": "AgIAAFAAAAAAAAAAAAAowC0AAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T00:46:39.406Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T00:46:39.406Z"
             },
             {
               "$type": "Document",
@@ -235,8 +198,7 @@
               "RelativeToolTip": "BLL\\QL_NguoiDung\\GiangVien_BLL.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAcwA0AAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-17T16:09:02.071Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-17T16:09:02.071Z"
             },
             {
               "$type": "Document",
@@ -248,8 +210,7 @@
               "RelativeToolTip": "quanLyDoAn\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T01:16:04.822Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T01:16:04.822Z"
             },
             {
               "$type": "Document",
@@ -266,6 +227,42 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Lop_BLL.cs",
+              "DocumentMoniker": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\BLL\\QL_NguoiDung\\Lop_BLL.cs",
+              "RelativeDocumentMoniker": "BLL\\QL_NguoiDung\\Lop_BLL.cs",
+              "ToolTip": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\BLL\\QL_NguoiDung\\Lop_BLL.cs",
+              "RelativeToolTip": "BLL\\QL_NguoiDung\\Lop_BLL.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAA1wB4AAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-16T14:56:21.766Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Lop_CTRL.cs",
+              "DocumentMoniker": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\quanLyDoAn\\Controllers\\QL_DoAn\\Lop_CTRL.cs",
+              "RelativeDocumentMoniker": "quanLyDoAn\\Controllers\\QL_DoAn\\Lop_CTRL.cs",
+              "ToolTip": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\quanLyDoAn\\Controllers\\QL_DoAn\\Lop_CTRL.cs",
+              "RelativeToolTip": "quanLyDoAn\\Controllers\\QL_DoAn\\Lop_CTRL.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAIBQwCgAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-16T14:48:19.619Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\quanLyDoAn\\appsettings.json",
+              "RelativeDocumentMoniker": "quanLyDoAn\\appsettings.json",
+              "ToolTip": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\quanLyDoAn\\appsettings.json",
+              "RelativeToolTip": "quanLyDoAn\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAACEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-11-19T06:50:55.365Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 8,
               "Title": "SinhVienDTO.cs",
               "DocumentMoniker": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\QL_DoAn\\SinhVienDTO.cs",
@@ -274,8 +271,7 @@
               "RelativeToolTip": "DTO\\QL_DoAn\\SinhVienDTO.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAuwA4AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T15:15:46.471Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T15:15:46.471Z"
             },
             {
               "$type": "Document",
@@ -287,8 +283,7 @@
               "RelativeToolTip": "DAL\\DAL.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-11-19T06:42:06.332Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-19T06:42:06.332Z"
             },
             {
               "$type": "Document",
@@ -300,8 +295,7 @@
               "RelativeToolTip": "DAL\\InterFace\\QL_DoAn\\ILopRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T14:07:59.791Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-16T14:07:59.791Z"
             },
             {
               "$type": "Document",
@@ -313,8 +307,7 @@
               "RelativeToolTip": "BLL\\InterFace\\QL_DoAn\\IGiangVien_BLL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-17T16:10:23.717Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-17T16:10:23.717Z"
             },
             {
               "$type": "Document",
@@ -326,8 +319,7 @@
               "RelativeToolTip": "DAL\\QL_DoAnRepository\\GiangVienRepository.cs",
               "ViewState": "AgIAAEsAAAAAAAAAAAAlwH8AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T11:24:29.513Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T11:24:29.513Z"
             },
             {
               "$type": "Document",
@@ -339,8 +331,7 @@
               "RelativeToolTip": "DAL\\InterFace\\QL_DoAn\\IGiangVienReposirooty.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T02:23:22.512Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T02:23:22.512Z"
             },
             {
               "$type": "Document",
@@ -352,8 +343,7 @@
               "RelativeToolTip": "DAL\\QL_DoAnRepository\\LopRepository.cs",
               "ViewState": "AgIAAC8AAAAAAAAAAAAgwDwAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T07:56:26.395Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-16T07:56:26.395Z"
             },
             {
               "$type": "Document",
@@ -365,8 +355,7 @@
               "RelativeToolTip": "DTO\\QL_DoAn\\HoiDongSinhVienDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T15:16:17.685Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T15:16:17.685Z"
             },
             {
               "$type": "Document",
@@ -378,8 +367,7 @@
               "RelativeToolTip": "DTO\\QL_HeThong\\nhomQuyen_DTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T15:16:23.456Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T15:16:23.456Z"
             },
             {
               "$type": "Document",
@@ -391,8 +379,7 @@
               "RelativeToolTip": "DTO\\QL_DoAn\\LopDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T15:15:13.505Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T15:15:13.505Z"
             },
             {
               "$type": "Document",
@@ -404,8 +391,7 @@
               "RelativeToolTip": "DTO\\QL_HeThong\\NhomQuyenPhanQuyen_DTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T15:11:24.274Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T15:11:24.274Z"
             },
             {
               "$type": "Document",
@@ -417,8 +403,7 @@
               "RelativeToolTip": "DTO\\QL_HeThong\\nguoiDung_DTO.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAAwBAAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T11:31:55.462Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T11:31:55.462Z"
             },
             {
               "$type": "Document",
@@ -430,8 +415,7 @@
               "RelativeToolTip": "DTO\\QL_HeThong\\phanQuyen_DTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T15:16:33.189Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T15:16:33.189Z"
             },
             {
               "$type": "Document",
@@ -443,8 +427,7 @@
               "RelativeToolTip": "DTO\\QL_HeThong\\NguoiDungNhomQuyen_DTO.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T15:16:40.979Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T15:16:40.979Z"
             },
             {
               "$type": "Document",
@@ -456,8 +439,7 @@
               "RelativeToolTip": "DTO\\QL_DoAn\\HoiDongGiangVienDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T15:16:13.906Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T15:16:13.906Z"
             },
             {
               "$type": "Document",
@@ -469,8 +451,7 @@
               "RelativeToolTip": "DTO\\QL_DoAn\\HoiDongDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T15:16:04.503Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T15:16:04.503Z"
             },
             {
               "$type": "Document",
@@ -482,8 +463,7 @@
               "RelativeToolTip": "DTO\\QL_DoAn\\DotLamDoAnDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T15:15:58.92Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T15:15:58.92Z"
             },
             {
               "$type": "Document",
@@ -495,8 +475,7 @@
               "RelativeToolTip": "quanLyDoAn\\Controllers\\QL_HeThong\\nguoiDung_CTRL.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAxwBUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T01:45:39.609Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T01:45:39.609Z"
             },
             {
               "$type": "Document",
@@ -508,8 +487,7 @@
               "RelativeToolTip": "quanLyDoAn\\Controllers\\QL_HeThong\\nhomQuyen_PhanQuyen_CTRL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAIBJwBEAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T01:01:26.733Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T01:01:26.733Z"
             },
             {
               "$type": "Document",
@@ -521,8 +499,7 @@
               "RelativeToolTip": "DTO\\QL_DoAn\\GiangVienDTO.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAIBJwBEAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T11:28:55.982Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T11:28:55.982Z"
             },
             {
               "$type": "Document",
@@ -534,8 +511,7 @@
               "RelativeToolTip": "BLL\\QL_HeThong\\nguoiDung_BLL.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAIBJwBIAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T02:17:55.303Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T02:17:55.303Z"
             },
             {
               "$type": "Document",
@@ -547,8 +523,7 @@
               "RelativeToolTip": "BLL\\InterFace\\QL_HeThong\\InhomQuyen_PhanQuyen_BLL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T15:02:20.709Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T15:02:20.709Z"
             },
             {
               "$type": "Document",
@@ -560,8 +535,7 @@
               "RelativeToolTip": "BLL\\QL_HeThong\\nhomQuyen_PhanQuyen_BLL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAIBJwBIAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T15:02:28.181Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T15:02:28.181Z"
             },
             {
               "$type": "Document",
@@ -573,8 +547,7 @@
               "RelativeToolTip": "DAL\\InterFace\\QL_HeThong\\INhomQuyenPhanQuyenRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T14:59:59.17Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T14:59:59.17Z"
             },
             {
               "$type": "Document",
@@ -586,8 +559,7 @@
               "RelativeToolTip": "DAL\\QL_HethongRepository\\nguoiDung_NhomQuyenReposiory.cs",
               "ViewState": "AgIAACgAAAAAAAAAAAAhwDQAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T00:47:05.038Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T00:47:05.038Z"
             },
             {
               "$type": "Document",
@@ -599,8 +571,7 @@
               "RelativeToolTip": "DAL\\QL_HethongRepository\\nguoiDungRepository.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAQwCEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T00:47:07.571Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T00:47:07.571Z"
             },
             {
               "$type": "Document",
@@ -612,8 +583,7 @@
               "RelativeToolTip": "quanLyDoAn\\Controllers\\QL_DoAn\\SinhVien_CTRL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T02:23:33.972Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T02:23:33.972Z"
             },
             {
               "$type": "Document",
@@ -625,8 +595,7 @@
               "RelativeToolTip": "quanLyDoAn\\Controllers\\QL_HeThong\\PhanQuyen_CTRL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T01:16:05.609Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T01:16:05.609Z"
             },
             {
               "$type": "Document",
@@ -638,8 +607,7 @@
               "RelativeToolTip": "quanLyDoAn\\Controllers\\QL_HeThong\\nguoiDung_NhomQuyen_CTRL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T01:01:25.605Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-15T01:01:25.605Z"
             }
           ]
         }

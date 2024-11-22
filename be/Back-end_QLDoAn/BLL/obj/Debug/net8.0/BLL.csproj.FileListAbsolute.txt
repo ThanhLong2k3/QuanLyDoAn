@@ -48,3 +48,4 @@ C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\BLL\obj\Debug\net8.0\
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\BLL\obj\Debug\net8.0\BLL.sourcelink.json
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\BLL\obj\Debug\net8.0\BLL.csproj.Up2Date
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\BLL\obj\Debug\net8.0\ref\BLL.dll
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\BLL\bin\Debug\net8.0\Back-end_QLDoAn.staticwebassets.endpoints.json

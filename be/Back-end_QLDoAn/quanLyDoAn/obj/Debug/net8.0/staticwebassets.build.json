@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jAvZs/ev3A+aBgvwzSwtbH2WZ5XHONe5XQTmOojPuI8=",
+  "Hash": "b3b6qUXAvTJHQgD8Mq1/h78GhylXb5oMeJM8jxBEIC0=",
   "Source": "quanLyDoAn",
   "BasePath": "_content/quanLyDoAn",
   "Mode": "Default",
@@ -19,5 +19,6 @@
     }
   ],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

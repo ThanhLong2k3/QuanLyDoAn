@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "5pgED25jpHpHiFqOFzGLm8vEFVSrKxwEOBuFXGWh0DI=",
+  "Hash": "NSbhQlRd4iQ6DYX20Aesw6r20iDsB+r8U+BWy2UcDMs=",
   "Source": "Back-end_QLDoAn",
   "BasePath": "_content/Back-end_QLDoAn",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

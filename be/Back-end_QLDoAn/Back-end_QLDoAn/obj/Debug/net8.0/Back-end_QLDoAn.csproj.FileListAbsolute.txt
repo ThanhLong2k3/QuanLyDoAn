@@ -64,3 +64,7 @@ C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\D
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.pdb
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.genruntimeconfig.cache
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\ref\Back-end_QLDoAn.dll
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\bin\Debug\net8.0\Back-end_QLDoAn.staticwebassets.endpoints.json
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets\msbuild.Back-end_QLDoAn.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

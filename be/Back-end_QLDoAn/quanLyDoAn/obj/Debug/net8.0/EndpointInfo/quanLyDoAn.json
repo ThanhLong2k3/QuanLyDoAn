@@ -1,0 +1,1537 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "quanLyDoAn",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/GiangVien_CTRL/getall": {
+      "get": {
+        "tags": [
+          "GiangVien_CTRL"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GiangVienDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GiangVienDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GiangVienDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/GiangVien_CTRL/create-GiangVien": {
+      "post": {
+        "tags": [
+          "GiangVien_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GiangVienDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GiangVienDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GiangVienDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GiangVienDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GiangVienDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GiangVienDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/GiangVien_CTRL/update-GiangVien": {
+      "post": {
+        "tags": [
+          "GiangVien_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GiangVienDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GiangVienDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GiangVienDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GiangVienDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GiangVienDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GiangVienDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/GiangVien_CTRL/delete-GiangVien": {
+      "delete": {
+        "tags": [
+          "GiangVien_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "ma",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Lop_CTRL/getall": {
+      "get": {
+        "tags": [
+          "Lop_CTRL"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LopDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LopDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LopDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lop_CTRL/create-Lop": {
+      "post": {
+        "tags": [
+          "Lop_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LopDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LopDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LopDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lop_CTRL/update-Lop": {
+      "post": {
+        "tags": [
+          "Lop_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LopDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LopDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LopDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lop_CTRL/delete-Lop": {
+      "delete": {
+        "tags": [
+          "Lop_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "ma",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nguoiDung_CTRL/getall": {
+      "get": {
+        "tags": [
+          "nguoiDung_CTRL"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/nguoiDung_DTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/nguoiDung_DTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/nguoiDung_DTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nguoiDung_CTRL/get-by-taikhoan/{id}": {
+      "get": {
+        "tags": [
+          "nguoiDung_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/nguoiDung_DTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/nguoiDung_DTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/nguoiDung_DTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nguoiDung_CTRL/create-nguoiDung": {
+      "post": {
+        "tags": [
+          "nguoiDung_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/nguoiDung_DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/nguoiDung_DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/nguoiDung_DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/nguoiDung_DTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/nguoiDung_DTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/nguoiDung_DTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nguoiDung_CTRL/update-nguoiDung": {
+      "post": {
+        "tags": [
+          "nguoiDung_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/nguoiDung_DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/nguoiDung_DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/nguoiDung_DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/nguoiDung_DTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/nguoiDung_DTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/nguoiDung_DTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nguoiDung_CTRL/dangnhap-nguoiDung": {
+      "post": {
+        "tags": [
+          "nguoiDung_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DangNhapDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DangNhapDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DangNhapDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nguoiDung_NhomQuyen_CTRL/getall": {
+      "get": {
+        "tags": [
+          "nguoiDung_NhomQuyen_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "ma",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NguoiDung_NhomQuyen_DTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NguoiDung_NhomQuyen_DTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NguoiDung_NhomQuyen_DTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nguoiDung_NhomQuyen_CTRL/create-nguoiDung_NhomQuyen": {
+      "post": {
+        "tags": [
+          "nguoiDung_NhomQuyen_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NguoiDungNhomQuyen_DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NguoiDungNhomQuyen_DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NguoiDungNhomQuyen_DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/NguoiDungNhomQuyen_DTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NguoiDungNhomQuyen_DTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NguoiDungNhomQuyen_DTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nguoiDung_NhomQuyen_CTRL/delete-nguoiDung_NhomQuyen": {
+      "delete": {
+        "tags": [
+          "nguoiDung_NhomQuyen_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NguoiDungNhomQuyen_DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NguoiDungNhomQuyen_DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NguoiDungNhomQuyen_DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/nhomQuyen_CTRL/getall": {
+      "get": {
+        "tags": [
+          "nhomQuyen_CTRL"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/nhomQuyen_DTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/nhomQuyen_DTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/nhomQuyen_DTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nhomQuyen_CTRL/create-nhomQuyen": {
+      "post": {
+        "tags": [
+          "nhomQuyen_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/nhomQuyen_DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/nhomQuyen_DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/nhomQuyen_DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/nhomQuyen_DTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/nhomQuyen_DTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/nhomQuyen_DTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nhomQuyen_CTRL/update-nhomQuyen": {
+      "post": {
+        "tags": [
+          "nhomQuyen_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/nhomQuyen_DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/nhomQuyen_DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/nhomQuyen_DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/nhomQuyen_DTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/nhomQuyen_DTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/nhomQuyen_DTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nhomQuyen_CTRL/delete-nhomQuyen": {
+      "delete": {
+        "tags": [
+          "nhomQuyen_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "ma",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/nhomQuyen_PhanQuyen_CTRL/getquyen_taikhoan": {
+      "get": {
+        "tags": [
+          "nhomQuyen_PhanQuyen_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NhomQuyenPhanQuyen_DTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NhomQuyenPhanQuyen_DTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NhomQuyenPhanQuyen_DTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nhomQuyen_PhanQuyen_CTRL/create-nhomquyen_phanquyen": {
+      "post": {
+        "tags": [
+          "nhomQuyen_PhanQuyen_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NhomQuyenPhanQuyen_DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NhomQuyenPhanQuyen_DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NhomQuyenPhanQuyen_DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/NhomQuyenPhanQuyen_DTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NhomQuyenPhanQuyen_DTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NhomQuyenPhanQuyen_DTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nhomQuyen_PhanQuyen_CTRL/delete-nhomquyen_phanquyen": {
+      "delete": {
+        "tags": [
+          "nhomQuyen_PhanQuyen_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NhomQuyenPhanQuyen_DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NhomQuyenPhanQuyen_DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NhomQuyenPhanQuyen_DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PhanQuyen_CTRL/getall": {
+      "get": {
+        "tags": [
+          "PhanQuyen_CTRL"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/phanQuyen_DTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/phanQuyen_DTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/phanQuyen_DTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PhanQuyen_CTRL/get_phanquyen_manhomquyen": {
+      "get": {
+        "tags": [
+          "PhanQuyen_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "ma",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/phanQuyen_DTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/phanQuyen_DTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/phanQuyen_DTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SinhVien_CTRL/getall": {
+      "get": {
+        "tags": [
+          "SinhVien_CTRL"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SinhVienDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SinhVienDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SinhVienDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SinhVien_CTRL/create-SinhVien": {
+      "post": {
+        "tags": [
+          "SinhVien_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SinhVienDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SinhVienDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SinhVienDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SinhVienDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SinhVienDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SinhVienDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SinhVien_CTRL/update-SinhVien": {
+      "post": {
+        "tags": [
+          "SinhVien_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SinhVienDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SinhVienDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SinhVienDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SinhVienDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SinhVienDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SinhVienDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SinhVien_CTRL/delete-SinhVien": {
+      "delete": {
+        "tags": [
+          "SinhVien_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "ma",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DangNhapDTO": {
+        "type": "object",
+        "properties": {
+          "taiKhoan": {
+            "type": "string",
+            "nullable": true
+          },
+          "matKhau": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GiangVienDTO": {
+        "type": "object",
+        "properties": {
+          "maGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenBoMon": {
+            "type": "string",
+            "nullable": true
+          },
+          "chucVu": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenHocVi": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenHocHam": {
+            "type": "string",
+            "nullable": true
+          },
+          "gioiTinh": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngaySinh": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sDT": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LopDTO": {
+        "type": "object",
+        "properties": {
+          "maLop": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenLop": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenChuyenNganh": {
+            "type": "string",
+            "nullable": true
+          },
+          "khoaHoc": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NguoiDungNhomQuyen_DTO": {
+        "type": "object",
+        "properties": {
+          "taiKhoan": {
+            "type": "string",
+            "nullable": true
+          },
+          "maNhomQuyen": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NguoiDung_NhomQuyen_DTO": {
+        "type": "object",
+        "properties": {
+          "taiKhoan": {
+            "type": "string",
+            "nullable": true
+          },
+          "hoTen": {
+            "type": "string",
+            "nullable": true
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NhomQuyenPhanQuyen_DTO": {
+        "type": "object",
+        "properties": {
+          "maNhomQuyen": {
+            "type": "string",
+            "nullable": true
+          },
+          "maQuyen": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SinhVienDTO": {
+        "type": "object",
+        "properties": {
+          "maSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "maLop": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngaySinh": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "gioiTinh": {
+            "type": "string",
+            "nullable": true
+          },
+          "sDT": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "nguoiDung_DTO": {
+        "type": "object",
+        "properties": {
+          "taiKhoan": {
+            "type": "string",
+            "nullable": true
+          },
+          "matKhau": {
+            "type": "string",
+            "nullable": true
+          },
+          "hoTen": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngaySinh": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "gioiTinh": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          },
+          "trangThai": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "nhomQuyen_DTO": {
+        "type": "object",
+        "properties": {
+          "maNhomQuyen": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenNhomQuyen": {
+            "type": "string",
+            "nullable": true
+          },
+          "loai": {
+            "type": "string",
+            "nullable": true
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          },
+          "soLuong": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "phanQuyen_DTO": {
+        "type": "object",
+        "properties": {
+          "maQuyen": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenQuyen": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
