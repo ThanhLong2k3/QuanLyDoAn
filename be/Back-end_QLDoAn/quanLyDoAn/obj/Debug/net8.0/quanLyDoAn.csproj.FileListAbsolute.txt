@@ -182,3 +182,8 @@ C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\quanLyDoAn\obj\Debug\
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\quanLyDoAn\obj\Debug\net8.0\quanLyDoAn.csproj.Up2Date
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\quanLyDoAn\obj\Debug\net8.0\quanLyDoAn.genruntimeconfig.cache
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\quanLyDoAn\obj\Debug\net8.0\ref\quanLyDoAn.dll
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\quanLyDoAn\bin\Debug\net8.0\Back-end_QLDoAn.staticwebassets.endpoints.json
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\quanLyDoAn\bin\Debug\net8.0\quanLyDoAn.staticwebassets.endpoints.json
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\quanLyDoAn\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\quanLyDoAn\obj\Debug\net8.0\staticwebassets\msbuild.quanLyDoAn.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\quanLyDoAn\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

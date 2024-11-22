@@ -1,16 +1,6 @@
 import axios from "axios";
 import { message } from "antd";
-export const DangNhap=async(url:string,giatri:{})=>
-{
-    try{
-        let data=await axios.post(url,giatri);
-        return data.data;
-    }
-    catch(error){
-        message.error("Đăng nhập thất bại!");
-        throw error;
-    }
-}
+
 export const getall=async(url:string)=>{
     let data=await axios.get(url);
     if(data)

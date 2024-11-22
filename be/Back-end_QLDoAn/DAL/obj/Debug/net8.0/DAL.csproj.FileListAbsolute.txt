@@ -44,3 +44,4 @@ C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\DAL.sourcelink.json
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\DAL.csproj.Up2Date
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\ref\DAL.dll
+C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\Back-end_QLDoAn.staticwebassets.endpoints.json
