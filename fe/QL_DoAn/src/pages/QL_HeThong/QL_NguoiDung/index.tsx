@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Card, Table, Button, Popconfirm, Row, Col, Input, Select, Space, Typography, Divider, Form, message } from "antd";
-import { NguoiDung } from "../../../components/InterFace";
+import { NguoiDung,Quyen } from "../../../components/InterFace";
 import ReusableModal from "../../../components/UI/Modal";
 import { FormNguoiDung } from "../../../components/QLHeThongComponent/QL_NguoiDung/QL_NguoiDungForm";
 import { CoLumNguoiDung } from "../../../components/QLHeThongComponent/QL_NguoiDung/TableNguoiDung";
 import { DeleteOutlined, SearchOutlined, UserAddOutlined, FilterOutlined } from "@ant-design/icons";
-import { getall,add,edit } from "../../../sevices/Api/nguoiDung-servives";
-import {URL} from "../../../sevices/Url"
+import ModalQuyen from "../../../components/QLHeThongComponent/QL_NguoiDung/modalQuyen";
+
+import {getAll_NguoiDung,addNguoiDung,editNguoiDung,delNguoiDung} from "../../../sevices/Api/QL_HeThong/QL_NguoiDung";
 
 import moment from 'moment';
 const { Option } = Select;
@@ -22,14 +23,17 @@ const QuanLyNguoiDung: React.FC = () => {
   const [timKiem, setTimKiem] = useState("");
   const [trangThai, setTrangThai] = useState<string | null>(null);
   const [duLieuLoc, setDuLieuLoc] = useState<NguoiDung[]>([]);
-
+  const [modalQuyen, setHienModalQuyen] = useState(false);
+  const [quyen, setQuyen] = useState<Quyen[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<NguoiDung[]>([]);
+  const [selectedQuyen, setSelectedQuyen] = useState<Quyen[]>([]);
   useEffect(() => {
     document.title = "Quản lý người dùng";
     getllNguoiDung();
   }, []);
 
   const getllNguoiDung = async () => {
-      let data = await getall(URL.QLHETHONG.QLNGUOIDUNG.GETALL);
+      let data = await getAll_NguoiDung();
       setNguoiDung(data);
   };
 
@@ -59,11 +63,11 @@ const QuanLyNguoiDung: React.FC = () => {
      const giatri= await formdulieu.validateFields();
 
       if (keyDangSua !== null) {
-          await edit(URL.QLHETHONG.QLNGUOIDUNG.UPDATE,giatri,getllNguoiDung);
-       message.success(`Tài khoản ${giatri.taiKhoan} đã được sửa thành công!`);
+        await editNguoiDung(giatri,getllNguoiDung);
+        message.success(`Tài khoản ${giatri.taiKhoan} đã được sửa thành công!`);
 
       } else {
-        await add(URL.QLHETHONG.QLNGUOIDUNG.ADD,giatri,getllNguoiDung);
+        await addNguoiDung(giatri,getllNguoiDung);
       }
       setHienModal(false);
       formdulieu.resetFields();
@@ -77,7 +81,7 @@ const QuanLyNguoiDung: React.FC = () => {
       const banGhi = nguoiDung.find(user => user.taiKhoan === taiKhoan);
       if (banGhi) {
         const newStatus =  "Đã xét duyệt";
-        await edit(URL.QLHETHONG.QLNGUOIDUNG.UPDATE,{ ...banGhi, trangThai: newStatus }, getllNguoiDung);
+        await editNguoiDung({ ...banGhi, trangThai: newStatus }, getllNguoiDung);
       }
     }
     message.success(`${a} tài khoản đã được  "xét duyệt" !`);
@@ -89,20 +93,20 @@ const QuanLyNguoiDung: React.FC = () => {
     if(banGhi.trangThai==="Chưa xét duyệt")
     {
       let giatri={...banGhi,trangThai:"Đã xét duyệt"};
-      await edit(URL.QLHETHONG.QLNGUOIDUNG.UPDATE,giatri,getllNguoiDung);
+      await editNguoiDung (giatri,getllNguoiDung); 
        message.success(`Tài khoản ${banGhi.taiKhoan} đã được kích hoạt thành công!`);
     }
     else{
       let giatri={...banGhi,trangThai:"Chưa xét duyệt"};
-      await edit(URL.QLHETHONG.QLNGUOIDUNG.UPDATE,giatri,getllNguoiDung);
-      message.success(`Tài khoản ${banGhi.taiKhoan} đã được hủy kích hoạt!`);
+      await editNguoiDung (giatri,getllNguoiDung); 
+      message.success(`Tài khoản ${banGhi.taiKhoan} đã hủy kích hoạt!`);
     }
     
   };
   const khoiPhucMatKhau = async(banGhi: NguoiDung) => {
     const mk="123456";
     let giatri={...banGhi,matKhau:mk};
-    await edit(URL.QLHETHONG.QLNGUOIDUNG.UPDATE,giatri,getllNguoiDung);
+     await editNguoiDung (giatri,getllNguoiDung); 
     message.success(`Mật khẩu của tài khoản ${banGhi.taiKhoan} đã được khôi phục thành công!`);
   };
   const cotBang = CoLumNguoiDung(hienThiModal, kichHoat,khoiPhucMatKhau);
@@ -113,6 +117,47 @@ const QuanLyNguoiDung: React.FC = () => {
   const luaChonDong = {
     selectedRowKeys: cacDongDaChon,
     onChange: chonDong,
+  };
+
+
+  const openModalQuyen=()=>{
+    setHienModalQuyen(true);
+  }
+  
+  const handleAddUser = (user: NguoiDung) => {
+    setSelectedUsers((prev) => [...prev, user]);
+  };
+  const handleAddQuyen = (quyen: Quyen) => {
+    setSelectedQuyen((prev) => [...prev, quyen]);
+  };
+  const handleRemoveQuyen = async (maQuyen: string) => {
+    setSelectedQuyen((prev) =>
+      prev.filter((quyen) => quyen.maQuyen !== maQuyen)
+    );
+  
+  };
+  const themQuyen = async () => {
+    
+  setHienModalQuyen(true);
+    // const existingQuyen = await getAll_NguoiDung(
+    //   URL.QLHETHONG.PHANQUYEN.GETBYMANHOMQUYEN(manhomquyen)
+    // );
+    // for(let i=0;i<selectedQuyen.length;i++)
+    // {
+    //   const giatri = {
+    //     maNhomQuyen: manhomquyen,
+    //     maQuyen: selectedQuyen[i].maQuyen,
+    //   };
+    //   const isExisting = existingQuyen.some(
+    //     (existingQuyen: Quyen) => existingQuyen.maQuyen === giatri.maQuyen
+    //   );
+
+    //   if (!isExisting) {
+    //     await add_Quyen(URL.QLHETHONG.NHOMQUYENPHANQUYEN.ADD, giatri);
+
+    //   }
+    // }
+    message.success("Phân quyền thành công !");
   };
 
   return (
@@ -191,6 +236,15 @@ const QuanLyNguoiDung: React.FC = () => {
           />
         </div>
       </Card>
+      <ModalQuyen
+        hienmodalphanquyen={modalQuyen}
+        setHienModal={openModalQuyen}
+        quyenn={quyen}
+        selectedQuyen={selectedQuyen}
+        handleAddQuyen={handleAddQuyen}
+        handleRemoveQuyen={handleRemoveQuyen}
+        themQuyen={themQuyen}
+      />
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}
@@ -201,6 +255,7 @@ const QuanLyNguoiDung: React.FC = () => {
       >
         <FormNguoiDung form={formdulieu} />
       </ReusableModal>
+     
     </>
   );
 };

@@ -24,17 +24,12 @@ import { NhomQuyen, NguoiDung, Quyen } from "../../../components/InterFace";
 import ReusableModal from "../../../components/UI/Modal";
 import { FormNhomQuyen } from "../../../components/QLHeThongComponent/QLNhomQuyen/form";
 import { columNhomQuyen } from "../../../components/QLHeThongComponent/QLNhomQuyen/table";
-import {
-  getall,
-  add,
-  edit,
-  Delete,
-  add_Quyen,
-  Delete_Quyen,
-} from "../../../sevices/Api/nguoiDung-servives";
-import { URL } from "../../../sevices/Url";
+import {getAll,addNhomQuyen,editNhomQuyen,delNhomQuyen } from "../../../sevices/Api/QL_HeThong/QL_NhomQuyen";
+import {getAll_PhanQUyen,getByMaNhomQuyen,addNhomQuyen_PhanQuyen,delNhomQuyen_PhanQuyen} from "../../../sevices/Api/QL_HeThong/QL_PhanQuyen";
 import ModalThemNguoiDung from "../../../components/QLHeThongComponent/QLNhomQuyen/modalADDNguoiDung";
 import ModalQLPhanQuyen from "../../../components/QLHeThongComponent/QLNhomQuyen/modalQLPhanQuyen";
+import {getAll_NguoiDung,getNguoiDung_ByMaNhomQuyen,addNguoiDung_NhomQuyen,delNguoiDung_NhomQuyen} from "../../../sevices/Api/QL_HeThong/QL_NguoiDung";
+
 const { Option } = Select;
 const { Title } = Typography;
 
@@ -63,7 +58,7 @@ const QuanLyNhomQuyen: React.FC = () => {
 
   const getAllNhomQuyen = useCallback(async () => {
     try {
-      const res = await getall(URL.QLHETHONG.QLNHOMQUYEN.GETALL);
+      const res = await getAll();
       setNhomQuyen(res);
     } catch (error) {
       console.error(error);
@@ -73,9 +68,7 @@ const QuanLyNhomQuyen: React.FC = () => {
   const themQuyen = async () => {
     
     setHienModalPhanQuyen(false);
-    const existingQuyen = await getall(
-      URL.QLHETHONG.PHANQUYEN.GETBYMANHOMQUYEN(manhomquyen)
-    );
+    const existingQuyen = await getByMaNhomQuyen(manhomquyen);
     for(let i=0;i<selectedQuyen.length;i++)
     {
       const giatri = {
@@ -87,7 +80,7 @@ const QuanLyNhomQuyen: React.FC = () => {
       );
 
       if (!isExisting) {
-        await add_Quyen(URL.QLHETHONG.NHOMQUYENPHANQUYEN.ADD, giatri);
+        await addNhomQuyen_PhanQuyen(giatri);
 
       }
     }
@@ -96,9 +89,7 @@ const QuanLyNhomQuyen: React.FC = () => {
 
   const themNguoiDung = async () => {
     setHienModalNguoiDung(false);
-    const existingUsers = await getall(
-      URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.GETBYMANHOMQUYEN(manhomquyen)
-    );
+    const existingUsers = await getNguoiDung_ByMaNhomQuyen(manhomquyen);
 
     for (const user of selectedUsers) {
       const giatri = {
@@ -111,7 +102,7 @@ const QuanLyNhomQuyen: React.FC = () => {
       );
 
       if (!isExisting) {
-        await add_Quyen(URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.ADD, giatri);
+        await addNguoiDung_NhomQuyen(giatri);
       }
     }
 
@@ -121,9 +112,7 @@ const QuanLyNhomQuyen: React.FC = () => {
 
   const capNhapNguoiDung = useCallback(async (maNhomQuyen: string) => {
     setMaNhomQuyen(maNhomQuyen);
-    const nguoiDungOnNhom = await getall(
-      URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.GETBYMANHOMQUYEN(maNhomQuyen)
-    );
+    const nguoiDungOnNhom = await getNguoiDung_ByMaNhomQuyen(maNhomQuyen);
     setSelectedUsers(nguoiDungOnNhom);
     setHienModalNguoiDung(true);
   }, []);
@@ -134,14 +123,14 @@ const QuanLyNhomQuyen: React.FC = () => {
       taiKhoan: userId,
       manhomquyen: manhomquyen,
     };
-    await Delete_Quyen(URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.DELETE, giatri);
+    await delNguoiDung_NhomQuyen(giatri);
   };
 
   useEffect(() => {
     const fetchUsers = async () => {
       if (hienModalNguoiDung) {
         try {
-          const data = await getall(URL.QLHETHONG.QLNGUOIDUNG.GETALL);
+          const data = await getAll();
           setNguoiDung(data);
         } catch (error) {
           console.error("Error fetching users:", error);
@@ -166,10 +155,7 @@ const QuanLyNhomQuyen: React.FC = () => {
   );
 
   const xuLyXoa = useCallback(async (maNhomQuyen: string) => {
-      await Delete(
-        URL.QLHETHONG.QLNHOMQUYEN.DELETE(maNhomQuyen),
-        getAllNhomQuyen
-      );
+      await delNhomQuyen(maNhomQuyen,getAllNhomQuyen);
       message.success(`Xóa thành công!`);
     },
     [getAllNhomQuyen]
@@ -179,10 +165,10 @@ const QuanLyNhomQuyen: React.FC = () => {
     try {
       const giatri = await form.validateFields();
       if (keyDangSua !== null) {
-        await edit(URL.QLHETHONG.QLNHOMQUYEN.UPDATE, giatri, getAllNhomQuyen);
+        await editNhomQuyen(giatri,getAllNhomQuyen);
         message.success(`Sửa thành công!`);
       } else {
-        await add(URL.QLHETHONG.QLNHOMQUYEN.ADD, giatri, getAllNhomQuyen);
+        await addNhomQuyen(giatri,getAllNhomQuyen);
         message.success(`Thêm thành công!`);
       }
       setHienModal(false);
@@ -194,9 +180,9 @@ const QuanLyNhomQuyen: React.FC = () => {
   };
   const PhanQuyen = useCallback(async (maNhomQuyen: string) => {
     setMaNhomQuyen(maNhomQuyen);
-    const phanQuyenOnNhom=await getall(URL.QLHETHONG.PHANQUYEN.GETBYMANHOMQUYEN(maNhomQuyen));
+    const phanQuyenOnNhom=await getByMaNhomQuyen(maNhomQuyen);
     setSelectedQuyen(phanQuyenOnNhom);
-    const listquyen = await getall(URL.QLHETHONG.PHANQUYEN.GETALL);
+    const listquyen = await getAll_PhanQUyen();
     setQuyen(listquyen);
     setHienModalPhanQuyen(true);
   }, []);
@@ -220,7 +206,7 @@ const QuanLyNhomQuyen: React.FC = () => {
       maQuyen: maQuyen,
       maNhomQuyen: manhomquyen,
     };
-    await Delete_Quyen(URL.QLHETHONG.NHOMQUYENPHANQUYEN.DELETE, giatri);
+    await delNhomQuyen_PhanQuyen(giatri);
   };
   return (
     <>

@@ -31,6 +31,8 @@ export default function QuanLygiangvien() {
 
   const xuLyXoa = async (maGiangVien: string) => {
     let kq = await delGiangVien(maGiangVien, getAllGiangVien);
+    console.log(kq);
+    debugger;
     message.success(`Đã xóa thành công giảng viên ${kq.data}`);
   };
 

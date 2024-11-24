@@ -203,10 +203,6 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.AspNetCore.Mvc.RazorPages": {
-              "target": "Package",
-              "version": "[2.2.5, )"
-            },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[5.2.2, )"
@@ -217,7 +213,7 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.8.1, )"
+              "version": "[7.0.0, )"
             }
           },
           "imports": [
