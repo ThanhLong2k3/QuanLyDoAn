@@ -21,6 +21,10 @@ export interface Quyen{
     maQuyen:string;
     tenQuyen:string;
 }
+export interface NhomQuyen_PhanQuyen{
+        maNhomQuyen: string,
+        maQuyen: string,
+}
 export interface NhomQuyen {
     maNhomQuyen:string;
     tenNhomQuyen:string;

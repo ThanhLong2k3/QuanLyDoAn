@@ -3,7 +3,7 @@ import { Form, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./Style_Login.css";
 import ROUTERS from "../../router/Path";
-import { getall } from '../../sevices/Api/nguoiDung-servives'
+import { getall } from '../../sevices/Api/QL_HeThong/nguoiDung-servives'
 import { URL } from "../../sevices/Url/index"
 
 interface Account {
