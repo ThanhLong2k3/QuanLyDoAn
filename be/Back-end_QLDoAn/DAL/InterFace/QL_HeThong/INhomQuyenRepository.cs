@@ -10,6 +10,8 @@ namespace DAL.InterFace.QL_HeThong
     public partial interface INhomQuyenRepository
     {
         public List<nhomQuyen_DTO> GetAll();
+        public List<nhomQuyen_DTO> GetNhomQuyen_TaiKhoan(string tk);
+
         string Create(nhomQuyen_DTO model);
         bool Update(nhomQuyen_DTO model);
         bool Delete(string ma);

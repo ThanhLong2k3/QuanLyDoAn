@@ -5,6 +5,9 @@ import {NguoiDung} from "../../../components/InterFace"
 export const getAll_NguoiDung =async () =>{
     return await getall(URL.QLHETHONG.QLNGUOIDUNG.GETALL);
 }
+export const getAll_NguoiDung_TaiKhoan =async (taiKhoan:string) =>{
+    return await getall(URL.QLHETHONG.QLNGUOIDUNG.GETBYTK(taiKhoan));
+}
 
 export const addNguoiDung= async(value:NguoiDung,callBack:()=>void)=>{
       return await add(URL.QLHETHONG.QLNGUOIDUNG.ADD,value,true,false,callBack)as AxiosResponse<any>; 
@@ -21,8 +24,18 @@ export const getNguoiDung_ByMaNhomQuyen =async (ma:string) =>{
 
 // 
 export const addNguoiDung_NhomQuyen= async(value:{})=>{
-    return await add(URL.QLHETHONG.QLNGUOIDUNG.ADD,value,true,false,undefined)as AxiosResponse<any>; 
+    return await add(URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.ADD,value,true,false,undefined)as AxiosResponse<any>; 
 }
 export const delNguoiDung_NhomQuyen=async(value:{})=>{
     return await Delete_obj(URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.DELETE, value);
+}
+
+//  NGUOIDUNG_NHOMQUYEN
+
+export const dangNhap =async (value:{}) =>{
+    return await add(URL.QLHETHONG.QLNGUOIDUNG.DANGNHAP,value,true,false)as AxiosResponse<any>;
+}
+
+export const getAllQuyen_TaiKhoan =async (tk:string) =>{
+    return await getall(URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.GETBYTAIKHOAN(tk));
 }

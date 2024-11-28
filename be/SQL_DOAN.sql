@@ -263,7 +263,7 @@ CREATE PROCEDURE dangnhap
 AS
 BEGIN
     -- Kiểm tra tài khoản và mật khẩu trong bảng nguoiDung
-    IF EXISTS (SELECT 1 FROM nguoiDung WHERE taiKhoan = @taiKhoan AND matKhau = @matKhau AND TrangThai = N'Đã kích hoạt')
+    IF EXISTS (SELECT 1 FROM nguoiDung WHERE taiKhoan = @taiKhoan AND matKhau = @matKhau AND TrangThai = N'Đã xét duyệt')
     BEGIN
         -- Kiểm tra nếu tài khoản là mã sinh viên
         IF EXISTS (SELECT 1 FROM sinhVien WHERE maSinhVien = @taiKhoan)
@@ -275,7 +275,7 @@ BEGIN
         ELSE IF EXISTS (SELECT 1 FROM giangVien WHERE maGiangVien = @taiKhoan)
         BEGIN
             SELECT 2 AS Role; -- Giảng viên
-            RETURN;
+            RETURN; 
         END
     END
 
@@ -297,7 +297,7 @@ BEGIN
     IF NOT EXISTS (SELECT 1 FROM nguoiDung WHERE taiKhoan = @taiKhoan)
     BEGIN
         INSERT INTO nguoiDung (taiKhoan, matKhau, hoTen, ngaySinh,gioiTinh, email, moTa, TrangThai)
-        VALUES (@taiKhoan, '123456', @hoTen, @ngaySinh,@gioiTinh, @email, @moTa, 'Chưa xét duyệt');
+        VALUES (@taiKhoan, '123456', @hoTen, @ngaySinh,@gioiTinh, @email, @moTa, N'Chưa xét duyệt');
 
         SELECT N'Thêm người dùng thành công' AS ThongBao;
     END
@@ -429,13 +429,15 @@ as
 	go
 
 	
-create procedure delNguoiDung_NhomQuyen
-	@taiKhoan nvarchar(20),
-	@maNhomQuyen nvarchar(50)
-as 
-	begin 
-		delete from nguoiDung_nhomQuyen where taiKhoan=@taiKhoan and maNhomQuyen = @maNhomQuyen
-		 IF @@ROWCOUNT > 0
+CREATE PROCEDURE delNguoiDung_NhomQuyen
+    @taiKhoan NVARCHAR(20),
+    @maNhomQuyen NVARCHAR(50)
+AS 
+BEGIN 
+    DELETE FROM nguoiDung_nhomQuyen 
+    WHERE taiKhoan = @taiKhoan AND maNhomQuyen = @maNhomQuyen
+    
+    IF @@ROWCOUNT > 0
     BEGIN
         RETURN 1; -- Trả về 1 nếu xóa thành công
     END
@@ -443,7 +445,8 @@ as
     BEGIN
         RETURN 0; -- Trả về 0 nếu không có bản ghi nào bị xóa
     END
-	end;
+END;
+GO
 	go
 --Thêm quyền
 create procedure getallQuyen
@@ -824,3 +827,18 @@ INSERT INTO nhomQuyen_phanQuyen (maNhomQuyen,maQuyen)VALUES
 ('NQ01','DEL_NHOMQUYEN'),
 ('NQ01','UP_NGUOIDUNG'),
 ('NQ01','UP_NHOMQUYEN')
+GO
+
+CREATE PROC GETNHOMQUYEN_TAIKHOAN
+@TaiKhoan nvarchar(50)
+AS
+BEGIN
+		SELECT nq.maNhomQuyen, nq.tenNhomQuyen, nq.loai, nq.moTa,
+       (SELECT COUNT(ndnq.taiKhoan) FROM nguoiDung_nhomQuyen ndnq WHERE ndnq.maNhomQuyen = nq.maNhomQuyen) AS soLuong
+FROM nhomQuyen nq inner join nguoiDung_nhomQuyen nd_nq on nq.maNhomQuyen=nd_nq.maNhomQuyen where nd_nq.taiKhoan=@TaiKhoan; 
+END
+
+EXEC delNguoiDung_NhomQuyen @taiKhoan='ă', @maNhomQuyen='NQ01'
+SELECT *FROM nguoiDung_nhomQuyen where taiKhoan=N'10621306'
+
+

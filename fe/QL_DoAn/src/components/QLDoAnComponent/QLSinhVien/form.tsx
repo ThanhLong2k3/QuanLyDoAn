@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form, Input, DatePicker, Select, FormInstance, Row, Col, message } from "antd";
-import { getAll } from '../../../sevices/Api/QL_Lop-servives'
+import { getAll } from '../../../sevices/Api/QL_DoAn/QL_Lop-servives'
 import { Lop } from '../../InterFace/index';
 
 interface SinhVienFormProps {

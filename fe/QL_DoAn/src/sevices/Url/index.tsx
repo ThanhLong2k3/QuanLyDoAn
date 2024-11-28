@@ -11,6 +11,7 @@ export const URL = {
             DANGNHAP:LocalHot+`api/nguoiDung_CTRL/dangnhap-nguoiDung`
         },
         QLNHOMQUYEN:{
+            GETNHOMQUYEN_TAIKHOAN:(taiKhoan:string)=>`${LocalHot}api/nhomQuyen_CTRL/getnhomquyen_taikhoan?tk=${taiKhoan}`,
             GETALL: `${LocalHot}api/nhomQuyen_CTRL/getall`,
             ADD: `${LocalHot}api/nhomQuyen_CTRL/create-nhomQuyen`,
             UPDATE: `${LocalHot}api/nhomQuyen_CTRL/update-nhomQuyen`,

@@ -24,7 +24,7 @@ import { NhomQuyen, NguoiDung, Quyen } from "../../../components/InterFace";
 import ReusableModal from "../../../components/UI/Modal";
 import { FormNhomQuyen } from "../../../components/QLHeThongComponent/QLNhomQuyen/form";
 import { columNhomQuyen } from "../../../components/QLHeThongComponent/QLNhomQuyen/table";
-import {getAll,addNhomQuyen,editNhomQuyen,delNhomQuyen } from "../../../sevices/Api/QL_HeThong/QL_NhomQuyen";
+import {getAll_Quyen,addNhomQuyen,editNhomQuyen,delNhomQuyen } from "../../../sevices/Api/QL_HeThong/QL_NhomQuyen";
 import {getAll_PhanQUyen,getByMaNhomQuyen,addNhomQuyen_PhanQuyen,delNhomQuyen_PhanQuyen} from "../../../sevices/Api/QL_HeThong/QL_PhanQuyen";
 import ModalThemNguoiDung from "../../../components/QLHeThongComponent/QLNhomQuyen/modalADDNguoiDung";
 import ModalQLPhanQuyen from "../../../components/QLHeThongComponent/QLNhomQuyen/modalQLPhanQuyen";
@@ -58,7 +58,7 @@ const QuanLyNhomQuyen: React.FC = () => {
 
   const getAllNhomQuyen = useCallback(async () => {
     try {
-      const res = await getAll();
+      const res = await getAll_Quyen();
       setNhomQuyen(res);
     } catch (error) {
       console.error(error);
@@ -130,8 +130,11 @@ const QuanLyNhomQuyen: React.FC = () => {
     const fetchUsers = async () => {
       if (hienModalNguoiDung) {
         try {
-          const data = await getAll();
+          const data = await getAll_NguoiDung();
+          console.log(data);
+          debugger
           setNguoiDung(data);
+
         } catch (error) {
           console.error("Error fetching users:", error);
         }
@@ -291,7 +294,6 @@ const QuanLyNhomQuyen: React.FC = () => {
             pagination={{
               pageSize: 10,
               showSizeChanger: true,
-              showQuickJumper: true,
               showTotal: (total, range) =>
                 `${range[0]}-${range[1]} của ${total} mục`,
             }}

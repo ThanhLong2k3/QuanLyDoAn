@@ -32,6 +32,21 @@ namespace DAL.QL_HethongRepository
                 throw ex;
             }
         }
+        public List<nhomQuyen_DTO> GetNhomQuyen_TaiKhoan(string taikhoan)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "GETNHOMQUYEN_TAIKHOAN","@TaiKhoan",taikhoan);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<nhomQuyen_DTO>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
         public string Create(nhomQuyen_DTO model)

@@ -18,17 +18,7 @@
         "IsRequired": false
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "DTO.QL_DoAn.GiangVienDTO",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.GiangVien_CTRL",
@@ -90,17 +80,7 @@
         "IsRequired": false
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "DTO.QL_DoAn.GiangVienDTO",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.Lop_CTRL",
@@ -471,6 +451,32 @@
   },
   {
     "ContainingType": "quanLyDoAn.Controllers.QL_HeThong.nhomQuyen_CTRL",
+    "Method": "GetNhomQuyen_TaiKhoan",
+    "RelativePath": "api/nhomQuyen_CTRL/getnhomquyen_taikhoan",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tk",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_HeThong.nhomQuyen_DTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_HeThong.nhomQuyen_CTRL",
     "Method": "UpdateItem",
     "RelativePath": "api/nhomQuyen_CTRL/update-nhomQuyen",
     "HttpMethod": "POST",
@@ -630,7 +636,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.QL_DoAn.SinhVienDTO",
+        "Type": "System.String",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -659,7 +665,17 @@
         "IsRequired": false
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.SinhVien_CTRL",
@@ -702,7 +718,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "DTO.QL_DoAn.SinhVienDTO",
+        "Type": "System.String",
         "MediaTypes": [
           "text/plain",
           "application/json",

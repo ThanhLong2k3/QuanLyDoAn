@@ -23,24 +23,24 @@ namespace quanLyDoAn.Controllers.QL_DoAn
 
         [Route("create-GiangVien")]
         [HttpPost]
-        public GiangVienDTO CreateItem([FromBody] GiangVienDTO model,string taikhoan)
+        public IActionResult CreateItem([FromBody] GiangVienDTO model,string taikhoan)
         {
-            _GiangVienBLL.Create(model,taikhoan);
-            return model;
+          string result=  _GiangVienBLL.Create(model,taikhoan);
+            return Ok(result);
         }
         [Route("update-GiangVien")]
         [HttpPost]
-        public GiangVienDTO UpdateItem([FromBody] GiangVienDTO model,string taikhoan)
+        public IActionResult UpdateItem([FromBody] GiangVienDTO model,string taikhoan)
         {
-            _GiangVienBLL.Update(model, taikhoan);
-            return model;
+            string result= _GiangVienBLL.Update(model, taikhoan);
+            return Ok(result);
         }
         [Route("delete-GiangVien")]
         [HttpDelete]
         public IActionResult DeleteItem(string ma,string taikhoan)
         {
-            _GiangVienBLL.Delete(ma, taikhoan);
-            return Ok(ma);
+            string result = _GiangVienBLL.Delete(ma, taikhoan);
+            return Ok(result);
         }
 
     }

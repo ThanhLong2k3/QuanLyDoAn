@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Table, Button, Popconfirm, Row, Col, Input, Space, Typography, Divider, message, Upload,Form } from 'antd'
-import { DeleteOutlined, SearchOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons'
+import { DeleteOutlined, SearchOutlined, PlusOutlined, UploadOutlined,DownloadOutlined } from '@ant-design/icons'
 import ReusableModal from '../../../components/UI/Modal'
 import { SinhVienForm } from '../../../components/QLDoAnComponent/QLSinhVien/form'
 import { COLUMS } from '../../../components/QLDoAnComponent/QLSinhVien/table'
 import { SinhVien } from "../../../components/InterFace"
 import * as XLSX from 'xlsx'
-import {getAll,addSinhVien,delSinhVien,editSinhVien} from '../../../sevices/Api/QL_SinhVien-servives'
+import {getAll,addSinhVien,delSinhVien,editSinhVien} from '../../../sevices/Api/QL_DoAn/QL_SinhVien-servives'
 import moment from 'moment';
 
 const { Title } = Typography
@@ -45,11 +45,11 @@ export default function QuanLySinhVien() {
     try {
       const giatri = await form.validateFields();
       if (keyDangSua !== null) {
-        const kq = await editSinhVien(giatri, getAllSinhVien);
-        message.success(kq.data);
+         await editSinhVien(giatri, getAllSinhVien);
+        
       } else {
-        const kq = await addSinhVien(giatri, getAllSinhVien);
-        message.success(kq.data);
+         await addSinhVien(giatri, getAllSinhVien);
+        
       }
       setHienModal(false);
       form.resetFields();
@@ -60,8 +60,7 @@ export default function QuanLySinhVien() {
   };
   
   const xuLyXoa = async (maSinhVien: string) => {
-    let kq = await delSinhVien(maSinhVien, getAllSinhVien);
-    message.success(`Đã xóa thành công sinh viên ${kq.data}`);
+    await delSinhVien(maSinhVien, getAllSinhVien);
   };
   const cotBang = COLUMS(hienThiModal, xuLyXoa)
 
@@ -72,8 +71,12 @@ export default function QuanLySinhVien() {
     selectedRowKeys: cacDongDaChon,
     onChange: chonDong,
   }
- const xuLyXoaNhieu = () => {
-    
+ const xuLyXoaNhieu = async() => {
+  for(let i=0;i<cacDongDaChon.length;i++)
+    {
+      await xuLyXoa(cacDongDaChon[i].toString());
+    }
+    setCacDongDaChon([]);
     message.success(`Xóa thành công!`);
   };
  
@@ -98,7 +101,13 @@ export default function QuanLySinhVien() {
     reader.readAsArrayBuffer(file)
     return false 
   }
-
+  const xuLyXuatExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(sinhVien);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Danh sách sinh viên");
+    XLSX.writeFile(workbook, "danh_sach_sinhvien.xlsx");
+    message.success("Xuất Excel thành công!");
+  };
   return (
     <div className="bg-gray-100 min-h-screen p-6">
       <Card className="shadow rounded-lg overflow-hidden">
@@ -108,7 +117,7 @@ export default function QuanLySinhVien() {
           </Title>
           <hr />
           <Row gutter={16} className="mb-6">
-            <Col xs={24} sm={24} md={16} lg={18} xl={18}>
+            <Col xs={20} sm={20} md={14} lg={14} xl={14}>
               <Input
                 placeholder="Tìm kiếm theo mã lớp hoặc tên sinh viên"
                 value={timKiem}
@@ -144,8 +153,14 @@ export default function QuanLySinhVien() {
                   showUploadList={false}
                   beforeUpload={xuLyNhapExcel}
                 >
-                  <Button icon={<UploadOutlined />}>Nhập Excel</Button>
+                   <Button icon={<DownloadOutlined />}>Nhập Excel</Button>
                 </Upload>
+                <Button 
+                  icon={< UploadOutlined />} 
+                  onClick={xuLyXuatExcel}
+                >
+                  Xuất Excel
+                </Button>
               </Space>
             </Col>
           </Row>
@@ -160,7 +175,6 @@ export default function QuanLySinhVien() {
             pagination={{
               pageSize: 10,
               showSizeChanger: true,
-              showQuickJumper: true,
               showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} mục`,
             }}
           />

@@ -1,12 +1,12 @@
 import React, { useEffect, useState,useCallback } from 'react'
 import { Card, Table, Button, Popconfirm, Row, Col, Input, Space, Typography, Divider, message, Upload,Form } from 'antd'
-import { DeleteOutlined, SearchOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons'
+import { DeleteOutlined, SearchOutlined, PlusOutlined, UploadOutlined,DownloadOutlined } from '@ant-design/icons'
 import ReusableModal from '../../../components/UI/Modal'
 import { FormGiangVien } from '../../../components/QLDoAnComponent/QLGiangVien/form'
 import { COLUMS } from '../../../components/QLDoAnComponent/QLGiangVien/table'
 import { GiangVien } from "../../../components/InterFace"
 import * as XLSX from 'xlsx'
-import {getAll,editGiangVien,addGiangVien,delGiangVien} from '../../../sevices/Api/QL_GiangVien-servives'
+import {getAll,editGiangVien,addGiangVien,delGiangVien} from '../../../sevices/Api/QL_DoAn/QL_GiangVien-servives'
 import moment from 'moment';
 
 const { Title } = Typography
@@ -30,10 +30,8 @@ export default function QuanLygiangvien() {
   }
 
   const xuLyXoa = async (maGiangVien: string) => {
-    let kq = await delGiangVien(maGiangVien, getAllGiangVien);
-    console.log(kq);
-    debugger;
-    message.success(`Đã xóa thành công giảng viên ${kq.data}`);
+    await delGiangVien(maGiangVien, getAllGiangVien);
+    
   };
 
   const hienThiModal = useCallback(
@@ -55,12 +53,10 @@ export default function QuanLygiangvien() {
   const xuLyDongY = async () => {
     const giatri = await form.validateFields();
     if (keyDangSua !== null) {
-      let kq = await editGiangVien(giatri, getAllGiangVien);
-      message.success(kq.data);
+      await editGiangVien(giatri, getAllGiangVien);
     }
     else {
-      let kq = await addGiangVien(giatri, getAllGiangVien);
-      message.success(kq.data);
+      await addGiangVien(giatri, getAllGiangVien);
     }
     setHienModal(false);
     form.resetFields();
@@ -69,7 +65,7 @@ export default function QuanLygiangvien() {
 
   const cotBang = COLUMS(hienThiModal, xuLyXoa);
 
-  const xuLyNhapExcel = (file: File) => {
+  const xuLyNhapExcel = async(file: File) => {
     const reader = new FileReader()
     reader.onload = (e) => {
       const data = new Uint8Array(e.target?.result as ArrayBuffer)
@@ -80,10 +76,12 @@ export default function QuanLygiangvien() {
 
       const duLieuMoi = jsonData.map((item, index) => ({
         ...item,
-        key: giangVien.length + index + 1,
       }))
-      
-      console.log(duLieuMoi);
+      // for(let i=0;i<duLieuMoi.length;i++)
+      // {
+      //   await addGiangVien(duLieuMoi[i],getAllGiangVien);
+      // }
+       console.log(duLieuMoi);
     }
     reader.readAsArrayBuffer(file)
     return false 
@@ -98,12 +96,21 @@ export default function QuanLygiangvien() {
     onChange: chonDong,
   };
 
-  const xuLyXoaNhieu = () => {
-    
-    message.success(`Xóa thành công!`);
+  const xuLyXoaNhieu = async() => {
+    for(let i=0;i<cacDongDaChon.length;i++)
+      {
+        await xuLyXoa(cacDongDaChon[i].toString());
+      }
+      setCacDongDaChon([]);
   };
 
-  
+  const xuLyXuatExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(giangVien);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Danh sách giảng viên");
+    XLSX.writeFile(workbook, "danh_sach_giang_vien.xlsx");
+    message.success("Xuất Excel thành công!");
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen p-6">
@@ -114,7 +121,7 @@ export default function QuanLygiangvien() {
            </Title>
           <hr />
           <Row gutter={16} className="mb-6">
-            <Col xs={22} sm={22} md={14} lg={16} xl={16}>
+            <Col xs={18} sm={18} md={10} lg={12} xl={12}>
               <Input
                 placeholder="Tìm kiếm theo tên lớp hoặc chuyên ngành"
                 value={timKiem}
@@ -150,8 +157,14 @@ export default function QuanLygiangvien() {
                   showUploadList={false}
                   beforeUpload={xuLyNhapExcel}
                 >
-                  <Button icon={<UploadOutlined />}>Nhập Excel</Button>
+                  <Button icon={<DownloadOutlined />}>Nhập Excel</Button>
                 </Upload>
+                <Button 
+                  icon={< UploadOutlined />} 
+                  onClick={xuLyXuatExcel}
+                >
+                  Xuất Excel
+                </Button>
               </Space>
             </Col>
           </Row>
@@ -166,7 +179,6 @@ export default function QuanLygiangvien() {
             pagination={{
               pageSize: 10,
               showSizeChanger: true,
-              showQuickJumper: true,
               showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} mục`,
             }}
           />
