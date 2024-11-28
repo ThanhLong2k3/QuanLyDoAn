@@ -27,7 +27,8 @@ export const ColumLop: ColumnType[] = [
     danhSachCot: Array<ColumnType>, 
     hienThiModal: (banGhi: any) => void, 
     kichHoat: (banGhi: any) => void, 
-    khoiPhucMatKhau: (banGhi: any) => void
+    khoiPhucMatKhau: (banGhi: any) => void,
+    ShowQuyen:(taiKhoan:string)=>void
   ) => {
     const cotCoBan = [...danhSachCot];
   
@@ -36,8 +37,8 @@ export const ColumLop: ColumnType[] = [
       key: 'action',
       render: (_: any, banGhi: any) => (
         <Space size="middle">
-          <Tooltip title="Xem Quền">
-            <Button type="primary" icon={<EyeOutlined />} />
+          <Tooltip title="Xem Nhóm Quyền">
+            <Button type="primary" icon={<EyeOutlined />}  onClick={()=>ShowQuyen(banGhi.taiKhoan)}/>
           </Tooltip>
           <Tooltip title="Khôi phục mật khẩu">
             <Button type="primary" icon={<UnlockOutlined  />} onClick={()=>khoiPhucMatKhau(banGhi)}/>
@@ -56,5 +57,5 @@ export const ColumLop: ColumnType[] = [
   
     return cotCoBan;
   };
-  export const CoLumNguoiDung = (hienThiModal: (banGhi: any) => void, kichHoat: (banGhi: any) => void,khoiPhucMatKhau: (banGhi: any) => void) =>
-    taoCotBangnguoidung(ColumLop, hienThiModal, kichHoat,khoiPhucMatKhau);
+  export const CoLumNguoiDung = (hienThiModal: (banGhi: any) => void, kichHoat: (banGhi: any) => void,khoiPhucMatKhau: (banGhi: any) => void,ShowQuyen:(taiKhoan:string)=>void) =>
+    taoCotBangnguoidung(ColumLop, hienThiModal, kichHoat,khoiPhucMatKhau,ShowQuyen);

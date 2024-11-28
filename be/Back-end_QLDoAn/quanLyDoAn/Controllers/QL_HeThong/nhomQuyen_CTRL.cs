@@ -20,7 +20,12 @@ namespace quanLyDoAn.Controllers.QL_HeThong
             return _nhomQuyenBLL.GetAll();
         }
 
-
+        [Route("getnhomquyen_taikhoan")]
+        [HttpGet]
+        public List<nhomQuyen_DTO> GetNhomQuyen_TaiKhoan(string tk)
+        {
+            return _nhomQuyenBLL.GetNhomQuyen_TaiKhoan(tk);
+        }
         [Route("create-nhomQuyen")]
         [HttpPost]
         public nhomQuyen_DTO CreateItem([FromBody] nhomQuyen_DTO model)

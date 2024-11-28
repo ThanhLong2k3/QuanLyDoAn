@@ -59,28 +59,24 @@ namespace DAL.QL_HethongRepository
         public bool Delete(NguoiDungNhomQuyen_DTO model)
         {
             string msgError = "";
-            bool kq;
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedure(out msgError, "delNguoiDung_NhomQuyen",
                      "@taiKhoan", model.taiKhoan,
                      "@maNhomQuyen", model.maNhomQuyen);
 
-                if (Convert.ToInt32(result) > 0)
+                if (result != null && int.TryParse(result.ToString(), out int returnValue))
                 {
-                    kq = true;
+                    return returnValue > 0;
                 }
-                else
-                {
-                    kq = false;
-                }
-                return kq;
+
+                return false;
             }
             catch (Exception ex)
             {
-                throw ex;
+               
+                return false;
             }
-
         }
     }
 }

@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { Modal, Card, Table, Button, Input, Typography, Space } from 'antd';
 import { DeleteOutlined, UserAddOutlined, SearchOutlined } from '@ant-design/icons';
-
-interface Quyen {
-  maQuyen: string;
-  tenQuyen: string;
-}
+import {NhomQuyen} from "../../InterFace";
 
 interface ModalThemQuyenProps {
   hienmodalphanquyen: boolean;
   setHienModal: (visible: boolean) => void;
-  quyenn: Quyen[];
-  selectedQuyen: Quyen[];
-  handleAddQuyen: (user: Quyen) => void;
+  NhomQuyen: NhomQuyen[];
+  selectedQuyen: NhomQuyen[];
+  handleAddQuyen: (user: NhomQuyen) => void;
   handleRemoveQuyen: (maQuyen: string) => void;
   themQuyen: () => void;
 }
@@ -22,7 +18,7 @@ const { Title } = Typography;
 const ModalQuyen: React.FC<ModalThemQuyenProps> = ({
   hienmodalphanquyen,
   setHienModal,
-  quyenn,
+  NhomQuyen,
   selectedQuyen,
   handleAddQuyen,
   handleRemoveQuyen,
@@ -30,22 +26,22 @@ const ModalQuyen: React.FC<ModalThemQuyenProps> = ({
 }) => {
   const [searchText, setSearchText] = useState('');
 
-  const filteredQuyen = quyenn.filter(quyen => 
-    quyen.tenQuyen.toLowerCase().includes(searchText.toLowerCase()) ||
-    quyen.maQuyen.toLowerCase().includes(searchText.toLowerCase())
+  const filteredQuyen = NhomQuyen.filter(nhomquyen => 
+    nhomquyen.tenNhomQuyen.toLowerCase().includes(searchText.toLowerCase()) ||
+    nhomquyen.maNhomQuyen.toLowerCase().includes(searchText.toLowerCase())
   );
 
   const columns = [
     {
-      title: 'Mã quyền',
-      dataIndex: 'maQuyen',
-      key: 'maQuyen',
+      title: 'Mã nhóm quyền',
+      dataIndex: 'maNhomQuyen',
+      key: 'maNhomQuyen',
       width: '40%',
     },
     {
-      title: 'Tên quyền',
-      dataIndex: 'tenQuyen',
-      key: 'tenQuyen',
+      title: 'Tên nhóm quyền',
+      dataIndex: 'tenNhomQuyen',
+      key: 'tenNhomQuyen',
       width: '40%',
       ellipsis: true,
     },
@@ -53,13 +49,13 @@ const ModalQuyen: React.FC<ModalThemQuyenProps> = ({
       title: 'Thao Tác',
       key: 'action',
       width: '20%',
-      render: (text: string, quyen: Quyen) => (
+      render: (text: string, nhomquyen: NhomQuyen) => (
         <Button
           type="primary"
           size="small"
           icon={<UserAddOutlined />}
-          onClick={() => handleAddQuyen(quyen)}
-          disabled={selectedQuyen.some(q => q.maQuyen === quyen.maQuyen)}
+          onClick={() => handleAddQuyen(nhomquyen)}
+          disabled={selectedQuyen.some(q => q.maNhomQuyen === nhomquyen.maNhomQuyen)}
         >
           Thêm
         </Button>
@@ -69,15 +65,15 @@ const ModalQuyen: React.FC<ModalThemQuyenProps> = ({
 
   const columnsSelected = [
     {
-      title: 'Mã quyền',
-      dataIndex: 'maQuyen',
-      key: 'maQuyen',
+      title: 'Mã nhóm quyền',
+      dataIndex: 'maNhomQuyen',
+      key: 'maNhomQuyen',
       width: '40%',
     },
     {
-      title: 'Tên quyền',
-      dataIndex: 'tenQuyen',
-      key: 'tenQuyen',
+      title: 'Tên nhóm quyền',
+      dataIndex: 'tenNhomQuyen',
+      key: 'tenNhomQuyen',
       width: '40%',
       ellipsis: true,
     },
@@ -85,13 +81,13 @@ const ModalQuyen: React.FC<ModalThemQuyenProps> = ({
       title: 'Thao Tác',
       key: 'action',
       width: '20%',
-      render: (text: string, quyen: Quyen) => (
+      render: (text: string, nhomquyen: NhomQuyen) => (
         <Button
           type="primary"
           danger
           size="small"
           icon={<DeleteOutlined />}
-          onClick={() => handleRemoveQuyen(quyen.maQuyen)}
+          onClick={() => handleRemoveQuyen(nhomquyen.maNhomQuyen)}
         >
           Xóa
         </Button>
@@ -103,7 +99,7 @@ const ModalQuyen: React.FC<ModalThemQuyenProps> = ({
     <Modal
       title={
         <Title level={3} style={{ margin: 0 }}>
-          <UserAddOutlined /> Phân Quyền
+          <UserAddOutlined /> Nhóm Quyền
         </Title>
       }
       open={hienmodalphanquyen}
@@ -122,7 +118,7 @@ const ModalQuyen: React.FC<ModalThemQuyenProps> = ({
         />
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: '24px' }}>
           <Card
-            title={<Title level={4}>Danh sách quyền</Title>}
+            title={<Title level={4}>Danh sách nhóm quyền</Title>}
             style={{ width: '50%' }}
           >
             <Table
@@ -134,7 +130,7 @@ const ModalQuyen: React.FC<ModalThemQuyenProps> = ({
             />
           </Card>
           <Card
-            title={<Title level={4}>Quyền đã chọn</Title>}
+            title={<Title level={4}>Nhóm quyền đã chọn</Title>}
             style={{ width: '50%' }}
           >
             <Table

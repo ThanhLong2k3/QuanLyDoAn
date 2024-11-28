@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { Card, Table, Button, Popconfirm, Row, Col, Input, Select, Space, Typography, Divider, Form, message } from "antd";
-import { NguoiDung,Quyen } from "../../../components/InterFace";
+import { NguoiDung, NhomQuyen } from "../../../components/InterFace";
 import ReusableModal from "../../../components/UI/Modal";
 import { FormNguoiDung } from "../../../components/QLHeThongComponent/QL_NguoiDung/QL_NguoiDungForm";
 import { CoLumNguoiDung } from "../../../components/QLHeThongComponent/QL_NguoiDung/TableNguoiDung";
 import { DeleteOutlined, SearchOutlined, UserAddOutlined, FilterOutlined } from "@ant-design/icons";
-import ModalQuyen from "../../../components/QLHeThongComponent/QL_NguoiDung/modalQuyen";
-
-import {getAll_NguoiDung,addNguoiDung,editNguoiDung,delNguoiDung} from "../../../sevices/Api/QL_HeThong/QL_NguoiDung";
+import ModalQuyen from "../../../components/QLHeThongComponent/QL_NguoiDung/modalNhomQuyen";
+import { getNhomQuyen_TaiKhoan, getAll_Quyen,delNguoiDung_NhomQuyen } from "../../../sevices/Api/QL_HeThong/QL_NhomQuyen";
+import { getAll_NguoiDung, addNguoiDung, editNguoiDung, addNguoiDung_NhomQuyen } from "../../../sevices/Api/QL_HeThong/QL_NguoiDung";
 
 import moment from 'moment';
 const { Option } = Select;
 const { Title } = Typography;
-
 
 const QuanLyNguoiDung: React.FC = () => {
   const [nguoiDung, setNguoiDung] = useState<NguoiDung[]>([]);
@@ -22,143 +21,161 @@ const QuanLyNguoiDung: React.FC = () => {
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [timKiem, setTimKiem] = useState("");
   const [trangThai, setTrangThai] = useState<string | null>(null);
-  const [duLieuLoc, setDuLieuLoc] = useState<NguoiDung[]>([]);
   const [modalQuyen, setHienModalQuyen] = useState(false);
-  const [quyen, setQuyen] = useState<Quyen[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<NguoiDung[]>([]);
-  const [selectedQuyen, setSelectedQuyen] = useState<Quyen[]>([]);
+  const [quyen, setQuyen] = useState<NhomQuyen[]>([]);
+  const [selectedQuyen, setSelectedQuyen] = useState<NhomQuyen[]>([]);
+  const [taikhoanon, setTaiKhoan_ON] = useState("");
+
   useEffect(() => {
     document.title = "Quản lý người dùng";
     getllNguoiDung();
   }, []);
 
-  const getllNguoiDung = async () => {
-      let data = await getAll_NguoiDung();
+  const getllNguoiDung = useCallback(async () => {
+    try {
+      const data = await getAll_NguoiDung();
       setNguoiDung(data);
-  };
+    } catch (error) {
+      message.error("Không thể tải danh sách người dùng");
+    }
+  }, []);
 
-  const hienThiModal = (banGhi?: NguoiDung) => {
+  const hienThiModal = useCallback((banGhi?: NguoiDung) => {
     formdulieu.resetFields();
     if (banGhi) {
-        const ngaySinhValue = banGhi.ngaySinh ? moment(banGhi.ngaySinh) : null;
-        formdulieu.setFieldsValue({ ...banGhi, ngaySinh: ngaySinhValue });
-        setKeyDangSua(banGhi.taiKhoan);
+      const ngaySinhValue = banGhi.ngaySinh ? moment(banGhi.ngaySinh) : null;
+      formdulieu.setFieldsValue({ ...banGhi, ngaySinh: ngaySinhValue });
+      setKeyDangSua(banGhi.taiKhoan);
     } else {
-        setKeyDangSua(null);
+      setKeyDangSua(null);
     }
     setHienModal(true);
-  };
+  }, [formdulieu]);
 
-  useEffect(() => {
-    const ketQuaLoc = nguoiDung.filter(
+  const duLieuLoc = useMemo(() => {
+    return nguoiDung.filter(
       (nguoi) =>
         (nguoi.hoTen.toLowerCase().includes(timKiem.toLowerCase()) ||
           nguoi.trangThai.toLowerCase().includes(timKiem.toLowerCase())) &&
         (trangThai === null || nguoi.trangThai === trangThai)
     );
-    setDuLieuLoc(ketQuaLoc);
   }, [nguoiDung, timKiem, trangThai]);
 
-  const xuLyDongY =async () => {
-     const giatri= await formdulieu.validateFields();
-
+  const xuLyDongY = useCallback(async () => {
+    try {
+      const giatri = await formdulieu.validateFields();
       if (keyDangSua !== null) {
-        await editNguoiDung(giatri,getllNguoiDung);
+        await editNguoiDung(giatri, getllNguoiDung);
         message.success(`Tài khoản ${giatri.taiKhoan} đã được sửa thành công!`);
-
       } else {
-        await addNguoiDung(giatri,getllNguoiDung);
+        await addNguoiDung(giatri, getllNguoiDung);
       }
       setHienModal(false);
       formdulieu.resetFields();
       setKeyDangSua(null);
-    
-  };
+    } catch (error) {
+      message.error("Có lỗi xảy ra khi xử lý dữ liệu");
+    }
+  }, [formdulieu, keyDangSua, getllNguoiDung]);
 
-  const xuLykichhoat =async () => {
-    let a=cacDongDaChon.length;
-    for (const taiKhoan of cacDongDaChon) {
-      const banGhi = nguoiDung.find(user => user.taiKhoan === taiKhoan);
-      if (banGhi) {
-        const newStatus =  "Đã xét duyệt";
-        await editNguoiDung({ ...banGhi, trangThai: newStatus }, getllNguoiDung);
+  const xuLykichhoat = useCallback(async () => {
+    try {
+      let a = cacDongDaChon.length;
+      for (const taiKhoan of cacDongDaChon) {
+        const banGhi = nguoiDung.find(user => user.taiKhoan === taiKhoan);
+        if (banGhi) {
+          const newStatus = "Đã xét duyệt";
+          await editNguoiDung({ ...banGhi, trangThai: newStatus }, getllNguoiDung);
+        }
       }
+      message.success(`${a} tài khoản đã được "xét duyệt"!`);
+    } catch (error) {
+      message.error("Có lỗi xảy ra khi kích hoạt tài khoản");
     }
-    message.success(`${a} tài khoản đã được  "xét duyệt" !`);
+  }, [cacDongDaChon, nguoiDung, getllNguoiDung]);
 
-  };
+  const kichHoat = useCallback(async (banGhi: NguoiDung) => {
+    try {
+      const newStatus = banGhi.trangThai === "Chưa xét duyệt" ? "Đã xét duyệt" : "Chưa xét duyệt";
+      await editNguoiDung({ ...banGhi, trangThai: newStatus }, getllNguoiDung);
+      message.success(`Tài khoản ${banGhi.taiKhoan} đã được ${newStatus === "Đã xét duyệt" ? "kích hoạt" : "hủy kích hoạt"} thành công!`);
+    } catch (error) {
+      message.error("Có lỗi xảy ra khi thay đổi trạng thái tài khoản");
+    }
+  }, [getllNguoiDung]);
 
-  
-  const kichHoat = async(banGhi: NguoiDung) => {
-    if(banGhi.trangThai==="Chưa xét duyệt")
-    {
-      let giatri={...banGhi,trangThai:"Đã xét duyệt"};
-      await editNguoiDung (giatri,getllNguoiDung); 
-       message.success(`Tài khoản ${banGhi.taiKhoan} đã được kích hoạt thành công!`);
+  const khoiPhucMatKhau = useCallback(async (banGhi: NguoiDung) => {
+    try {
+      const mk = "123456";
+      await editNguoiDung({ ...banGhi, matKhau: mk }, getllNguoiDung);
+      message.success(`Mật khẩu của tài khoản ${banGhi.taiKhoan} đã được khôi phục thành công!`);
+    } catch (error) {
+      message.error("Có lỗi xảy ra khi khôi phục mật khẩu");
     }
-    else{
-      let giatri={...banGhi,trangThai:"Chưa xét duyệt"};
-      await editNguoiDung (giatri,getllNguoiDung); 
-      message.success(`Tài khoản ${banGhi.taiKhoan} đã hủy kích hoạt!`);
+  }, [getllNguoiDung]);
+
+  const ShowQuyen = useCallback(async (taiKhoanON: string) => {
+    try {
+      setTaiKhoan_ON(taiKhoanON);
+      const NhomQuyen_TaiKhoan = await getNhomQuyen_TaiKhoan(taiKhoanON);
+      setSelectedQuyen(NhomQuyen_TaiKhoan);
+      const allQuyen = await getAll_Quyen();
+      setQuyen(allQuyen);
+      setHienModalQuyen(true);
+    } catch (error) {
+      message.error("Có lỗi xảy ra khi tải thông tin quyền");
     }
-    
-  };
-  const khoiPhucMatKhau = async(banGhi: NguoiDung) => {
-    const mk="123456";
-    let giatri={...banGhi,matKhau:mk};
-     await editNguoiDung (giatri,getllNguoiDung); 
-    message.success(`Mật khẩu của tài khoản ${banGhi.taiKhoan} đã được khôi phục thành công!`);
-  };
-  const cotBang = CoLumNguoiDung(hienThiModal, kichHoat,khoiPhucMatKhau);
-  const chonDong = (cacKeyChon: React.Key[]) => {
+  }, []);
+
+  const cotBang = useMemo(() => CoLumNguoiDung(hienThiModal, kichHoat, khoiPhucMatKhau, ShowQuyen), [hienThiModal, kichHoat, khoiPhucMatKhau, ShowQuyen]);
+
+  const chonDong = useCallback((cacKeyChon: React.Key[]) => {
     setCacDongDaChon(cacKeyChon);
-  };
+  }, []);
 
-  const luaChonDong = {
+  const luaChonDong = useMemo(() => ({
     selectedRowKeys: cacDongDaChon,
     onChange: chonDong,
-  };
+  }), [cacDongDaChon, chonDong]);
 
-
-  const openModalQuyen=()=>{
-    setHienModalQuyen(true);
-  }
-  
-  const handleAddUser = (user: NguoiDung) => {
-    setSelectedUsers((prev) => [...prev, user]);
-  };
-  const handleAddQuyen = (quyen: Quyen) => {
+  const handleAddQuyen = useCallback((quyen: NhomQuyen) => {
     setSelectedQuyen((prev) => [...prev, quyen]);
-  };
-  const handleRemoveQuyen = async (maQuyen: string) => {
+  }, []);
+
+  const handleRemoveQuyen = useCallback(async(maNhomQuyen: string) => {
     setSelectedQuyen((prev) =>
-      prev.filter((quyen) => quyen.maQuyen !== maQuyen)
+      prev.filter((quyen) => quyen.maNhomQuyen !== maNhomQuyen)
     );
-  
-  };
-  const themQuyen = async () => {
-    
-  setHienModalQuyen(true);
-    // const existingQuyen = await getAll_NguoiDung(
-    //   URL.QLHETHONG.PHANQUYEN.GETBYMANHOMQUYEN(manhomquyen)
-    // );
-    // for(let i=0;i<selectedQuyen.length;i++)
-    // {
-    //   const giatri = {
-    //     maNhomQuyen: manhomquyen,
-    //     maQuyen: selectedQuyen[i].maQuyen,
-    //   };
-    //   const isExisting = existingQuyen.some(
-    //     (existingQuyen: Quyen) => existingQuyen.maQuyen === giatri.maQuyen
-    //   );
+    const giatri={
+       taiKhoan: taikhoanon,
+        maNhomQuyen: maNhomQuyen
+    }
+    await delNguoiDung_NhomQuyen(giatri);
+  }, []);
 
-    //   if (!isExisting) {
-    //     await add_Quyen(URL.QLHETHONG.NHOMQUYENPHANQUYEN.ADD, giatri);
+  const themQuyen = useCallback(async () => {
+    try {
+      setHienModalQuyen(false);
+      const existingQuyen = await getNhomQuyen_TaiKhoan(taikhoanon);
+      for (let i = 0; i < selectedQuyen.length; i++) {
+        const giatri = {
+          taiKhoan: taikhoanon,
+          maNhomQuyen: selectedQuyen[i].maNhomQuyen
+        };
+        const isExisting = existingQuyen.some(
+          (existingQuyen: NhomQuyen) => existingQuyen.maNhomQuyen === giatri.maNhomQuyen
+        );
 
-    //   }
-    // }
-    message.success("Phân quyền thành công !");
-  };
+        if (!isExisting) {
+          await addNguoiDung_NhomQuyen(giatri);
+        }
+      }
+      message.success("Phân quyền thành công!");
+      setTaiKhoan_ON("");
+    } catch (error) {
+      message.error("Có lỗi xảy ra khi phân quyền");
+    }
+  }, [taikhoanon, selectedQuyen]);
 
   return (
     <>
@@ -224,13 +241,11 @@ const QuanLyNguoiDung: React.FC = () => {
             rowSelection={luaChonDong}
             columns={cotBang}
             dataSource={duLieuLoc}
-            rowKey="taiKhoan"
+            rowKey={(record) => record.taiKhoan}
             scroll={{ x: 768 }}
             className="shadow-sm rounded-md overflow-hidden"
             pagination={{
               pageSize: 10,
-              showSizeChanger: true,
-              showQuickJumper: true,
               showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} mục`,
             }}
           />
@@ -238,8 +253,8 @@ const QuanLyNguoiDung: React.FC = () => {
       </Card>
       <ModalQuyen
         hienmodalphanquyen={modalQuyen}
-        setHienModal={openModalQuyen}
-        quyenn={quyen}
+        setHienModal={setHienModalQuyen}
+        NhomQuyen={quyen}
         selectedQuyen={selectedQuyen}
         handleAddQuyen={handleAddQuyen}
         handleRemoveQuyen={handleRemoveQuyen}
@@ -255,9 +270,9 @@ const QuanLyNguoiDung: React.FC = () => {
       >
         <FormNguoiDung form={formdulieu} />
       </ReusableModal>
-     
     </>
   );
 };
 
 export default QuanLyNguoiDung;
+

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Back-end_QLDoAn")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c9e56ad1ff638fdf85bd231bdc9aee4d4d67cd93")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+06dfceff79ca05641e0a857dba42a1255a94049c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Back-end_QLDoAn")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Back-end_QLDoAn")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -54,14 +54,14 @@ export const FormLop: React.FC<ReusableFormProps> = ({ formdulieu }) => (
       <Select placeholder="Chọn khóa học">
         <Option value="2018-2022">2018-2022</Option>
         <Option value="2019-2023">2019-2023</Option>
-        <Option value="2020-2021">2020-2021</Option>
-        <Option value="2022-2023">2022-2023</Option>
-        <Option value="2023-2024">2023-2024</Option>
-        <Option value="2024-2025">2024-2025</Option>
-        <Option value="2025-2026">2025-2026</Option>
-        <Option value="2026-2027">2026-2027</Option>
-        <Option value="2027-2028">2027-2028</Option>
-        <Option value="2028-2029">2028-2029</Option>
+        <Option value="2020-2024">2020-2024</Option>
+        <Option value="2021-2025">2021-2025</Option>
+        <Option value="2022-2026">2022-2026</Option>
+        <Option value="2023-2027">2023-2027</Option>
+        <Option value="2024-2028">2024-2028</Option>
+        <Option value="2025-2029">2025-2029</Option>
+        <Option value="2026-2030">2026-2030</Option>
+        <Option value="2027-2031">2027-2031</Option>
       </Select>
     </Form.Item>
   </Form>

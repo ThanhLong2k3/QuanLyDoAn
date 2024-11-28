@@ -22,6 +22,10 @@ namespace BLL.QL_HeThong
         {
             return _res.GetAll();
         }
+        public List<nhomQuyen_DTO> GetNhomQuyen_TaiKhoan(string tk)
+        {
+            return _res.GetNhomQuyen_TaiKhoan(tk);
+        }
         public string Create(nhomQuyen_DTO model)
         {
             return _res.Create(model);

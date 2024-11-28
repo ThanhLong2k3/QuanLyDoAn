@@ -46,7 +46,7 @@ const Sidebar: React.FC = () => {
           return {
             key: item.KEY,
             icon: item.ICON,
-            label: <Link to={item.LINK}>{item.TEXT}</Link>,
+            label: <Link style={{textDecoration:"none"}} to={item.LINK}>{item.TEXT}</Link>,
           };
         }
         return null;

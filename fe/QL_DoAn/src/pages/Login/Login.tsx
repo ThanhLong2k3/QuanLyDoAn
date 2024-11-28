@@ -3,9 +3,7 @@ import { Form, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./Style_Login.css";
 import ROUTERS from "../../router/Path";
-import { getall } from '../../sevices/Api/QL_HeThong/nguoiDung-servives'
-import { URL } from "../../sevices/Url/index"
-
+import {dangNhap,getAllQuyen_TaiKhoan} from "../../sevices/Api/QL_HeThong/QL_NguoiDung"
 interface Account {
   taiKhoan: string;
   matKhau: string;
@@ -20,32 +18,34 @@ const Login: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-        localStorage.setItem('taiKhoan', account.taiKhoan);
+        let login = await dangNhap(account);
+     
+        if (login.data && login.data !== 0) {
+            localStorage.setItem('taiKhoan', account.taiKhoan);
 
-        
-            const listQuyen = await getall(URL.QLHETHONG.NGUOIDUNG_NHOMQUYEN.GETBYTAIKHOAN(account.taiKhoan));
-            
-            console.log("listQuyen:", listQuyen);
-            debugger;
+            const listQuyen = await getAllQuyen_TaiKhoan(account.taiKhoan);
+
             if (Array.isArray(listQuyen) && listQuyen.length > 0) {
                 const maQuyenArray = listQuyen.map(item => item.maQuyen);
-
-                const existingPermissions = localStorage.getItem('ListQuyen') || '[]';
-                const parsedPermissions = JSON.parse(existingPermissions);
-                const updatedPermissions = [...parsedPermissions, ...maQuyenArray];
+                
+                const existingPermissions = JSON.parse(localStorage.getItem('ListQuyen') || '[]');
+                
+                const updatedPermissions = Array.from(new Set([...existingPermissions, ...maQuyenArray]));
 
                 localStorage.setItem('ListQuyen', JSON.stringify(updatedPermissions));
 
                 navigate(ROUTERS.HOME.DEFAULT.PATH);
             } else {
-                alert("Tài khoản không có quyền truy cập!");
+                alert("Không có quyền nào được gán cho tài khoản này!");
             }
-    } catch (error) {
-        console.error("Login error:", error);
+        } else {
+            alert("Tài khoản không có quyền truy cập hoặc không tồn tại!");
+        }
+    } catch (error: any) {
+        console.error("Login error:", error.message || error);
         alert("Đã xảy ra lỗi khi đăng nhập. Vui lòng thử lại.");
     }
 };
-
 
 
   const handleChange = (name: string, value: string) => {

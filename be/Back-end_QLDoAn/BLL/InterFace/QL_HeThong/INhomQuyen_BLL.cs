@@ -9,6 +9,8 @@ namespace BLL.InterFace.QL_HeThong
 {
     public partial interface INhomQuyen_BLL
     {
+        public List<nhomQuyen_DTO> GetNhomQuyen_TaiKhoan(string tk);
+
         public List<nhomQuyen_DTO> GetAll();
         string Create(nhomQuyen_DTO model);
         bool Update(nhomQuyen_DTO model);

@@ -5,7 +5,7 @@ import ReusableModal from '../../../components/UI/Modal'
 import { COLUMS } from '../../../components/QLDoAnComponent/QLLop/Table'
 import { FormLop } from '../../../components/QLDoAnComponent/QLLop/form'
 import { Lop } from "../../../components/InterFace"
-import { getAll, addLop, delLop, editLop } from "../../../sevices/Api/QL_Lop-servives"
+import { getAll, addLop, delLop, editLop } from "../../../sevices/Api/QL_DoAn/QL_Lop-servives"
 import * as XLSX from 'xlsx'
 
 const { Title } = Typography
@@ -28,8 +28,8 @@ export default function QuanLyLop() {
   }
 
   const xuLyXoa = async (maLop: string) => {
-    let kq = await delLop(maLop, getAllLop);
-    message.success(kq.data);
+    await delLop(maLop, getAllLop);
+    
   };
 
   const hienThiModal = useCallback(
@@ -49,12 +49,12 @@ export default function QuanLyLop() {
   const xuLyDongY = async () => {
     const giatri = await form.validateFields();
     if (keyDangSua !== null) {
-      let kq = await editLop(giatri, getAllLop);
-      message.success(kq.data);
+      await editLop(giatri, getAllLop);
+      
     }
     else {
-      let kq = await addLop(giatri, getAllLop);
-      message.success(kq.data);
+      await addLop(giatri, getAllLop);
+      
     }
     setHienModal(false);
     form.resetFields();
@@ -92,9 +92,12 @@ export default function QuanLyLop() {
     onChange: chonDong,
   };
 
-  const xulyXoaNhieu = () => {
-    
-    message.success(`Xóa thành công!`);
+  const xulyXoaNhieu = async() => {
+    for(let i=0;i<cacDongDaChon.length;i++)
+    {
+      await xuLyXoa(cacDongDaChon[i].toString());
+    }
+    setCacDongDaChon([]);
   };
 
   const xuLyXuatExcel = () => {
@@ -150,10 +153,10 @@ export default function QuanLyLop() {
                   showUploadList={false}
                   beforeUpload={xuLyNhapExcel}
                 >
-                  <Button icon={<UploadOutlined />}>Nhập Excel</Button>
+                   <Button icon={<DownloadOutlined />}>Nhập Excel</Button>
                 </Upload>
                 <Button 
-                  icon={<DownloadOutlined />} 
+                  icon={< UploadOutlined />} 
                   onClick={xuLyXuatExcel}
                 >
                   Xuất Excel
@@ -172,7 +175,6 @@ export default function QuanLyLop() {
             pagination={{
               pageSize: 10,
               showSizeChanger: true,
-              showQuickJumper: true,
               showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} mục`,
             }}
           />
