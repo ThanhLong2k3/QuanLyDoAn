@@ -73,6 +73,7 @@ CREATE TABLE hoiDong (
 CREATE TABLE hoiDong_GiangVien (
     maHoiDong VARCHAR(50),
     maGiangVien NVARCHAR(50),
+	nhiemVu NVARCHAR(50) NULL,
     PRIMARY KEY (maHoiDong, maGiangVien),
     FOREIGN KEY (maHoiDong) REFERENCES hoiDong(maHoiDong) ON DELETE CASCADE,
     FOREIGN KEY (maGiangVien) REFERENCES giangVien(maGiangVien) ON DELETE CASCADE
@@ -837,8 +838,350 @@ BEGIN
        (SELECT COUNT(ndnq.taiKhoan) FROM nguoiDung_nhomQuyen ndnq WHERE ndnq.maNhomQuyen = nq.maNhomQuyen) AS soLuong
 FROM nhomQuyen nq inner join nguoiDung_nhomQuyen nd_nq on nq.maNhomQuyen=nd_nq.maNhomQuyen where nd_nq.taiKhoan=@TaiKhoan; 
 END
+--=================================================================QUAN LY DOT LAM DO AN===============================
 
-EXEC delNguoiDung_NhomQuyen @taiKhoan='ă', @maNhomQuyen='NQ01'
-SELECT *FROM nguoiDung_nhomQuyen where taiKhoan=N'10621306'
+GO
+CREATE PROC GetAll_DotLamDoAn
+AS
+	BEGIN
+		SELECT * FROM dotLamDoAn
+	END
+
+GO
+
+CREATE PROCEDURE Them_DotLamDoAn
+    @taiKhoan NVARCHAR(50),
+    @maDot VARCHAR(50),
+    @tenDot NVARCHAR(255),
+    @ngayBatDau DATE,
+    @namApDung VARCHAR(4),
+    @dangKyDeTai BIT,
+    @choPhepSinhVienDangKyGiangVienKhacBoMon BIT,
+    @choPhepSinhVienBaoCaoKhacTuanHienTai BIT,
+    @choPhepGiangVienBaoCaoKhacTuanHienTai BIT,
+    @choPhepGiangVienSuaDeTai BIT,
+    @trangThai BIT
+AS
+BEGIN
+    DECLARE @coQuyenThemDot BIT = 0;
+
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'ADD_DOTLAMDOAN'
+    )
+    BEGIN
+        SET @coQuyenThemDot = 1;
+    END
+
+    IF @coQuyenThemDot = 1
+    BEGIN 
+        INSERT INTO dotLamDoAn(maDot, tenDot, ngayBatDau, namApDung, dangKyDeTai, 
+                               choPhepSinhVienDangKyGiangVienKhacBoMon, choPhepSinhVienBaoCaoKhacTuanHienTai, 
+                               choPhepGiangVienBaoCaoKhacTuanHienTai, choPhepGiangVienSuaDeTai, trangThai)
+        VALUES (@maDot, @tenDot, @ngayBatDau, @namApDung, @dangKyDeTai, 
+                @choPhepSinhVienDangKyGiangVienKhacBoMon, @choPhepSinhVienBaoCaoKhacTuanHienTai, 
+                @choPhepGiangVienBaoCaoKhacTuanHienTai, @choPhepGiangVienSuaDeTai, @trangThai);
+
+        SELECT N'Thêm đợt làm đồ án thành công' AS ThongBao;
+    END
+    ELSE
+    BEGIN
+        SELECT N'Bạn không có quyền thêm đợt làm đồ án' AS ThongBao;
+    END
+END;
+GO
+
+-- Procedure to edit an existing "dotLamDoAn"
+CREATE PROCEDURE Sua_DotLamDoAn
+    @taiKhoan NVARCHAR(50),
+    @maDot VARCHAR(50),
+    @tenDot NVARCHAR(255),
+    @ngayBatDau DATE,
+    @namApDung VARCHAR(4),
+    @dangKyDeTai BIT,
+    @choPhepSinhVienDangKyGiangVienKhacBoMon BIT,
+    @choPhepSinhVienBaoCaoKhacTuanHienTai BIT,
+    @choPhepGiangVienBaoCaoKhacTuanHienTai BIT,
+    @choPhepGiangVienSuaDeTai BIT,
+    @trangThai BIT
+AS
+BEGIN
+    DECLARE @coQuyenSuaDot BIT = 0;
+
+    -- Check permission to edit a project period
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'UP_DOTLAMDOAN'
+    )
+    BEGIN
+        SET @coQuyenSuaDot = 1;
+    END
+
+    IF @coQuyenSuaDot = 1
+    BEGIN 
+        UPDATE dotLamDoAn
+        SET tenDot = @tenDot, 
+            ngayBatDau = @ngayBatDau, 
+            namApDung = @namApDung, 
+            dangKyDeTai = @dangKyDeTai, 
+            choPhepSinhVienDangKyGiangVienKhacBoMon = @choPhepSinhVienDangKyGiangVienKhacBoMon, 
+            choPhepSinhVienBaoCaoKhacTuanHienTai = @choPhepSinhVienBaoCaoKhacTuanHienTai, 
+            choPhepGiangVienBaoCaoKhacTuanHienTai = @choPhepGiangVienBaoCaoKhacTuanHienTai, 
+            choPhepGiangVienSuaDeTai = @choPhepGiangVienSuaDeTai, 
+            trangThai = @trangThai
+        WHERE maDot = @maDot;
+
+        SELECT N'Sửa đợt làm đồ án thành công' AS ThongBao;
+    END
+    ELSE
+    BEGIN
+        SELECT N'Bạn không có quyền sửa đợt làm đồ án' AS ThongBao;
+    END
+END;
+GO
+
+-- Procedure to delete a "dotLamDoAn"
+CREATE PROCEDURE Xoa_DotLamDoAn
+    @taiKhoan NVARCHAR(50),
+    @maDot VARCHAR(50)
+AS
+BEGIN
+    DECLARE @coQuyenXoaDot BIT = 0;
+
+    -- Check permission to delete a project period
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'DEL_DOTLAMDOAN'
+    )
+    BEGIN
+        SET @coQuyenXoaDot = 1;
+    END
+
+    IF @coQuyenXoaDot = 1
+    BEGIN 
+        DELETE FROM dotLamDoAn WHERE maDot = @maDot;
+
+        SELECT N'Xóa đợt làm đồ án thành công' AS ThongBao;
+    END
+    ELSE
+    BEGIN
+        SELECT N'Bạn không có quyền xóa đợt làm đồ án' AS ThongBao;
+    END
+END;
+GO
+CREATE PROC GetAll_HoiDong
+AS
+BEGIN
+	SELECT*FROM hoiDong
+	END
+	GO
+-- Procedure to add a new "hoiDong"
+CREATE PROCEDURE Them_HoiDong
+    @taiKhoan NVARCHAR(50),
+    @maHoiDong VARCHAR(50),
+    @tenHoiDong NVARCHAR(255),
+    @maDot VARCHAR(50),
+    @thuocLop NVARCHAR(100),
+    @phong NVARCHAR(50),
+    @ngayDuKien DATE
+AS
+BEGIN
+    DECLARE @coQuyenThemHoiDong BIT = 0;
+
+    -- Check permission to add a new committee
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'ADD_HOIDONG'
+    )
+    BEGIN
+        SET @coQuyenThemHoiDong = 1;
+    END
+
+    IF @coQuyenThemHoiDong = 1
+    BEGIN 
+        INSERT INTO hoiDong(maHoiDong, tenHoiDong, maDot, thuocLop, phong, ngayDuKien)
+        VALUES (@maHoiDong, @tenHoiDong, @maDot, @thuocLop, @phong, @ngayDuKien);
+
+        SELECT N'Thêm hội đồng thành công' AS ThongBao;
+    END
+    ELSE
+    BEGIN
+        SELECT N'Bạn không có quyền thêm hội đồng' AS ThongBao;
+    END
+END;
+GO
+
+-- Procedure to edit an existing "hoiDong"
+CREATE PROCEDURE Sua_HoiDong
+    @taiKhoan NVARCHAR(50),
+    @maHoiDong VARCHAR(50),
+    @tenHoiDong NVARCHAR(255),
+    @maDot VARCHAR(50),
+    @thuocLop NVARCHAR(100),
+    @phong NVARCHAR(50),
+    @ngayDuKien DATE
+AS
+BEGIN
+    DECLARE @coQuyenSuaHoiDong BIT = 0;
+
+    -- Check permission to edit a committee
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'UP_HOIDONG'
+    )
+    BEGIN
+        SET @coQuyenSuaHoiDong = 1;
+    END
+
+    IF @coQuyenSuaHoiDong = 1
+    BEGIN 
+        UPDATE hoiDong
+        SET tenHoiDong = @tenHoiDong, 
+            maDot = @maDot, 
+            thuocLop = @thuocLop, 
+            phong = @phong, 
+            ngayDuKien = @ngayDuKien
+        WHERE maHoiDong = @maHoiDong;
+
+        SELECT N'Sửa hội đồng thành công' AS ThongBao;
+    END
+    ELSE
+    BEGIN
+        SELECT N'Bạn không có quyền sửa hội đồng' AS ThongBao;
+    END
+END;
+GO
+
+-- Procedure to delete a "hoiDong"
+CREATE PROCEDURE Xoa_HoiDong
+    @taiKhoan NVARCHAR(50),
+    @maHoiDong VARCHAR(50)
+AS
+BEGIN
+    DECLARE @coQuyenXoaHoiDong BIT = 0;
+
+    -- Check permission to delete a committee
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'DEL_HOIDONG'
+    )
+    BEGIN
+        SET @coQuyenXoaHoiDong = 1;
+    END
+
+    IF @coQuyenXoaHoiDong = 1
+    BEGIN 
+        DELETE FROM hoiDong WHERE maHoiDong = @maHoiDong;
+
+        SELECT N'Xóa hội đồng thành công' AS ThongBao;
+    END
+    ELSE
+    BEGIN
+        SELECT N'Bạn không có quyền xóa hội đồng' AS ThongBao;
+    END
+END;
+GO
+
+CREATE PROCEDURE Them_ThanhVien_HoiDong
+    @taiKhoan NVARCHAR(50),
+    @maHoiDong VARCHAR(50),
+    @maThanhVien NVARCHAR(50),
+    @loaiThanhVien NVARCHAR(10), -- 'GV' for lecturer, 'SV' for student
+    @nhiemVu NVARCHAR(50) = NULL -- Default value is NULL
+AS
+BEGIN
+    DECLARE @coQuyenThemThanhVien BIT = 0;
+
+    -- Check permission to add members to a committee
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'ADD_THANHVIEN_HOIDONG'
+    )
+    BEGIN
+        SET @coQuyenThemThanhVien = 1;
+    END
+
+    IF @coQuyenThemThanhVien = 1
+    BEGIN 
+        IF @loaiThanhVien = 'GV'
+        BEGIN
+            INSERT INTO hoiDong_GiangVien(maHoiDong, maGiangVien, nhiemVu)
+            VALUES (@maHoiDong, @maThanhVien, @nhiemVu);
+        END
+        ELSE IF @loaiThanhVien = 'SV'
+        BEGIN
+            INSERT INTO hoiDong_SinhVien(maHoiDong, maSinhVien)
+            VALUES (@maHoiDong, @maThanhVien);
+        END
+
+        SELECT N'Thêm thành viên vào hội đồng thành công' AS ThongBao;
+    END
+    ELSE
+    BEGIN
+        SELECT N'Bạn không có quyền thêm thành viên vào hội đồng' AS ThongBao;
+    END
+END;
+GO
 
 
+-- Procedure to remove members from a "hoiDong"
+CREATE PROCEDURE Xoa_ThanhVien_HoiDong
+    @taiKhoan NVARCHAR(50),
+    @maHoiDong VARCHAR(50),
+    @maThanhVien NVARCHAR(50),
+    @loaiThanhVien NVARCHAR(10) -- 'GV' for lecturer, 'SV' for student
+AS
+BEGIN
+    DECLARE @coQuyenXoaThanhVien BIT = 0;
+
+    -- Check permission to remove members from a committee
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'DEL_THANHVIEN_HOIDONG'
+    )
+    BEGIN
+        SET @coQuyenXoaThanhVien = 1;
+    END
+
+    IF @coQuyenXoaThanhVien = 1
+    BEGIN 
+        IF @loaiThanhVien = 'GV'
+        BEGIN
+            DELETE FROM hoiDong_GiangVien 
+            WHERE maHoiDong = @maHoiDong AND maGiangVien = @maThanhVien;
+        END
+        ELSE IF @loaiThanhVien = 'SV'
+        BEGIN
+            DELETE FROM hoiDong_SinhVien 
+            WHERE maHoiDong = @maHoiDong AND maSinhVien = @maThanhVien;
+        END
+
+        SELECT N'Xóa thành viên khỏi hội đồng thành công' AS ThongBao;
+    END
+    ELSE
+    BEGIN
+        SELECT N'Bạn không có quyền xóa thành viên khỏi hội đồng' AS ThongBao;
+    END
+END;
+GO
+CREATE PROC Get_GiangVien_MaHoiDong
+    @maHoiDong VARCHAR(50)
+AS
+BEGIN
+	SELECT gv.maGiangVien,gv.tenGiangVien,gv. FROM giangVien gv inner join hoiDong_GiangVien hd_gv on gv.maGiangVien=hd_gv.maGiangVien where hd_gv.maHoiDong=@maHoiDong;
