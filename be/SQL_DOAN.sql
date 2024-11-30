@@ -1,7 +1,7 @@
 ﻿CREATE DATABASE QL_DoAn;
 GO
-USE QL_DoAn;
-GO
+
+--=====================================================QUẢN LÝ ĐỒ ÁN 
 CREATE TABLE lop (
     maLop VARCHAR(50) PRIMARY KEY,
     tenLop NVARCHAR(50) NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE hoiDong_SinhVien (
     FOREIGN KEY (maHoiDong) REFERENCES hoiDong(maHoiDong) ON DELETE CASCADE,
     FOREIGN KEY (maSinhVien) REFERENCES sinhVien(maSinhVien) ON DELETE CASCADE
 );
-
+-- ========================================QUAN LY HỆ THỐNG===========================================
 -- Tạo bảng nhomQuyen
 CREATE TABLE nhomQuyen (
     maNhomQuyen VARCHAR(20) PRIMARY KEY,

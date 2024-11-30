@@ -1,13 +1,6 @@
 ﻿using BLL.InterFace.QL_DoAn;
 using DAL.InterFace.QL_DoAn;
-using DAL.InterFace.QL_HeThong;
 using DTO.QL_DoAn;
-using DTO.QL_HeThong;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.QL_NguoiDung
 {

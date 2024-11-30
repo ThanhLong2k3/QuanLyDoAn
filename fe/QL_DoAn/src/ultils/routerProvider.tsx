@@ -27,36 +27,33 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: ROUTERS.GIAOVU.STUDENTS.PATH,
+        path: ROUTERS.DOAN.QL_SINHVIEN.PATH,
         element: <QuanLySinhVien />,
       },
+      
       {
-        path: ROUTERS.GIAOVU.PROJECTWORK.PATH,
-        element: <Projects />,
-      },
-      {
-        path: ROUTERS.GIAOVU.SUPERVISORS.PATH,
-        element: <Supervisors />,
-      },
-      {
-        path: ROUTERS.GIAOVU.CLASS.PATH,
+        path: ROUTERS.DOAN.QL_LOP.PATH,
         element: <QuanLyLop />,
       },
       {
-        path: ROUTERS.GIAOVU.USER.PATH,
+        path: ROUTERS.HETHONG.QL_NGUOIDUNG.PATH,
         element: <QuanLyNguoiDung />,
       },
       {
-        path: ROUTERS.GIAOVU.PHANQUYEN.PATH,
+        path: ROUTERS.HETHONG.QL_NHOMQUYEN.PATH,
         element:<QuanLyNhomQuuyen/>,
       },
       {
-        path: ROUTERS.GIAOVU.GIANGVIEN.PATH,
+        path: ROUTERS.DOAN.QL_GIANGVIEN.PATH,
         element: <QuanLygiangvien />,
       },
       {
-        path: ROUTERS.GIAOVU.DOTLAMDOAN.PATH,
+        path: ROUTERS.DOAN.QL_DOTLAMDOAN.PATH,
         element: <QuanLyDotLamDoAn />,
+      },
+      {
+        path: ROUTERS.DANHMUC.QL_HOCVI.PATH,
+        element: <QuanLyHocVi />,
       },
     ],
   },

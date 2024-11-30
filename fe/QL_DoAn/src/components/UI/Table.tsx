@@ -6,7 +6,7 @@ import {ColumnType} from '../QLDanhMucComponent/types';
  const taoCotBang = (
   danhSachCot: Array<ColumnType>, 
   hienThiModal: (banGhi: any) => void, 
-  xuLyXoa: (key: number) => void
+  xuLyXoa: (key: string) => void
 ) => {
   const cotCoBan = [...danhSachCot];
 
@@ -31,7 +31,7 @@ import {ColumnType} from '../QLDanhMucComponent/types';
 };
 
  
-export const COLUMS = (colums:ColumnType[],hienThiModal: (banGhi: any) => void, xuLyXoa: (key: number) => void) =>
+export const COLUMS = (colums:ColumnType[],hienThiModal: (banGhi: any) => void, xuLyXoa: (key: string) => void) =>
   taoCotBang(colums, hienThiModal, xuLyXoa);
 
 
