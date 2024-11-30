@@ -1,6 +1,36 @@
 const LocalHot = "http://localhost:5295/";
     
 export const URL = {
+    QLDANHMUC:{
+        QLBOMON:{
+            GetAllBoMon:`${LocalHot}api/BoMon_CTRL/getall`,
+            GetBoMonById:(ID:string)=>`${LocalHot}`,
+            AddBoMon:`${LocalHot}api/BoMon_CTRL/create-BoMon`,
+            UpdateBoMon:`${LocalHot}api/BoMon_CTRL/create-BoMon`,
+            DeleteBoMon:(ID:string)=>`${LocalHot}api/BoMon_CTRL/delete-BoMon?maBoMon=${ID}`,
+        },
+        QLCHUCVU:{
+            GetAllChucVu:`${LocalHot}api/ChucVu_CTRL/getall`,
+            GetChucVuById:(ID:string)=>`${LocalHot}api/ChucVu_CTRL/getbyid`,
+            AddChucVu:`${LocalHot}api/ChucVu_CTRL/create-ChucVu`,
+            UpdateChucVu:`${LocalHot}api/ChucVu_CTRL/update-ChucVu`,
+            DeleteChucVu:(ID:string)=>`${LocalHot}api/ChucVu_CTRL/delete-ChucVu?maChucVu=${ID}`,
+        },
+        QLKHOA:{
+            GetAllKhoa:`${LocalHot}api/Khoa_CTRL/getall`,
+            GetKhoaById:(ID:string)=>`${LocalHot}`,
+            AddKhoa:`${LocalHot}api/Khoa_CTRL/create-Khoa`,
+            UpdateKhoa:`${LocalHot}api/Khoa_CTRL/update-Khoa`,
+            DeleteKhoa:(ID:string)=>`${LocalHot}api/Khoa_CTRL/delete-Khoa?maKhoa=${ID}`,
+        },
+        QLTRINHDO:{
+            GetAllTrinhDo_HocHam:`${LocalHot}api/TrinhDo_CTRL/getall-HocHam`,
+            GetAllTrinhDo_HocVi:`${LocalHot}api/TrinhDo_CTRL/getall-HocVi`,
+            AddTrinhDo:`${LocalHot}api/TrinhDo_CTRL/create-TrinhDo`,
+            UpdateTrinhDo:`${LocalHot}api/TrinhDo_CTRL/update-TrinhDo`,
+            DeleteTrinhDo:(ID:string)=>`${LocalHot}api/TrinhDo_CTRL/delete-TrinhDo?maTrinhDo=${ID}`,
+        }
+    },
     QLHETHONG: {
         QLNGUOIDUNG: {
             GETALL: `${LocalHot}api/nguoiDung_CTRL/getall`,

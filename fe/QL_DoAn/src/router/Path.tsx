@@ -6,20 +6,28 @@ type router = {
     [key: string]: router;
   };
   
-  // ROUTERS định nghĩa chỉ chứa các đường dẫn là chuỗi
   const ROUTERS: { [key: string]: routerSection } = {
+    
     HOME: { DEFAULT : {PATH: "/home"}},
     AUTH: { DEFAULT : {PATH:"/"}},
-    GIAOVU: {
-      DOTLAMDOAN:{PATH:"admin/quanlydotlamdoan"},
-      GIANGVIEN:{PATH:"admin/canbogiangvien"},
-      PHANQUYEN:{PATH:"admin/nhomquyen"},
-      USER:{PATH:"admin/user"},
-      STUDENTS: { PATH: "giaovu/sinhvien" },
-      PROJECTWORK: { PATH: "giaovu/project" },
-      SUPERVISORS: { PATH: "giaovu/supervisors" },
-      CLASS: { PATH: "giaovu/class" },
+    DOAN: {
+      QL_SINHVIEN:{PATH:"doan/sinhvien"},
+      QL_GIANGVIEN:{PATH:"doan/giangvien"},
+      QL_LOP:{PATH:"doan/lop"},
+      QL_DOTLAMDOAN:{PATH:"doan/dotlamdoan"},
     },
+    HETHONG:{
+      QL_NGUOIDUNG:{PATH:"hethong/nguoidung"},
+      QL_NHOMQUYEN:{PATH:"hethong/nhomquyen"},
+    },
+    DANHMUC:{
+      QL_CHUCVU:{PATH:"danhmuc/chucvu"},
+      QL_BOMON:{PATH:"danhmuc/bomon"},
+      QL_HOCVI:{PATH:"danhmuc/hocvi"},
+      QL_HOCHAM:{PATH:"danhmuc/hocham"},
+      QL_KHOA:{PATH:"danhmuc/khoa"},
+
+    }
   };
   
   export default ROUTERS;

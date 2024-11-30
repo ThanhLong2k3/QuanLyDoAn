@@ -1,11 +1,5 @@
 ﻿using DAL.InterFace.QL_DoAn;
 using DTO.QL_DoAn;
-using DTO.QL_HeThong;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.QL_DoAnRepository
 {

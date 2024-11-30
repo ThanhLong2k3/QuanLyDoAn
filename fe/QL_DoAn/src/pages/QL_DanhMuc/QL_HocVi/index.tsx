@@ -1,95 +1,144 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Table, Button, Popconfirm, Row, Col, Input, Space, Typography, Divider } from 'antd';
+import { Card, Table, Button, Popconfirm, Row, Col, Input, Space, Typography, Divider, Form, message } from 'antd';
 import { DeleteOutlined, SearchOutlined, PlusOutlined } from '@ant-design/icons';
-import { useQuanLyDuLieu } from '../../../ultils/hook';
 import ReusableModal from '../../../components/UI/Modal';
 import { COLUMS } from '../../../components/UI/Table';
 import { FormHocVi } from '../../../components/QLDanhMucComponent/QL_HocVi/QL_HocViForm';
 import { cotHocVi } from '../../../components/QLDanhMucComponent/QL_HocVi/TableHocVi';
-import { HocVi } from "../../../components/InterFace";
+import { TrinhDo } from "../../../components/InterFace";
+import { getAll_HocVi, addTrinhDo, delTrinhDo, editTrinhDo } from "../../../sevices/Api/QL_DanhMuc/QL_TrinhDo-servives";
 
 const { Title } = Typography;
 
-const hocViBanDau: HocVi[] = [
-  {
-    key: 1,
-    ma: 'TS',
-    ten: 'Tiến sĩ',
-    kyHieu: 'Dr.',
-    moTa: 'Bậc học vị cao nhất',
-    soLuongHuongDan: 10,
-  },
-  {
-    key: 2,
-    ma: 'ThS',
-    ten: 'Thạc sĩ',
-    kyHieu: 'M.',
-    moTa: 'Bậc học vị sau đại học',
-    soLuongHuongDan: 5,
-  },
-];
-
 const QuanLyHocVi: React.FC = () => {
-  const {
-    duLieu: hocVi,
-    hienModal,
-    setHienModal,
-    form,
-    keyDangSua,
-    cacDongDaChon,
-    hienThiModal,
-    xuLyDongY,
-    xuLyXoa,
-    xuLyXoaNhieu,
-    chonDong,
-  } = useQuanLyDuLieu<HocVi>({
-    duLieuBanDau: hocViBanDau,
-    khoaLuuTru: 'utehy_hocvi',
-  });
-
+  const [listHocVi, setHocVi] = useState<TrinhDo[]>([]);
+  const [hienModal, setHienModal] = useState(false);
+  const [form] = Form.useForm();
+  const [keyDangSua, setKeyDangSua] = useState<string | null>(null);
   const [timKiem, setTimKiem] = useState("");
-  const [duLieuLoc, setDuLieuLoc] = useState(hocVi);
+  const [duLieuLoc, setDuLieuLoc] = useState<TrinhDo[]>([]);
+  const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const GetALL_HocVi = async () => {
+    try {
+      setLoading(true);
+      const response = await getAll_HocVi();
+      if (response ) {
+        setHocVi(response);
+      } else {
+        setHocVi([]);
+        message.error("Không có dữ liệu học vị.");
+      }
+    } catch (error) {
+      console.error("Lỗi khi lấy dữ liệu học vị:", error);
+      message.error("Không thể lấy dữ liệu học vị. Vui lòng thử lại sau.");
+      setHocVi([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const hienThiModal = (banGhi?: TrinhDo) => {
+    form.resetFields();
+    if (banGhi) {
+      form.setFieldsValue(banGhi);
+      setKeyDangSua(banGhi.maHocHam_HocVi);
+    } else {
+      setKeyDangSua(null);
+    }
+    setHienModal(true);
+  };
 
   useEffect(() => {
     document.title = 'Quản lý học vị';
+    GetALL_HocVi();
   }, []);
 
   useEffect(() => {
-    const ketQuaLoc = hocVi.filter(
+    const ketQuaLoc = listHocVi.filter(
       (hv) =>
-        hv.ten.toLowerCase().includes(timKiem.toLowerCase()) ||
+        hv.tenHocHam_HocVi.toLowerCase().includes(timKiem.toLowerCase()) ||
         hv.kyHieu.toLowerCase().includes(timKiem.toLowerCase())
     );
     setDuLieuLoc(ketQuaLoc);
-  }, [hocVi, timKiem]);
+  }, [listHocVi, timKiem]);
+
+  const xuLyDongY = async () => {
+    try {
+      debugger;
+      const giaTri = await form.validateFields();
+      if (keyDangSua !== null) {
+        const HocVi:TrinhDo={
+          ...giaTri,
+          maHocHam_HocVi:keyDangSua,
+          hocHam_HocVi:1
+      }
+        await editTrinhDo(HocVi, GetALL_HocVi);
+      } else {
+        const HocVi:TrinhDo={
+            ...giaTri,
+            hocHam_HocVi:1
+        }
+        await addTrinhDo(HocVi, GetALL_HocVi);
+      }
+      setHienModal(false);
+      form.resetFields();
+      setKeyDangSua(null);
+    } catch (error) {
+      console.error("Lỗi khi lưu dữ liệu:", error);
+      message.error("Có lỗi xảy ra. Vui lòng thử lại.");
+    }
+  };
+
+  const xuLyXoa = async (key: string) => {
+    try {
+      debugger;
+      await delTrinhDo(key, GetALL_HocVi);
+    } catch (error) {
+      console.error("Lỗi khi xóa dữ liệu:", error);
+      message.error("Không thể xóa học vị. Vui lòng thử lại.");
+    }
+  };
 
   const cotBang = COLUMS(cotHocVi, hienThiModal, xuLyXoa);
 
   const luaChonDong = {
     selectedRowKeys: cacDongDaChon,
-    onChange: chonDong,
+    onChange: (cacKeyChon: React.Key[]) => setCacDongDaChon(cacKeyChon),
+  };
+
+  const xuLyXoaNhieu = async () => {
+    try {
+      await Promise.all(cacDongDaChon.map((key) => delTrinhDo(key.toString(), GetALL_HocVi)));
+      setCacDongDaChon([]);
+      message.success(`${cacDongDaChon.length} học vị đã được xóa thành công!`);
+      await GetALL_HocVi();
+    } catch (error) {
+      console.error("Lỗi khi xóa nhiều học vị:", error);
+      message.error("Có lỗi xảy ra khi xóa học vị. Vui lòng thử lại.");
+    }
   };
 
   return (
     <div className="bg-gray-100 min-h-screen p-6">
       <Card className="shadow rounded-lg overflow-hidden">
         <div className="p-6">
-        <Title level={2} className="text-center custom-blue mb-8" style={{color: '#1e88e5', fontSize: '25px', fontWeight: 'bold'}}>
+          <Title level={2} className="text-center mb-8" style={{color: '#1e88e5', fontSize: '25px', fontWeight: 'bold'}}>
             QUẢN LÝ HỌC VỊ
-        </Title>
-        <hr></hr>
+          </Title>
+          <Divider />
           <Row gutter={16} className="mb-6">
             <Col xs={24} sm={24} md={16} lg={18} xl={18}>
               <Input
                 placeholder="Tìm kiếm theo tên học vị hoặc ký hiệu"
                 value={timKiem}
-                
                 onChange={(e) => setTimKiem(e.target.value)}
                 prefix={<SearchOutlined className="text-gray-400" />}
-                className="w-full "
+                className="w-full"
               />
             </Col>
-            <Col xs={24} sm={24} md={8} lg={6} xl={4} className="flex justify-end">
+            <Col xs={24} sm={24} md={8} lg={6} xl={6} className="flex justify-end">
               <Space>
                 {cacDongDaChon.length > 0 && (
                   <Popconfirm
@@ -114,13 +163,13 @@ const QuanLyHocVi: React.FC = () => {
               </Space>
             </Col>
           </Row>
-          <Divider className="my-6" />
           <Table
             rowSelection={luaChonDong}
             columns={cotBang}
             dataSource={duLieuLoc}
-            rowKey="key"
+            rowKey="maHocHam_HocVi"
             scroll={{ x: 768 }}
+            loading={loading}
             className="shadow-sm rounded-md overflow-hidden"
             pagination={{
               pageSize: 10,
@@ -146,3 +195,4 @@ const QuanLyHocVi: React.FC = () => {
 };
 
 export default QuanLyHocVi;
+
