@@ -43,7 +43,7 @@ const QuanLyHocVi: React.FC = () => {
     form.resetFields();
     if (banGhi) {
       form.setFieldsValue(banGhi);
-      setKeyDangSua(banGhi.maHocHam_HocVi);
+      setKeyDangSua(banGhi.id);
     } else {
       setKeyDangSua(null);
     }
@@ -167,7 +167,7 @@ const QuanLyHocVi: React.FC = () => {
             rowSelection={luaChonDong}
             columns={cotBang}
             dataSource={duLieuLoc}
-            rowKey="maHocHam_HocVi"
+            rowKey="id"
             scroll={{ x: 768 }}
             loading={loading}
             className="shadow-sm rounded-md overflow-hidden"

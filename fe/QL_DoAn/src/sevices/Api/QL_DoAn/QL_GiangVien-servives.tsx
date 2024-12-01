@@ -9,6 +9,7 @@ export const getAll =async () =>{
 }
 
 export const addGiangVien= async(value:GiangVien,callBack:()=>void)=>{
+    debugger;
       const result= await add(URL.QLDOAN.QL_GIANGVIEN.ADD(taiKhoan),value,true,false,callBack)as AxiosResponse<any>; 
       message.success(result.data);
 }
@@ -17,6 +18,7 @@ export const delGiangVien=async(maGiangVien:string,callBack:()=>void)=>{
     message.success(result.data);
 }
 export const editGiangVien= async(value:GiangVien,callBack:()=>void)=>{
+    debugger;
     const result= await edit(URL.QLDOAN.QL_GIANGVIEN.UPDATE(taiKhoan),value,true,false,callBack) as AxiosResponse<any>;
     message.success(result.data);
 }

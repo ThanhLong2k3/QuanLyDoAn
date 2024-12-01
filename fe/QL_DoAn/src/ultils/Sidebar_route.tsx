@@ -59,7 +59,7 @@ type SidebarItem_DanhMuc = {
 };
 
 export const Sidebar_router_DanhMuc: { [key: string]: SidebarItem_DanhMuc } = {
-  QLKHOA: { KEY: '17', ICON: <BankOutlined />, LINK: ROUTERS.HOME.DEFAULT.PATH, TEXT: "Danh mục khoa"},
+  QLKHOA: { KEY: '17', ICON: <BankOutlined />, LINK: ROUTERS.DANHMUC.QL_KHOA.PATH, TEXT: "Danh mục khoa"},
   QLBOMON: { KEY: '18', ICON: <ClusterOutlined />, LINK: ROUTERS.DANHMUC.QL_BOMON.PATH, TEXT: 'Danh mục bộ môn'},
   QLHOCVI: { KEY: '19', ICON: <TrophyOutlined />, LINK: ROUTERS.DANHMUC.QL_HOCVI.PATH, TEXT: "Danh Mục học vị"},
   QLHOCHAM: { KEY: '21', ICON: <CrownOutlined />, LINK: ROUTERS.DANHMUC.QL_HOCHAM.PATH, TEXT: "Danh Mục học hàm"},

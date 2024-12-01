@@ -55,7 +55,7 @@ namespace DAL.QL_DanhMucRepository
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "InsertBoMon",
-                    "@maBoMon", boMon.maBoMon,
+                    "@maBoMon", boMon.ID,
                     "@tenBoMon", boMon.tenBoMon,
                     "@tenKhoa", boMon.tenKhoa
                 );
@@ -84,7 +84,7 @@ namespace DAL.QL_DanhMucRepository
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "UpdateBoMon",
-                    "@maBoMon", boMon.maBoMon,
+                    "@maBoMon", boMon.ID,
                     "@tenBoMon", boMon.tenBoMon,
                     "@tenKhoa", boMon.tenKhoa
                 );

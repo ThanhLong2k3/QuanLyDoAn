@@ -133,10 +133,8 @@ INSERT INTO lop (maLop, tenLop, tenChuyenNganh, khoaHoc) VALUES
 ('L08', N'Lớp 8', N'Y khoa', '2021'),
 ('L09', N'Lớp 9', N'Kiến trúc', '2022'),
 ('L10', N'Lớp 10', N'Kỹ thuật phần mềm', '2023');
-
 -- Thêm dữ liệu vào bảng nguoiDung
 INSERT INTO nguoiDung (taiKhoan, matKhau, hoTen, ngaySinh, gioiTinh, email, moTa, TrangThai) VALUES
-('GV001', '123456', N'Trần Văn A', '1970-05-10', N'Nam', 'a.tran@example.com', N'Giảng viên', N'Hoạt động'),
 ('GV002', '123456', N'Nguyễn Văn B', '1980-07-15', N'Nam', 'b.nguyen@example.com', N'Giảng viên', N'Hoạt động'),
 ('GV003', '123456', N'Lê Thị C', '1985-11-21', N'Nữ', 'c.le@example.com', N'Giảng viên', N'Hoạt động'),
 ('GV004', '123456', N'Phạm Quốc D', '1990-03-25', N'Nam', 'd.pham@example.com', N'Giảng viên', N'Hoạt động'),
@@ -214,13 +212,31 @@ VALUES
 	('DEL_NHOMQUYEN',N'Xóa nhóm quyền');
 go
 
+INSERT INTO nguoiDung (taiKhoan, matKhau, hoTen, ngaySinh, gioiTinh, email, moTa, TrangThai) VALUES
+('GV001', '123456', N'Trần Văn A', '1970-05-10', N'Nam', 'a.tran@example.com', N'Giảng viên', N'Đã xét duyệt')
+GO
 -- Thêm dữ liệu vào bảng nguoiDung_nhomQuyen
 INSERT INTO nguoiDung_nhomQuyen (taiKhoan, maNhomQuyen) VALUES
-('GV001', 'NQ01'),
-('GV002', 'NQ01'),
-('SV001', 'NQ02'),
-('SV002', 'NQ02');
+('GV001', 'NQ01')
 go
+
+INSERT INTO nhomQuyen_phanQuyen (maNhomQuyen,maQuyen)VALUES
+('NQ01','ADD_GIANGVIEN'),
+('NQ01','ADD_LOP'),
+('NQ01','ADD_SINHVIEN'),
+('NQ01','DEL_GIANGVIEN'),
+('NQ01','DEL_LOP'),
+('NQ01','DEL_SINHVIEN'),
+('NQ01','UP_GIANGVIEN'),
+('NQ01','UP_LOP'),
+('NQ01','UP_SINHVIEN'),
+('NQ01','ADD_NGUOIDUNG'),
+('NQ01','ADD_NHOMQUYEN'),
+('NQ01','DEL_NGUOIDUNG'),
+('NQ01','DEL_NHOMQUYEN'),
+('NQ01','UP_NGUOIDUNG'),
+('NQ01','UP_NHOMQUYEN')
+GO
 --========================PROCEDURE=========================
 
 --=========================Nhomquyen_Phan quyen
@@ -257,32 +273,27 @@ create procedure getphanquyenbymanhomquyen
 		end;
 		go
 -- THÊM NGU?I DÙNG
-
 CREATE PROCEDURE dangnhap
     @taiKhoan NVARCHAR(50),
     @matKhau NVARCHAR(50)
 AS
 BEGIN
-    -- Kiểm tra tài khoản và mật khẩu trong bảng nguoiDung
-    IF EXISTS (SELECT 1 FROM nguoiDung WHERE taiKhoan = @taiKhoan AND matKhau = @matKhau AND TrangThai = N'Đã xét duyệt')
+    -- Kiểm tra tài khoản và mật khẩu trong bảng nguoiDung (Giảng viên)
+    IF EXISTS (
+        SELECT 1 
+        FROM nguoiDung 
+        WHERE taiKhoan = @taiKhoan AND matKhau = @matKhau AND TrangThai = N'Đã xét duyệt'
+    )
     BEGIN
-        -- Kiểm tra nếu tài khoản là mã sinh viên
-        IF EXISTS (SELECT 1 FROM sinhVien WHERE maSinhVien = @taiKhoan)
-        BEGIN
-            SELECT 1 AS Role; -- Sinh viên
-            RETURN;
-        END
-        -- Kiểm tra nếu tài khoản là mã giảng viên
-        ELSE IF EXISTS (SELECT 1 FROM giangVien WHERE maGiangVien = @taiKhoan)
-        BEGIN
-            SELECT 2 AS Role; -- Giảng viên
-            RETURN; 
-        END
+        SELECT 2 AS Role; -- Giảng viên
+        RETURN;
     END
 
-    -- Nếu tài khoản hoặc mật khẩu không chính xác hoặc không thuộc giảng viên/sinh viên
+    -- Nếu không tìm thấy tài khoản phù hợp
     SELECT 0 AS Role; -- Đăng nhập thất bại
 END;
+GO
+
 GO
 
 CREATE PROCEDURE ThemNguoiDung
@@ -647,11 +658,12 @@ BEGIN
 
     IF @coQuyenSuaGiangVien = 1
     BEGIN
+		EXEC SuaNguoiDung @taiKhoan = @maGiangVien, @hoTen = @tenGiangVien, @ngaySinh = @ngaySinh, @gioiTinh = @gioiTinh, @email = @email, @moTa = N'Giảng viên';
+
         UPDATE giangVien
         SET tenGiangVien = @tenGiangVien, tenBoMon = @tenBoMon, chucVu = @chucVu,
             tenHocVi = @tenHocVi, tenHocHam = @tenHocHam,gioiTinh=@gioiTinh, sDT = @sDT, email = @email
         WHERE maGiangVien = @maGiangVien;
-		EXEC SuaSuaNguoiDung @taiKhoan = @maGiangVien, @hoTen = @tenGiangVien, @ngaySinh = @ngaySinh, @gioiTinh = @gioiTinh, @email = @email, @moTa = N'Giảng viên';
 
         SELECT N'Sửa giảng viên thành công' AS ThongBao;
     END
@@ -812,23 +824,6 @@ as
 SELECT nhomQuyen_phanQuyen.maNhomQuyen,nhomQuyen_phanQuyen.maQuyen FROM nhomQuyen_phanQuyen INNER JOIN nguoiDung_nhomQuyen ON nhomQuyen_phanQuyen.maNhomQuyen=nguoiDung_nhomQuyen.maNhomQuyen WHERE nguoiDung_nhomQuyen.taiKhoan=@taiKhoan;
 end
 go
-INSERT INTO nhomQuyen_phanQuyen (maNhomQuyen,maQuyen)VALUES
-('NQ01','ADD_GIANGVIEN'),
-('NQ01','ADD_LOP'),
-('NQ01','ADD_SINHVIEN'),
-('NQ01','DEL_GIANGVIEN'),
-('NQ01','DEL_LOP'),
-('NQ01','DEL_SINHVIEN'),
-('NQ01','UP_GIANGVIEN'),
-('NQ01','UP_LOP'),
-('NQ01','UP_SINHVIEN'),
-('NQ01','ADD_NGUOIDUNG'),
-('NQ01','ADD_NHOMQUYEN'),
-('NQ01','DEL_NGUOIDUNG'),
-('NQ01','DEL_NHOMQUYEN'),
-('NQ01','UP_NGUOIDUNG'),
-('NQ01','UP_NHOMQUYEN')
-GO
 
 CREATE PROC GETNHOMQUYEN_TAIKHOAN
 @TaiKhoan nvarchar(50)

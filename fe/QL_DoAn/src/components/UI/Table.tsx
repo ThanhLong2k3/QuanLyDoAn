@@ -6,7 +6,7 @@ import {ColumnType} from '../QLDanhMucComponent/types';
  const taoCotBang = (
   danhSachCot: Array<ColumnType>, 
   hienThiModal: (banGhi: any) => void, 
-  xuLyXoa: (key: string) => void
+  xuLyXoa: (id: string) => void
 ) => {
   const cotCoBan = [...danhSachCot];
 
@@ -19,7 +19,7 @@ import {ColumnType} from '../QLDanhMucComponent/types';
           <Button type="primary" icon={<EditOutlined />} onClick={() => hienThiModal(banGhi)}/>
         </Tooltip>
         <Tooltip title="Xóa">
-          <Popconfirm title="Bạn có chắc chắn muốn xóa?" onConfirm={() => xuLyXoa(banGhi.key)}>
+          <Popconfirm title="Bạn có chắc chắn muốn xóa?" onConfirm={() => xuLyXoa(banGhi.id)}>
             <Button type="primary" danger icon={<DeleteOutlined />}/>
           </Popconfirm>
         </Tooltip>
@@ -31,7 +31,7 @@ import {ColumnType} from '../QLDanhMucComponent/types';
 };
 
  
-export const COLUMS = (colums:ColumnType[],hienThiModal: (banGhi: any) => void, xuLyXoa: (key: string) => void) =>
+export const COLUMS = (colums:ColumnType[],hienThiModal: (banGhi: any) => void, xuLyXoa: (id: string) => void) =>
   taoCotBang(colums, hienThiModal, xuLyXoa);
 
 

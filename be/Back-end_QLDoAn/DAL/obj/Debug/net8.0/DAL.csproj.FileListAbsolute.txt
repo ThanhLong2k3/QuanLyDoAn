@@ -45,3 +45,27 @@ C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\DAL.csproj.Up2Date
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\ref\DAL.dll
 C:\Users\Phuong Linh\Desktop\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\Back-end_QLDoAn.staticwebassets.endpoints.json
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\appsettings.json
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\Back-end_QLDoAn.staticwebassets.endpoints.json
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\Back-end_QLDoAn.deps.json
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\Back-end_QLDoAn.runtimeconfig.json
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\Back-end_QLDoAn.exe
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\DAL.deps.json
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\DAL.dll
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\DAL.pdb
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\Back-end_QLDoAn.dll
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\DTO.dll
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\Back-end_QLDoAn.pdb
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\bin\Debug\net8.0\DTO.pdb
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\DAL.csproj.AssemblyReference.cache
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\DAL.AssemblyInfoInputs.cache
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\DAL.AssemblyInfo.cs
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\DAL.csproj.CoreCompileInputs.cache
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\DAL.sourcelink.json
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\DAL.csproj.Up2Date
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\DAL.dll
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\refint\DAL.dll
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\DAL.pdb
+C:\Users\Phuong Linh\Desktop\New folder (2)\QuanLyDoAn\be\Back-end_QLDoAn\DAL\obj\Debug\net8.0\ref\DAL.dll

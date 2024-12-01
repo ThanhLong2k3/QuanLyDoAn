@@ -83,23 +83,23 @@ export interface HoiDong extends DuLieuItem {
   ngayDuKien: string;
 }
 export interface BoMon {
-  maBoMon: string;
+  id: string;
   tenBoMon: string;
   tenKhoa: string;
 }
 
 export interface ChucVu {
-  maChucVU: string;
+  id: string;
   tenChucVu: string;
   moTa: string;
 }
 
 export interface Khoa {
-  maKhoa: string;
+  id: string;
   tenKhoa: string;
 }
 export interface TrinhDo {
-  maHocHam_HocVi: string;
+  id: string;
   tenHocHam_HocVi: string;
   kyHieu: string;
   moTa: string;

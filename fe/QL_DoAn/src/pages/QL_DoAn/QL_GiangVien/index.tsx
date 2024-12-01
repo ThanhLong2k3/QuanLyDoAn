@@ -65,27 +65,30 @@ export default function QuanLygiangvien() {
 
   const cotBang = COLUMS(hienThiModal, xuLyXoa);
 
-  const xuLyNhapExcel = async(file: File) => {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      const data = new Uint8Array(e.target?.result as ArrayBuffer)
-      const workbook = XLSX.read(data, { type: 'array' })
-      const sheetName = workbook.SheetNames[0]
-      const worksheet = workbook.Sheets[sheetName]
-      const jsonData = XLSX.utils.sheet_to_json(worksheet) as GiangVien[]
-
-      const duLieuMoi = jsonData.map((item, index) => ({
-        ...item,
-      }))
-      // for(let i=0;i<duLieuMoi.length;i++)
-      // {
-      //   await addGiangVien(duLieuMoi[i],getAllGiangVien);
-      // }
-       console.log(duLieuMoi);
+  const xuLyNhapExcel = async (file: File) => {
+    try {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const data = new Uint8Array(e.target?.result as ArrayBuffer);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet) as GiangVien[];
+  
+        const duLieuMoi = jsonData.map((item) => ({ ...item }));
+  
+        await Promise.all(
+          duLieuMoi.map((giangVien) => addGiangVien(giangVien, getAllGiangVien))
+        );
+  
+      };
+      reader.readAsArrayBuffer(file);
+    } catch (error) {
+      console.error("Lỗi khi xử lý file Excel:", error);
     }
-    reader.readAsArrayBuffer(file)
-    return false 
-  }
+    return false;
+  };
+  
 
   const chonDong = (cacKeyChon: React.Key[]) => {
     setCacDongDaChon(cacKeyChon);

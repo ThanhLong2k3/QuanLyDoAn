@@ -8,7 +8,7 @@ namespace DTO.QL_DanhMuc
 {
     public class TrinhDoDTO
     {
-        public string maHocHam_HocVi { get; set; }
+        public string ID { get; set; }
         public string tenHocHam_HocVi { get; set; }
         public string kyHieu { get; set; }
         public string moTa { get; set; }

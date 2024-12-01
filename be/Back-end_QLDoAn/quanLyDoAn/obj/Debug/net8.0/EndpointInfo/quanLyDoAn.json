@@ -2125,7 +2125,7 @@
       "BoMonDTO": {
         "type": "object",
         "properties": {
-          "maBoMon": {
+          "id": {
             "type": "string",
             "nullable": true
           },
@@ -2143,7 +2143,7 @@
       "ChucVuDTO": {
         "type": "object",
         "properties": {
-          "maChucVu": {
+          "id": {
             "type": "string",
             "nullable": true
           },
@@ -2221,7 +2221,7 @@
       "KhoaDTO": {
         "type": "object",
         "properties": {
-          "maKhoa": {
+          "id": {
             "type": "string",
             "nullable": true
           },
@@ -2337,7 +2337,7 @@
       "TrinhDoDTO": {
         "type": "object",
         "properties": {
-          "maHocHam_HocVi": {
+          "id": {
             "type": "string",
             "nullable": true
           },
