@@ -2,8 +2,8 @@ import {ColumnType} from '../types';
 export const cotBoMon: ColumnType[] = [
     {
       title: 'Mã bộ môn',
-      dataIndex: 'id',
-      key: 'id',
+      dataIndex: 'maBoMon',
+      key: 'maBoMon',
     },
     {
       title: 'Tên bộ môn',

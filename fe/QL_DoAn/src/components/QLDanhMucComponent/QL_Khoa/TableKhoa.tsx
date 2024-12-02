@@ -2,8 +2,8 @@ import {ColumnType} from '../types';
 export const cotKhoa: ColumnType[] = [
     {
       title: 'Mã khoa',
-      dataIndex: 'id',
-      key: 'id',
+      dataIndex: 'maKhoa',
+      key: 'maKhoa',
     },
     {
       title: 'Tên khoa',

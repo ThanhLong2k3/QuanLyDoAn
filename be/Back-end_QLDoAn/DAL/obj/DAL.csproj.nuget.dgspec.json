@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\DAL.csproj": {}
+    "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\DAL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj": {
+    "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj",
+        "projectUniqueName": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj",
         "projectName": "Back-end_QLDoAn",
-        "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj",
+        "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj",
         "packagesPath": "C:\\Users\\Phuong Linh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\obj\\",
+        "outputPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -78,14 +78,14 @@
         }
       }
     },
-    "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\DAL.csproj": {
+    "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\DAL.csproj",
+        "projectUniqueName": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\DAL.csproj",
+        "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\DAL.csproj",
         "packagesPath": "C:\\Users\\Phuong Linh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\obj\\",
+        "outputPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -106,11 +106,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj": {
-                "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj"
+              "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj": {
+                "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj"
               },
-              "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj": {
-                "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj"
+              "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj": {
+                "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj"
               }
             }
           }
@@ -164,14 +164,14 @@
         }
       }
     },
-    "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj": {
+    "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj",
+        "projectUniqueName": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj",
         "projectName": "DTO",
-        "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj",
+        "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj",
         "packagesPath": "C:\\Users\\Phuong Linh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\obj\\",
+        "outputPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

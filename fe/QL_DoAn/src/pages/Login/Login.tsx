@@ -19,20 +19,15 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
         let login = await dangNhap(account);
-        debugger
         if (login.data && login.data !== 0) {
             localStorage.setItem('taiKhoan', account.taiKhoan);
 
             const listQuyen = await getAllQuyen_TaiKhoan(account.taiKhoan);
-
+            debugger;
             if (Array.isArray(listQuyen) && listQuyen.length > 0) {
                 const maQuyenArray = listQuyen.map(item => item.maQuyen);
-                
-                const existingPermissions = JSON.parse(localStorage.getItem('ListQuyen') || '[]');
-                
-                const updatedPermissions = Array.from(new Set([...existingPermissions, ...maQuyenArray]));
 
-                localStorage.setItem('ListQuyen', JSON.stringify(updatedPermissions));
+                localStorage.setItem('ListQuyen', JSON.stringify(maQuyenArray));
 
                 navigate(ROUTERS.HOME.DEFAULT.PATH);
             } else {

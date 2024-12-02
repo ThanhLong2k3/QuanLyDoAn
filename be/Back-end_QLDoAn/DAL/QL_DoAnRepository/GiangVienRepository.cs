@@ -34,7 +34,7 @@ namespace DAL.QL_DoAnRepository
         }
 
 
-        public string Create(GiangVienDTO model, string taikhoan)
+        public string Create(D_GiangVienDTO model, string taikhoan)
         {
             string msgError = "";
             string kq = "";
@@ -44,10 +44,10 @@ namespace DAL.QL_DoAnRepository
                    "@taiKhoan", taikhoan,
                     "@maGiangVien",model.maGiangVien,
                    "@tenGiangVien",model.tenGiangVien,
-                   "@tenBoMon",model.tenBoMon,
-                   "@chucVu",model.chucVu,
-                   "@tenHocVi",model.tenHocVi,
-                   "@tenHocHam",model.tenHocHam,
+                   "@IDBoMon", model.IDBoMon,
+                   "@IDChucVu", model.IDChucVu,
+                   "@IDHocVi", model.IDHocVi,
+                   "@IDHocHam", model.IDHocHam,
                    "@ngaySinh",model.ngaySinh,
                    "@gioiTinh",model.gioiTinh,
                    "@sdt",model.sDT,
@@ -71,20 +71,20 @@ namespace DAL.QL_DoAnRepository
         }
 
 
-        public string Update(GiangVienDTO model,string taiKhoan)
+        public string Update(D_GiangVienDTO model,string taiKhoan)
         {
             string msgError = "";
             string kq = "";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "SuaGiangVien",
-                  "@taiKhoan", taiKhoan,
+                   "@taiKhoan", taiKhoan,
                     "@maGiangVien", model.maGiangVien,
                    "@tenGiangVien", model.tenGiangVien,
-                   "@tenBoMon", model.tenBoMon,
-                   "@chucVu", model.chucVu,
-                   "@tenHocVi", model.tenHocVi,
-                   "@tenHocHam", model.tenHocHam,
+                   "@IDBoMon", model.IDBoMon,
+                   "@IDChucVu", model.IDChucVu,
+                   "@IDHocVi", model.IDHocVi,
+                   "@IDHocHam", model.IDHocHam,
                    "@ngaySinh", model.ngaySinh,
                    "@gioiTinh", model.gioiTinh,
                    "@sdt", model.sDT,

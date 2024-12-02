@@ -19,7 +19,7 @@ import {ColumnType} from '../QLDanhMucComponent/types';
           <Button type="primary" icon={<EditOutlined />} onClick={() => hienThiModal(banGhi)}/>
         </Tooltip>
         <Tooltip title="Xóa">
-          <Popconfirm title="Bạn có chắc chắn muốn xóa?" onConfirm={() => xuLyXoa(banGhi.id)}>
+          <Popconfirm title="Bạn có chắc chắn muốn xóa?" onConfirm={() => xuLyXoa(banGhi)}>
             <Button type="primary" danger icon={<DeleteOutlined />}/>
           </Popconfirm>
         </Tooltip>
@@ -31,7 +31,7 @@ import {ColumnType} from '../QLDanhMucComponent/types';
 };
 
  
-export const COLUMS = (colums:ColumnType[],hienThiModal: (banGhi: any) => void, xuLyXoa: (id: string) => void) =>
+export const COLUMS = (colums:ColumnType[],hienThiModal: (banGhi: any) => void, xuLyXoa: (banGhi: any) => void) =>
   taoCotBang(colums, hienThiModal, xuLyXoa);
 
 

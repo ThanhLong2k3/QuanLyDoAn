@@ -52,17 +52,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BoMonDTO"
+                "$ref": "#/components/schemas/D_BoMonDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/BoMonDTO"
+                "$ref": "#/components/schemas/D_BoMonDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/BoMonDTO"
+                "$ref": "#/components/schemas/D_BoMonDTO"
               }
             }
           }
@@ -100,17 +100,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BoMonDTO"
+                "$ref": "#/components/schemas/D_BoMonDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/BoMonDTO"
+                "$ref": "#/components/schemas/D_BoMonDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/BoMonDTO"
+                "$ref": "#/components/schemas/D_BoMonDTO"
               }
             }
           }
@@ -443,17 +443,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GiangVienDTO"
+                "$ref": "#/components/schemas/D_GiangVienDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/GiangVienDTO"
+                "$ref": "#/components/schemas/D_GiangVienDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/GiangVienDTO"
+                "$ref": "#/components/schemas/D_GiangVienDTO"
               }
             }
           }
@@ -483,17 +483,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GiangVienDTO"
+                "$ref": "#/components/schemas/D_GiangVienDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/GiangVienDTO"
+                "$ref": "#/components/schemas/D_GiangVienDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/GiangVienDTO"
+                "$ref": "#/components/schemas/D_GiangVienDTO"
               }
             }
           }
@@ -529,6 +529,350 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/HocHam_CTRL/getall-HocHam": {
+      "get": {
+        "tags": [
+          "HocHam_CTRL"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HocHamDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HocHamDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HocHamDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/HocHam_CTRL/create-HocHam": {
+      "post": {
+        "tags": [
+          "HocHam_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HocHamDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HocHamDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HocHamDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/HocHam_CTRL/update-HocHam": {
+      "post": {
+        "tags": [
+          "HocHam_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HocHamDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HocHamDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HocHamDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/HocHam_CTRL/delete-HocHam": {
+      "delete": {
+        "tags": [
+          "HocHam_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "maHocHam",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/HocVi_CTRL/getall-HocVi": {
+      "get": {
+        "tags": [
+          "HocVi_CTRL"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HocViDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HocViDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HocViDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/HocVi_CTRL/create-HocVi": {
+      "post": {
+        "tags": [
+          "HocVi_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HocViDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HocViDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HocViDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/HocVi_CTRL/update-HocVi": {
+      "post": {
+        "tags": [
+          "HocVi_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HocViDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HocViDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HocViDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/HocVi_CTRL/delete-HocVi": {
+      "delete": {
+        "tags": [
+          "HocVi_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "maHocVi",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -1908,216 +2252,6 @@
           }
         }
       }
-    },
-    "/api/TrinhDo_CTRL/getall-HocHam": {
-      "get": {
-        "tags": [
-          "TrinhDo_CTRL"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TrinhDoDTO"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TrinhDoDTO"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TrinhDoDTO"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/TrinhDo_CTRL/getall-HocVi": {
-      "get": {
-        "tags": [
-          "TrinhDo_CTRL"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TrinhDoDTO"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TrinhDoDTO"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TrinhDoDTO"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/TrinhDo_CTRL/create-TrinhDo": {
-      "post": {
-        "tags": [
-          "TrinhDo_CTRL"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TrinhDoDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TrinhDoDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TrinhDoDTO"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/TrinhDo_CTRL/update-TrinhDo": {
-      "post": {
-        "tags": [
-          "TrinhDo_CTRL"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TrinhDoDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TrinhDoDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TrinhDoDTO"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/TrinhDo_CTRL/delete-TrinhDo": {
-      "delete": {
-        "tags": [
-          "TrinhDo_CTRL"
-        ],
-        "parameters": [
-          {
-            "name": "maTrinhDo",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -2125,7 +2259,7 @@
       "BoMonDTO": {
         "type": "object",
         "properties": {
-          "id": {
+          "maBoMon": {
             "type": "string",
             "nullable": true
           },
@@ -2143,7 +2277,7 @@
       "ChucVuDTO": {
         "type": "object",
         "properties": {
-          "id": {
+          "maChucVu": {
             "type": "string",
             "nullable": true
           },
@@ -2152,6 +2286,70 @@
             "nullable": true
           },
           "moTa": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "D_BoMonDTO": {
+        "type": "object",
+        "properties": {
+          "maBoMon": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenBoMon": {
+            "type": "string",
+            "nullable": true
+          },
+          "idKhoa": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "D_GiangVienDTO": {
+        "type": "object",
+        "properties": {
+          "maGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "idBoMon": {
+            "type": "string",
+            "nullable": true
+          },
+          "idChucVu": {
+            "type": "string",
+            "nullable": true
+          },
+          "idHocVi": {
+            "type": "string",
+            "nullable": true
+          },
+          "idHocHam": {
+            "type": "string",
+            "nullable": true
+          },
+          "gioiTinh": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngaySinh": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sDT": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
             "type": "string",
             "nullable": true
           }
@@ -2218,10 +2416,62 @@
         },
         "additionalProperties": false
       },
+      "HocHamDTO": {
+        "type": "object",
+        "properties": {
+          "maHocHam": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenHocHam": {
+            "type": "string",
+            "nullable": true
+          },
+          "kyHieu": {
+            "type": "string",
+            "nullable": true
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          },
+          "soLuongHuongDan": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "HocViDTO": {
+        "type": "object",
+        "properties": {
+          "maHocVi": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenHocVi": {
+            "type": "string",
+            "nullable": true
+          },
+          "kyHieu": {
+            "type": "string",
+            "nullable": true
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          },
+          "soLuongHuongDan": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "KhoaDTO": {
         "type": "object",
         "properties": {
-          "id": {
+          "maKhoa": {
             "type": "string",
             "nullable": true
           },
@@ -2330,36 +2580,6 @@
           "email": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "TrinhDoDTO": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "nullable": true
-          },
-          "tenHocHam_HocVi": {
-            "type": "string",
-            "nullable": true
-          },
-          "kyHieu": {
-            "type": "string",
-            "nullable": true
-          },
-          "moTa": {
-            "type": "string",
-            "nullable": true
-          },
-          "soLuongHuongDan": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "hocHam_HocVi": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false

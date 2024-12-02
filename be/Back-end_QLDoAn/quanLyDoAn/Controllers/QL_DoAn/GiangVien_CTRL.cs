@@ -23,14 +23,14 @@ namespace quanLyDoAn.Controllers.QL_DoAn
 
         [Route("create-GiangVien")]
         [HttpPost]
-        public IActionResult CreateItem([FromBody] GiangVienDTO model,string taikhoan)
+        public IActionResult CreateItem([FromBody] D_GiangVienDTO model,string taikhoan)
         {
           string result=  _GiangVienBLL.Create(model,taikhoan);
             return Ok(result);
         }
         [Route("update-GiangVien")]
         [HttpPost]
-        public IActionResult UpdateItem([FromBody] GiangVienDTO model,string taikhoan)
+        public IActionResult UpdateItem([FromBody] D_GiangVienDTO model,string taikhoan)
         {
             string result= _GiangVienBLL.Update(model, taikhoan);
             return Ok(result);

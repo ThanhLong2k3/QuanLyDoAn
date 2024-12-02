@@ -6,11 +6,14 @@ import {
   Select,
   Row,
   Col,
-  DatePicker,
+  DatePicker,message
 } from "antd";
-import { TrinhDo } from "../../InterFace";
-import { getAll_HocHam, getAll_HocVi } from "../../../sevices/Api/QL_DanhMuc/QL_TrinhDo-servives";
+import { HocVi,HocHam,BoMon, ChucVu } from "../../InterFace";
 
+import {  getAll_HocVi } from "../../../sevices/Api/QL_DanhMuc/QL_HocVi-servives";
+import {  getAll_HocHam } from "../../../sevices/Api/QL_DanhMuc/QL_HocHam-servives";
+import { getAll_BoMon } from "../../../sevices/Api/QL_DanhMuc/QL_BoMon-servives";
+import { getAll_ChucVu } from "../../../sevices/Api/QL_DanhMuc/QL_ChucVu-sevives";
 const { Option } = Select;
 
 interface ReusableFormProps {
@@ -18,31 +21,38 @@ interface ReusableFormProps {
 }
 
 export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => {
-  const [hocHam, setHocHam] = useState<TrinhDo[]>([]);
-  const [hocVi, setHocVi] = useState<TrinhDo[]>([]);
+  const [hocHam, setHocHam] = useState<HocHam[]>([]);
+  const [hocVi, setHocVi] = useState<HocVi[]>([]);
   const [loading, setLoading] = useState(true);
+  const [BoMon,setBoMon]=useState<BoMon[]>([]);
+  const [ChucVu,setChucVu]=useState<ChucVu[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [hocHamData, hocViData] = await Promise.all([
+        const [hocHamData, hocViData, boMonData, chucVuData] = await Promise.all([
           getAll_HocHam(),
-          getAll_HocVi()
+          getAll_HocVi(),
+          getAll_BoMon(),
+          getAll_ChucVu(),
         ]);
-        debugger;
-        setHocHam(hocHamData);
-        setHocVi(hocViData);
+  
+        setHocHam(hocHamData || []);
+        setHocVi(hocViData || []);
+        setBoMon(boMonData || []);
+        setChucVu(chucVuData || []);
       } catch (error) {
         console.error("Error fetching data:", error);
+        message.error("Không thể tải dữ liệu, vui lòng thử lại!");
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchData();
   }, []);
-
+  
   return (
     <Form form={formdulieu} layout="vertical">
       <Row gutter={16}>
@@ -68,33 +78,36 @@ export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => {
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item
-            name="tenBoMon"
+            name="idBoMon"
             label="Tên bộ môn"
             rules={[{ required: true, message: "Vui lòng nhập tên bộ môn!" }]}
           >
             <Select placeholder="Chọn bộ môn">
-              <Option value="Công nghệ phần mềm">Công nghệ phần mềm</Option>
-              <Option value="Hệ thống thông tin">Hệ thống thông tin</Option>
-              <Option value="Khoa học máy tính">Khoa học máy tính</Option>
+              {BoMon && BoMon.length>0?(
+                BoMon.map((item)=>(
+                <Option key={item.maBoMon} value={item.maBoMon}>{item.tenBoMon}</Option>
+                ))
+              ):(
+                <Option value="">Không có dữ liệu</Option>
+              )}
             </Select>
           </Form.Item>
         </Col>
         <Col span={12}>
           <Form.Item
-            name="chucVu"
+            name="idChucVu"
             label="Chức vụ quản lý"
             rules={[{ required: true, message: "Vui lòng chọn chức vụ!" }]}
           >
             <Select placeholder="Chọn chức vụ">
-              <Option value="Giảng viên">Giảng viên</Option>
-              <Option value="Trưởng bộ môn">Trưởng bộ môn</Option>
-              <Option value="Phó trưởng bộ môn">Phó trưởng bộ môn</Option>
-              <Option value="Trưởng khoa">Trưởng khoa</Option>
-              <Option value="Phó trưởng khoa">Phó trưởng khoa</Option>
-              <Option value="Giám đốc trung tâm">Giám đốc trung tâm</Option>
-              <Option value="Phó giám đốc trung tâm">
-                Phó giám đốc trung tâm
-              </Option>
+              {ChucVu && ChucVu.length>0 ? (
+                ChucVu.map((item)=>(
+                  <Option key={item.maChucVu} value={item.maChucVu}>{item.tenChucVu}</Option>
+
+                ))):(
+                  <Option value="">Không có dữ liệu</Option>
+                )
+              }
             </Select>
           </Form.Item>
         </Col>
@@ -102,14 +115,14 @@ export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => {
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item
-            name="tenHocVi"
+            name="idHocVi"
             label="Tên học vị"
           >
             <Select placeholder="Chọn học vị">
               {hocVi && hocVi.length > 0 ? (
                 hocVi.map((item) => (
-                  <Option key={item.id} value={item.id}>
-                  {item.tenHocHam_HocVi}
+                  <Option key={item.maHocVi} value={item.maHocVi}>
+                  {item.tenHocVi}
                 </Option>
                 ))
               ) : (
@@ -119,12 +132,12 @@ export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="tenHocHam" label="Tên học hàm">
+          <Form.Item name="idHocHam" label="Tên học hàm">
             <Select placeholder="Chọn học hàm">
               {hocHam && hocHam.length > 0 ? (
                 hocHam.map((item) => (
-                  <Option key={item.id} value={item.id}>
-                  {item.tenHocHam_HocVi}
+                  <Option key={item.maHocHam} value={item.maHocHam}>
+                  {item.tenHocHam}
                 </Option>
                 ))
               ) : (

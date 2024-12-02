@@ -33,7 +33,7 @@ export const FormBoMon: React.FC<ReusableFormProps> = ({ formdulieu }) => {
   return (
     <Form form={formdulieu} layout="vertical">
       <Form.Item
-        name="id"
+        name="maBoMon"
         label="Mã bộ môn"
         rules={[{ required: true, message: 'Vui lòng nhập mã bộ môn!' }]}
       >
@@ -47,14 +47,14 @@ export const FormBoMon: React.FC<ReusableFormProps> = ({ formdulieu }) => {
         <Input />
       </Form.Item>
       <Form.Item
-        name="tenKhoa"
+        name="idKhoa"
         label="Tên Khoa"
         rules={[{ required: true, message: 'Vui lòng chọn khoa!' }]}
       >
         <Select placeholder="Chọn khoa">
           {danhSachKhoa.length > 0 ? (
             danhSachKhoa.map((item) => (
-              <Option key={item.id} value={item.tenKhoa}>
+              <Option key={item.maKhoa} value={item.maKhoa}>
                 {item.tenKhoa}
               </Option>
             ))

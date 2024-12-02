@@ -48,16 +48,16 @@ namespace DAL.QL_DanhMucRepository
         }
 
         // Thêm bộ môn mới
-        public string AddBoMon(BoMonDTO boMon)
+        public string AddBoMon(D_BoMonDTO boMon)
         {
             string msgError = "";
             string kq;
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "InsertBoMon",
-                    "@maBoMon", boMon.ID,
+                    "@maBoMon", boMon.maBoMon,
                     "@tenBoMon", boMon.tenBoMon,
-                    "@tenKhoa", boMon.tenKhoa
+                    "@IDKhoa", boMon.IDKhoa
                 );
 
                 if (result != null)
@@ -77,16 +77,16 @@ namespace DAL.QL_DanhMucRepository
         }
 
         // Cập nhật bộ môn
-        public string UpdateBoMon(BoMonDTO boMon)
+        public string UpdateBoMon(D_BoMonDTO boMon)
         {
             string msgError = "";
             string kq;
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "UpdateBoMon",
-                    "@maBoMon", boMon.ID,
+                 "@maBoMon", boMon.maBoMon,
                     "@tenBoMon", boMon.tenBoMon,
-                    "@tenKhoa", boMon.tenKhoa
+                    "@IDKhoa", boMon.IDKhoa
                 );
 
                 if (result != null)

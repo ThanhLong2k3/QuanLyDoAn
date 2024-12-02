@@ -16,6 +16,8 @@ const Sidebar: React.FC = () => {
   useEffect(() => {
     try {
       const permissions = JSON.parse(localStorage.getItem("ListQuyen") || "[]");
+      console.log(permissions);
+      debugger;
       setUserPermissions(permissions);
     } catch (error) {
       console.error("Failed to load permissions", error);
@@ -37,6 +39,7 @@ const Sidebar: React.FC = () => {
   };
 
   const renderMenuItems = () => {
+    debugger;
     if (userPermissions.length === 0) return [];
 
     // Render DANH MỤC items

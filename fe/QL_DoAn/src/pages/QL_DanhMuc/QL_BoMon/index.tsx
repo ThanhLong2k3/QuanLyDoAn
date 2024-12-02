@@ -40,11 +40,10 @@ const QuanLyBoMon: React.FC = () => {
   };
 
   const hienThiModal = (banGhi?: BoMon) => {
-    debugger;
     form.resetFields();
     if (banGhi) {
       form.setFieldsValue(banGhi);
-      setKeyDangSua(banGhi.id);
+      setKeyDangSua(banGhi.maBoMon);
     } else {
       setKeyDangSua(null);
     }
@@ -85,10 +84,9 @@ const QuanLyBoMon: React.FC = () => {
     }
   };
 
-  const xuLyXoa = async (key: string) => {
+  const xuLyXoa = async (banGhi: BoMon) => {
     try {
-      debugger;
-      await delBoMon(key, GetAll_BoMon);
+      await delBoMon(banGhi.maBoMon, GetAll_BoMon);
     } catch (error) {
       console.error("Lỗi khi xóa dữ liệu:", error);
       message.error("Không thể xóa bộ môn. Vui lòng thử lại.");
@@ -161,7 +159,7 @@ const QuanLyBoMon: React.FC = () => {
             rowSelection={luaChonDong}
             columns={cotBang}
             dataSource={duLieuLoc}
-            rowKey="id"
+            rowKey="maBoMon"
             scroll={{ x: 768 }}
             loading={loading}
             className="shadow-sm rounded-md overflow-hidden"

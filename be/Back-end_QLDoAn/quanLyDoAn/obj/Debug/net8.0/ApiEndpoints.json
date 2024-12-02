@@ -9,7 +9,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "DTO.QL_DanhMuc.BoMonDTO",
+        "Type": "DTO.QL_DanhMuc.D_BoMonDTO",
         "IsRequired": true
       }
     ],
@@ -81,7 +81,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "DTO.QL_DanhMuc.BoMonDTO",
+        "Type": "DTO.QL_DanhMuc.D_BoMonDTO",
         "IsRequired": true
       }
     ],
@@ -231,7 +231,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "DTO.QL_DoAn.GiangVienDTO",
+        "Type": "DTO.QL_DoAn.D_GiangVienDTO",
         "IsRequired": true
       },
       {
@@ -293,7 +293,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "DTO.QL_DoAn.GiangVienDTO",
+        "Type": "DTO.QL_DoAn.D_GiangVienDTO",
         "IsRequired": true
       },
       {
@@ -303,6 +303,202 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.HocHam_CTRL",
+    "Method": "CreateItem",
+    "RelativePath": "api/HocHam_CTRL/create-HocHam",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DanhMuc.HocHamDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.HocHam_CTRL",
+    "Method": "DeleteItem",
+    "RelativePath": "api/HocHam_CTRL/delete-HocHam",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "maHocHam",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.HocHam_CTRL",
+    "Method": "GetAllHocHam",
+    "RelativePath": "api/HocHam_CTRL/getall-HocHam",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DanhMuc.HocHamDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.HocHam_CTRL",
+    "Method": "UpdateItem",
+    "RelativePath": "api/HocHam_CTRL/update-HocHam",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DanhMuc.HocHamDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.HocVi_CTRL",
+    "Method": "CreateItem",
+    "RelativePath": "api/HocVi_CTRL/create-HocVi",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DanhMuc.HocViDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.HocVi_CTRL",
+    "Method": "DeleteItem",
+    "RelativePath": "api/HocVi_CTRL/delete-HocVi",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "maHocVi",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.HocVi_CTRL",
+    "Method": "GetAllHocVi",
+    "RelativePath": "api/HocVi_CTRL/getall-HocVi",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DanhMuc.HocViDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.HocVi_CTRL",
+    "Method": "UpdateItem",
+    "RelativePath": "api/HocVi_CTRL/update-HocVi",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DanhMuc.HocViDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.Khoa_CTRL",
@@ -1060,124 +1256,6 @@
         "Name": "taikhoan",
         "Type": "System.String",
         "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.String",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.TrinhDo_CTRL",
-    "Method": "CreateItem",
-    "RelativePath": "api/TrinhDo_CTRL/create-TrinhDo",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "model",
-        "Type": "DTO.QL_DanhMuc.TrinhDoDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.String",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.TrinhDo_CTRL",
-    "Method": "DeleteItem",
-    "RelativePath": "api/TrinhDo_CTRL/delete-TrinhDo",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "maTrinhDo",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.String",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.TrinhDo_CTRL",
-    "Method": "GetAllHocHam",
-    "RelativePath": "api/TrinhDo_CTRL/getall-HocHam",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DanhMuc.TrinhDoDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.TrinhDo_CTRL",
-    "Method": "GetAllHocVi",
-    "RelativePath": "api/TrinhDo_CTRL/getall-HocVi",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DanhMuc.TrinhDoDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.TrinhDo_CTRL",
-    "Method": "UpdateItem",
-    "RelativePath": "api/TrinhDo_CTRL/update-TrinhDo",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "model",
-        "Type": "DTO.QL_DanhMuc.TrinhDoDTO",
-        "IsRequired": true
       }
     ],
     "ReturnTypes": [

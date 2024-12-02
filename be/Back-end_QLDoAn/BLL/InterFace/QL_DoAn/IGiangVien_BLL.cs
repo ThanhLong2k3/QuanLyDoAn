@@ -10,8 +10,8 @@ namespace BLL.InterFace.QL_DoAn
    public partial interface IGiangVien_BLL
     {
         public List<GiangVienDTO> GetAll();
-        string Create(GiangVienDTO model,string taikhoan);
-        string  Update(GiangVienDTO model, string taikhoan);
+        string Create(D_GiangVienDTO model,string taikhoan);
+        string  Update(D_GiangVienDTO model, string taikhoan);
         string Delete(string ma, string taikhoan);
     }
 }

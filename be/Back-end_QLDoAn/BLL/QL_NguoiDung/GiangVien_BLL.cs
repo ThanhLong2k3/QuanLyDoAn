@@ -15,11 +15,11 @@ namespace BLL.QL_NguoiDung
         {
             return _res.GetAll();
         }
-        public string Create(GiangVienDTO model,string taikhoan)
+        public string Create(D_GiangVienDTO model,string taikhoan)
         {
             return _res.Create(model, taikhoan);
         }
-        public string Update(GiangVienDTO model,string taikhoan)
+        public string Update(D_GiangVienDTO model,string taikhoan)
         {
             return _res.Update(model, taikhoan);
         }

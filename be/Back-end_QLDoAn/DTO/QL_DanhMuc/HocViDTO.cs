@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace DTO.QL_DanhMuc
 {
-    public class TrinhDoDTO
+    public class HocViDTO
     {
-        public string ID { get; set; }
-        public string tenHocHam_HocVi { get; set; }
+        public string maHocVi { get; set; }
+        public string tenHocVi { get; set; }
         public string kyHieu { get; set; }
         public string moTa { get; set; }
         public int soLuongHuongDan { get; set; }
-        public int hocHam_HocVi { get; set; }
     }
 
 }

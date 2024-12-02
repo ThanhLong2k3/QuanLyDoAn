@@ -6,8 +6,8 @@ namespace BLL.InterFace.QL_DanhMuc
     {
         List<BoMonDTO> GetAllBoMon();
         BoMonDTO GetBoMonById(string maBoMon);
-        string AddBoMon(BoMonDTO boMon);
-        string UpdateBoMon(BoMonDTO boMon);
+        string AddBoMon(D_BoMonDTO boMon);
+        string UpdateBoMon(D_BoMonDTO boMon);
         string DeleteBoMon(string maBoMon);
     }
 }
