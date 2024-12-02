@@ -22,6 +22,7 @@ export default function AppHeader() {
 
 
   const DangXuat=()=>{
+    debugger;
         localStorage.setItem('taiKhoan',"");
         navigate(ROUTERS.AUTH.DEFAULT.PATH);
 
@@ -40,7 +41,7 @@ export default function AppHeader() {
     },
     {
       key: '3',
-      label:<a onClick={()=>DangXuat}>Đăng xuất</a>,
+      label:<a onClick={DangXuat}>Đăng xuất</a>,
     },
   ];
 

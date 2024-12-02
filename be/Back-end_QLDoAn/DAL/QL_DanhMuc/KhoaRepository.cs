@@ -55,7 +55,7 @@ namespace DAL.QL_DanhMuc
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "InsertKhoa",
-                    "@maKhoa", khoa.ID,
+                    "@maKhoa", khoa.maKhoa,
                     "@tenKhoa", khoa.tenKhoa
                 );
 
@@ -83,7 +83,7 @@ namespace DAL.QL_DanhMuc
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "UpdateKhoa",
-                    "@maKhoa", khoa.ID,
+                    "@maKhoa", khoa.maKhoa,
                     "@tenKhoa", khoa.tenKhoa
                 );
 

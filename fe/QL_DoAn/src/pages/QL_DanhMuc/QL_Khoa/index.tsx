@@ -43,7 +43,7 @@ const QuanLyKhoa: React.FC = () => {
     form.resetFields();
     if (banGhi) {
       form.setFieldsValue(banGhi);
-      setKeyDangSua(banGhi.id);
+      setKeyDangSua(banGhi.maKhoa);
     } else {
       setKeyDangSua(null);
     }
@@ -83,10 +83,10 @@ const QuanLyKhoa: React.FC = () => {
     }
   };
 
-  const xuLyXoa = async (ID: string) => {
+  const xuLyXoa = async (banGhi: Khoa) => {
     try {
       debugger;
-      await delKhoa(ID, GetAll_Khoa);
+      await delKhoa(banGhi.maKhoa, GetAll_Khoa);
     } catch (error) {
       console.error("Lỗi khi xóa dữ liệu:", error);
       message.error("Không thể xóa Khoa. Vui lòng thử lại.");
@@ -159,7 +159,7 @@ const QuanLyKhoa: React.FC = () => {
             rowSelection={luaChonDong}
             columns={cotBang}
             dataSource={duLieuLoc}
-            rowKey="id"
+            rowKey="maKhoa"
             scroll={{ x: 768 }}
             loading={loading}
             className="shadow-sm rounded-md overflow-hidden"

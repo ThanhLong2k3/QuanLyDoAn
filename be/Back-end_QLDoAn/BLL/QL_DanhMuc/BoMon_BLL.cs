@@ -23,12 +23,12 @@ namespace BLL.QL_DanhMuc
             return _boMonRepository.GetBoMonById(maBoMon);
         }
 
-        public string AddBoMon(BoMonDTO boMon)
+        public string AddBoMon(D_BoMonDTO boMon)
         {
             return _boMonRepository.AddBoMon(boMon);
         }
 
-        public string UpdateBoMon(BoMonDTO boMon)
+        public string UpdateBoMon(D_BoMonDTO boMon)
         {
             return _boMonRepository.UpdateBoMon(boMon);
         }

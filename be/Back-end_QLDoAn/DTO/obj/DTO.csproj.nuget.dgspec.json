@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj": {}
+    "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj": {
+    "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj",
+        "projectUniqueName": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj",
         "projectName": "DTO",
-        "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj",
+        "projectPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\DTO.csproj",
         "packagesPath": "C:\\Users\\Phuong Linh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Phuong Linh\\Desktop\\New folder (2)\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\obj\\",
+        "outputPath": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\DTO\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

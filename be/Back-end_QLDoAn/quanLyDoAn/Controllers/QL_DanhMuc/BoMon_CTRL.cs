@@ -26,7 +26,7 @@ namespace quanLyDoAn.Controllers.QL_DanhMuc
         // API để tạo mới bộ môn
         [Route("create-BoMon")]
         [HttpPost]
-        public string CreateItem([FromBody] BoMonDTO model)
+        public string CreateItem([FromBody] D_BoMonDTO model)
         {
             string result = _BoMonBLL.AddBoMon(model); // Thêm mới bộ môn
             return result; // Trả về kết quả thêm bộ môn (thành công hoặc thất bại)
@@ -35,7 +35,7 @@ namespace quanLyDoAn.Controllers.QL_DanhMuc
         // API để cập nhật bộ môn
         [Route("update-BoMon")]
         [HttpPost]
-        public string UpdateItem([FromBody] BoMonDTO model)
+        public string UpdateItem([FromBody] D_BoMonDTO model)
         {
             string result = _BoMonBLL.UpdateBoMon(model); // Cập nhật bộ môn
             return result; // Trả về kết quả cập nhật bộ môn (thành công hoặc thất bại)

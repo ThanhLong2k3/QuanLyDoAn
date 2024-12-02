@@ -8,7 +8,7 @@ namespace DTO.QL_DanhMuc
 {
     public class KhoaDTO
     {
-        public string ID { get; set; }
+        public string maKhoa { get; set; }
         public string tenKhoa { get; set; }
     }
 }

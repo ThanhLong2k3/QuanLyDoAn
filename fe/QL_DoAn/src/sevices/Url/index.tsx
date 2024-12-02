@@ -6,7 +6,7 @@ export const URL = {
             GetAllBoMon:`${LocalHot}api/BoMon_CTRL/getall`,
             GetBoMonById:(ID:string)=>`${LocalHot}`,
             AddBoMon:`${LocalHot}api/BoMon_CTRL/create-BoMon`,
-            UpdateBoMon:`${LocalHot}api/BoMon_CTRL/create-BoMon`,
+            UpdateBoMon:`${LocalHot}api/BoMon_CTRL/update-BoMon`,
             DeleteBoMon:(ID:string)=>`${LocalHot}api/BoMon_CTRL/delete-BoMon?maBoMon=${ID}`,
         },
         QLCHUCVU:{
@@ -23,12 +23,17 @@ export const URL = {
             UpdateKhoa:`${LocalHot}api/Khoa_CTRL/update-Khoa`,
             DeleteKhoa:(ID:string)=>`${LocalHot}api/Khoa_CTRL/delete-Khoa?maKhoa=${ID}`,
         },
-        QLTRINHDO:{
-            GetAllTrinhDo_HocHam:`${LocalHot}api/TrinhDo_CTRL/getall-HocHam`,
-            GetAllTrinhDo_HocVi:`${LocalHot}api/TrinhDo_CTRL/getall-HocVi`,
-            AddTrinhDo:`${LocalHot}api/TrinhDo_CTRL/create-TrinhDo`,
-            UpdateTrinhDo:`${LocalHot}api/TrinhDo_CTRL/update-TrinhDo`,
-            DeleteTrinhDo:(ID:string)=>`${LocalHot}api/TrinhDo_CTRL/delete-TrinhDo?maTrinhDo=${ID}`,
+        QLHOCHAM:{
+            GetAllHocHam:`${LocalHot}api/HocHam_CTRL/getall-HocHam`,
+            AddHocHam:`${LocalHot}api/HocHam_CTRL/create-HocHam`,
+            UpdateHocHam:`${LocalHot}api/HocHam_CTRL/create-HocHam`,
+            DeleteHocHam:(ID:string)=>`${LocalHot}api/HocHam_CTRL/delete-HocHam?maHocHam=${ID}`,
+        },
+        QLHOCVI:{
+            GetAllHocVi:`${LocalHot}api/HocVi_CTRL/getall-HocVi`,
+            AddHocVi:`${LocalHot}api/HocVi_CTRL/create-HocVi`,
+            UpdateHocVi:`${LocalHot}api/HocVi_CTRL/create-HocVi`,
+            DeleteHocVi:(ID:string)=>`${LocalHot}api/HocVi_CTRL/delete-HocVi?maHocVi=${ID}`,
         }
     },
     QLHETHONG: {

@@ -2,13 +2,13 @@ import {ColumnType} from '../types';
 export const cotHocHam: ColumnType[] = [
     {
       title: 'Mã học hàm',
-      dataIndex: 'id',
-      key: 'id',
+      dataIndex: 'maHocHam',
+      key: 'maHocHam',
     },
     {
       title: 'Tên học hàm',
-      dataIndex: 'tenHocHam_HocVi',
-      key: 'tenHocHam_HocVi',
+      dataIndex: 'tenHocHam',
+      key: 'tenHocHam',
     },
     {
       title: 'Ký hiệu',

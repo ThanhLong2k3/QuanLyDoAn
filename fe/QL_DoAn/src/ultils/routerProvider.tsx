@@ -5,6 +5,7 @@ import Projects from '../pages/Projects'
 import Students from '../pages/students'
 import Supervisors from '../pages/Supervisors'
 import Class from "../pages/Classs"
+import QuanLyChucVu from "../pages/QL_DanhMuc/QL_ChucVu"
 import QuanLyBoMon from "../pages/QL_DanhMuc/QL_BoMon"
 import QuanLyKhoa from "../pages/QL_DanhMuc/QL_Khoa"
 import QuanLyHocHam from "../pages/QL_DanhMuc/QL_HocHam"
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: ROUTERS.DANHMUC.QL_BOMON.PATH,
         element: <QuanLyBoMon />,
+      },
+      {
+        path: ROUTERS.DANHMUC.QL_CHUCVU.PATH,
+        element: <QuanLyChucVu />,
       },
     ],
   },

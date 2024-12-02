@@ -5,18 +5,18 @@ import ReusableModal from '../../../components/UI/Modal';
 import { COLUMS } from '../../../components/UI/Table';
 import { FormHocHam } from '../../../components/QLDanhMucComponent/QL_HocHam/QL_HocHamForm';
 import { cotHocHam } from '../../../components/QLDanhMucComponent/QL_HocHam/TableHocHam';
-import { TrinhDo } from "../../../components/InterFace";
-import { getAll_HocHam, addTrinhDo, delTrinhDo, editTrinhDo } from "../../../sevices/Api/QL_DanhMuc/QL_TrinhDo-servives";
+import { HocHam } from "../../../components/InterFace";
+import { getAll_HocHam, addHocHam, delHocHam, editHocHam } from "../../../sevices/Api/QL_DanhMuc/QL_HocHam-servives";
 
 const { Title } = Typography;
 
 const QuanLyHocHam: React.FC = () => {
-  const [listHocHam, setHocHam] = useState<TrinhDo[]>([]);
+  const [listHocHam, setHocHam] = useState<HocHam[]>([]);
   const [hienModal, setHienModal] = useState(false);
   const [form] = Form.useForm();
   const [keyDangSua, setKeyDangSua] = useState<string | null>(null);
   const [timKiem, setTimKiem] = useState("");
-  const [duLieuLoc, setDuLieuLoc] = useState<TrinhDo[]>([]);
+  const [duLieuLoc, setDuLieuLoc] = useState<HocHam[]>([]);
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -39,11 +39,11 @@ const QuanLyHocHam: React.FC = () => {
     }
   };
 
-  const hienThiModal = (banGhi?: TrinhDo) => {
+  const hienThiModal = (banGhi?: HocHam) => {
     form.resetFields();
     if (banGhi) {
       form.setFieldsValue(banGhi);
-      setKeyDangSua(banGhi.id);
+      setKeyDangSua(banGhi.maHocHam);
     } else {
       setKeyDangSua(null);
     }
@@ -58,7 +58,7 @@ const QuanLyHocHam: React.FC = () => {
   useEffect(() => {
     const ketQuaLoc = listHocHam.filter(
       (hv) =>
-        hv.tenHocHam_HocVi.toLowerCase().includes(timKiem.toLowerCase()) ||
+        hv.tenHocHam.toLowerCase().includes(timKiem.toLowerCase()) ||
         hv.kyHieu.toLowerCase().includes(timKiem.toLowerCase())
     );
     setDuLieuLoc(ketQuaLoc);
@@ -69,18 +69,14 @@ const QuanLyHocHam: React.FC = () => {
       debugger;
       const giaTri = await form.validateFields();
       if (keyDangSua !== null) {
-        const HocVi:TrinhDo={
+        const HocVi:HocHam={
           ...giaTri,
-          maHocHam_HocVi:keyDangSua,
-          hocHam_HocVi:0
+          maHocHam:keyDangSua
       }
-        await editTrinhDo(HocVi, GetAll_HocHam);
+        await editHocHam(HocVi, GetAll_HocHam);
       } else {
-        const HocVi:TrinhDo={
-            ...giaTri,
-            hocHam_HocVi:0
-        }
-        await addTrinhDo(HocVi, GetAll_HocHam);
+       
+        await addHocHam(giaTri, GetAll_HocHam);
       }
       setHienModal(false);
       form.resetFields();
@@ -91,10 +87,10 @@ const QuanLyHocHam: React.FC = () => {
     }
   };
 
-  const xuLyXoa = async (key: string) => {
+  const xuLyXoa = async (banGhi: HocHam) => {
     try {
       debugger;
-      await delTrinhDo(key, GetAll_HocHam);
+      await delHocHam(banGhi.maHocHam, GetAll_HocHam);
     } catch (error) {
       console.error("Lỗi khi xóa dữ liệu:", error);
       message.error("Không thể xóa học hàm. Vui lòng thử lại.");
@@ -110,7 +106,7 @@ const QuanLyHocHam: React.FC = () => {
 
   const xuLyXoaNhieu = async () => {
     try {
-      await Promise.all(cacDongDaChon.map((key) => delTrinhDo(key.toString(), GetAll_HocHam)));
+      await Promise.all(cacDongDaChon.map((key) => delHocHam(key.toString(), GetAll_HocHam)));
       setCacDongDaChon([]);
       message.success(`${cacDongDaChon.length} học hàm đã được xóa thành công!`);
       await GetAll_HocHam();
@@ -167,7 +163,7 @@ const QuanLyHocHam: React.FC = () => {
             rowSelection={luaChonDong}
             columns={cotBang}
             dataSource={duLieuLoc}
-            rowKey="id"
+            rowKey="maHocHam_HocVi"
             scroll={{ x: 768 }}
             loading={loading}
             className="shadow-sm rounded-md overflow-hidden"

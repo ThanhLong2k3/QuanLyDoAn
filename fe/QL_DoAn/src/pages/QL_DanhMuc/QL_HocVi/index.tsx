@@ -5,18 +5,18 @@ import ReusableModal from '../../../components/UI/Modal';
 import { COLUMS } from '../../../components/UI/Table';
 import { FormHocVi } from '../../../components/QLDanhMucComponent/QL_HocVi/QL_HocViForm';
 import { cotHocVi } from '../../../components/QLDanhMucComponent/QL_HocVi/TableHocVi';
-import { TrinhDo } from "../../../components/InterFace";
-import { getAll_HocVi, addTrinhDo, delTrinhDo, editTrinhDo } from "../../../sevices/Api/QL_DanhMuc/QL_TrinhDo-servives";
+import { HocVi } from "../../../components/InterFace";
+import { getAll_HocVi, addHocVi, delHocVi, editHocVi } from "../../../sevices/Api/QL_DanhMuc/QL_HocVi-servives";
 
 const { Title } = Typography;
 
 const QuanLyHocVi: React.FC = () => {
-  const [listHocVi, setHocVi] = useState<TrinhDo[]>([]);
+  const [listHocVi, setHocVi] = useState<HocVi[]>([]);
   const [hienModal, setHienModal] = useState(false);
   const [form] = Form.useForm();
   const [keyDangSua, setKeyDangSua] = useState<string | null>(null);
   const [timKiem, setTimKiem] = useState("");
-  const [duLieuLoc, setDuLieuLoc] = useState<TrinhDo[]>([]);
+  const [duLieuLoc, setDuLieuLoc] = useState<HocVi[]>([]);
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -39,11 +39,11 @@ const QuanLyHocVi: React.FC = () => {
     }
   };
 
-  const hienThiModal = (banGhi?: TrinhDo) => {
+  const hienThiModal = (banGhi?: HocVi) => {
     form.resetFields();
     if (banGhi) {
       form.setFieldsValue(banGhi);
-      setKeyDangSua(banGhi.id);
+      setKeyDangSua(banGhi.maHocHam_HocVi);
     } else {
       setKeyDangSua(null);
     }
@@ -58,7 +58,7 @@ const QuanLyHocVi: React.FC = () => {
   useEffect(() => {
     const ketQuaLoc = listHocVi.filter(
       (hv) =>
-        hv.tenHocHam_HocVi.toLowerCase().includes(timKiem.toLowerCase()) ||
+        hv.tenHocVi.toLowerCase().includes(timKiem.toLowerCase()) ||
         hv.kyHieu.toLowerCase().includes(timKiem.toLowerCase())
     );
     setDuLieuLoc(ketQuaLoc);
@@ -69,18 +69,18 @@ const QuanLyHocVi: React.FC = () => {
       debugger;
       const giaTri = await form.validateFields();
       if (keyDangSua !== null) {
-        const HocVi:TrinhDo={
+        const HocVi:HocVi={
           ...giaTri,
-          maHocHam_HocVi:keyDangSua,
-          hocHam_HocVi:1
+          maHocVi:keyDangSua,
+       
       }
-        await editTrinhDo(HocVi, GetALL_HocVi);
+        await editHocVi(HocVi, GetALL_HocVi);
       } else {
-        const HocVi:TrinhDo={
+        const HocVi:HocVi={
             ...giaTri,
             hocHam_HocVi:1
         }
-        await addTrinhDo(HocVi, GetALL_HocVi);
+        await addHocVi(HocVi, GetALL_HocVi);
       }
       setHienModal(false);
       form.resetFields();
@@ -91,10 +91,9 @@ const QuanLyHocVi: React.FC = () => {
     }
   };
 
-  const xuLyXoa = async (key: string) => {
+  const xuLyXoa = async (banGhi: HocVi) => {
     try {
-      debugger;
-      await delTrinhDo(key, GetALL_HocVi);
+      await delHocVi(banGhi.maHocHam_HocVi, GetALL_HocVi);
     } catch (error) {
       console.error("Lỗi khi xóa dữ liệu:", error);
       message.error("Không thể xóa học vị. Vui lòng thử lại.");
@@ -110,7 +109,7 @@ const QuanLyHocVi: React.FC = () => {
 
   const xuLyXoaNhieu = async () => {
     try {
-      await Promise.all(cacDongDaChon.map((key) => delTrinhDo(key.toString(), GetALL_HocVi)));
+      await Promise.all(cacDongDaChon.map((key) => delHocVi(key.toString(), GetALL_HocVi)));
       setCacDongDaChon([]);
       message.success(`${cacDongDaChon.length} học vị đã được xóa thành công!`);
       await GetALL_HocVi();
@@ -167,7 +166,7 @@ const QuanLyHocVi: React.FC = () => {
             rowSelection={luaChonDong}
             columns={cotBang}
             dataSource={duLieuLoc}
-            rowKey="id"
+            rowKey="maHocHam_HocVi"
             scroll={{ x: 768 }}
             loading={loading}
             className="shadow-sm rounded-md overflow-hidden"

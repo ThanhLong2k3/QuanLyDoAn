@@ -9,7 +9,7 @@ interface ReusableFormProps {
 export const FormKhoa: React.FC<ReusableFormProps> = ({ formdulieu }) => (
   <Form form={formdulieu} layout="vertical">
     <Form.Item
-      name="id"
+      name="maKhoa"
       label="Mã khoa"
       rules={[{ required: true, message: 'Vui lòng nhập mã khoa!' }]}
     >
