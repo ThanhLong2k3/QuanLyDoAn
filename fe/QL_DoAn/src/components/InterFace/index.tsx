@@ -60,8 +60,7 @@ export interface SinhVien {
   gioiTinh: string;
   sDT: string;
 }
-export interface DotLamDoAn extends DuLieuItem {
-  key: number;
+export interface DotLamDoAn {
   maDot: string;
   tenDot: string;
   ngayBatDau: string;
@@ -70,7 +69,7 @@ export interface DotLamDoAn extends DuLieuItem {
   choPhepSinhVienDangKyGiangVienKhacBoMon?: boolean;
   choPhepSinhVienBaoCaoKhacTuanHienTai?: boolean;
   choPhepGiangVienBaoCaoKhacTuanHienTai?: boolean;
-  ChoPhepGiangVienSuaDeTai?: boolean;
+  choPhepGiangVienSuaDeTai?: boolean;
   trangThai: boolean;
 }
 export interface HoiDong extends DuLieuItem {

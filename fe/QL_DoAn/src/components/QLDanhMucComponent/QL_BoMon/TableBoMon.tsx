@@ -13,7 +13,8 @@ export const cotBoMon: ColumnType[] = [
     {
       title: 'Tên Khoa',
       dataIndex: 'tenKhoa',
-      key: 'tenKhoa',
+      key: 'idKhoa',
     },
+   
   ];
   

@@ -33,6 +33,21 @@ namespace DAL.QL_DoAnRepository
                 throw ex;
             }
         }
+        public List<DotLamDoAnDTO> GetBYID()
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "GET_DOT_ID");
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<DotLamDoAnDTO>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public string Create(DotLamDoAnDTO model, string taikhoan)
         {

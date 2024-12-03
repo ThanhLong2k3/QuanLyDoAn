@@ -98,13 +98,12 @@ CREATE TABLE sinhVien (
     FOREIGN KEY (maLop) REFERENCES lop(maLop) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (maSinhVien) REFERENCES nguoiDung(taiKhoan) ON DELETE CASCADE ON UPDATE CASCADE
 )
-
 -- dotLamDoAn table
 CREATE TABLE dotLamDoAn (
     maDot VARCHAR(50) PRIMARY KEY,
     tenDot NVARCHAR(255),
     ngayBatDau DATE,
-    namApDung VARCHAR(4),
+    namApDung VARCHAR(20),
     dangKyDeTai BIT,
     choPhepSinhVienDangKyGiangVienKhacBoMon BIT,
     choPhepSinhVienBaoCaoKhacTuanHienTai BIT,
@@ -126,7 +125,13 @@ CREATE TABLE hoiDong (
     FOREIGN KEY (maDot) REFERENCES dotLamDoAn(maDot) ON DELETE NO ACTION ON UPDATE NO ACTION,
     FOREIGN KEY (thuocLop) REFERENCES lop(maLop) ON DELETE NO ACTION ON UPDATE NO ACTION
 )
-
+CREATE TABLE hoiDongLop (
+    maHoiDong VARCHAR(50),
+    maLop VARCHAR(50),
+    PRIMARY KEY (maHoiDong, maLop),
+    FOREIGN KEY (maHoiDong) REFERENCES hoiDong(maHoiDong) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (maLop) REFERENCES lop(maLop) ON DELETE CASCADE ON UPDATE CASCADE
+);
 -- hoiDong_GiangVien table
 CREATE TABLE hoiDong_GiangVien (
     maHoiDong VARCHAR(50),
@@ -206,7 +211,12 @@ VALUES
 	('DEL_NGUOIDUNG',N'Xóa người dùng'),
 	('ADD_NHOMQUYEN','Thêm nhóm quyền'),
 	('UP_NHOMQUYEN',N'Sửa nhóm quyền'),
-	('DEL_NHOMQUYEN',N'Xóa nhóm quyền');
+	('DEL_NHOMQUYEN',N'Xóa nhóm quyền'),
+	('ADD_DOTLAMDOAN',N'Thêm đợt làm đồ án'),
+	('UP_DOTLAMDOAN',N'Sửa đợt làm đồ án'),
+	('DEL_DOTLAMDOAN',N'Xóa đợt làm đồ án');
+
+
 go
 
 INSERT INTO nguoiDung (taiKhoan, matKhau, hoTen, ngaySinh, gioiTinh, email, moTa, TrangThai,IsDeleted) VALUES
@@ -519,10 +529,11 @@ BEGIN
 END;
 
 GO
+
 CREATE OR ALTER PROCEDURE GetAllBoMon
 AS
 BEGIN
-    SELECT BM.maBoMon, BM.tenBoMon, K.tenKhoa
+    SELECT BM.maBoMon, BM.tenBoMon, K.tenKhoa,BM.IDKhoa
     FROM BoMon BM
     JOIN Khoa K ON BM.IDKhoa = K.maKhoa
     WHERE BM.IsDeleted = 1 AND K.IsDeleted = 1;
@@ -538,25 +549,22 @@ BEGIN
         BM.tenBoMon, 
         CV.tenChucVu, 
         HH.tenHocHam,
-		HV.tenHocVi,
+        HV.tenHocVi,
         GV.ngaySinh,
         GV.gioiTinh,
         GV.sDT,
-        GV.email
+        GV.email,
+		GV.IDBoMon,
+		GV.IDChucVu,
+		GV.IDHocHam,
+		GV.IDHocVi
     FROM giangVien GV
-    JOIN BoMon BM ON GV.IDBoMon = BM.maBoMon
-    JOIN ChucVu CV ON GV.IDChucVu = CV.maChucVu
-    JOIN HocHam HH ON GV.IDHocHam=HH.maHocHam
-    JOIN HocVi HV ON GV.IDHocVi=HV.maHocVi
-
-    WHERE GV.IsDeleted = 1 
-      AND BM.IsDeleted = 1 
-      AND CV.IsDeleted = 1 
-      AND HV.IsDeleted = 1
-      AND HH.IsDeleted = 1;
-	  ;
+    INNER JOIN BoMon BM ON GV.IDBoMon = BM.maBoMon 
+    INNER JOIN ChucVu CV ON GV.IDChucVu = CV.maChucVu 
+    LEFT JOIN HocHam HH ON GV.IDHocHam = HH.maHocHam 
+    LEFT JOIN HocVi HV ON GV.IDHocVi = HV.maHocVi
+    WHERE GV.IsDeleted = 1;
 END;
-
 -- Insert procedures remain unchanged
 -- Insert procedures
 
@@ -844,7 +852,7 @@ CREATE OR ALTER PROCEDURE DeleteHocHam
     @maHocHam VARCHAR(20)
 AS
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM TrinhDo WHERE maHocHam = @maHocHam AND IsDeleted = 1)
+    IF NOT EXISTS (SELECT 1 FROM HocHam WHERE maHocHam = @maHocHam AND IsDeleted = 1)
     BEGIN
         SELECT N'Mã học hàm không tồn tại!' AS ThongBao;
     END
@@ -861,7 +869,7 @@ CREATE OR ALTER PROCEDURE DeleteHocVi
     @maHocVi VARCHAR(20)
 AS
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM TrinhDo WHERE maHocVi = @maHocVi AND IsDeleted = 1)
+    IF NOT EXISTS (SELECT 1 FROM HocVi WHERE maHocVi = @maHocVi AND IsDeleted = 1)
     BEGIN
         SELECT N'Mã học vị không tồn tại!' AS ThongBao;
     END
@@ -881,13 +889,14 @@ BEGIN
     SELECT * FROM lop WHERE IsDeleted = 1;
 END;
 	go
+	
 CREATE OR ALTER PROCEDURE GetAllSinhVien
 AS
 BEGIN
-    SELECT sv.maSinhVien, sv.tenSinhVien, l.tenLop, sv.ngaySinh, sv.gioiTinh, sv.sDT, sv.email
+    SELECT sv.maSinhVien, sv.tenSinhVien, l.tenLop, sv.ngaySinh, sv.gioiTinh, sv.sDT, sv.email,sv.maLop
     FROM sinhVien sv
     JOIN lop l ON sv.maLop = l.maLop
-    WHERE sv.IsDeleted = 1 AND l.IsDeleted = 1;
+    WHERE sv.IsDeleted = 1 ;
 END;
 	go
 
@@ -1004,6 +1013,7 @@ BEGIN
 END;
 GO
 --============================GIANG VIEN
+
 CREATE OR ALTER PROCEDURE ThemGiangVien
     @taiKhoan NVARCHAR(50),
     @maGiangVien NVARCHAR(50),
@@ -1032,10 +1042,10 @@ BEGIN
 
     IF @coQuyenThemGiangVien = 1
     BEGIN
-        EXEC ThemNguoiDung @taiKhoan = @maGiangVien, @hoTen = @tenGiangVien, @ngaySinh = @ngaySinh, @gioiTinh = @gioiTinh, @email = @email, @moTa = N'Giảng viên';
 
         INSERT INTO giangVien (maGiangVien, tenGiangVien, IDBoMon, IDChucVu, IDHocHam,IDHocVi, ngaySinh, gioiTinh, sDT, email, IsDeleted)
         VALUES (@maGiangVien, @tenGiangVien, @IDBoMon, @IDChucVu, @IDHocHam,@IDHocVi, @ngaySinh, @gioiTinh, @sDT, @email, 1);
+        EXEC ThemNguoiDung @taiKhoan = @maGiangVien, @hoTen = @tenGiangVien, @ngaySinh = @ngaySinh, @gioiTinh = @gioiTinh, @email = @email, @moTa = N'Giảng viên';
         
         SELECT N'Thêm giảng viên thành công' AS ThongBao;
     END
@@ -1045,7 +1055,6 @@ BEGIN
     END
 END;
 GO
-
 
 CREATE OR ALTER PROCEDURE SuaGiangVien
     @taiKhoan NVARCHAR(50),
@@ -1261,14 +1270,14 @@ AS
 BEGIN
     SELECT * FROM dotLamDoAn WHERE IsDeleted = 1;
 END
-GO
-
-CREATE OR ALTER PROCEDURE Them_DotLamDoAn
+	GO
+	
+	CREATE PROCEDURE Them_DotLamDoAn
     @taiKhoan NVARCHAR(50),
     @maDot VARCHAR(50),
     @tenDot NVARCHAR(255),
     @ngayBatDau DATE,
-    @namApDung VARCHAR(4),
+    @namApDung VARCHAR(20),
     @dangKyDeTai BIT,
     @choPhepSinhVienDangKyGiangVienKhacBoMon BIT,
     @choPhepSinhVienBaoCaoKhacTuanHienTai BIT,
@@ -1278,7 +1287,9 @@ CREATE OR ALTER PROCEDURE Them_DotLamDoAn
 AS
 BEGIN
     DECLARE @coQuyenThemDot BIT = 0;
+    DECLARE @thongBao NVARCHAR(255) = '';
 
+    -- Kiểm tra quyền thêm đợt
     IF EXISTS (
         SELECT 1
         FROM nguoiDung_nhomQuyen AS ndnq
@@ -1289,32 +1300,61 @@ BEGIN
         SET @coQuyenThemDot = 1;
     END
 
+    -- Kiểm tra xem mã đợt đã tồn tại chưa
+    IF EXISTS (SELECT 1 FROM dotLamDoAn WHERE maDot = @maDot)
+    BEGIN
+        SET @thongBao = N'Mã đợt đã tồn tại';
+        SET @coQuyenThemDot = 0;
+    END
+
     IF @coQuyenThemDot = 1
     BEGIN 
-        INSERT INTO dotLamDoAn(maDot, tenDot, ngayBatDau, namApDung, dangKyDeTai, 
-                               choPhepSinhVienDangKyGiangVienKhacBoMon, choPhepSinhVienBaoCaoKhacTuanHienTai, 
-                               choPhepGiangVienBaoCaoKhacTuanHienTai, choPhepGiangVienSuaDeTai, trangThai, IsDeleted)
-        VALUES (@maDot, @tenDot, @ngayBatDau, @namApDung, @dangKyDeTai, 
-                @choPhepSinhVienDangKyGiangVienKhacBoMon, @choPhepSinhVienBaoCaoKhacTuanHienTai, 
-                @choPhepGiangVienBaoCaoKhacTuanHienTai, @choPhepGiangVienSuaDeTai, @trangThai, 1);
-
-        SELECT N'Thêm đợt làm đồ án thành công' AS ThongBao;
+        INSERT INTO dotLamDoAn(
+            maDot, tenDot, ngayBatDau, namApDung, dangKyDeTai, 
+            choPhepSinhVienDangKyGiangVienKhacBoMon, 
+            choPhepSinhVienBaoCaoKhacTuanHienTai, 
+            choPhepGiangVienBaoCaoKhacTuanHienTai, 
+            choPhepGiangVienSuaDeTai, 
+            trangThai, 
+            IsDeleted
+        )
+        VALUES (
+            @maDot, @tenDot, @ngayBatDau, @namApDung, @dangKyDeTai, 
+            @choPhepSinhVienDangKyGiangVienKhacBoMon, 
+            @choPhepSinhVienBaoCaoKhacTuanHienTai, 
+            @choPhepGiangVienBaoCaoKhacTuanHienTai, 
+            @choPhepGiangVienSuaDeTai, 
+            @trangThai, 
+            1
+        );
+        SET @thongBao = N'Thêm đợt làm đồ án thành công';
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền thêm đợt làm đồ án' AS ThongBao;
+        IF @thongBao = ''
+            SET @thongBao = N'Bạn không có quyền thêm đợt làm đồ án';
     END
-END;
 
+    -- Trả về thông báo
+    SELECT @thongBao AS ThongBao;
+END;
 GO
 
+	CREATE PROC GET_DOT_ID
+		@MaDot nvarchar(50)
+		AS
+			BEGIN
+    SELECT * FROM dotLamDoAn WHERE maDot=@MaDot and IsDeleted = 1;
+			END
+				
+				GO
 -- Procedure to edit an existing "dotLamDoAn"
 CREATE OR ALTER PROCEDURE Sua_DotLamDoAn
     @taiKhoan NVARCHAR(50),
     @maDot VARCHAR(50),
     @tenDot NVARCHAR(255),
     @ngayBatDau DATE,
-    @namApDung VARCHAR(4),
+    @namApDung VARCHAR(20),
     @dangKyDeTai BIT,
     @choPhepSinhVienDangKyGiangVienKhacBoMon BIT,
     @choPhepSinhVienBaoCaoKhacTuanHienTai BIT,
@@ -1395,81 +1435,142 @@ BEGIN
 END
 
 GO
+
 CREATE OR ALTER PROCEDURE Them_HoiDong
     @taiKhoan NVARCHAR(50),
     @maHoiDong VARCHAR(50),
     @tenHoiDong NVARCHAR(255),
     @maDot VARCHAR(50),
-    @thuocLop NVARCHAR(100),
+    @thuocLop NVARCHAR(MAX), -- Danh sách mã lớp cách nhau dấu phẩy
     @phong NVARCHAR(50),
     @ngayDuKien DATE
 AS
 BEGIN
-    DECLARE @coQuyenThemHoiDong BIT = 0;
+    BEGIN TRY
+        -- Kiểm tra quyền của tài khoản
+        IF EXISTS (
+            SELECT 1
+            FROM nguoiDung_nhomQuyen AS ndnq
+            JOIN nhomQuyen_phanQuyen AS nqpnq 
+                ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
+            WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'ADD_HOIDONG'
+        )
+        BEGIN
+            BEGIN TRANSACTION;
 
-    IF EXISTS (
-        SELECT 1
-        FROM nguoiDung_nhomQuyen AS ndnq
-        JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
-        WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'ADD_HOIDONG'
-    )
-    BEGIN
-        SET @coQuyenThemHoiDong = 1;
-    END
+            -- Thêm hội đồng vào bảng hoiDong
+            INSERT INTO hoiDong (maHoiDong, tenHoiDong, maDot, phong, ngayDuKien, IsDeleted)
+            VALUES (@maHoiDong, @tenHoiDong, @maDot, @phong, @ngayDuKien, 1);
 
-    IF @coQuyenThemHoiDong = 1
-    BEGIN 
-        INSERT INTO hoiDong(maHoiDong, tenHoiDong, maDot, thuocLop, phong, ngayDuKien, IsDeleted)
-        VALUES (@maHoiDong, @tenHoiDong, @maDot, @thuocLop, @phong, @ngayDuKien, 1);
+            -- Tách danh sách mã lớp và thêm vào bảng hoiDongLop
+            DECLARE @maLop NVARCHAR(50);
+            WHILE CHARINDEX(',', @thuocLop) > 0
+            BEGIN
+                SET @maLop = LTRIM(RTRIM(LEFT(@thuocLop, CHARINDEX(',', @thuocLop) - 1)));
+                IF EXISTS (SELECT 1 FROM lop WHERE maLop = @maLop)
+                BEGIN
+                    INSERT INTO hoiDongLop (maHoiDong, maLop) VALUES (@maHoiDong, @maLop);
+                END
+                SET @thuocLop = SUBSTRING(@thuocLop, CHARINDEX(',', @thuocLop) + 1, LEN(@thuocLop));
+            END;
 
-        SELECT N'Thêm hội đồng thành công' AS ThongBao;
-    END
-    ELSE
-    BEGIN
-        SELECT N'Bạn không có quyền thêm hội đồng' AS ThongBao;
-    END
+            -- Thêm lớp cuối cùng (nếu còn)
+            IF LTRIM(RTRIM(@thuocLop)) <> ''
+            BEGIN
+                SET @maLop = LTRIM(RTRIM(@thuocLop));
+                IF EXISTS (SELECT 1 FROM lop WHERE maLop = @maLop)
+                BEGIN
+                    INSERT INTO hoiDongLop (maHoiDong, maLop) VALUES (@maHoiDong, @maLop);
+                END
+            END;
+
+            COMMIT TRANSACTION;
+
+            SELECT N'Thêm hội đồng thành công' AS ThongBao;
+        END
+        ELSE
+        BEGIN
+            SELECT N'Bạn không có quyền thêm hội đồng' AS ThongBao;
+        END
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        SELECT ERROR_MESSAGE() AS ThongBao;
+    END CATCH
 END;
 
+
 GO
+
 CREATE OR ALTER PROCEDURE Sua_HoiDong
     @taiKhoan NVARCHAR(50),
     @maHoiDong VARCHAR(50),
     @tenHoiDong NVARCHAR(255),
     @maDot VARCHAR(50),
-    @thuocLop NVARCHAR(100),
+    @thuocLop NVARCHAR(MAX), -- Nhiều mã lớp cách nhau dấu phẩy
     @phong NVARCHAR(50),
     @ngayDuKien DATE
 AS
 BEGIN
-    DECLARE @coQuyenSuaHoiDong BIT = 0;
+    BEGIN TRY
+        -- Kiểm tra quyền sửa hội đồng
+        IF EXISTS (
+            SELECT 1
+            FROM nguoiDung_nhomQuyen AS ndnq
+            JOIN nhomQuyen_phanQuyen AS nqpnq 
+                ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
+            WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'UP_HOIDONG'
+        )
+        BEGIN
+            BEGIN TRANSACTION;
 
-    IF EXISTS (
-        SELECT 1
-        FROM nguoiDung_nhomQuyen AS ndnq
-        JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
-        WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'UP_HOIDONG'
-    )
-    BEGIN
-        SET @coQuyenSuaHoiDong = 1;
-    END
+            -- Cập nhật thông tin hội đồng trong bảng hoiDong
+            UPDATE hoiDong
+            SET tenHoiDong = @tenHoiDong, 
+                maDot = @maDot, 
+                phong = @phong, 
+                ngayDuKien = @ngayDuKien
+            WHERE maHoiDong = @maHoiDong AND IsDeleted = 1;
 
-    IF @coQuyenSuaHoiDong = 1
-    BEGIN 
-        UPDATE hoiDong
-        SET tenHoiDong = @tenHoiDong, 
-            maDot = @maDot, 
-            thuocLop = @thuocLop, 
-            phong = @phong, 
-            ngayDuKien = @ngayDuKien
-        WHERE maHoiDong = @maHoiDong AND IsDeleted = 1;
+            -- Xóa các liên kết cũ trong bảng hoiDongLop
+            DELETE FROM hoiDongLop WHERE maHoiDong = @maHoiDong;
 
-        SELECT N'Sửa hội đồng thành công' AS ThongBao;
-    END
-    ELSE
-    BEGIN
-        SELECT N'Bạn không có quyền sửa hội đồng' AS ThongBao;
-    END
+            -- Thêm lại các lớp vào bảng hoiDongLop
+            DECLARE @maLop NVARCHAR(50);
+            WHILE CHARINDEX(',', @thuocLop) > 0
+            BEGIN
+                SET @maLop = LTRIM(RTRIM(LEFT(@thuocLop, CHARINDEX(',', @thuocLop) - 1)));
+                IF EXISTS (SELECT 1 FROM lop WHERE maLop = @maLop)
+                BEGIN
+                    INSERT INTO hoiDongLop (maHoiDong, maLop) VALUES (@maHoiDong, @maLop);
+                END
+                SET @thuocLop = SUBSTRING(@thuocLop, CHARINDEX(',', @thuocLop) + 1, LEN(@thuocLop));
+            END;
+
+            -- Thêm lớp cuối cùng (nếu có)
+            IF LTRIM(RTRIM(@thuocLop)) <> ''
+            BEGIN
+                SET @maLop = LTRIM(RTRIM(@thuocLop));
+                IF EXISTS (SELECT 1 FROM lop WHERE maLop = @maLop)
+                BEGIN
+                    INSERT INTO hoiDongLop (maHoiDong, maLop) VALUES (@maHoiDong, @maLop);
+                END
+            END;
+
+            COMMIT TRANSACTION;
+            SELECT N'Sửa hội đồng thành công' AS ThongBao;
+        END
+        ELSE
+        BEGIN
+            SELECT N'Bạn không có quyền sửa hội đồng' AS ThongBao;
+        END
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        SELECT ERROR_MESSAGE() AS ThongBao;
+    END CATCH
 END;
+
 
 GO
 CREATE OR ALTER PROCEDURE Xoa_HoiDong
@@ -1477,28 +1578,36 @@ CREATE OR ALTER PROCEDURE Xoa_HoiDong
     @maHoiDong VARCHAR(50)
 AS
 BEGIN
-    DECLARE @coQuyenXoaHoiDong BIT = 0;
+    BEGIN TRY
+        -- Kiểm tra quyền xóa hội đồng
+        IF EXISTS (
+            SELECT 1
+            FROM nguoiDung_nhomQuyen AS ndnq
+            JOIN nhomQuyen_phanQuyen AS nqpnq 
+                ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
+            WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'DEL_HOIDONG'
+        )
+        BEGIN
+            BEGIN TRANSACTION;
 
-    IF EXISTS (
-        SELECT 1
-        FROM nguoiDung_nhomQuyen AS ndnq
-        JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
-        WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'DEL_HOIDONG'
-    )
-    BEGIN
-        SET @coQuyenXoaHoiDong = 1;
-    END
+            -- Xóa liên kết hội đồng-lớp
+            DELETE FROM hoiDongLop WHERE maHoiDong = @maHoiDong;
 
-    IF @coQuyenXoaHoiDong = 1
-    BEGIN 
-        UPDATE hoiDong SET IsDeleted = 0 WHERE maHoiDong = @maHoiDong;
+            -- Đánh dấu hội đồng đã bị xóa
+            UPDATE hoiDong SET IsDeleted = 0 WHERE maHoiDong = @maHoiDong AND IsDeleted = 1;
 
-        SELECT N'Xóa hội đồng thành công' AS ThongBao;
-    END
-    ELSE
-    BEGIN
-        SELECT N'Bạn không có quyền xóa hội đồng' AS ThongBao;
-    END
+            COMMIT TRANSACTION;
+            SELECT N'Xóa hội đồng thành công' AS ThongBao;
+        END
+        ELSE
+        BEGIN
+            SELECT N'Bạn không có quyền xóa hội đồng' AS ThongBao;
+        END
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        SELECT ERROR_MESSAGE() AS ThongBao;
+    END CATCH
 END;
 
 GO
@@ -1603,3 +1712,4 @@ BEGIN
     WHERE hd_sv.maHoiDong = @maHoiDong AND hd_sv.IsDeleted = 1 AND sv.IsDeleted = 1;
 END;
 GO
+select*from dotLamDoAn

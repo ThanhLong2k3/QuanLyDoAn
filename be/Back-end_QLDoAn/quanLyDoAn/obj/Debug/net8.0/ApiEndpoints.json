@@ -222,6 +222,89 @@
     ]
   },
   {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.DotLamDoAn_CTRL",
+    "Method": "CreateItem",
+    "RelativePath": "api/DotLamDoAn_CTRL/create-DotLamDoAn",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.DotLamDoAnDTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.DotLamDoAn_CTRL",
+    "Method": "DeleteItem",
+    "RelativePath": "api/DotLamDoAn_CTRL/delete-DotLamDoAn",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ma",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.DotLamDoAn_CTRL",
+    "Method": "Getall",
+    "RelativePath": "api/DotLamDoAn_CTRL/getall",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.DotLamDoAnDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.DotLamDoAn_CTRL",
+    "Method": "UpdateItem",
+    "RelativePath": "api/DotLamDoAn_CTRL/update-DotLamDoAn",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.DotLamDoAnDTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.GiangVien_CTRL",
     "Method": "CreateItem",
     "RelativePath": "api/GiangVien_CTRL/create-GiangVien",
@@ -499,6 +582,89 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.HoiDong_CTRL",
+    "Method": "CreateItem",
+    "RelativePath": "api/HoiDong_CTRL/create-HoiDong",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.HoiDongDTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.HoiDong_CTRL",
+    "Method": "DeleteItem",
+    "RelativePath": "api/HoiDong_CTRL/delete-HoiDong",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ma",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.HoiDong_CTRL",
+    "Method": "Getall",
+    "RelativePath": "api/HoiDong_CTRL/getall",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.HoiDongDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.HoiDong_CTRL",
+    "Method": "UpdateItem",
+    "RelativePath": "api/HoiDong_CTRL/update-HoiDong",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.HoiDongDTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.Khoa_CTRL",

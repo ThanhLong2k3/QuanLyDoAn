@@ -387,6 +387,152 @@
         }
       }
     },
+    "/api/DotLamDoAn_CTRL/getall": {
+      "get": {
+        "tags": [
+          "DotLamDoAn_CTRL"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DotLamDoAnDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DotLamDoAnDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DotLamDoAnDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DotLamDoAn_CTRL/create-DotLamDoAn": {
+      "post": {
+        "tags": [
+          "DotLamDoAn_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DotLamDoAnDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DotLamDoAnDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DotLamDoAnDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DotLamDoAn_CTRL/update-DotLamDoAn": {
+      "post": {
+        "tags": [
+          "DotLamDoAn_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DotLamDoAnDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DotLamDoAnDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DotLamDoAnDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DotLamDoAn_CTRL/delete-DotLamDoAn": {
+      "delete": {
+        "tags": [
+          "DotLamDoAn_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "ma",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/GiangVien_CTRL/getall": {
       "get": {
         "tags": [
@@ -873,6 +1019,152 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/HoiDong_CTRL/getall": {
+      "get": {
+        "tags": [
+          "HoiDong_CTRL"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoiDongDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoiDongDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HoiDongDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/HoiDong_CTRL/create-HoiDong": {
+      "post": {
+        "tags": [
+          "HoiDong_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoiDongDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoiDongDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoiDongDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/HoiDong_CTRL/update-HoiDong": {
+      "post": {
+        "tags": [
+          "HoiDong_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoiDongDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoiDongDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HoiDongDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/HoiDong_CTRL/delete-HoiDong": {
+      "delete": {
+        "tags": [
+          "HoiDong_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "ma",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -2270,6 +2562,10 @@
           "tenKhoa": {
             "type": "string",
             "nullable": true
+          },
+          "idKhoa": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2370,6 +2666,47 @@
         },
         "additionalProperties": false
       },
+      "DotLamDoAnDTO": {
+        "type": "object",
+        "properties": {
+          "maDot": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenDot": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngayBatDau": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "namApDung": {
+            "type": "string",
+            "nullable": true
+          },
+          "dangKyDeTai": {
+            "type": "boolean"
+          },
+          "choPhepSinhVienDangKyGiangVienKhacBoMon": {
+            "type": "boolean"
+          },
+          "choPhepSinhVienBaoCaoKhacTuanHienTai": {
+            "type": "boolean"
+          },
+          "choPhepGiangVienBaoCaoKhacTuanHienTai": {
+            "type": "boolean"
+          },
+          "choPhepGiangVienSuaDeTai": {
+            "type": "boolean"
+          },
+          "trangThai": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "GiangVienDTO": {
         "type": "object",
         "properties": {
@@ -2385,7 +2722,7 @@
             "type": "string",
             "nullable": true
           },
-          "chucVu": {
+          "tenChucVu": {
             "type": "string",
             "nullable": true
           },
@@ -2410,6 +2747,22 @@
             "nullable": true
           },
           "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "idBoMon": {
+            "type": "string",
+            "nullable": true
+          },
+          "idChucVu": {
+            "type": "string",
+            "nullable": true
+          },
+          "idHocVi": {
+            "type": "string",
+            "nullable": true
+          },
+          "idHocHam": {
             "type": "string",
             "nullable": true
           }
@@ -2464,6 +2817,37 @@
           "soLuongHuongDan": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "HoiDongDTO": {
+        "type": "object",
+        "properties": {
+          "maHoiDong": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenHoiDong": {
+            "type": "string",
+            "nullable": true
+          },
+          "maDot": {
+            "type": "string",
+            "nullable": true
+          },
+          "thuocLop": {
+            "type": "string",
+            "nullable": true
+          },
+          "phong": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngayDuKien": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false

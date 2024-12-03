@@ -10,8 +10,10 @@ namespace DAL.InterFace.QL_DoAn
     public partial interface IDotLmaDoAnRepository
     {
         public List<DotLamDoAnDTO> GetAll();
+        public List<DotLamDoAnDTO> GetBYID();
+
         string Create(DotLamDoAnDTO model, string taikhoan);
         string Update(DotLamDoAnDTO model, string taikhoan);
-        string Delete(string malop, string taikhoan);
+        string Delete(string madot, string taikhoan);
     }
 }

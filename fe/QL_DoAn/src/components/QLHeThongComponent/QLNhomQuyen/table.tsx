@@ -42,6 +42,7 @@ export const COLUMS: ColumnType[] = [
     cotCoBan.push({
       title: 'Thao tác',
       key: 'action',
+      width:'20%',
       render: (_: any, banGhi: any) => (
         <Space size="middle">
           <Tooltip title="Thêm người dùng vào nhóm quyền">

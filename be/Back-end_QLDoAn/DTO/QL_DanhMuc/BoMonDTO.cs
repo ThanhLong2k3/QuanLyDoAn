@@ -11,6 +11,8 @@ namespace DTO.QL_DanhMuc
         public string maBoMon { get; set; }
         public string tenBoMon { get; set; }
         public string tenKhoa { get; set; }
+        public string IDKhoa { get; set; }
+
     }
     public class D_BoMonDTO
     {

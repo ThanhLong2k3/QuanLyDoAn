@@ -1,12 +1,28 @@
 import React from "react";
-import { Form, Input, DatePicker, FormInstance, Switch, Row, Col } from "antd";
+import { Form, Input, DatePicker, FormInstance, Switch, Row, Col, Select } from "antd";
 
 interface ReusableFormProps {
   formdulieu: FormInstance<any> | undefined;
 }
 
+const { Option } = Select;
+const years = Array.from({ length: 10 }, (_, i) => 2021 + i).map(
+  (year) => `${year}-${year + 1}`
+);
+
 export const FormDotLamDoAn: React.FC<ReusableFormProps> = ({ formdulieu }) => (
-  <Form form={formdulieu} layout="vertical">
+  <Form
+    form={formdulieu}
+    layout="vertical"
+    initialValues={{
+      dangKyDeTai: false,
+      choPhepSinhVienDangKyGiangVienKhacBoMon: false,
+      choPhepSinhVienBaoCaoKhacTuanHienTai: false,
+      choPhepGiangVienBaoCaoKhacTuanHienTai: false,
+      choPhepGiangVienSuaDeTai: false,
+      trangThai: false,
+    }}
+  >
     <Row gutter={16}>
       <Col span={12}>
         <Form.Item
@@ -27,6 +43,7 @@ export const FormDotLamDoAn: React.FC<ReusableFormProps> = ({ formdulieu }) => (
         </Form.Item>
       </Col>
     </Row>
+
     <Row gutter={16}>
       <Col span={12}>
         <Form.Item
@@ -41,37 +58,41 @@ export const FormDotLamDoAn: React.FC<ReusableFormProps> = ({ formdulieu }) => (
         <Form.Item
           name="namApDung"
           label="Năm áp dụng"
-          rules={[{ required: true, message: "Vui lòng nhập năm áp dụng!" }]}
+          rules={[{ required: true, message: "Vui lòng chọn năm áp dụng!" }]}
         >
-          <Input />
+          <Select placeholder="Chọn khóa học">
+            {years.map((year) => (
+              <Option key={year} value={year}>
+                {year}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
       </Col>
     </Row>
+
     <Row gutter={16}>
       <Col span={12}>
-        <Form.Item
-          name="dangKyDeTai"
-          label="Đăng ký đề tài"
-          valuePropName="checked"
-        >
+        <Form.Item name="dangKyDeTai" label="Đăng ký đề tài" valuePropName="checked">
           <Switch />
         </Form.Item>
       </Col>
       <Col span={12}>
         <Form.Item
           name="choPhepSinhVienDangKyGiangVienKhacBoMon"
-          label="Cho phép sinh viên đăng ký giảng viên khác bộ môn"
+          label="Sinh viên đăng ký giảng viên khác bộ môn"
           valuePropName="checked"
         >
           <Switch />
         </Form.Item>
       </Col>
     </Row>
+
     <Row gutter={16}>
       <Col span={12}>
         <Form.Item
           name="choPhepSinhVienBaoCaoKhacTuanHienTai"
-          label="Cho phép sinh viên báo cáo khác tuần hiện tại"
+          label="Sinh viên báo cáo khác tuần hiện tại"
           valuePropName="checked"
         >
           <Switch />
@@ -80,30 +101,26 @@ export const FormDotLamDoAn: React.FC<ReusableFormProps> = ({ formdulieu }) => (
       <Col span={12}>
         <Form.Item
           name="choPhepGiangVienBaoCaoKhacTuanHienTai"
-          label="Cho phép giảng viên báo cáo khác tuần hiện tại"
+          label="Giảng viên báo cáo khác tuần hiện tại"
           valuePropName="checked"
         >
           <Switch />
         </Form.Item>
       </Col>
     </Row>
+
     <Row gutter={16}>
       <Col span={12}>
         <Form.Item
-          name="ChoPhepGiangVienSuaDeTai"
-          label="Cho phép giảng viên sửa đề tài"
+          name="choPhepGiangVienSuaDeTai"
+          label="Giảng viên sửa đề tài"
           valuePropName="checked"
         >
           <Switch />
         </Form.Item>
       </Col>
       <Col span={12}>
-        <Form.Item
-          name="trangThai"
-          label="Trạng thái"
-          valuePropName="checked"
-          rules={[{ required: true, message: "Vui lòng chọn trạng thái!" }]}
-        >
+        <Form.Item name="trangThai" label="Trạng thái" valuePropName="checked">
           <Switch />
         </Form.Item>
       </Col>

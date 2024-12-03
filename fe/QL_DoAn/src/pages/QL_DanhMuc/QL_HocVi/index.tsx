@@ -43,7 +43,7 @@ const QuanLyHocVi: React.FC = () => {
     form.resetFields();
     if (banGhi) {
       form.setFieldsValue(banGhi);
-      setKeyDangSua(banGhi.maHocHam_HocVi);
+      setKeyDangSua(banGhi.maHocVi);
     } else {
       setKeyDangSua(null);
     }
@@ -66,7 +66,6 @@ const QuanLyHocVi: React.FC = () => {
 
   const xuLyDongY = async () => {
     try {
-      debugger;
       const giaTri = await form.validateFields();
       if (keyDangSua !== null) {
         const HocVi:HocVi={
@@ -93,7 +92,7 @@ const QuanLyHocVi: React.FC = () => {
 
   const xuLyXoa = async (banGhi: HocVi) => {
     try {
-      await delHocVi(banGhi.maHocHam_HocVi, GetALL_HocVi);
+      await delHocVi(banGhi.maHocVi, GetALL_HocVi);
     } catch (error) {
       console.error("Lỗi khi xóa dữ liệu:", error);
       message.error("Không thể xóa học vị. Vui lòng thử lại.");

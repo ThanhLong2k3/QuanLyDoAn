@@ -1,68 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Table, Button, Popconfirm, Row, Col, Input, Space, Typography, Divider} from 'antd'
+import { Card, Table, Button, Popconfirm, Row, Col, Input, Space, Typography, Divider,Form} from 'antd'
 import { DeleteOutlined, SearchOutlined, PlusOutlined } from '@ant-design/icons'
 import { useQuanLyDuLieu } from '../../../ultils/hook'
 import ReusableModal from '../../../components/UI/Modal'
 import { columDotLamDoAn } from '../../../components/QLDoAnComponent/QLDotLamDoAn/table'
 import { FormDotLamDoAn } from '../../../components/QLDoAnComponent/QLDotLamDoAn/form'
 import { DotLamDoAn } from "../../../components/InterFace"
-
+import { getAll_DotDoAn,add_DotDoAn,edit_DotDoAn,del_DotDoAn } from '../../../sevices/Api/QL_DoAn/QL_DotDoAn'
+import moment from 'moment'
 const { Title } = Typography
 
-const dotBatDau: DotLamDoAn[] = [
-  {
-    key:1,
-    maDot:"DOT1",
-    tenDot:"Đồ án 1",
-    ngayBatDau:"10/8/2024",
-    namApDung:"2024-2025",
-    dangKyDeTai:true,
-    choPhepSinhVienDangKyGiangVienKhacBoMon:true,
-    choPhepGiangVienBaoCaoKhacTuanHienTai:true,
-    choPhepSinhVienBaoCaoKhacTuanHienTai:true,
-    ChoPhepGiangVienSuaDeTai:true,
-    trangThai:true,
-  },
-  {
-    key:2,
-    maDot:"DOT2",
-    tenDot:"Đồ án 2",
-    ngayBatDau:"10/8/2024",
-    namApDung:"2024-2025",
-    dangKyDeTai:true,
-    choPhepSinhVienDangKyGiangVienKhacBoMon:false,
-    choPhepGiangVienBaoCaoKhacTuanHienTai:true,
-    choPhepSinhVienBaoCaoKhacTuanHienTai:true,
-    ChoPhepGiangVienSuaDeTai:true,
-    trangThai:true,
-  },
-]
-
 export default function QuanLyDotLamDoAn() {
-  const {
-    duLieu: dotlamdoan,
-    hienModal,
-    setHienModal,
-    form,
-    keyDangSua,
-    cacDongDaChon,
-    hienThiModal,
-    xuLyDongY,
-    xuLyXoa,
-    xuLyXoaNhieu,
-    chonDong,
-  } = useQuanLyDuLieu<DotLamDoAn>({
-    duLieuBanDau: dotBatDau,
-    khoaLuuTru: 'utehy_dotlamdoan',
-  })
-
+  const [dotlamdoan,setDotLamDoAn]=useState<DotLamDoAn[]>([]);
+  const [hienModal,setHienModal]=useState(false);
   const [timKiem, setTimKiem] = useState("")
   const [duLieuLoc, setDuLieuLoc] = useState(dotlamdoan)
-
+  const [form] = Form.useForm();
+  const [maDot,setMaDot]=useState<string | null>(null);
+  const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   useEffect(() => {
     document.title = 'Quản lý đợt làm đồ án'
+    GetAll_DotDoAn()
   }, [])
 
+  const GetAll_DotDoAn=async()=>{
+      const data=await getAll_DotDoAn();
+      setDotLamDoAn(data);
+  }
   useEffect(() => {
     const ketQuaLoc = dotlamdoan.filter(
       (hv) =>
@@ -71,6 +35,62 @@ export default function QuanLyDotLamDoAn() {
     )
     setDuLieuLoc(ketQuaLoc)
   }, [dotlamdoan, timKiem])
+
+  const hienThiModal = (banGhi?: DotLamDoAn) => {
+    form.resetFields();
+    if (banGhi) {
+      const ngayBatDau = banGhi.ngayBatDau ? moment(banGhi.ngayBatDau) : null;
+      form.setFieldsValue({ ...banGhi, ngayBatDau: ngayBatDau });
+      setMaDot(banGhi.maDot);
+    } else {
+      setMaDot(null);
+    }
+    setHienModal(true);
+  };
+
+  const xuLyDongY = async () => {
+    const giatri = await form.validateFields();
+    debugger;
+    if (maDot !== null) {
+      await edit_DotDoAn(giatri, GetAll_DotDoAn);
+    }
+    else {
+      const fieldsToEnsure = [
+        'dangKyDeTai',
+        'choPhepSinhVienDangKyGiangVienKhacBoMon',
+        'choPhepSinhVienBaoCaoKhacTuanHienTai',
+        'choPhepGiangVienBaoCaoKhacTuanHienTai',
+        'choPhepGiangVienSuaDeTai',
+        'trangThai',
+      ];
+  
+      fieldsToEnsure.forEach((field) => {
+        if (giatri[field] === undefined) giatri[field] = false;
+      });
+  
+      await add_DotDoAn(giatri, GetAll_DotDoAn);
+    }
+    setHienModal(false);
+    form.resetFields();
+    setMaDot(null);
+  };
+
+
+  const xuLyXoa =async (maDot:string) => {
+    await del_DotDoAn(maDot,GetAll_DotDoAn);
+  };
+
+  const xulyXoaNhieu = async() => {
+    for(let i=0;i<cacDongDaChon.length;i++)
+    {
+      await xuLyXoa(cacDongDaChon[i].toString());
+    }
+    setCacDongDaChon([]);
+  };
+
+  const chonDong = (cacKeyChon: React.Key[]) => {
+    setCacDongDaChon(cacKeyChon);
+  };
 
   const cotBang=columDotLamDoAn(hienThiModal,xuLyXoa)
   const luaChonDong = {
@@ -102,7 +122,7 @@ export default function QuanLyDotLamDoAn() {
                 {cacDongDaChon.length > 0 && (
                   <Popconfirm
                     title={`Bạn có chắc chắn muốn xóa ${cacDongDaChon.length} đợt đã chọn?`}
-                    onConfirm={xuLyXoaNhieu}
+                    onConfirm={xulyXoaNhieu}
                     okText="Đồng ý"
                     cancelText="Hủy"
                   >
@@ -128,7 +148,7 @@ export default function QuanLyDotLamDoAn() {
             rowSelection={luaChonDong}
             columns={cotBang}
             dataSource={duLieuLoc}
-            rowKey="key"
+            rowKey="maDot"
             scroll={{ x: 768 }}
             className="shadow-sm rounded-md overflow-hidden"
             pagination={{
@@ -144,7 +164,7 @@ export default function QuanLyDotLamDoAn() {
         visible={hienModal}
         onOk={xuLyDongY}
         onCancel={() => setHienModal(false)}
-        keyDangSua={keyDangSua}
+        keyDangSua={maDot}
         add_Titel="Thêm đợt làm đồ án"
         update_Titel="Sửa đợt làm đồ án"
       >

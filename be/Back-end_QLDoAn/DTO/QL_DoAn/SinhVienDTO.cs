@@ -14,6 +14,7 @@ namespace DTO.QL_DoAn
         public DateTime ngaySinh { get; set; }
         public string gioiTinh { get; set; }
         public string sDT { get; set; }
+
         public string email { get; set; }
     }
 

@@ -14,6 +14,10 @@ const App: React.FC = () => {
         token: {
           colorPrimary: '#1e88e5',
           colorLink: '#1e88e5',
+          fontFamily: '"Inter", "Roboto", "Arial", sans-serif',
+          fontSize: 12,
+          colorText: '#333333',
+
         },
       }}
     >
