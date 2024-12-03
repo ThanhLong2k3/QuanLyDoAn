@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Layout, Menu, Button, Drawer } from "antd";
-import { MenuOutlined, AppstoreOutlined, SettingOutlined } from "@ant-design/icons";
-import { Sidebar_router, Sidebar_router_DanhMuc } from "../../ultils/Sidebar_route";
+import { MenuOutlined, AppstoreOutlined, SettingOutlined,CalendarOutlined } from "@ant-design/icons";
+import { Sidebar_router, Sidebar_router_DanhMuc,Sidebar_HeThong } from "../../ultils/Sidebar_route";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -48,6 +48,13 @@ const Sidebar: React.FC = () => {
       icon: item.ICON,
       label: <Link style={{ textDecoration: "none" }} to={item.LINK}>{item.TEXT}</Link>,
     }));
+    
+    const HeThongItems = Object.entries(Sidebar_HeThong).map(([key, item]) => ({
+      key: item.KEY,
+      icon: item.ICON,
+      label: <Link style={{ textDecoration: "none" }} to={item.LINK}>{item.TEXT}</Link>,
+    }));
+    
 
     // Render Hệ thống items based on permissions
     const permissionItems = Object.entries(Sidebar_router)
@@ -71,10 +78,16 @@ const Sidebar: React.FC = () => {
         children: danhMucItems,
       },
       {
+        key: 'do-an',
+        icon: <CalendarOutlined />,
+        label: 'Đồ Án',
+        children: permissionItems,
+      },
+      {
         key: 'he-thong',
         icon: <SettingOutlined />,
-        label: 'Hệ thống',
-        children: permissionItems,
+        label: 'Hệ Thống',
+        children: HeThongItems,
       },
     ];
   };

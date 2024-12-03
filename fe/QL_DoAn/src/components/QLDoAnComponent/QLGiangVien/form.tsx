@@ -1,31 +1,25 @@
 import React, { useState, useEffect } from "react";
-import {
-  Form,
-  Input,
-  FormInstance,
-  Select,
-  Row,
-  Col,
-  DatePicker,message
-} from "antd";
-import { HocVi,HocHam,BoMon, ChucVu } from "../../InterFace";
-
-import {  getAll_HocVi } from "../../../sevices/Api/QL_DanhMuc/QL_HocVi-servives";
-import {  getAll_HocHam } from "../../../sevices/Api/QL_DanhMuc/QL_HocHam-servives";
+import { Form, Input, FormInstance, Select, Row, Col, DatePicker, message } from "antd";
+import { HocVi, HocHam, BoMon, ChucVu } from "../../InterFace";
+import { getAll_HocVi } from "../../../sevices/Api/QL_DanhMuc/QL_HocVi-servives";
+import { getAll_HocHam } from "../../../sevices/Api/QL_DanhMuc/QL_HocHam-servives";
 import { getAll_BoMon } from "../../../sevices/Api/QL_DanhMuc/QL_BoMon-servives";
 import { getAll_ChucVu } from "../../../sevices/Api/QL_DanhMuc/QL_ChucVu-sevives";
+import moment from 'moment';
+
 const { Option } = Select;
 
 interface ReusableFormProps {
-  formdulieu: FormInstance<any> | undefined;
+  formdulieu: FormInstance<any>;
+  initialValues?: any;
 }
 
-export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => {
+export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu, initialValues }) => {
   const [hocHam, setHocHam] = useState<HocHam[]>([]);
   const [hocVi, setHocVi] = useState<HocVi[]>([]);
+  const [boMon, setBoMon] = useState<BoMon[]>([]);
+  const [chucVu, setChucVu] = useState<ChucVu[]>([]);
   const [loading, setLoading] = useState(true);
-  const [BoMon,setBoMon]=useState<BoMon[]>([]);
-  const [ChucVu,setChucVu]=useState<ChucVu[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +31,7 @@ export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => {
           getAll_BoMon(),
           getAll_ChucVu(),
         ]);
-  
+
         setHocHam(hocHamData || []);
         setHocVi(hocViData || []);
         setBoMon(boMonData || []);
@@ -49,10 +43,27 @@ export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => {
         setLoading(false);
       }
     };
-  
+
     fetchData();
   }, []);
-  
+
+  useEffect(() => {
+    if (initialValues && !loading) {
+      formdulieu.setFieldsValue({
+        ...initialValues,
+        idBoMon: boMon.find(bm => bm.tenBoMon === initialValues.tenBoMon)?.maBoMon,
+        idChucVu: chucVu.find(cv => cv.tenChucVu === initialValues.tenChucVu)?.maChucVu,
+        idHocVi: hocVi.find(hv => hv.tenHocVi === initialValues.tenHocVi)?.maHocVi,
+        idHocHam: hocHam.find(hh => hh.tenHocHam === initialValues.tenHocHam)?.maHocHam,
+        ngaySinh: initialValues.ngaySinh ? moment(initialValues.ngaySinh) : null,
+      });
+    }
+  }, [initialValues, boMon, chucVu, hocVi, hocHam, loading, formdulieu]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Form form={formdulieu} layout="vertical">
       <Row gutter={16}>
@@ -80,16 +91,12 @@ export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => {
           <Form.Item
             name="idBoMon"
             label="Tên bộ môn"
-            rules={[{ required: true, message: "Vui lòng nhập tên bộ môn!" }]}
+            rules={[{ required: true, message: "Vui lòng chọn bộ môn!" }]}
           >
             <Select placeholder="Chọn bộ môn">
-              {BoMon && BoMon.length>0?(
-                BoMon.map((item)=>(
+              {boMon.map((item) => (
                 <Option key={item.maBoMon} value={item.maBoMon}>{item.tenBoMon}</Option>
-                ))
-              ):(
-                <Option value="">Không có dữ liệu</Option>
-              )}
+              ))}
             </Select>
           </Form.Item>
         </Col>
@@ -100,14 +107,9 @@ export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => {
             rules={[{ required: true, message: "Vui lòng chọn chức vụ!" }]}
           >
             <Select placeholder="Chọn chức vụ">
-              {ChucVu && ChucVu.length>0 ? (
-                ChucVu.map((item)=>(
-                  <Option key={item.maChucVu} value={item.maChucVu}>{item.tenChucVu}</Option>
-
-                ))):(
-                  <Option value="">Không có dữ liệu</Option>
-                )
-              }
+              {chucVu.map((item) => (
+                <Option key={item.maChucVu} value={item.maChucVu}>{item.tenChucVu}</Option>
+              ))}
             </Select>
           </Form.Item>
         </Col>
@@ -119,30 +121,18 @@ export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => {
             label="Tên học vị"
           >
             <Select placeholder="Chọn học vị">
-              {hocVi && hocVi.length > 0 ? (
-                hocVi.map((item) => (
-                  <Option key={item.maHocVi} value={item.maHocVi}>
-                  {item.tenHocVi}
-                </Option>
-                ))
-              ) : (
-                <Option value="">Không có dữ liệu</Option>
-              )}
+              {hocVi.map((item) => (
+                <Option key={item.maHocVi} value={item.maHocVi}>{item.tenHocVi}</Option>
+              ))}
             </Select>
           </Form.Item>
         </Col>
         <Col span={12}>
           <Form.Item name="idHocHam" label="Tên học hàm">
             <Select placeholder="Chọn học hàm">
-              {hocHam && hocHam.length > 0 ? (
-                hocHam.map((item) => (
-                  <Option key={item.maHocHam} value={item.maHocHam}>
-                  {item.tenHocHam}
-                </Option>
-                ))
-              ) : (
-                <Option value="">Không có dữ liệu</Option>
-              )}
+              {hocHam.map((item) => (
+                <Option key={item.maHocHam} value={item.maHocHam}>{item.tenHocHam}</Option>
+              ))}
             </Select>
           </Form.Item>
         </Col>
@@ -154,7 +144,7 @@ export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => {
             label="Ngày sinh"
             rules={[{ required: true, message: "Vui lòng chọn ngày sinh!" }]}
           >
-            <DatePicker style={{ width: "100%" }} />
+            <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" />
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -196,4 +186,3 @@ export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu }) => {
     </Form>
   );
 };
-

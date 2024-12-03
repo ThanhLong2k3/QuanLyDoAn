@@ -32,7 +32,7 @@ export const URL = {
         QLHOCVI:{
             GetAllHocVi:`${LocalHot}api/HocVi_CTRL/getall-HocVi`,
             AddHocVi:`${LocalHot}api/HocVi_CTRL/create-HocVi`,
-            UpdateHocVi:`${LocalHot}api/HocVi_CTRL/create-HocVi`,
+            UpdateHocVi:`${LocalHot}api/HocVi_CTRL/update-HocVi`,
             DeleteHocVi:(ID:string)=>`${LocalHot}api/HocVi_CTRL/delete-HocVi?maHocVi=${ID}`,
         }
     },
@@ -85,6 +85,12 @@ export const URL = {
             UPDATE:(taiKhoan:string)=> `${LocalHot}api/GiangVien_CTRL/update-GiangVien?taikhoan=${taiKhoan}`,
             DELETE:(taiKhoan:string,maGiangVien:string)=> `${LocalHot}api/GiangVien_CTRL/delete-GiangVien?ma=${maGiangVien}&taikhoan=${taiKhoan}`,
             GETALL:`${LocalHot}api/GiangVien_CTRL/getall`,
+        },
+        QL_DOTDOAN:{
+            ADD:(taiKhoan:string)=> `${LocalHot}api/DotLamDoAn_CTRL/create-DotLamDoAn?taikhoan=${taiKhoan}`,
+            UPDATE:(taiKhoan:string)=> `${LocalHot}api/DotLamDoAn_CTRL/update-DotLamDoAn?taikhoan=${taiKhoan}`,
+            DELETE:(taiKhoan:string,maGiangVien:string)=> `${LocalHot}api/DotLamDoAn_CTRL/delete-DotLamDoAn?ma=${maGiangVien}&taikhoan=${taiKhoan}`,
+            GETALL:`${LocalHot}api/DotLamDoAn_CTRL/getall`,
         }
     }
 };

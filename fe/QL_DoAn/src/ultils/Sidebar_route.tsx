@@ -38,9 +38,7 @@ export const Sidebar_router: { [key: string]: SidebarItem } = {
   LOP: { KEY: '3', ICON: <TeamOutlined />, LINK: ROUTERS.DOAN.QL_LOP.PATH, TEXT: "Quản lý lớp", PERMISSION: ["ADD_LOP", "UP_LOP", "DEL_LOP"] },
   HOIDONG: { KEY: '4', ICON: <BookOutlined />, LINK: "ROUTERS.PATH.SUPERVISORS.PATH", TEXT: "Quản lý hội đồng", PERMISSION: ["MANAGE_HOIDONG"] },
   SINHVIEN: { KEY: '5', ICON: <UserOutlined />, LINK:  ROUTERS.DOAN.QL_SINHVIEN.PATH, TEXT: "Quản lý sinh viên", PERMISSION: ["ADD_SINHVIEN","UP_SINHVIEN","DEL_SINHVIEN"] },
-  DOTLAMDOAN: { KEY: '6', ICON: <CalendarOutlined />, LINK: ROUTERS.DOAN.QL_DOTLAMDOAN.PATH, TEXT: 'Đợt làm đồ án tốt nghiệp', PERMISSION: ["MANAGE_DOTLAMDOAN"] },
-  PHANQUYEN: { KEY: '7', ICON: <SafetyCertificateOutlined />, LINK: ROUTERS.HETHONG.QL_NHOMQUYEN.PATH, TEXT: "Quản lý nhóm quyền", PERMISSION: ["ADD_NHOMQUYEN","UP_NHOMQUYEN","DEL_NHOMQUYEN"] },
-  USER: { KEY: '8', ICON: <UsergroupAddOutlined />, LINK: ROUTERS.HETHONG.QL_NGUOIDUNG.PATH, TEXT: "Quản lý người dùng", PERMISSION: ["ADD_NGUOIDUNG","UP_NGUOIDUNG","DEL_NGUOIDUNG"] },
+  DOTLAMDOAN: { KEY: '6', ICON: <CalendarOutlined />, LINK: ROUTERS.DOAN.QL_DOTLAMDOAN.PATH, TEXT: 'Đợt làm đồ án tốt nghiệp', PERMISSION: ["ADD_DOTLAMDOAN","DEL_DOTLAMDOAN","UP_DOTLAMDOAN"] },
   LISTSV: { KEY: '9', ICON: <OrderedListOutlined />, LINK: "", TEXT: "Danh sách sinh viên phản biện và hội đồng", PERMISSION: ["VIEW_LISTSV"] },
   REVIEWCOMMENT: { KEY: '10', ICON: <FileTextOutlined />, LINK: "", TEXT: "Giảng viên đánh giá, nhận xét báo cáo", PERMISSION: ["REVIEW_COMMENT"] },
   GV_COMFILMPROJECT: { KEY: '11', ICON: <CheckCircleOutlined />, LINK: "", TEXT: "Giảng viên xác nhận sinh viên đăng ký đề tài", PERMISSION: ["CONFIRM_PROJECT"] },
@@ -65,4 +63,8 @@ export const Sidebar_router_DanhMuc: { [key: string]: SidebarItem_DanhMuc } = {
   QLHOCHAM: { KEY: '21', ICON: <CrownOutlined />, LINK: ROUTERS.DANHMUC.QL_HOCHAM.PATH, TEXT: "Danh Mục học hàm"},
   QLCHUCVU: { KEY: '20', ICON: <IdcardOutlined />, LINK: ROUTERS.DANHMUC.QL_CHUCVU.PATH, TEXT: "Danh mục chức vụ"},
 };
-
+export const Sidebar_HeThong: { [key: string]: SidebarItem } = {
+  PHANQUYEN: { KEY: '7', ICON: <SafetyCertificateOutlined />, LINK: ROUTERS.HETHONG.QL_NHOMQUYEN.PATH, TEXT: "Quản lý nhóm quyền", PERMISSION: ["ADD_NHOMQUYEN","UP_NHOMQUYEN","DEL_NHOMQUYEN"] },
+  USER: { KEY: '8', ICON: <UsergroupAddOutlined />, LINK: ROUTERS.HETHONG.QL_NGUOIDUNG.PATH, TEXT: "Quản lý người dùng", PERMISSION: ["ADD_NGUOIDUNG","UP_NGUOIDUNG","DEL_NGUOIDUNG"] },
+  
+}

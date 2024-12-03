@@ -35,6 +35,7 @@ export const ColumLop: ColumnType[] = [
     cotCoBan.push({
       title: 'Thao tác',
       key: 'action',
+      width:'20%',
       render: (_: any, banGhi: any) => (
         <Space size="middle">
           <Tooltip title="Xem Nhóm Quyền">

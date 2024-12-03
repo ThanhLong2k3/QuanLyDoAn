@@ -10,7 +10,6 @@ interface SinhVienFormProps {
 export const SinhVienForm: React.FC<SinhVienFormProps> = ({ formdulieu }) => {
   const [lop, setLop] = useState<Lop[]>([]);
 
-  // Gọi hàm để lấy tất cả lớp
   useEffect(() => {
     const fetchLop = async () => {
       try {

@@ -58,6 +58,15 @@ builder.Services.AddTransient<IHocVi_BLL, HocVi_BLL>();
 builder.Services.AddTransient<IHocHamReponsitory,HocHamReponsitory>();
 builder.Services.AddTransient<IHocHam_BLL, HocHam_BLL>();
 
+
+builder.Services.AddTransient<IDotLmaDoAnRepository, DotLamDoAnRepository>();
+builder.Services.AddTransient<IDotLamDoAn_BLL, DotLamDoAn_BLL>();
+
+
+builder.Services.AddTransient<IHoiDongReponsitory, HoiDongReponsitory>();
+builder.Services.AddTransient<IHoiDong_BLL, HoiDong_BLL>();
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -36,6 +36,7 @@ export default function QuanLygiangvien() {
 
   const hienThiModal = useCallback(
     (banGhi?: GiangVien) => {
+      debugger
       form.resetFields();
       if (banGhi) {
         const ngaySinhValue = banGhi.ngaySinh ? moment(banGhi.ngaySinh) : null;
