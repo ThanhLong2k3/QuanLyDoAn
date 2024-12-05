@@ -111,3 +111,11 @@ export interface HocVi {
   moTa: string;
   soLuongHuongDan: number;
 }
+
+export interface DotLamDoAn_GiangVien {
+  maDot:string,
+  maGiangVien:string,
+  tenGiangVien:string,
+  soLuongHuongDan: number;
+}
+

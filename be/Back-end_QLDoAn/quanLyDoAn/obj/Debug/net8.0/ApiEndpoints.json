@@ -222,6 +222,105 @@
     ]
   },
   {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.Dot_GiangVien_CTRL",
+    "Method": "CreateItem",
+    "RelativePath": "api/Dot_GiangVien_CTRL/create-Dot_GiangVien",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.Dot_GiangVienDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.Dot_GiangVien_CTRL",
+    "Method": "DeleteItem",
+    "RelativePath": "api/Dot_GiangVien_CTRL/delete-Dot_GiangVien",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "maDot",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "maGiangVien",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.Dot_GiangVien_CTRL",
+    "Method": "GetGiangVien_HD",
+    "RelativePath": "api/Dot_GiangVien_CTRL/getallgv",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.V_Dot_GiangVienDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.Dot_GiangVien_CTRL",
+    "Method": "GetGiangVien_MaDot",
+    "RelativePath": "api/Dot_GiangVien_CTRL/getallgv_madot",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "madot",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.V_Dot_GiangVienDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.Dot_GiangVien_CTRL",
+    "Method": "UpdateItem",
+    "RelativePath": "api/Dot_GiangVien_CTRL/update-Dot_GiangVien",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.Dot_GiangVienDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.DotLamDoAn_CTRL",
     "Method": "CreateItem",
     "RelativePath": "api/DotLamDoAn_CTRL/create-DotLamDoAn",

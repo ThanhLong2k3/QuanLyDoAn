@@ -91,6 +91,13 @@ export const URL = {
             UPDATE:(taiKhoan:string)=> `${LocalHot}api/DotLamDoAn_CTRL/update-DotLamDoAn?taikhoan=${taiKhoan}`,
             DELETE:(taiKhoan:string,maGiangVien:string)=> `${LocalHot}api/DotLamDoAn_CTRL/delete-DotLamDoAn?ma=${maGiangVien}&taikhoan=${taiKhoan}`,
             GETALL:`${LocalHot}api/DotLamDoAn_CTRL/getall`,
+            DOT_GIANGVIEN:{
+                GETALL_GV_HD:`${LocalHot}api/Dot_GiangVien_CTRL/getallgv`,
+                GET_GV_MADOT:(maDot:string)=>`${LocalHot}api/Dot_GiangVien_CTRL/getallgv_madot?madot=${maDot}`,
+                CREATE_DOT_GV:`${LocalHot}api/Dot_GiangVien_CTRL/create-Dot_GiangVien`,
+                UP_DOT_GV:`${LocalHot}api/Dot_GiangVien_CTRL/update-Dot_GiangVien`,
+                DEL_GV_DOT:(maDot:string,maGV:string)=>`${LocalHot}api/Dot_GiangVien_CTRL/delete-Dot_GiangVien?maDot=${maDot}&maGiangVien=${maGV}`
+            }
         }
     }
 };

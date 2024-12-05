@@ -387,6 +387,181 @@
         }
       }
     },
+    "/api/Dot_GiangVien_CTRL/getallgv": {
+      "get": {
+        "tags": [
+          "Dot_GiangVien_CTRL"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_Dot_GiangVienDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_Dot_GiangVienDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_Dot_GiangVienDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Dot_GiangVien_CTRL/getallgv_madot": {
+      "get": {
+        "tags": [
+          "Dot_GiangVien_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "madot",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_Dot_GiangVienDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_Dot_GiangVienDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_Dot_GiangVienDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Dot_GiangVien_CTRL/create-Dot_GiangVien": {
+      "post": {
+        "tags": [
+          "Dot_GiangVien_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dot_GiangVienDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dot_GiangVienDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dot_GiangVienDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Dot_GiangVien_CTRL/update-Dot_GiangVien": {
+      "post": {
+        "tags": [
+          "Dot_GiangVien_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dot_GiangVienDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dot_GiangVienDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dot_GiangVienDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Dot_GiangVien_CTRL/delete-Dot_GiangVien": {
+      "delete": {
+        "tags": [
+          "Dot_GiangVien_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "maDot",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maGiangVien",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/DotLamDoAn_CTRL/getall": {
       "get": {
         "tags": [
@@ -2707,6 +2882,24 @@
         },
         "additionalProperties": false
       },
+      "Dot_GiangVienDTO": {
+        "type": "object",
+        "properties": {
+          "maDot": {
+            "type": "string",
+            "nullable": true
+          },
+          "maGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "soLuongHuongDan": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "GiangVienDTO": {
         "type": "object",
         "properties": {
@@ -2964,6 +3157,28 @@
           "email": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V_Dot_GiangVienDTO": {
+        "type": "object",
+        "properties": {
+          "maDot": {
+            "type": "string",
+            "nullable": true
+          },
+          "maGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "soLuongHuongDan": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

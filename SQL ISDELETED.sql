@@ -122,7 +122,15 @@ CREATE TABLE Dot_GiangVien (
     FOREIGN KEY (maDot) REFERENCES dotLamDoAn(maDot) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (maGiangVien) REFERENCES giangVien(maGiangVien) ON UPDATE CASCADE ON DELETE CASCADE
 );
-
+CREATE TABLE Dot_SinhVien (
+    maDot VARCHAR(50) NOT NULL,
+    maSinhVien NVARCHAR(50) NOT NULL,
+    soLuongHuongDan INT NOT NULL,
+	IsDeleted int,
+    PRIMARY KEY (maDot, maSinhVien),
+    FOREIGN KEY (maDot) REFERENCES dotLamDoAn(maDot) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (maSinhVien) REFERENCES SinhVien(maSinhVien) ON UPDATE CASCADE ON DELETE CASCADE
+);
 -- hoiDong table
 CREATE TABLE hoiDong (
     maHoiDong VARCHAR(50) PRIMARY KEY,
@@ -1749,6 +1757,7 @@ AS
 BEGIN
     INSERT INTO Dot_GiangVien (maDot, maGiangVien, soLuongHuongDan,IsDeleted)
     VALUES (@maDot, @maGiangVien, @soLuongHuongDan,1);
+
 END;
 GO
 
@@ -1783,4 +1792,54 @@ CREATE PROC GET_GiangVien_MaDot
 AS
 BEGIN 
 	SELECT D.maDot,gv.maGiangVien,gv.tenGiangVien,D.soLuongHuongDan FROM Dot_GiangVien D inner join giangVien gv on D.maGiangVien=gv.maGiangVien WHERE maDot=@MaDot AND D.IsDeleted=1;
+	END
+
+
+
+	---Dot Sinh Vien
+
+	GO
+
+CREATE PROCEDURE Them_DotSinhVien
+    @maDot VARCHAR(50),
+    @maSinhVien NVARCHAR(50),
+    @soLuongHuongDan INT
+AS
+BEGIN
+    INSERT INTO Dot_SinhVien (maDot, maSinhVien, soLuongHuongDan,IsDeleted)
+    VALUES (@maDot, @maSinhVien, @soLuongHuongDan,1);
+END;
+GO
+
+CREATE PROCEDURE Xoa_DotSinhVien
+    @maDot VARCHAR(50),
+    @maSinhVien NVARCHAR(50)
+AS
+BEGIN
+	UPDATE  Dot_SinhVien SET IsDeleted=0
+    WHERE maDot = @maDot AND maSinhVien = @maSinhVien;
+END;
+
+
+GO
+
+
+CREATE PROCEDURE Sua_DotSinhVien
+    @maDot VARCHAR(50),
+    @maSinhVien NVARCHAR(50),
+    @soLuongHuongDan INT
+AS
+BEGIN
+    UPDATE Dot_SinhVien
+    SET soLuongHuongDan = @soLuongHuongDan
+    WHERE maDot = @maDot AND maSinhVien = @maSinhVien;
+END;
+
+
+go
+CREATE PROC GET_SinhVien_MaDot
+@MaDot VARCHAR(50)
+AS
+BEGIN 
+	SELECT D.maDot,gv.maSinhVien,gv.tenSinhVien,D.soLuongHuongDan FROM Dot_SinhVien D inner join SinhVien gv on D.maSinhVien=gv.maSinhVien WHERE maDot=@MaDot AND D.IsDeleted=1;
 	END
