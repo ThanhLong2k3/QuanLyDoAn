@@ -35,7 +35,8 @@ export const ColumDotLamDoAn: ColumnType[] = [
 const taocotbangdotlamdoan = (
   danhSachCot: Array<ColumnType>, 
   hienThiModal: (banGhi: any) => void, 
-  xuLyXoa: (maDot: string) => void
+  xuLyXoa: (maDot: string) => void,
+  showMoDAL_ADDGiangVien:(maDot:string)=>void
 ) => {
   const cotCoBan = [...danhSachCot];
 
@@ -49,7 +50,7 @@ const taocotbangdotlamdoan = (
           <Button type="primary" icon={<FileExcelOutlined />} />
         </Tooltip>
         <Tooltip title="Thêm giảng viên hướng dẫn">
-          <Button type="primary" icon={<UserAddOutlined />} />
+          <Button type="primary" icon={<UserAddOutlined />} onClick={()=> showMoDAL_ADDGiangVien(banGhi.maDot)} />
         </Tooltip>
         <Tooltip title="Thêm sinh viên vào đợt làm đồ án">
           <Button type="primary" icon={<TeamOutlined />} />
@@ -69,5 +70,5 @@ const taocotbangdotlamdoan = (
   return cotCoBan;
 };
 
-export const columDotLamDoAn = (hienThiModal: (banGhi: any) => void, xuLyXoa: (maDot: string) => void) =>
-  taocotbangdotlamdoan(ColumDotLamDoAn, hienThiModal, xuLyXoa);
+export const columDotLamDoAn = (hienThiModal: (banGhi: any) => void, xuLyXoa: (maDot: string) => void,showMoDAL_ADDGiangVien:(maDot:string)=>void) =>
+  taocotbangdotlamdoan(ColumDotLamDoAn, hienThiModal, xuLyXoa,showMoDAL_ADDGiangVien);

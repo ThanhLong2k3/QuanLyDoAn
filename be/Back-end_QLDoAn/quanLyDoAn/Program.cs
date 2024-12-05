@@ -67,6 +67,9 @@ builder.Services.AddTransient<IHoiDongReponsitory, HoiDongReponsitory>();
 builder.Services.AddTransient<IHoiDong_BLL, HoiDong_BLL>();
 
 
+builder.Services.AddTransient<IDot_GiangVienReponsitory, Dot_GiangVienReponsitory>();
+builder.Services.AddTransient<IDot_GiangVien_BLL, Dot_GiangVien_BLL>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

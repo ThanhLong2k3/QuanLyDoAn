@@ -1,40 +1,37 @@
-import React, { useEffect, useState } from 'react'
-import { Card, Table, Button, Popconfirm, Row, Col, Input, Space, Typography, Divider,Form} from 'antd'
+import React, { useEffect, useState, useCallback } from 'react'
+import { Card, Table, Button, Popconfirm, Row, Col, Input, Space, Typography, Divider, Form, message } from 'antd'
 import { DeleteOutlined, SearchOutlined, PlusOutlined } from '@ant-design/icons'
-import { useQuanLyDuLieu } from '../../../ultils/hook'
 import ReusableModal from '../../../components/UI/Modal'
 import { columDotLamDoAn } from '../../../components/QLDoAnComponent/QLDotLamDoAn/table'
 import { FormDotLamDoAn } from '../../../components/QLDoAnComponent/QLDotLamDoAn/form'
-import { DotLamDoAn } from "../../../components/InterFace"
-import { getAll_DotDoAn,add_DotDoAn,edit_DotDoAn,del_DotDoAn } from '../../../sevices/Api/QL_DoAn/QL_DotDoAn'
+import { DotLamDoAn, DotLamDoAn_GiangVien } from "../../../components/InterFace"
+import { getAll_DotDoAn, add_DotDoAn, edit_DotDoAn, del_DotDoAn } from '../../../sevices/Api/QL_DoAn/QL_DotLamDoAn/QL_DotDoAn'
 import moment from 'moment'
+import Modal_GiangVien_Dot from "../../../components/QLDoAnComponent/QLDotLamDoAn/Modal_GiangVien"
+import { add_GiangVien_DotLamDoAn, getAll_GiangVien_HD, getGiangVien_maDot,del_GiangVien_DotDoAn,Up_SLHuongDan } from '../../../sevices/Api/QL_DoAn/QL_DotLamDoAn/DotLamDoAn_GiangVien-servives'
+
 const { Title } = Typography
 
 export default function QuanLyDotLamDoAn() {
-  const [dotlamdoan,setDotLamDoAn]=useState<DotLamDoAn[]>([]);
-  const [hienModal,setHienModal]=useState(false);
-  const [timKiem, setTimKiem] = useState("")
-  const [duLieuLoc, setDuLieuLoc] = useState(dotlamdoan)
-  const [form] = Form.useForm();
-  const [maDot,setMaDot]=useState<string | null>(null);
+  const [dotlamdoan, setDotLamDoAn] = useState<DotLamDoAn[]>([]);
+  const [hienModal, setHienModal] = useState(false);
+  const [timKiem, setTimKiem] = useState("");
+  const [maDot, setMaDot] = useState<string | null>(null);
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
+  const [hienmodalGiangVien, setHienModalGiangVien] = useState(false);
+  const [GiangVien, setGiangVien] = useState<DotLamDoAn_GiangVien[]>([]);
+  const [GiangVien_Dot, setGiangVien_Dot] = useState<DotLamDoAn_GiangVien[]>([]);
+  const [form] = Form.useForm();
+  const [maDot_on,setMaDotOn]=useState("");
   useEffect(() => {
     document.title = 'Quản lý đợt làm đồ án'
     GetAll_DotDoAn()
   }, [])
 
-  const GetAll_DotDoAn=async()=>{
-      const data=await getAll_DotDoAn();
-      setDotLamDoAn(data);
+  const GetAll_DotDoAn = async () => {
+    const data = await getAll_DotDoAn();
+    setDotLamDoAn(data);
   }
-  useEffect(() => {
-    const ketQuaLoc = dotlamdoan.filter(
-      (hv) =>
-        hv.tenDot.toLowerCase().includes(timKiem.toLowerCase()) ||
-        hv.maDot.toLowerCase().includes(timKiem.toLowerCase())
-    )
-    setDuLieuLoc(ketQuaLoc)
-  }, [dotlamdoan, timKiem])
 
   const hienThiModal = (banGhi?: DotLamDoAn) => {
     form.resetFields();
@@ -50,11 +47,9 @@ export default function QuanLyDotLamDoAn() {
 
   const xuLyDongY = async () => {
     const giatri = await form.validateFields();
-    debugger;
     if (maDot !== null) {
       await edit_DotDoAn(giatri, GetAll_DotDoAn);
-    }
-    else {
+    } else {
       const fieldsToEnsure = [
         'dangKyDeTai',
         'choPhepSinhVienDangKyGiangVienKhacBoMon',
@@ -63,11 +58,11 @@ export default function QuanLyDotLamDoAn() {
         'choPhepGiangVienSuaDeTai',
         'trangThai',
       ];
-  
+
       fieldsToEnsure.forEach((field) => {
         if (giatri[field] === undefined) giatri[field] = false;
       });
-  
+
       await add_DotDoAn(giatri, GetAll_DotDoAn);
     }
     setHienModal(false);
@@ -75,14 +70,12 @@ export default function QuanLyDotLamDoAn() {
     setMaDot(null);
   };
 
-
-  const xuLyXoa =async (maDot:string) => {
-    await del_DotDoAn(maDot,GetAll_DotDoAn);
+  const xuLyXoa = async (maDot: string) => {
+    await del_DotDoAn(maDot, GetAll_DotDoAn);
   };
 
-  const xulyXoaNhieu = async() => {
-    for(let i=0;i<cacDongDaChon.length;i++)
-    {
+  const xulyXoaNhieu = async () => {
+    for (let i = 0; i < cacDongDaChon.length; i++) {
       await xuLyXoa(cacDongDaChon[i].toString());
     }
     setCacDongDaChon([]);
@@ -92,20 +85,77 @@ export default function QuanLyDotLamDoAn() {
     setCacDongDaChon(cacKeyChon);
   };
 
-  const cotBang=columDotLamDoAn(hienThiModal,xuLyXoa)
+  const handleAddGiangVien = useCallback((giangVien: DotLamDoAn_GiangVien) => {
+    setGiangVien_Dot(prevState => [...prevState, giangVien]);
+  }, []);
+
+  const handleRemoveGiangVien = useCallback(async(maDot: string, maGiangVien: string) => {
+    setGiangVien_Dot(prevState => prevState.filter(gv => gv.maGiangVien !== maGiangVien));
+    await del_GiangVien_DotDoAn(maDot,maGiangVien);
+  }, []);
+// chưa xong hàm này
+  const updateSelectedGiangVien = useCallback(async(updatedGiangVien: DotLamDoAn_GiangVien[]) => {
+    console.log(maDot_on);
+    const existingGiangVien = await getGiangVien_maDot(maDot_on);
+    for(let i=0;i<existingGiangVien.length;i++)
+    {
+      for(let j=0;j<updatedGiangVien.length;j++)
+      {
+        if(existingGiangVien[i].maGiangVien===updatedGiangVien[j].maGiangVien && existingGiangVien[i].soLuongHuongDan !== updatedGiangVien[j].soLuongHuongDan )
+        {
+            let data={
+              maDot:maDot_on,
+              maGiangVien:existingGiangVien[i].maGiangVien,
+              soLuongHuongDan:updatedGiangVien[j].soLuongHuongDan
+            }
+            await Up_SLHuongDan(data);
+        }
+      }
+    }
+  }, []);
+
+  const themGiangVien = async () => {
+    setHienModalGiangVien(false);
+    
+    const existingGiangVien = await getGiangVien_maDot(maDot_on);
+    
+    const newGiangVien = GiangVien_Dot.filter(
+        gv => !existingGiangVien.some(
+            (existing:DotLamDoAn_GiangVien) => existing.maGiangVien === gv.maGiangVien
+        )
+    );
+
+    for(let gv of newGiangVien) {
+        let data = {
+            maDot: maDot_on,
+            maGiangVien: gv.maGiangVien,
+            soLuongHuongDan: gv.soLuongHuongDan
+        }
+        await add_GiangVien_DotLamDoAn(data);
+    }
+
+    
+    message.success(`Đã thêm ${newGiangVien.length} giảng viên mới`);
+};
+  const showMoDAL_ADDGiangVien=async(maDot:string)=>{
+      setMaDotOn(maDot);
+      setHienModalGiangVien(true);
+      setGiangVien(await getAll_GiangVien_HD());
+      setGiangVien_Dot(await getGiangVien_maDot(maDot));
+  }
+  const cotBang = columDotLamDoAn(hienThiModal, xuLyXoa,showMoDAL_ADDGiangVien)
   const luaChonDong = {
     selectedRowKeys: cacDongDaChon,
     onChange: chonDong,
   }
 
-
   return (
     <div className="bg-gray-100 min-h-screen p-6">
       <Card className="shadow rounded-lg overflow-hidden">
         <div className="p-6">
-          <Title level={2} className="text-center custom-blue mb-8" style={{color: '#1e88e5', fontSize: '25px', fontWeight: 'bold'}}>
+          <Title level={2} className="text-center custom-blue mb-8" style={{ color: '#1e88e5', fontSize: '25px', fontWeight: 'bold' }}>
             QUẢN LÝ ĐỢT LÀM ĐỒ ÁN
-           </Title>
+          </Title>
           <hr />
           <Row gutter={16} className="mb-6">
             <Col xs={24} sm={24} md={16} lg={18} xl={18}>
@@ -131,15 +181,14 @@ export default function QuanLyDotLamDoAn() {
                     </Button>
                   </Popconfirm>
                 )}
-                <Button 
-                  type="primary" 
-                  icon={<PlusOutlined />} 
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
                   onClick={() => hienThiModal()}
                   className="bg-green-500 hover:bg-green-600 border-green-500 hover:border-green-600"
                 >
                   Thêm đợt làm đồ án
                 </Button>
-               
               </Space>
             </Col>
           </Row>
@@ -147,7 +196,11 @@ export default function QuanLyDotLamDoAn() {
           <Table
             rowSelection={luaChonDong}
             columns={cotBang}
-            dataSource={duLieuLoc}
+            dataSource={dotlamdoan.filter(
+              (hv) =>
+                hv.tenDot.toLowerCase().includes(timKiem.toLowerCase()) ||
+                hv.maDot.toLowerCase().includes(timKiem.toLowerCase())
+            )}
             rowKey="maDot"
             scroll={{ x: 768 }}
             className="shadow-sm rounded-md overflow-hidden"
@@ -160,6 +213,16 @@ export default function QuanLyDotLamDoAn() {
           />
         </div>
       </Card>
+      <Modal_GiangVien_Dot
+        hienmodalGiangVien={hienmodalGiangVien}
+        setHienModal={setHienModalGiangVien}
+        GiangVien={GiangVien}
+        selectedGiangVien={GiangVien_Dot}
+        handleAddGiangVien={handleAddGiangVien}
+        handleRemoveGiangVien={handleRemoveGiangVien}
+        themGiangVien={themGiangVien}
+        updateSelectedGiangVien={updateSelectedGiangVien}
+      />
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}
@@ -173,3 +236,4 @@ export default function QuanLyDotLamDoAn() {
     </div>
   )
 }
+

@@ -5,7 +5,6 @@ import { MenuOutlined, AppstoreOutlined, SettingOutlined,CalendarOutlined } from
 import { Sidebar_router, Sidebar_router_DanhMuc,Sidebar_HeThong } from "../../ultils/Sidebar_route";
 
 const { Sider } = Layout;
-const { SubMenu } = Menu;
 
 const Sidebar: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -42,7 +41,6 @@ const Sidebar: React.FC = () => {
     debugger;
     if (userPermissions.length === 0) return [];
 
-    // Render DANH MỤC items
     const danhMucItems = Object.entries(Sidebar_router_DanhMuc).map(([key, item]) => ({
       key: item.KEY,
       icon: item.ICON,
@@ -56,7 +54,6 @@ const Sidebar: React.FC = () => {
     }));
     
 
-    // Render Hệ thống items based on permissions
     const permissionItems = Object.entries(Sidebar_router)
       .map(([key, item]) => {
         if (item.PERMISSION.some((permission) => userPermissions.includes(permission))) {

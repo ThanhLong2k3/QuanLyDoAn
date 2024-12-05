@@ -17,7 +17,7 @@ namespace DAL.QL_DoAnRepository
             _dbHelper = dbHelper;
         }
 
-        public List<Dot_GiangVienDTO> GetGiangVien_MaDot(string madot)
+        public List<V_Dot_GiangVienDTO> GetGiangVien_MaDot(string madot)
         {
             string msgError = "";
             try
@@ -25,14 +25,29 @@ namespace DAL.QL_DoAnRepository
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "GET_GiangVien_MaDot","@MaDot",madot);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<Dot_GiangVienDTO>().ToList();
+                return dt.ConvertTo<V_Dot_GiangVienDTO>().ToList();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        
+        public List<V_Dot_GiangVienDTO> GetGiangVien_HD()
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "GETGIAOVIENN_HUONGDAN");
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<V_Dot_GiangVienDTO>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public string Create(Dot_GiangVienDTO model)
         {
             string msgError = "";

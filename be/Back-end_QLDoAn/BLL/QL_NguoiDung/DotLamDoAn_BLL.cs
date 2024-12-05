@@ -15,7 +15,7 @@ namespace BLL.QL_NguoiDung
         {
             return _res.GetAll();
         }
-        public List<DotLamDoAnDTO> GET_DOT_ID()
+        public List<DotLamDoAnDTO> GetBYID()
         {
             return _res.GetBYID();
         }
