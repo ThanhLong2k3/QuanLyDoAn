@@ -118,4 +118,10 @@ export interface DotLamDoAn_GiangVien {
   tenGiangVien:string,
   soLuongHuongDan: number;
 }
+export interface DotLamDoAn_SinhVien {
+  maDot:string,
+  maLop:string,
+  maSinhVien:string,
+  tenSinhVien:string,
+}
 

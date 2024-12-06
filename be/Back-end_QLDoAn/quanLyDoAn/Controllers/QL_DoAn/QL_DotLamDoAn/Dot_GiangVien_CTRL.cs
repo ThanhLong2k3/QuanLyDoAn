@@ -1,8 +1,8 @@
-﻿using BLL.InterFace.QL_DoAn;
-using DTO.QL_DoAn;
+﻿using BLL.InterFace.QL_DoAn.DotLamDoAn_DLL;
+using DTO.QL_DoAn.DotLamDoAn_DTO;
 using Microsoft.AspNetCore.Mvc;
 
-namespace quanLyDoAn.Controllers.QL_DoAn
+namespace quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -29,14 +29,14 @@ namespace quanLyDoAn.Controllers.QL_DoAn
 
         [Route("create-Dot_GiangVien")]
         [HttpPost]
-        public IActionResult CreateItem([FromBody] Dot_GiangVienDTO model)
+        public IActionResult CreateItem([FromBody] D_Dot_GiangVienDTO model)
         {
             string result = _Dot_GiangVien_BLL.Create(model);
             return Ok(result);
         }
         [Route("update-Dot_GiangVien")]
         [HttpPost]
-        public IActionResult UpdateItem([FromBody] Dot_GiangVienDTO model)
+        public IActionResult UpdateItem([FromBody] D_Dot_GiangVienDTO model)
         {
             string result = _Dot_GiangVien_BLL.Update(model);
             return Ok(result);

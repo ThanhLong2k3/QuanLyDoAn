@@ -122,10 +122,10 @@ CREATE TABLE Dot_GiangVien (
     FOREIGN KEY (maDot) REFERENCES dotLamDoAn(maDot) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (maGiangVien) REFERENCES giangVien(maGiangVien) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
 CREATE TABLE Dot_SinhVien (
     maDot VARCHAR(50) NOT NULL,
     maSinhVien NVARCHAR(50) NOT NULL,
-    soLuongHuongDan INT NOT NULL,
 	IsDeleted int,
     PRIMARY KEY (maDot, maSinhVien),
     FOREIGN KEY (maDot) REFERENCES dotLamDoAn(maDot) ON UPDATE CASCADE ON DELETE CASCADE,
@@ -1802,15 +1802,13 @@ BEGIN
 
 CREATE PROCEDURE Them_DotSinhVien
     @maDot VARCHAR(50),
-    @maSinhVien NVARCHAR(50),
-    @soLuongHuongDan INT
+    @maSinhVien NVARCHAR(50)
 AS
 BEGIN
-    INSERT INTO Dot_SinhVien (maDot, maSinhVien, soLuongHuongDan,IsDeleted)
-    VALUES (@maDot, @maSinhVien, @soLuongHuongDan,1);
+    INSERT INTO Dot_SinhVien (maDot, maSinhVien,IsDeleted)
+    VALUES (@maDot, @maSinhVien,1);
 END;
 GO
-
 CREATE PROCEDURE Xoa_DotSinhVien
     @maDot VARCHAR(50),
     @maSinhVien NVARCHAR(50)
@@ -1822,24 +1820,18 @@ END;
 
 
 GO
-
-
-CREATE PROCEDURE Sua_DotSinhVien
-    @maDot VARCHAR(50),
-    @maSinhVien NVARCHAR(50),
-    @soLuongHuongDan INT
+CREATE PROC GET_SinhVien
 AS
-BEGIN
-    UPDATE Dot_SinhVien
-    SET soLuongHuongDan = @soLuongHuongDan
-    WHERE maDot = @maDot AND maSinhVien = @maSinhVien;
-END;
-
+BEGIN 
+	SELECT sv.maSinhVien,sv.tenSinhVien,l.maLop FROM  sinhVien sv  inner join lop l on  sv.maLop=l.maLop where  sv.IsDeleted=1;
+	END
+	
 
 go
+	
 CREATE PROC GET_SinhVien_MaDot
 @MaDot VARCHAR(50)
 AS
 BEGIN 
-	SELECT D.maDot,gv.maSinhVien,gv.tenSinhVien,D.soLuongHuongDan FROM Dot_SinhVien D inner join SinhVien gv on D.maSinhVien=gv.maSinhVien WHERE maDot=@MaDot AND D.IsDeleted=1;
+	SELECT d_sv.maDot,sv.maSinhVien,sv.tenSinhVien,l.maLop FROM Dot_SinhVien d_sv inner join sinhVien sv on d_sv.maSinhVien=sv.maSinhVien inner join lop l on  sv.maLop=l.maLop where d_sv.maDot=@MaDot and  d_sv.IsDeleted=1;
 	END

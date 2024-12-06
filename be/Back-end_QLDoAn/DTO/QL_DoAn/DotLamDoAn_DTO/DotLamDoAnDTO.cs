@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DTO.QL_DoAn
+namespace DTO.QL_DoAn.DotLamDoAn_DTO
 {
     public class DotLamDoAnDTO
     {

@@ -97,6 +97,12 @@ export const URL = {
                 CREATE_DOT_GV:`${LocalHot}api/Dot_GiangVien_CTRL/create-Dot_GiangVien`,
                 UP_DOT_GV:`${LocalHot}api/Dot_GiangVien_CTRL/update-Dot_GiangVien`,
                 DEL_GV_DOT:(maDot:string,maGV:string)=>`${LocalHot}api/Dot_GiangVien_CTRL/delete-Dot_GiangVien?maDot=${maDot}&maGiangVien=${maGV}`
+            },
+            DOT_SINHVIEN:{
+                GETALL_SV_HD:`${LocalHot}api/Dot_SinhVien/getall_SinhVien`,
+                GET_SV_MADOT:(maDot:string)=>`${LocalHot}api/Dot_SinhVien/get_SinhVien_madot?madot=${maDot}`,
+                CREATE_DOT_SV:`${LocalHot}api/Dot_SinhVien/create-Dot_SinhVien`,
+                DEL_SV_DOT:(maDot:string,maSV:string)=>`${LocalHot}api/Dot_SinhVien/delete-Dot_SinhVien?maDot=${maDot}&maSinhVien=${maSV}`
             }
         }
     }

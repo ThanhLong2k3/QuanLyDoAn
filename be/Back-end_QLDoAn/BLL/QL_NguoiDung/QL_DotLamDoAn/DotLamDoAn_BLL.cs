@@ -1,8 +1,8 @@
-﻿using BLL.InterFace.QL_DoAn;
-using DAL.InterFace.QL_DoAn;
-using DTO.QL_DoAn;
+﻿using BLL.InterFace.QL_DoAn.DotLamDoAn_DLL;
+using DAL.InterFace.QL_DoAn.IDotLamDoAnRepository;
+using DTO.QL_DoAn.DotLamDoAn_DTO;
 
-namespace BLL.QL_NguoiDung
+namespace BLL.QL_NguoiDung.QL_DotLamDoAn
 {
     public class DotLamDoAn_BLL : IDotLamDoAn_BLL
     {
@@ -19,9 +19,9 @@ namespace BLL.QL_NguoiDung
         {
             return _res.GetBYID();
         }
-        public string Create(DotLamDoAnDTO model,string tk)
+        public string Create(DotLamDoAnDTO model, string tk)
         {
-            return _res.Create(model,tk);
+            return _res.Create(model, tk);
         }
         public string Update(DotLamDoAnDTO model, string taikhoan)
         {

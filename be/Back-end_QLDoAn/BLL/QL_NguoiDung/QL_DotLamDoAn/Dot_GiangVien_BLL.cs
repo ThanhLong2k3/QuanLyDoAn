@@ -1,10 +1,10 @@
-﻿using BLL.InterFace.QL_DoAn;
-using DAL.InterFace.QL_DoAn;
-using DTO.QL_DoAn;
+﻿using BLL.InterFace.QL_DoAn.DotLamDoAn_DLL;
+using DAL.InterFace.QL_DoAn.IDotLamDoAnRepository;
+using DTO.QL_DoAn.DotLamDoAn_DTO;
 
-namespace BLL.QL_NguoiDung
+namespace BLL.QL_NguoiDung.QL_DotLamDoAn
 {
-    public class Dot_GiangVien_BLL: IDot_GiangVien_BLL
+    public class Dot_GiangVien_BLL : IDot_GiangVien_BLL
     {
         private IDot_GiangVienReponsitory _res;
         public Dot_GiangVien_BLL(IDot_GiangVienReponsitory res)
@@ -20,11 +20,11 @@ namespace BLL.QL_NguoiDung
         {
             return _res.GetGiangVien_MaDot(id);
         }
-        public string Create(Dot_GiangVienDTO model)
+        public string Create(D_Dot_GiangVienDTO model)
         {
             return _res.Create(model);
         }
-        public string Update(Dot_GiangVienDTO model)
+        public string Update(D_Dot_GiangVienDTO model)
         {
             return _res.Update(model);
         }
