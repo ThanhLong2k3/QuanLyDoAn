@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DTO.QL_DoAn;
+using DTO.QL_DoAn.DotLamDoAn_DTO;
 
-namespace BLL.InterFace.QL_DoAn
+namespace BLL.InterFace.QL_DoAn.DotLamDoAn_DLL
 {
     public partial interface IDotLamDoAn_BLL
     {

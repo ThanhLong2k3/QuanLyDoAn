@@ -222,7 +222,7 @@
     ]
   },
   {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.Dot_GiangVien_CTRL",
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn.Dot_GiangVien_CTRL",
     "Method": "CreateItem",
     "RelativePath": "api/Dot_GiangVien_CTRL/create-Dot_GiangVien",
     "HttpMethod": "POST",
@@ -231,14 +231,14 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "DTO.QL_DoAn.Dot_GiangVienDTO",
+        "Type": "DTO.QL_DoAn.DotLamDoAn_DTO.D_Dot_GiangVienDTO",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.Dot_GiangVien_CTRL",
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn.Dot_GiangVien_CTRL",
     "Method": "DeleteItem",
     "RelativePath": "api/Dot_GiangVien_CTRL/delete-Dot_GiangVien",
     "HttpMethod": "DELETE",
@@ -259,7 +259,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.Dot_GiangVien_CTRL",
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn.Dot_GiangVien_CTRL",
     "Method": "GetGiangVien_HD",
     "RelativePath": "api/Dot_GiangVien_CTRL/getallgv",
     "HttpMethod": "GET",
@@ -268,7 +268,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.V_Dot_GiangVienDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.DotLamDoAn_DTO.V_Dot_GiangVienDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -279,7 +279,7 @@
     ]
   },
   {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.Dot_GiangVien_CTRL",
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn.Dot_GiangVien_CTRL",
     "Method": "GetGiangVien_MaDot",
     "RelativePath": "api/Dot_GiangVien_CTRL/getallgv_madot",
     "HttpMethod": "GET",
@@ -294,7 +294,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.V_Dot_GiangVienDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.DotLamDoAn_DTO.V_Dot_GiangVienDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -305,7 +305,7 @@
     ]
   },
   {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.Dot_GiangVien_CTRL",
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn.Dot_GiangVien_CTRL",
     "Method": "UpdateItem",
     "RelativePath": "api/Dot_GiangVien_CTRL/update-Dot_GiangVien",
     "HttpMethod": "POST",
@@ -314,14 +314,97 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "DTO.QL_DoAn.Dot_GiangVienDTO",
+        "Type": "DTO.QL_DoAn.DotLamDoAn_DTO.D_Dot_GiangVienDTO",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.DotLamDoAn_CTRL",
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn.Dot_SinhVien",
+    "Method": "CreateItem",
+    "RelativePath": "api/Dot_SinhVien/create-Dot_SinhVien",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.DotLamDoAn_DTO.D_Dot_SinhVien",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn.Dot_SinhVien",
+    "Method": "DeleteItem",
+    "RelativePath": "api/Dot_SinhVien/delete-Dot_SinhVien",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "maDot",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "maSinhVien",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn.Dot_SinhVien",
+    "Method": "Get_SinhVien_MaDot",
+    "RelativePath": "api/Dot_SinhVien/get_SinhVien_madot",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "madot",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.DotLamDoAn_DTO.V_Dot_SinhVienDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn.Dot_SinhVien",
+    "Method": "GetAll_SinhVien",
+    "RelativePath": "api/Dot_SinhVien/getall_SinhVien",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.DotLamDoAn_DTO.V_Dot_SinhVienDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn.DotLamDoAn_CTRL",
     "Method": "CreateItem",
     "RelativePath": "api/DotLamDoAn_CTRL/create-DotLamDoAn",
     "HttpMethod": "POST",
@@ -330,7 +413,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "DTO.QL_DoAn.DotLamDoAnDTO",
+        "Type": "DTO.QL_DoAn.DotLamDoAn_DTO.DotLamDoAnDTO",
         "IsRequired": true
       },
       {
@@ -342,7 +425,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.DotLamDoAn_CTRL",
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn.DotLamDoAn_CTRL",
     "Method": "DeleteItem",
     "RelativePath": "api/DotLamDoAn_CTRL/delete-DotLamDoAn",
     "HttpMethod": "DELETE",
@@ -363,7 +446,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.DotLamDoAn_CTRL",
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn.DotLamDoAn_CTRL",
     "Method": "Getall",
     "RelativePath": "api/DotLamDoAn_CTRL/getall",
     "HttpMethod": "GET",
@@ -372,7 +455,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.DotLamDoAnDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.DotLamDoAn_DTO.DotLamDoAnDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -383,7 +466,7 @@
     ]
   },
   {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.DotLamDoAn_CTRL",
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn.DotLamDoAn_CTRL",
     "Method": "UpdateItem",
     "RelativePath": "api/DotLamDoAn_CTRL/update-DotLamDoAn",
     "HttpMethod": "POST",
@@ -392,7 +475,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "DTO.QL_DoAn.DotLamDoAnDTO",
+        "Type": "DTO.QL_DoAn.DotLamDoAn_DTO.DotLamDoAnDTO",
         "IsRequired": true
       },
       {

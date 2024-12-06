@@ -1,16 +1,20 @@
 using BLL.InterFace.QL_DanhMuc;
 using BLL.InterFace.QL_DoAn;
+using BLL.InterFace.QL_DoAn.DotLamDoAn_DLL;
 using BLL.InterFace.QL_HeThong;
 using BLL.QL_DanhMuc;
 using BLL.QL_HeThong;
 using BLL.QL_NguoiDung;
+using BLL.QL_NguoiDung.QL_DotLamDoAn;
 using DAL;
 using DAL.InterFace.QL_DanhMuc;
 using DAL.InterFace.QL_DoAn;
+using DAL.InterFace.QL_DoAn.IDotLamDoAnRepository;
 using DAL.InterFace.QL_HeThong;
 using DAL.QL_DanhMuc;
 using DAL.QL_DanhMucRepository;
 using DAL.QL_DoAnRepository;
+using DAL.QL_DoAnRepository.QL_DotLamDoAnRepository;
 using DAL.QL_HethongRepository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -69,6 +73,10 @@ builder.Services.AddTransient<IHoiDong_BLL, HoiDong_BLL>();
 
 builder.Services.AddTransient<IDot_GiangVienReponsitory, Dot_GiangVienReponsitory>();
 builder.Services.AddTransient<IDot_GiangVien_BLL, Dot_GiangVien_BLL>();
+
+
+builder.Services.AddTransient<IDot_SinhVienRepository,Dot_SinhVienRepository>();
+builder.Services.AddTransient<IDot_SinhVien_BLL, Dot_SinhVien_BLL>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

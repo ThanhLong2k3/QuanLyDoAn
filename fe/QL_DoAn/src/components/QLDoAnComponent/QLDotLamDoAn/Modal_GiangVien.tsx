@@ -159,7 +159,7 @@ const Modal_GiangVien_Dot: React.FC<ModalThemGiangVien> = ({
               dataSource={filteredGiangVien}
               columns={columns}
               rowKey="maGiangVien"
-              pagination={{ pageSize: 6 }}
+              pagination={{ pageSize: 10 }}
               size="small"
             />
           </Card>
@@ -171,7 +171,7 @@ const Modal_GiangVien_Dot: React.FC<ModalThemGiangVien> = ({
               dataSource={selectedGiangVien}
               columns={columnsSelected}
               rowKey="maGiangVien"
-              pagination={{ pageSize: 6 }}
+              pagination={{ pageSize: 10 }}
               size="small"
             />
           </Card>

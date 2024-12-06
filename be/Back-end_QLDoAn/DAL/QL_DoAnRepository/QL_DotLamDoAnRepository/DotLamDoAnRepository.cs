@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.InterFace.QL_DoAn;
-using DTO.QL_DoAn;
+using DAL.InterFace.QL_DoAn.IDotLamDoAnRepository;
+using DTO.QL_DoAn.DotLamDoAn_DTO;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace DAL.QL_DoAnRepository
+namespace DAL.QL_DoAnRepository.QL_DotLamDoAnRepository
 {
-    public class DotLamDoAnRepository:IDotLmaDoAnRepository
+    public class DotLamDoAnRepository : IDotLmaDoAnRepository
     {
         private IDatabaseHelper _dbHelper;
 
@@ -58,7 +58,7 @@ namespace DAL.QL_DoAnRepository
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "Them_DotLamDoAn",
                     "@taiKhoan", taikhoan,
                     "@maDot", model.maDot,
-                    "@tenDot",model.tenDot,
+                    "@tenDot", model.tenDot,
                     "@ngayBatDau", model.ngayBatDau,
                     "@namApDung", model.namApDung,
                     "@dangKyDeTai", model.dangKyDeTai,

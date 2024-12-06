@@ -1,8 +1,5 @@
-import  { AxiosResponse } from "axios";
 import {getall,add,Delete,edit} from "../../API-servives"
 import {URL} from "../../../Url"
-import {DotLamDoAn_GiangVien} from "../../../../components/InterFace"
-import { message } from "antd";
 export const getAll_GiangVien_HD =async () =>{
     return await getall(URL.QLDOAN.QL_DOTDOAN.DOT_GIANGVIEN.GETALL_GV_HD);
 }

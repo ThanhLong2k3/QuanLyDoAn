@@ -1,8 +1,8 @@
-﻿using BLL.InterFace.QL_DoAn;
-using DTO.QL_DoAn;
+﻿using BLL.InterFace.QL_DoAn.DotLamDoAn_DLL;
+using DTO.QL_DoAn.DotLamDoAn_DTO;
 using Microsoft.AspNetCore.Mvc;
 
-namespace quanLyDoAn.Controllers.QL_DoAn
+namespace quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -23,7 +23,7 @@ namespace quanLyDoAn.Controllers.QL_DoAn
         [Route("create-DotLamDoAn")]
         [HttpPost]
         public IActionResult CreateItem([FromBody] DotLamDoAnDTO model, string taikhoan)
-        {   
+        {
             string result = _DotLamDoAm_BLL.Create(model, taikhoan);
             return Ok(result);
         }

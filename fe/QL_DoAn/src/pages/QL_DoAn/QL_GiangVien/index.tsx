@@ -81,7 +81,6 @@ export default function QuanLygiangvien() {
         await Promise.all(
           duLieuMoi.map((giangVien) => addGiangVien(giangVien, getAllGiangVien))
         );
-  
       };
       reader.readAsArrayBuffer(file);
     } catch (error) {

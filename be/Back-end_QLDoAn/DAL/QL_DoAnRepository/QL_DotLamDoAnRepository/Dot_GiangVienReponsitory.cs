@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.InterFace.QL_DoAn;
-using DTO.QL_DoAn;
+using DAL.InterFace.QL_DoAn.IDotLamDoAnRepository;
+using DTO.QL_DoAn.DotLamDoAn_DTO;
 
-namespace DAL.QL_DoAnRepository
+namespace DAL.QL_DoAnRepository.QL_DotLamDoAnRepository
 {
     public class Dot_GiangVienReponsitory : IDot_GiangVienReponsitory
     {
@@ -22,7 +22,7 @@ namespace DAL.QL_DoAnRepository
             string msgError = "";
             try
             {
-                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "GET_GiangVien_MaDot","@MaDot",madot);
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "GET_GiangVien_MaDot", "@MaDot", madot);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<V_Dot_GiangVienDTO>().ToList();
@@ -48,16 +48,16 @@ namespace DAL.QL_DoAnRepository
             }
         }
 
-        public string Create(Dot_GiangVienDTO model)
+        public string Create(D_Dot_GiangVienDTO model)
         {
             string msgError = "";
             string kq = "";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "Them_DotGiangVien",
-                    "@maDot",model.maDot,
-                    "@maGiangVien",model.maGiangVien,
-                    "@soLuongHuongDan",model.soLuongHuongDan
+                    "@maDot", model.maDot,
+                    "@maGiangVien", model.maGiangVien,
+                    "@soLuongHuongDan", model.soLuongHuongDan
                 );
 
                 if (result != null)
@@ -77,7 +77,7 @@ namespace DAL.QL_DoAnRepository
         }
 
 
-        public string Update(Dot_GiangVienDTO model)
+        public string Update(D_Dot_GiangVienDTO model)
         {
             string msgError = "";
             string kq = "";
@@ -104,15 +104,15 @@ namespace DAL.QL_DoAnRepository
                 throw new Exception("Đã xảy ra lỗi trong quá trình cập nhật người dùng: " + ex.Message, ex);
             }
         }
-        public string Delete(string madot,string magv)
+        public string Delete(string madot, string magv)
         {
             string msgError = "";
             string kq = "";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedure(out msgError, "Xoa_DotGiangVien",
-                   "@maDot",madot,
-                   "@maGiangVien",magv);
+                   "@maDot", madot,
+                   "@maGiangVien", magv);
 
                 if (result != null)
                 {
