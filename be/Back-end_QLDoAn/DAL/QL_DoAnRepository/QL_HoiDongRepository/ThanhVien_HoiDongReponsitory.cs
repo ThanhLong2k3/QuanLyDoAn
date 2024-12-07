@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL.InterFace.QL_DoAn;
+﻿using DAL.InterFace.QL_DoAn;
 using DTO.QL_DoAn;
 
-namespace DAL.QL_DoAnRepository
+namespace DAL.QL_DoAnRepository.QL_HoiDongRepository
 {
-    public class ThanhVien_HoiDongReponsitory:IThem_ThanhVien_HoiDong
+    public class ThanhVien_HoiDongReponsitory : IThem_ThanhVien_HoiDong
     {
         private IDatabaseHelper _dbHelper;
 
@@ -24,9 +19,9 @@ namespace DAL.QL_DoAnRepository
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "Them_ThanhVien_HoiDong",
                    "@taiKhoan", taikhoan,
-                   "@maHoiDong",model.maHoiDong,
-                   "@maThanhVien",model.maThanhVien,
-                   "@loaiThanhVien",model.loaiThanhVien
+                   "@maHoiDong", model.maHoiDong,
+                   "@maThanhVien", model.maThanhVien,
+                   "@loaiThanhVien", model.loaiThanhVien
                 );
 
                 if (result != null)
