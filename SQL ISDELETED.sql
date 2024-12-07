@@ -131,6 +131,18 @@ CREATE TABLE Dot_SinhVien (
     FOREIGN KEY (maDot) REFERENCES dotLamDoAn(maDot) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (maSinhVien) REFERENCES SinhVien(maSinhVien) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+
+CREATE TABLE PhanCong_HuongDan(
+    maDot VARCHAR(50) NOT NULL,
+    maSinhVien NVARCHAR(50) NOT NULL,
+    maGiangVien NVARCHAR(50) NOT NULL,
+    IsDeleted int DEFAULT 1,
+    PRIMARY KEY (maDot, maSinhVien, maGiangVien),
+    FOREIGN KEY (maDot) REFERENCES dotLamDoAn(maDot),
+    FOREIGN KEY (maSinhVien) REFERENCES SinhVien(maSinhVien),
+    FOREIGN KEY (maGiangVien) REFERENCES giangVien(maGiangVien)
+)
 -- hoiDong table
 CREATE TABLE hoiDong (
     maHoiDong VARCHAR(50) PRIMARY KEY,
@@ -1835,3 +1847,89 @@ AS
 BEGIN 
 	SELECT d_sv.maDot,sv.maSinhVien,sv.tenSinhVien,l.maLop FROM Dot_SinhVien d_sv inner join sinhVien sv on d_sv.maSinhVien=sv.maSinhVien inner join lop l on  sv.maLop=l.maLop where d_sv.maDot=@MaDot and  d_sv.IsDeleted=1;
 	END
+
+
+
+	----------------------Phân Công hướng dẫn 
+GO
+
+
+CREATE OR ALTER PROCEDURE sp_ThemPhanCongHuongDan
+    @taiKhoan NVARCHAR(50),
+    @maDot VARCHAR(50),
+    @maSinhVien NVARCHAR(50),
+    @maGiangVien NVARCHAR(50)
+AS
+BEGIN
+    DECLARE @coQuyenThemPhanCong BIT = 0;
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'ADD_PHANCONG'
+    )
+    BEGIN
+        SET @coQuyenThemPhanCong = 1;
+    END
+    
+    IF @coQuyenThemPhanCong = 1
+    BEGIN
+        INSERT INTO PhanCong_HuongDan 
+            (maDot, maSinhVien, maGiangVien, IsDeleted)
+        VALUES 
+            (@maDot, @maSinhVien, @maGiangVien, 1);
+        
+        SELECT N'Thêm phân công hướng dẫn thành công' AS ThongBao;
+    END
+    ELSE
+    BEGIN
+        SELECT N'Bạn không có quyền thêm phân công hướng dẫn' AS ThongBao;
+    END
+END;
+GO
+CREATE OR ALTER PROCEDURE sp_SuaGiaoVienHuongDan
+   @taiKhoan NVARCHAR(50),
+   @maDot VARCHAR(50),
+   @maSinhVien NVARCHAR(50),
+   @maGiangVien NVARCHAR(50)
+AS
+BEGIN
+   DECLARE @coQuyenSuaPhanCong BIT = 0;
+   IF EXISTS (
+       SELECT 1
+       FROM nguoiDung_nhomQuyen AS ndnq
+       JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
+       WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'EDIT_PHANCONG'
+   )
+   BEGIN
+       SET @coQuyenSuaPhanCong = 1;
+   END
+   
+   IF @coQuyenSuaPhanCong = 1
+   BEGIN
+       IF EXISTS (
+           SELECT 1 
+           FROM PhanCong_HuongDan 
+           WHERE maDot = @maDot AND maSinhVien = @maSinhVien
+       )
+       BEGIN
+           UPDATE PhanCong_HuongDan
+           SET maGiangVien = @maGiangVien
+           WHERE maDot = @maDot 
+             AND maSinhVien = @maSinhVien;
+           
+           SELECT N'Cập nhật giảng viên hướng dẫn thành công' AS ThongBao;
+       END
+       ELSE
+       BEGIN
+           SELECT N'Không tìm thấy phân công hướng dẫn cần sửa' AS ThongBao;
+       END
+   END
+   ELSE
+   BEGIN
+       SELECT N'Bạn không có quyền sửa phân công hướng dẫn' AS ThongBao;
+   END
+END;
+
+go
+		

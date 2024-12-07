@@ -15,6 +15,7 @@ using DAL.QL_DanhMuc;
 using DAL.QL_DanhMucRepository;
 using DAL.QL_DoAnRepository;
 using DAL.QL_DoAnRepository.QL_DotLamDoAnRepository;
+using DAL.QL_DoAnRepository.QL_HoiDongRepository;
 using DAL.QL_HethongRepository;
 
 var builder = WebApplication.CreateBuilder(args);

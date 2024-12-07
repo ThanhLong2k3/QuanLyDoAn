@@ -2,7 +2,7 @@
 using DTO.QL_DoAn;
 using Microsoft.AspNetCore.Mvc;
 
-namespace quanLyDoAn.Controllers.QL_DoAn
+namespace quanLyDoAn.Controllers.QL_DoAn.QL_HoiDong
 {
     [Route("api/[controller]")]
     [ApiController]
