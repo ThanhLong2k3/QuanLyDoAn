@@ -10,6 +10,7 @@ using DAL;
 using DAL.InterFace.QL_DanhMuc;
 using DAL.InterFace.QL_DoAn;
 using DAL.InterFace.QL_DoAn.IDotLamDoAnRepository;
+using DAL.InterFace.QL_DoAn.IHoiDongRepository;
 using DAL.InterFace.QL_HeThong;
 using DAL.QL_DanhMuc;
 using DAL.QL_DanhMucRepository;
@@ -78,6 +79,9 @@ builder.Services.AddTransient<IDot_GiangVien_BLL, Dot_GiangVien_BLL>();
 
 builder.Services.AddTransient<IDot_SinhVienRepository,Dot_SinhVienRepository>();
 builder.Services.AddTransient<IDot_SinhVien_BLL, Dot_SinhVien_BLL>();
+
+builder.Services.AddTransient<IPhanCongHuongDanRepository, PhanCongHuongDanRepository>();
+builder.Services.AddTransient<IPhanCongHuongDan_BLL, PhanCongHuongDan_BLL>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

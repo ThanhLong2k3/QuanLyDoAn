@@ -766,7 +766,7 @@
     ]
   },
   {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.HoiDong_CTRL",
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_HoiDong.HoiDong_CTRL",
     "Method": "CreateItem",
     "RelativePath": "api/HoiDong_CTRL/create-HoiDong",
     "HttpMethod": "POST",
@@ -775,7 +775,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "DTO.QL_DoAn.HoiDongDTO",
+        "Type": "DTO.QL_DoAn.HoiDong_DTO.HoiDongDTO",
         "IsRequired": true
       },
       {
@@ -787,7 +787,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.HoiDong_CTRL",
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_HoiDong.HoiDong_CTRL",
     "Method": "DeleteItem",
     "RelativePath": "api/HoiDong_CTRL/delete-HoiDong",
     "HttpMethod": "DELETE",
@@ -808,7 +808,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.HoiDong_CTRL",
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_HoiDong.HoiDong_CTRL",
     "Method": "Getall",
     "RelativePath": "api/HoiDong_CTRL/getall",
     "HttpMethod": "GET",
@@ -817,7 +817,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.HoiDongDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.HoiDong_DTO.HoiDongDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -828,7 +828,7 @@
     ]
   },
   {
-    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.HoiDong_CTRL",
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_HoiDong.HoiDong_CTRL",
     "Method": "UpdateItem",
     "RelativePath": "api/HoiDong_CTRL/update-HoiDong",
     "HttpMethod": "POST",
@@ -837,7 +837,7 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "DTO.QL_DoAn.HoiDongDTO",
+        "Type": "DTO.QL_DoAn.HoiDong_DTO.HoiDongDTO",
         "IsRequired": true
       },
       {
@@ -1458,6 +1458,74 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.PhanCongHuongDan_CTRL",
+    "Method": "CreateItem",
+    "RelativePath": "api/PhanCongHuongDan_CTRL/create-PhanCongHuongDan",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.D_PhanCongHuongDanDTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.PhanCongHuongDan_CTRL",
+    "Method": "GetAll_PhanCong_MaDot",
+    "RelativePath": "api/PhanCongHuongDan_CTRL/GetAll_PhanCong_MaDot",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "maDot",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.V_PhanCongHuongDan, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.PhanCongHuongDan_CTRL",
+    "Method": "UpdateItem",
+    "RelativePath": "api/PhanCongHuongDan_CTRL/update-PhanCongHuongDan",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.D_PhanCongHuongDanDTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "quanLyDoAn.Controllers.QL_HeThong.PhanQuyen_CTRL",

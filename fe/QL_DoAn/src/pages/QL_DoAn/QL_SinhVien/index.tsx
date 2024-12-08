@@ -6,7 +6,7 @@ import { SinhVienForm } from '../../../components/QLDoAnComponent/QLSinhVien/for
 import { COLUMS } from '../../../components/QLDoAnComponent/QLSinhVien/table'
 import { SinhVien } from "../../../components/InterFace"
 import * as XLSX from 'xlsx'
-import {getAll,addSinhVien,delSinhVien,editSinhVien} from '../../../sevices/Api/QL_DoAn/QL_SinhVien-servives'
+import {getall_SinhVien,addSinhVien,delSinhVien,editSinhVien} from '../../../sevices/Api/QL_DoAn/QL_SinhVien-servives'
 import moment from 'moment';
 
 const { Title } = Typography
@@ -23,11 +23,11 @@ export default function QuanLySinhVien() {
 
   useEffect(()=>{
     document.title="Quản lý sinh viên";
-    getAllSinhVien();
+    getall_SinhVienSinhVien();
   },[])
 
-  const getAllSinhVien= async()=>{
-      getAll().then((data)=>setsinhVien(data));
+  const getall_SinhVienSinhVien= async()=>{
+      getall_SinhVien().then((data)=>setsinhVien(data));
   }
   const hienThiModal = (banGhi?: SinhVien) => {
     form.resetFields();
@@ -45,10 +45,10 @@ export default function QuanLySinhVien() {
     try {
       const giatri = await form.validateFields();
       if (keyDangSua !== null) {
-         await editSinhVien(giatri, getAllSinhVien);
+         await editSinhVien(giatri, getall_SinhVienSinhVien);
         
       } else {
-         await addSinhVien(giatri, getAllSinhVien);
+         await addSinhVien(giatri, getall_SinhVienSinhVien);
         
       }
       setHienModal(false);
@@ -60,7 +60,7 @@ export default function QuanLySinhVien() {
   };
   
   const xuLyXoa = async (maSinhVien: string) => {
-    await delSinhVien(maSinhVien, getAllSinhVien);
+    await delSinhVien(maSinhVien, getall_SinhVienSinhVien);
   };
   const cotBang = COLUMS(hienThiModal, xuLyXoa)
 

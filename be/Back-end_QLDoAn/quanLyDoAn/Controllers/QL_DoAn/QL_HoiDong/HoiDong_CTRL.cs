@@ -1,5 +1,5 @@
 ﻿using BLL.InterFace.QL_DoAn;
-using DTO.QL_DoAn;
+using DTO.QL_DoAn.HoiDong_DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace quanLyDoAn.Controllers.QL_DoAn.QL_HoiDong

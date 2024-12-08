@@ -2582,6 +2582,133 @@
         }
       }
     },
+    "/api/PhanCongHuongDan_CTRL/GetAll_PhanCong_MaDot": {
+      "get": {
+        "tags": [
+          "PhanCongHuongDan_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "maDot",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_PhanCongHuongDan"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_PhanCongHuongDan"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_PhanCongHuongDan"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PhanCongHuongDan_CTRL/create-PhanCongHuongDan": {
+      "post": {
+        "tags": [
+          "PhanCongHuongDan_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_PhanCongHuongDanDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_PhanCongHuongDanDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_PhanCongHuongDanDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PhanCongHuongDan_CTRL/update-PhanCongHuongDan": {
+      "post": {
+        "tags": [
+          "PhanCongHuongDan_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_PhanCongHuongDanDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_PhanCongHuongDanDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_PhanCongHuongDanDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/PhanQuyen_CTRL/getall": {
       "get": {
         "tags": [
@@ -3003,6 +3130,24 @@
         },
         "additionalProperties": false
       },
+      "D_PhanCongHuongDanDTO": {
+        "type": "object",
+        "properties": {
+          "maDot": {
+            "type": "string",
+            "nullable": true
+          },
+          "maSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "maGiangVien": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "DangNhapDTO": {
         "type": "object",
         "properties": {
@@ -3359,6 +3504,36 @@
           "tenSinhVien": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V_PhanCongHuongDan": {
+        "type": "object",
+        "properties": {
+          "maSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "maLop": {
+            "type": "string",
+            "nullable": true
+          },
+          "maGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "soLuongHuongDan": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

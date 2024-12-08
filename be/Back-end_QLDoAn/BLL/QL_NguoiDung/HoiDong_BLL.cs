@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLL.InterFace.QL_DoAn;
-using DAL.InterFace.QL_DoAn;
-using DTO.QL_DoAn;
+using DAL.InterFace.QL_DoAn.IHoiDongRepository;
+using DTO.QL_DoAn.HoiDong_DTO;
 
 namespace BLL.QL_NguoiDung
 {

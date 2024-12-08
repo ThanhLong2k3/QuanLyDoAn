@@ -18,6 +18,7 @@ import QuanLyNhomQuuyen from "../pages/QL_HeThong/QL_NhomQuyen"
 import QuanLygiangvien from "../pages/QL_DoAn/QL_GiangVien"
 import QuanLySinhVien from "../pages/QL_DoAn/QL_SinhVien"
 import QuanLyDotLamDoAn from "../pages/QL_DoAn/QL_DotLamDoAn"
+import PhanCongHuongDan from "../pages/QL_DoAn/QL_PhanHuongDan"
 
 
 
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: ROUTERS.DANHMUC.QL_CHUCVU.PATH,
         element: <QuanLyChucVu />,
+      },
+      {
+        path: ROUTERS.DOAN.PHANCONG_HUONGDAN.PATH,
+        element: <PhanCongHuongDan />,
       },
     ],
   },

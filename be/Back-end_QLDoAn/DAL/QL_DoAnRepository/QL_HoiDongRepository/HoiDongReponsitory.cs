@@ -1,5 +1,5 @@
-﻿using DAL.InterFace.QL_DoAn;
-using DTO.QL_DoAn;
+﻿using DAL.InterFace.QL_DoAn.IHoiDongRepository;
+using DTO.QL_DoAn.HoiDong_DTO;
 
 namespace DAL.QL_DoAnRepository.QL_HoiDongRepository
 {
