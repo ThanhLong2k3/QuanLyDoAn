@@ -4,7 +4,7 @@ import {URL} from "../../Url"
 import {SinhVien} from "../../../components/InterFace";
 import { message } from "antd";
 var taiKhoan= localStorage.getItem('taiKhoan')|| '';
-export const getAll =async () =>{
+export const getall_SinhVien =async () =>{
     return await getall(URL.QLDOAN.QL_SINHVIEN.GETALL);
 }
 

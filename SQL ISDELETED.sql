@@ -227,6 +227,8 @@ INSERT INTO nhomQuyen (maNhomQuyen, tenNhomQuyen, loai, moTa, soLuong) VALUES
 -- Thêm dữ liệu vào bảng phanQuyen
 INSERT INTO phanQuyen (maQuyen,tenQuyen)
 VALUES
+    ('UP_PHANCONG',N'Sửa phân công hướng dẫn'),
+    ('ADD_PHANCONG',N'Phân công hướng dẫn'),
     ('ADD_LOP',N'Thêm lớp'),
     ('UP_LOP',N'Chỉnh sửa lớp'),
     ('DEL_LOP',N'Xóa lớp'),
@@ -1767,9 +1769,24 @@ CREATE PROCEDURE Them_DotGiangVien
     @soLuongHuongDan INT
 AS
 BEGIN
-    INSERT INTO Dot_GiangVien (maDot, maGiangVien, soLuongHuongDan,IsDeleted)
-    VALUES (@maDot, @maGiangVien, @soLuongHuongDan,1);
-
+    IF EXISTS (SELECT 1 FROM Dot_GiangVien 
+               WHERE maDot = @maDot 
+               AND maGiangVien = @maGiangVien 
+               AND IsDeleted = 0)
+    BEGIN
+        UPDATE Dot_GiangVien
+        SET IsDeleted = 1,
+            soLuongHuongDan = @soLuongHuongDan
+        WHERE maDot = @maDot
+        AND maGiangVien = @maGiangVien
+        AND IsDeleted = 0;
+    END
+    ELSE
+    BEGIN
+        -- If not exists, insert a new record
+        INSERT INTO Dot_GiangVien (maDot, maGiangVien, soLuongHuongDan, IsDeleted)
+        VALUES (@maDot, @maGiangVien, @soLuongHuongDan, 1);
+    END
 END;
 GO
 
@@ -1811,14 +1828,30 @@ BEGIN
 	---Dot Sinh Vien
 
 	GO
-
-CREATE PROCEDURE Them_DotSinhVien
+	CREATE PROCEDURE Them_DotSinhVien
     @maDot VARCHAR(50),
     @maSinhVien NVARCHAR(50)
 AS
 BEGIN
-    INSERT INTO Dot_SinhVien (maDot, maSinhVien,IsDeleted)
-    VALUES (@maDot, @maSinhVien,1);
+    -- Check if the student exists in the specified batch with IsDeleted = 0
+    IF EXISTS (SELECT 1 FROM Dot_SinhVien 
+               WHERE maDot = @maDot 
+               AND maSinhVien = @maSinhVien 
+               AND IsDeleted = 0)
+    BEGIN
+        -- If exists, update the status to 1
+        UPDATE Dot_SinhVien
+        SET IsDeleted = 1
+        WHERE maDot = @maDot
+        AND maSinhVien = @maSinhVien
+        AND IsDeleted = 0;
+    END
+    ELSE
+    BEGIN
+        -- If not exists, insert a new record
+        INSERT INTO Dot_SinhVien (maDot, maSinhVien, IsDeleted)
+        VALUES (@maDot, @maSinhVien, 1);
+    END
 END;
 GO
 CREATE PROCEDURE Xoa_DotSinhVien
@@ -1886,6 +1919,7 @@ BEGIN
         SELECT N'Bạn không có quyền thêm phân công hướng dẫn' AS ThongBao;
     END
 END;
+
 GO
 CREATE OR ALTER PROCEDURE sp_SuaGiaoVienHuongDan
    @taiKhoan NVARCHAR(50),
@@ -1899,7 +1933,7 @@ BEGIN
        SELECT 1
        FROM nguoiDung_nhomQuyen AS ndnq
        JOIN nhomQuyen_phanQuyen AS nqpnq ON ndnq.maNhomQuyen = nqpnq.maNhomQuyen
-       WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'EDIT_PHANCONG'
+       WHERE ndnq.taiKhoan = @taiKhoan AND nqpnq.maQuyen = 'UP_PHANCONG'
    )
    BEGIN
        SET @coQuyenSuaPhanCong = 1;
@@ -1930,6 +1964,30 @@ BEGIN
        SELECT N'Bạn không có quyền sửa phân công hướng dẫn' AS ThongBao;
    END
 END;
+GO
+CREATE PROC GET_PHANCONG_MADOT
+@MaDot VARCHAR(50)
+AS
+BEGIN
+    SELECT 
+        gv.maGiangVien,
+        gv.tenGiangVien,
+        CASE 
+            WHEN hh.soLuongHuongDan IS NOT NULL THEN hh.soLuongHuongDan
+            ELSE hv.soLuongHuongDan
+        END AS soLuongHuongDanTong,
+        COUNT(pc.maGiangVien) as soLuongHuongDan
+    FROM 
+        giangVien gv
+    LEFT JOIN HocHam hh ON gv.IDHocHam = hh.maHocHam
+    LEFT JOIN HocVi hv ON gv.IDHocVi = hv.maHocVi
+    LEFT JOIN PhanCong_HuongDan pc ON gv.maGiangVien = pc.maGiangVien AND pc.maDot = 'DOT12'
+    WHERE gv.IsDeleted = 1
+    GROUP BY gv.maGiangVien, gv.tenGiangVien, 
+        CASE 
+            WHEN hh.soLuongHuongDan IS NOT NULL THEN hh.soLuongHuongDan
+            ELSE hv.soLuongHuongDan
+        END
+END
 
-go
-		
+		select*from PhanCong_HuongDan

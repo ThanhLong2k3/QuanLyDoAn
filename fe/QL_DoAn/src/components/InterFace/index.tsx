@@ -125,3 +125,8 @@ export interface DotLamDoAn_SinhVien {
   tenSinhVien:string,
 }
 
+export interface PhanCongHuongDan{
+  maDot:string,
+  maSinhVien:string,
+  maGiangVien:string
+}

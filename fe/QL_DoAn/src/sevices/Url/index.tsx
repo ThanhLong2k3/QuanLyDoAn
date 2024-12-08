@@ -104,6 +104,11 @@ export const URL = {
                 CREATE_DOT_SV:`${LocalHot}api/Dot_SinhVien/create-Dot_SinhVien`,
                 DEL_SV_DOT:(maDot:string,maSV:string)=>`${LocalHot}api/Dot_SinhVien/delete-Dot_SinhVien?maDot=${maDot}&maSinhVien=${maSV}`
             }
+        },
+        PHANCONGHUONGDAN:{
+            GETPHANCONG_MADOT:(maDot:string)=>`${LocalHot}api/PhanCongHuongDan_CTRL/GetAll_PhanCong_MaDot?maDot=${maDot}`,
+            CREATE:(taiKhoan:string)=>`${LocalHot}api/PhanCongHuongDan_CTRL/create-PhanCongHuongDan?taiKhoan=${taiKhoan}`,
+            UPDATE:(taiKhoan:string)=>`${LocalHot}api/PhanCongHuongDan_CTRL/update-PhanCongHuongDan?taiKhoan=${taiKhoan}`
         }
     }
 };
