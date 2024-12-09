@@ -14,6 +14,5 @@ export const del_GiangVien_DotDoAn=async(maDot:string,maGiangVien:string)=>{
      await Delete(URL.QLDOAN.QL_DOTDOAN.DOT_GIANGVIEN.DEL_GV_DOT(maDot,maGiangVien),true,false);  
 }
 export const Up_SLHuongDan= async(value:{})=>{
-    debugger;
      await edit(URL.QLDOAN.QL_DOTDOAN.DOT_GIANGVIEN.UP_DOT_GV,value,false,false) ;
 }

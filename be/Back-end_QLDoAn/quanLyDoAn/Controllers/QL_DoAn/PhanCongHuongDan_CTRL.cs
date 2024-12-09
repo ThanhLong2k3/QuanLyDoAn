@@ -15,7 +15,7 @@ namespace quanLyDoAn.Controllers.QL_DoAn
         }
         [Route("GetAll_PhanCong_MaDot")]
         [HttpGet]
-        public List<V_PhanCongHuongDan> GetAll_PhanCong_MaDot(string maDot)
+        public List<D_PhanCongHuongDanDTO> GetAll_PhanCong_MaDot(string maDot)
         {
             return _PhanCongBLL.GetAll_PhanCong_MaDot(maDot);
         }

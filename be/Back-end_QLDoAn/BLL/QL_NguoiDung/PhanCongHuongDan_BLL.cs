@@ -11,7 +11,7 @@ namespace BLL.QL_NguoiDung
         {
             _res = res;
         }
-        public List<V_PhanCongHuongDan> GetAll_PhanCong_MaDot(string madot)
+        public List<D_PhanCongHuongDanDTO> GetAll_PhanCong_MaDot(string madot)
         {
             return _res.GetAll_PhanCong_MaDot(madot);
         }

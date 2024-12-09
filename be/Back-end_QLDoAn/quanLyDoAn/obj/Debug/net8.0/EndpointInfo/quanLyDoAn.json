@@ -2604,7 +2604,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/V_PhanCongHuongDan"
+                    "$ref": "#/components/schemas/D_PhanCongHuongDanDTO"
                   }
                 }
               },
@@ -2612,7 +2612,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/V_PhanCongHuongDan"
+                    "$ref": "#/components/schemas/D_PhanCongHuongDanDTO"
                   }
                 }
               },
@@ -2620,7 +2620,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/V_PhanCongHuongDan"
+                    "$ref": "#/components/schemas/D_PhanCongHuongDanDTO"
                   }
                 }
               }
@@ -3482,6 +3482,10 @@
           "soLuongHuongDan": {
             "type": "integer",
             "format": "int32"
+          },
+          "soLuongDangHuongDan": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -3504,36 +3508,6 @@
           "tenSinhVien": {
             "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "V_PhanCongHuongDan": {
-        "type": "object",
-        "properties": {
-          "maSinhVien": {
-            "type": "string",
-            "nullable": true
-          },
-          "tenSinhVien": {
-            "type": "string",
-            "nullable": true
-          },
-          "tenGiangVien": {
-            "type": "string",
-            "nullable": true
-          },
-          "maLop": {
-            "type": "string",
-            "nullable": true
-          },
-          "maGiangVien": {
-            "type": "string",
-            "nullable": true
-          },
-          "soLuongHuongDan": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
