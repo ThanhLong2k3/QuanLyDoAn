@@ -597,8 +597,7 @@ BEGIN
     LEFT JOIN HocVi HV ON GV.IDHocVi = HV.maHocVi
     WHERE GV.IsDeleted = 1;
 END;
--- Insert procedures remain unchanged
--- Insert procedures
+
 
 GO
 CREATE OR ALTER PROCEDURE InsertHocHam
@@ -1762,7 +1761,6 @@ BEGIN
 END
 GO
 
-
 CREATE PROCEDURE Them_DotGiangVien
     @maDot VARCHAR(50),
     @maGiangVien NVARCHAR(50),
@@ -1816,11 +1814,29 @@ END;
 
 
 go
+
 CREATE PROC GET_GiangVien_MaDot
 @MaDot VARCHAR(50)
 AS
 BEGIN 
-	SELECT D.maDot,gv.maGiangVien,gv.tenGiangVien,D.soLuongHuongDan FROM Dot_GiangVien D inner join giangVien gv on D.maGiangVien=gv.maGiangVien WHERE maDot=@MaDot AND D.IsDeleted=1;
+	SELECT 
+    D.maDot,
+    gv.maGiangVien,
+    gv.tenGiangVien,
+    D.soLuongHuongDan,
+    ISNULL((
+        SELECT COUNT(*) 
+        FROM PhanCong_HuongDan PCHD 
+        WHERE PCHD.maGiangVien = gv.maGiangVien
+          AND PCHD.maDot = D.maDot
+    ), 0) AS soLuongDangHuongDan
+FROM 
+    Dot_GiangVien D
+INNER JOIN 
+    giangVien gv ON D.maGiangVien = gv.maGiangVien
+WHERE 
+    D.maDot = @MaDot 
+    AND D.IsDeleted = 1;
 	END
 
 
@@ -1921,7 +1937,8 @@ BEGIN
 END;
 
 GO
-CREATE OR ALTER PROCEDURE sp_SuaGiaoVienHuongDan
+
+CREATE PROCEDURE sp_SuaGiaoVienHuongDan
    @taiKhoan NVARCHAR(50),
    @maDot VARCHAR(50),
    @maSinhVien NVARCHAR(50),
@@ -1965,29 +1982,10 @@ BEGIN
    END
 END;
 GO
+
 CREATE PROC GET_PHANCONG_MADOT
 @MaDot VARCHAR(50)
 AS
 BEGIN
-    SELECT 
-        gv.maGiangVien,
-        gv.tenGiangVien,
-        CASE 
-            WHEN hh.soLuongHuongDan IS NOT NULL THEN hh.soLuongHuongDan
-            ELSE hv.soLuongHuongDan
-        END AS soLuongHuongDanTong,
-        COUNT(pc.maGiangVien) as soLuongHuongDan
-    FROM 
-        giangVien gv
-    LEFT JOIN HocHam hh ON gv.IDHocHam = hh.maHocHam
-    LEFT JOIN HocVi hv ON gv.IDHocVi = hv.maHocVi
-    LEFT JOIN PhanCong_HuongDan pc ON gv.maGiangVien = pc.maGiangVien AND pc.maDot = 'DOT12'
-    WHERE gv.IsDeleted = 1
-    GROUP BY gv.maGiangVien, gv.tenGiangVien, 
-        CASE 
-            WHEN hh.soLuongHuongDan IS NOT NULL THEN hh.soLuongHuongDan
-            ELSE hv.soLuongHuongDan
-        END
+    	select*from PhanCong_HuongDan where maDot=@MaDot and IsDeleted=1
 END
-
-		select*from PhanCong_HuongDan

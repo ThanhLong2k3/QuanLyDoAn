@@ -12,7 +12,7 @@ namespace DAL.QL_DoAnRepository
             _dbHelper = dbHelper;
         }
 
-        public List<V_PhanCongHuongDan> GetAll_PhanCong_MaDot(string maDot)
+        public List<D_PhanCongHuongDanDTO> GetAll_PhanCong_MaDot(string maDot)
         {
             string msgError = "";
             try
@@ -20,7 +20,7 @@ namespace DAL.QL_DoAnRepository
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "GET_PHANCONG_MADOT","@MaDot",maDot);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<V_PhanCongHuongDan>().ToList();
+                return dt.ConvertTo<D_PhanCongHuongDanDTO>().ToList();
             }
             catch (Exception ex)
             {

@@ -16,7 +16,6 @@ export const getall=async(url:string)=>{
 export const add=async (url:string,giatri:{}, returnRespones:boolean,showMess:boolean,callBack?:()=> void): Promise<AxiosResponse<any> | void> =>{
     try{
          let kq= await axios.post(url,giatri);
-         debugger;
          if(showMess)
          {
             message.success("Thêm dữ liệu thành công !");
@@ -39,7 +38,6 @@ export const add=async (url:string,giatri:{}, returnRespones:boolean,showMess:bo
  export const Delete=async (url:string,returnRespones:boolean,showMess:boolean,callBack?:()=> void): Promise<AxiosResponse<any> | void> =>{
     try{
         let kq= await axios.delete(url);
-        debugger;
         if(showMess)
             {
                message.success("Thêm dữ liệu thành công !");
