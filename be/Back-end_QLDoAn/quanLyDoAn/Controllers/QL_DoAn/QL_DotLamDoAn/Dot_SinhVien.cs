@@ -14,7 +14,12 @@ namespace quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn
         {
             _Dot_SinhVien_BLL = Dot_SinhVienBLL;
         }
-
+        [Route("getall_Dot_taiKHoan")]
+        [HttpGet]
+        public string Get_Dot_TK(string tk)
+        {
+            return _Dot_SinhVien_BLL.GET_MADOT_TAIKHOAN(tk);
+        }
         [Route("getall_SinhVien")]
         [HttpGet]
         public List<V_Dot_SinhVienDTO> GetAll_SinhVien()

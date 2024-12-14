@@ -9,6 +9,7 @@ namespace DAL.InterFace.QL_DoAn.IDotLamDoAnRepository
 {
     public partial interface IDot_SinhVienRepository
     {
+        public string GET_MADOT_TAIKHOAN(string tk);
         public List<V_Dot_SinhVienDTO> GetAll_SinhVien();
         public List<V_Dot_SinhVienDTO> Get_SinhVien_MaDot(string maDot);
         string Create(D_Dot_SinhVien model);

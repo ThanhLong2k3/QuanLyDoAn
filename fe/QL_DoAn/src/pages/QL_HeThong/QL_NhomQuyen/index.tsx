@@ -50,6 +50,7 @@ const QuanLyNhomQuyen: React.FC = () => {
   const [keyDangSua, setKeyDangSua] = useState<string | null>(null);
   const [selectedUsers, setSelectedUsers] = useState<NguoiDung[]>([]);
   const [selectedQuyen, setSelectedQuyen] = useState<Quyen[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.title = "Quản lý nhóm quyền";
@@ -62,6 +63,9 @@ const QuanLyNhomQuyen: React.FC = () => {
       setNhomQuyen(res);
     } catch (error) {
       console.error(error);
+    }
+    finally{
+      setLoading(false);
     }
   }, []);
 
@@ -258,7 +262,7 @@ const QuanLyNhomQuyen: React.FC = () => {
                   <Popconfirm
                     title={`Bạn có chắc chắn muốn xóa ${cacDongDaChon.length} người dùng đã chọn?`}
                     onConfirm={() => {
-                      /* Implement xuLyXoaNhieu function */
+               
                     }}
                     okText="Đồng ý"
                     cancelText="Hủy"
@@ -287,6 +291,7 @@ const QuanLyNhomQuyen: React.FC = () => {
                 setCacDongDaChon(selectedRowKeys),
             }}
             columns={cotBang}
+            loading={loading}
             dataSource={nhomQuyen}
             rowKey="maNhomQuyen"
             scroll={{ x: 768 }}

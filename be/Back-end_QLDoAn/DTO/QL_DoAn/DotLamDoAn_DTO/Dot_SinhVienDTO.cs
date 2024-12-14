@@ -18,4 +18,5 @@ namespace DTO.QL_DoAn.DotLamDoAn_DTO
         public string maDot { get; set; }
         public string maSinhVien { get; set; }
     }
+
 }

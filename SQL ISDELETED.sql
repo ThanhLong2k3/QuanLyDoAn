@@ -113,6 +113,16 @@ CREATE TABLE dotLamDoAn (
     IsDeleted int
 )
 
+CREATE TABLE QuanLyDeTai(
+	MaDeTai INT IDENTITY(1,1) PRIMARY KEY ,
+	TenDeTai NVARCHAR(MAX) NOT NULL,
+	NamHocApDung Date NOT NULL,
+	maDot VARCHAR(50)  FOREIGN KEY REFERENCES dotLamDoAn(maDot),
+	HinhThucBaoCaoBaoVe NVARCHAR(50) NOT NULL,
+	MoTa NVARCHAR(MAX),
+	IsDeleted int
+)
+
 CREATE TABLE Dot_GiangVien (
     maDot VARCHAR(50) NOT NULL,
     maGiangVien NVARCHAR(50) NOT NULL,
@@ -227,6 +237,9 @@ INSERT INTO nhomQuyen (maNhomQuyen, tenNhomQuyen, loai, moTa, soLuong) VALUES
 -- Thêm dữ liệu vào bảng phanQuyen
 INSERT INTO phanQuyen (maQuyen,tenQuyen)
 VALUES
+    ('ADD_THEMDETAI',N'Thêm đề tài'),
+    ('UP_THEMDETAI',N'Thêm đề tài'),
+    ('DEL_THEMDETAI',N'Thêm đề tài'),
     ('UP_PHANCONG',N'Sửa phân công hướng dẫn'),
     ('ADD_PHANCONG',N'Phân công hướng dẫn'),
     ('ADD_LOP',N'Thêm lớp'),
@@ -338,6 +351,15 @@ AS
 	SELECT*FROM nguoiDung WHERE IsDeleted=1;
 	END
 GO
+
+
+CREATE PROCEDURE XoaNguoiDung
+	@taiKhoan Nvarchar(50)
+	as
+	 begin 
+		update nguoiDung set IsDeleted=0 where taiKhoan=@taiKhoan
+		end
+		go
 
 CREATE PROCEDURE ThemNguoiDung
     @taiKhoan NVARCHAR(50),
@@ -971,11 +993,11 @@ BEGIN
         INSERT INTO lop (maLop, tenLop, tenChuyenNganh, khoaHoc, IsDeleted)
         VALUES (@maLop, @tenLop, @tenChuyenNganh, @khoaHoc, 1);
 
-        SELECT N'Thêm lớp thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền thêm lớp' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 
@@ -1006,11 +1028,11 @@ BEGIN
         SET tenLop = @tenLop, tenChuyenNganh = @tenChuyenNganh, khoaHoc = @khoaHoc
         WHERE maLop = @maLop AND IsDeleted = 1;
 
-        SELECT N'Sửa lớp thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền sửa lớp' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 GO
@@ -1035,11 +1057,11 @@ BEGIN
     BEGIN
         UPDATE lop SET IsDeleted = 0 WHERE maLop = @maLop;
 
-        SELECT N'Xóa lớp thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền xóa lớp' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 GO
@@ -1078,11 +1100,11 @@ BEGIN
         VALUES (@maGiangVien, @tenGiangVien, @IDBoMon, @IDChucVu, @IDHocHam,@IDHocVi, @ngaySinh, @gioiTinh, @sDT, @email, 1);
         EXEC ThemNguoiDung @taiKhoan = @maGiangVien, @hoTen = @tenGiangVien, @ngaySinh = @ngaySinh, @gioiTinh = @gioiTinh, @email = @email, @moTa = N'Giảng viên';
         
-        SELECT N'Thêm giảng viên thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền thêm giảng viên' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 GO
@@ -1122,11 +1144,11 @@ BEGIN
             IDHocHam = @IDHocHam,IDHocVi=@IDHocVi, gioiTinh = @gioiTinh, ngaySinh = @ngaySinh, sDT = @sDT, email = @email
         WHERE maGiangVien = @maGiangVien AND IsDeleted = 1;
 
-        SELECT N'Sửa giảng viên thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền sửa giảng viên' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 
@@ -1155,11 +1177,11 @@ BEGIN
         UPDATE giangVien SET IsDeleted = 0 WHERE maGiangVien = @maGiangVien;
        
 
-        SELECT N'Xóa giảng viên thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền xóa giảng viên' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 GO
@@ -1195,11 +1217,11 @@ BEGIN
         INSERT INTO sinhVien (maSinhVien, tenSinhVien, maLop, ngaySinh, gioiTinh, sDT, email, IsDeleted)
         VALUES (@maSinhVien, @tenSinhVien, @maLop, @ngaySinh, @gioiTinh, @sDT, @email, 1);
 
-        SELECT N'Thêm sinh viên thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền thêm sinh viên' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 GO
@@ -1236,11 +1258,11 @@ BEGIN
 
         EXEC SuaNguoiDung @taiKhoan = @maSinhVien, @hoTen = @tenSinhVien, @ngaySinh = @ngaySinh, @gioiTinh = @gioiTinh, @email = @email, @moTa = N'Sinh viên';
 
-        SELECT N'Sửa sinh viên thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền sửa sinh viên' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 GO
@@ -1268,11 +1290,11 @@ BEGIN
 
         UPDATE sinhVien SET IsDeleted = 0 WHERE maSinhVien = @maSinhVien;
 
-        SELECT N'Xóa sinh viên thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền xóa sinh viên' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 GO
@@ -1303,7 +1325,7 @@ BEGIN
 END
 	GO
 	
-	CREATE PROCEDURE Them_DotLamDoAn
+	CREATE  OR ALTER PROCEDURE Them_DotLamDoAn
     @taiKhoan NVARCHAR(50),
     @maDot VARCHAR(50),
     @tenDot NVARCHAR(255),
@@ -1334,7 +1356,7 @@ BEGIN
     -- Kiểm tra xem mã đợt đã tồn tại chưa
     IF EXISTS (SELECT 1 FROM dotLamDoAn WHERE maDot = @maDot)
     BEGIN
-        SET @thongBao = N'Mã đợt đã tồn tại';
+        SET @thongBao = N'2';
         SET @coQuyenThemDot = 0;
     END
 
@@ -1358,12 +1380,12 @@ BEGIN
             @trangThai, 
             1
         );
-        SET @thongBao = N'Thêm đợt làm đồ án thành công';
+        SET @thongBao = N'1';
     END
     ELSE
     BEGIN
         IF @thongBao = ''
-            SET @thongBao = N'Bạn không có quyền thêm đợt làm đồ án';
+            SET @thongBao = N'0';
     END
 
     -- Trả về thông báo
@@ -1371,7 +1393,7 @@ BEGIN
 END;
 GO
 
-	CREATE PROC GET_DOT_ID
+	CREATE  PROC GET_DOT_ID
 		@MaDot nvarchar(50)
 		AS
 			BEGIN
@@ -1420,11 +1442,11 @@ BEGIN
             trangThai = @trangThai
         WHERE maDot = @maDot AND IsDeleted = 1;
 
-        SELECT N'Sửa đợt làm đồ án thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền sửa đợt làm đồ án' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 GO
@@ -1451,11 +1473,11 @@ BEGIN
     BEGIN 
         UPDATE dotLamDoAn SET IsDeleted = 0 WHERE maDot = @maDot;
 
-        SELECT N'Xóa đợt làm đồ án thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền xóa đợt làm đồ án' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 GO
@@ -1517,11 +1539,11 @@ BEGIN
 
             COMMIT TRANSACTION;
 
-            SELECT N'Thêm hội đồng thành công' AS ThongBao;
+            SELECT N'1' AS ThongBao;
         END
         ELSE
         BEGIN
-            SELECT N'Bạn không có quyền thêm hội đồng' AS ThongBao;
+            SELECT N'0' AS ThongBao;
         END
     END TRY
     BEGIN CATCH
@@ -1589,11 +1611,11 @@ BEGIN
             END;
 
             COMMIT TRANSACTION;
-            SELECT N'Sửa hội đồng thành công' AS ThongBao;
+            SELECT N'1' AS ThongBao;
         END
         ELSE
         BEGIN
-            SELECT N'Bạn không có quyền sửa hội đồng' AS ThongBao;
+            SELECT N'0' AS ThongBao;
         END
     END TRY
     BEGIN CATCH
@@ -1628,11 +1650,11 @@ BEGIN
             UPDATE hoiDong SET IsDeleted = 0 WHERE maHoiDong = @maHoiDong AND IsDeleted = 1;
 
             COMMIT TRANSACTION;
-            SELECT N'Xóa hội đồng thành công' AS ThongBao;
+            SELECT N'1' AS ThongBao;
         END
         ELSE
         BEGIN
-            SELECT N'Bạn không có quyền xóa hội đồng' AS ThongBao;
+            SELECT N'0' AS ThongBao;
         END
     END TRY
     BEGIN CATCH
@@ -1675,11 +1697,11 @@ BEGIN
             VALUES (@maHoiDong, @maThanhVien, 1);
         END
 
-        SELECT N'Thêm thành viên vào hội đồng thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền thêm thành viên vào hội đồng' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 
@@ -1718,11 +1740,11 @@ BEGIN
             WHERE maHoiDong = @maHoiDong AND maSinhVien = @maThanhVien;
         END
 
-        SELECT N'Xóa thành viên khỏi hội đồng thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền xóa thành viên khỏi hội đồng' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 GO
@@ -1761,7 +1783,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE Them_DotGiangVien
+CREATE  OR ALTER PROCEDURE Them_DotGiangVien
     @maDot VARCHAR(50),
     @maGiangVien NVARCHAR(50),
     @soLuongHuongDan INT
@@ -1788,7 +1810,7 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE Xoa_DotGiangVien
+CREATE  OR ALTER PROCEDURE Xoa_DotGiangVien
     @maDot VARCHAR(50),
     @maGiangVien NVARCHAR(50)
 AS
@@ -1801,7 +1823,7 @@ END;
 GO
 
 
-CREATE PROCEDURE Sua_DotGiangVien
+CREATE  OR ALTER PROCEDURE Sua_DotGiangVien
     @maDot VARCHAR(50),
     @maGiangVien NVARCHAR(50),
     @soLuongHuongDan INT
@@ -1815,7 +1837,7 @@ END;
 
 go
 
-CREATE PROC GET_GiangVien_MaDot
+CREATE  OR ALTER PROC GET_GiangVien_MaDot
 @MaDot VARCHAR(50)
 AS
 BEGIN 
@@ -1844,7 +1866,7 @@ WHERE
 	---Dot Sinh Vien
 
 	GO
-	CREATE PROCEDURE Them_DotSinhVien
+	CREATE  OR ALTER PROCEDURE Them_DotSinhVien
     @maDot VARCHAR(50),
     @maSinhVien NVARCHAR(50)
 AS
@@ -1870,7 +1892,7 @@ BEGIN
     END
 END;
 GO
-CREATE PROCEDURE Xoa_DotSinhVien
+CREATE  OR ALTER PROCEDURE Xoa_DotSinhVien
     @maDot VARCHAR(50),
     @maSinhVien NVARCHAR(50)
 AS
@@ -1881,7 +1903,7 @@ END;
 
 
 GO
-CREATE PROC GET_SinhVien
+CREATE  OR ALTER PROC GET_SinhVien
 AS
 BEGIN 
 	SELECT sv.maSinhVien,sv.tenSinhVien,l.maLop FROM  sinhVien sv  inner join lop l on  sv.maLop=l.maLop where  sv.IsDeleted=1;
@@ -1890,7 +1912,7 @@ BEGIN
 
 go
 	
-CREATE PROC GET_SinhVien_MaDot
+CREATE  OR ALTER PROC GET_SinhVien_MaDot
 @MaDot VARCHAR(50)
 AS
 BEGIN 
@@ -1928,17 +1950,17 @@ BEGIN
         VALUES 
             (@maDot, @maSinhVien, @maGiangVien, 1);
         
-        SELECT N'Thêm phân công hướng dẫn thành công' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
     ELSE
     BEGIN
-        SELECT N'Bạn không có quyền thêm phân công hướng dẫn' AS ThongBao;
+        SELECT N'0' AS ThongBao;
     END
 END;
 
 GO
 
-CREATE PROCEDURE sp_SuaGiaoVienHuongDan
+CREATE  OR ALTER PROCEDURE sp_SuaGiaoVienHuongDan
    @taiKhoan NVARCHAR(50),
    @maDot VARCHAR(50),
    @maSinhVien NVARCHAR(50),
@@ -1969,23 +1991,217 @@ BEGIN
            WHERE maDot = @maDot 
              AND maSinhVien = @maSinhVien;
            
-           SELECT N'Cập nhật giảng viên hướng dẫn thành công' AS ThongBao;
+           SELECT N'1' AS ThongBao;
        END
        ELSE
        BEGIN
-           SELECT N'Không tìm thấy phân công hướng dẫn cần sửa' AS ThongBao;
+           SELECT N'2' AS ThongBao;
        END
    END
    ELSE
    BEGIN
-       SELECT N'Bạn không có quyền sửa phân công hướng dẫn' AS ThongBao;
+       SELECT N'0' AS ThongBao;
    END
 END;
 GO
 
-CREATE PROC GET_PHANCONG_MADOT
+CREATE  OR ALTER PROC GET_PHANCONG_MADOT
 @MaDot VARCHAR(50)
 AS
 BEGIN
     	select*from PhanCong_HuongDan where maDot=@MaDot and IsDeleted=1
 END
+
+go
+
+--================================================QUẢN Ý ĐỀ TÀI
+
+
+
+CREATE OR ALTER PROCEDURE sp_ThemDeTai
+    @TenDeTai NVARCHAR(MAX),
+    @NamHocApDung DATE,
+    @MaDot VARCHAR(50),
+    @HinhThucBaoCaoBaoVe NVARCHAR(50),
+    @MoTa NVARCHAR(MAX) = NULL,
+    @TaiKhoan NVARCHAR(50)
+AS
+BEGIN
+    DECLARE @CoQuyenThem BIT = 0;
+    
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpq ON ndnq.maNhomQuyen = nqpq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @TaiKhoan AND nqpq.maQuyen = 'ADD_THEMDETAI'
+    )
+    BEGIN
+        SET @CoQuyenThem = 1;
+    END
+    
+    IF @CoQuyenThem = 1
+    BEGIN
+        IF @TenDeTai IS NULL OR @TenDeTai = ''
+        BEGIN
+            SELECT N'2' AS ThongBao; 
+            RETURN;
+        END
+        
+        IF @NamHocApDung IS NULL
+        BEGIN
+            SELECT N'2' AS ThongBao; 
+            RETURN;
+        END
+     
+        IF NOT EXISTS (SELECT 1 FROM dotLamDoAn WHERE maDot = @MaDot AND choPhepGiangVienSuaDeTai=1)
+        BEGIN
+            SELECT N'3' AS ThongBao; 
+            RETURN;
+        END
+        
+        INSERT INTO QuanLyDeTai (
+            TenDeTai, 
+            NamHocApDung, 
+            maDot, 
+            HinhThucBaoCaoBaoVe, 
+            MoTa,
+            IsDeleted
+        )
+        VALUES (
+            @TenDeTai, 
+            @NamHocApDung, 
+            @MaDot, 
+            @HinhThucBaoCaoBaoVe, 
+            @MoTa,
+            1
+        );
+        
+        SELECT N'1' AS ThongBao;
+    END
+    ELSE
+    BEGIN
+        SELECT N'0' AS ThongBao;
+    END
+END;
+GO
+
+CREATE OR ALTER PROCEDURE sp_SuaDeTai
+    @MaDeTai INT,
+    @TenDeTai NVARCHAR(MAX) = NULL,
+    @NamHocApDung DATE = NULL,
+    @MaDot VARCHAR(50) = NULL,
+    @HinhThucBaoCaoBaoVe NVARCHAR(50) = NULL,
+    @MoTa NVARCHAR(MAX) = NULL,
+    @TaiKhoan NVARCHAR(50)
+AS
+BEGIN
+    DECLARE @CoQuyenSua BIT = 0;
+    
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpq ON ndnq.maNhomQuyen = nqpq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @TaiKhoan AND nqpq.maQuyen = 'UP_SUADETAI'
+    )
+    BEGIN
+        SET @CoQuyenSua = 1;
+    END
+    
+    IF @CoQuyenSua = 1
+    BEGIN
+       
+        IF NOT EXISTS (SELECT 1 FROM QuanLyDeTai WHERE MaDeTai = @MaDeTai AND IsDeleted = 1)
+        BEGIN
+            SELECT N'2' AS ThongBao; 
+            RETURN;
+        END
+        
+        IF @MaDot IS NOT NULL AND NOT EXISTS (SELECT 1 FROM dotLamDoAn WHERE maDot = @MaDot AND choPhepGiangVienSuaDeTai=1)
+        BEGIN
+            SELECT N'3' AS ThongBao; 
+            RETURN;
+        END
+        
+        UPDATE QuanLyDeTai
+        SET 
+            TenDeTai = COALESCE(@TenDeTai, TenDeTai),
+            NamHocApDung = COALESCE(@NamHocApDung, NamHocApDung),
+            maDot = COALESCE(@MaDot, maDot),
+            HinhThucBaoCaoBaoVe = COALESCE(@HinhThucBaoCaoBaoVe, HinhThucBaoCaoBaoVe),
+            MoTa = COALESCE(@MoTa, MoTa)
+        WHERE MaDeTai = @MaDeTai;
+        
+        SELECT N'1' AS ThongBao; 
+    END
+    ELSE
+    BEGIN
+        SELECT N'0' AS ThongBao; 
+    END
+END;
+GO
+
+CREATE OR ALTER PROCEDURE sp_XoaDeTai
+    @MaDeTai INT,
+    @TaiKhoan NVARCHAR(50)
+AS
+BEGIN
+    DECLARE @CoQuyenXoa BIT = 0;
+    
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpq ON ndnq.maNhomQuyen = nqpq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @TaiKhoan AND nqpq.maQuyen = 'DEL_XOADETAI'
+    )
+    BEGIN
+        SET @CoQuyenXoa = 1;
+    END
+    
+    IF @CoQuyenXoa = 1
+    BEGIN
+        IF NOT EXISTS (SELECT 1 FROM QuanLyDeTai WHERE MaDeTai = @MaDeTai AND IsDeleted = 1)
+        BEGIN
+            SELECT N'2' AS ThongBao;
+            RETURN;
+        END
+        
+        UPDATE QuanLyDeTai
+        SET IsDeleted = 0
+        WHERE MaDeTai = @MaDeTai;
+        
+        SELECT N'1' AS ThongBao; 
+    END
+    ELSE
+    BEGIN
+        SELECT N'0' AS ThongBao;
+    END
+END;
+GO
+
+
+
+CREATE  PROCEDURE GET_DOT_TaiKhoan
+    @TaiKhoan NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @Result NVARCHAR(50);
+
+    SELECT TOP 1 @Result = d_sv.maDot 
+    FROM Dot_SinhVien D_SV 
+    INNER JOIN dotLamDoAn D ON D_SV.maDot = D.maDot 
+    WHERE D_SV.maSinhVien = @TaiKhoan 
+      AND D.IsDeleted = 1 
+      AND D.trangThai = 1;
+
+    IF @Result IS NOT NULL
+    BEGIN
+        SELECT @Result AS ThongBao;
+    END
+    ELSE
+    BEGIN
+        SELECT '0' AS ThongBao;
+    END
+END
+	exec GET_DOT_TaiKhoan @TaiKhoan='10621306'

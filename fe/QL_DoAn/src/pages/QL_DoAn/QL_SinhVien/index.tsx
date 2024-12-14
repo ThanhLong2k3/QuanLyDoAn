@@ -11,8 +11,6 @@ import moment from 'moment';
 
 const { Title } = Typography
 
-
-
 export default function QuanLySinhVien() {
   const [sinhVien,setsinhVien]=useState<SinhVien[]>([]);
   const [form] = Form.useForm();
@@ -20,15 +18,26 @@ export default function QuanLySinhVien() {
   const [keyDangSua, setKeyDangSua] = useState<string | null>(null);
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [timKiem, setTimKiem] = useState('');
-
+  const [loading, setLoading] = useState(true);
   useEffect(()=>{
     document.title="Quản lý sinh viên";
     getall_SinhVienSinhVien();
   },[])
 
   const getall_SinhVienSinhVien= async()=>{
-      getall_SinhVien().then((data)=>setsinhVien(data));
+    try{
+      const data = await getall_SinhVien();
+      setsinhVien(data);
+    }
+    catch{
+      message.error("Lỗi Sever!");
+    }
+    finally {
+      setLoading(false);
+    }
   }
+
+
   const hienThiModal = (banGhi?: SinhVien) => {
     form.resetFields();
     if (banGhi) {
@@ -169,6 +178,7 @@ export default function QuanLySinhVien() {
             rowSelection={luaChonDong}
             columns={cotBang}
             dataSource={sinhVien}
+            loading={loading}
             rowKey="maSinhVien"
             scroll={{ x: 768 }}
             className="shadow-sm rounded-md overflow-hidden"

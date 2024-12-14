@@ -16,6 +16,7 @@ type router = {
       QL_LOP:{PATH:"doan/lop"},
       QL_DOTLAMDOAN:{PATH:"doan/dotlamdoan"},
       PHANCONG_HUONGDAN:{PATH:"doan/phancong"},
+      DEXUATDETAI:{PATH:"doan/dangkydetai"},
     },
     HETHONG:{
       QL_NGUOIDUNG:{PATH:"hethong/nguoidung"},
