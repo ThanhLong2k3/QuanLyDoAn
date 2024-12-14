@@ -17,14 +17,23 @@ export default function QuanLyLop() {
   const [keyDangSua, setKeyDangSua] = useState<string | null>(null);
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [timKiem, setTimKiem] = useState('');
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     document.title = 'Quản lý lớp'
     getAllLop()
   }, [])
 
-  const getAllLop = () => {
-    getAll().then((data) => setLop(data))
+  const getAllLop =async () => {
+    try{
+      const data = await getAll();
+      setLop(data);
+    }
+    catch{
+      message.error("Lỗi Sever!");
+    }
+    finally {
+      setLoading(false);
+    }
   }
 
   const xuLyXoa = async (maLop: string) => {
@@ -169,6 +178,7 @@ export default function QuanLyLop() {
             rowSelection={luaChonDong}
             columns={cotBang}
             dataSource={lop}
+            loading={loading}
             rowKey="maLop"
             scroll={{ x: 768 }}
             className="shadow-sm rounded-md overflow-hidden"

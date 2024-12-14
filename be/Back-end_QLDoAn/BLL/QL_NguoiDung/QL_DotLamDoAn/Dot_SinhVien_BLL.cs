@@ -11,6 +11,10 @@ namespace BLL.QL_NguoiDung.QL_DotLamDoAn
         {
             _res = res;
         }
+        public string GET_MADOT_TAIKHOAN(string taikhoan)
+        {
+            return _res.GET_MADOT_TAIKHOAN(taikhoan);
+        }
 
         public List<V_Dot_SinhVienDTO> GetAll_SinhVien()
         {

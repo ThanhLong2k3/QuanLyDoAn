@@ -99,6 +99,7 @@ export const URL = {
                 DEL_GV_DOT:(maDot:string,maGV:string)=>`${LocalHot}api/Dot_GiangVien_CTRL/delete-Dot_GiangVien?maDot=${maDot}&maGiangVien=${maGV}`
             },
             DOT_SINHVIEN:{
+                GET_DOT_TK:(TK:string)=>`${LocalHot}api/Dot_SinhVien/getall_Dot_taiKHoan?tk=${TK}`,
                 GETALL_SV_HD:`${LocalHot}api/Dot_SinhVien/getall_SinhVien`,
                 GET_SV_MADOT:(maDot:string)=>`${LocalHot}api/Dot_SinhVien/get_SinhVien_madot?madot=${maDot}`,
                 CREATE_DOT_SV:`${LocalHot}api/Dot_SinhVien/create-Dot_SinhVien`,
@@ -109,6 +110,9 @@ export const URL = {
             GETPHANCONG_MADOT:(maDot:string)=>`${LocalHot}api/PhanCongHuongDan_CTRL/GetAll_PhanCong_MaDot?maDot=${maDot}`,
             CREATE:(taiKhoan:string)=>`${LocalHot}api/PhanCongHuongDan_CTRL/create-PhanCongHuongDan?taiKhoan=${taiKhoan}`,
             UPDATE:(taiKhoan:string)=>`${LocalHot}api/PhanCongHuongDan_CTRL/update-PhanCongHuongDan?taiKhoan=${taiKhoan}`
+        },
+        QUANLYDETAI:{
+
         }
     }
 };

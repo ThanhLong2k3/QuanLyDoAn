@@ -19,14 +19,24 @@ export default function QuanLygiangvien() {
   const [keyDangSua, setKeyDangSua] = useState<string | null>(null);
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [timKiem, setTimKiem] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.title = 'Quản lý cán bộ, giảng viên'
     getAllGiangVien()
   }, [])
 
-  const getAllGiangVien = () => {
-    getAll().then((data) => setGiangVien(data))
+  const  getAllGiangVien =async () => {
+    try{
+      const data = await getAll();
+      setGiangVien(data);
+    }
+    catch{
+      message.error("Lỗi Sever!");
+    }
+    finally {
+      setLoading(false);
+    }
   }
 
   const xuLyXoa = async (maGiangVien: string) => {
@@ -175,6 +185,7 @@ export default function QuanLygiangvien() {
           <Table
             rowSelection={luaChonDong}
             columns={cotBang}
+            loading={loading}
             dataSource={giangVien}
             rowKey="maGiangVien"
             scroll={{ x: 768 }}

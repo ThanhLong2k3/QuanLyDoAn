@@ -66,7 +66,6 @@ const QuanLyBoMon: React.FC = () => {
 
   const xuLyDongY = async () => {
     try {
-        debugger;
       const giaTri = await form.validateFields();
       if (keyDangSua !== null) {
         console.log(keyDangSua);
@@ -158,6 +157,7 @@ const QuanLyBoMon: React.FC = () => {
           <Table
             rowSelection={luaChonDong}
             columns={cotBang}
+            
             dataSource={duLieuLoc}
             rowKey="maBoMon"
             scroll={{ x: 768 }}

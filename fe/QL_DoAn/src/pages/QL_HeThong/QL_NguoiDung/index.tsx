@@ -25,6 +25,7 @@ const QuanLyNguoiDung: React.FC = () => {
   const [quyen, setQuyen] = useState<NhomQuyen[]>([]);
   const [selectedQuyen, setSelectedQuyen] = useState<NhomQuyen[]>([]);
   const [taikhoanon, setTaiKhoan_ON] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.title = "Quản lý người dùng";
@@ -37,6 +38,10 @@ const QuanLyNguoiDung: React.FC = () => {
       setNguoiDung(data);
     } catch (error) {
       message.error("Không thể tải danh sách người dùng");
+    }
+    finally{
+
+      setLoading(false);
     }
   }, []);
 
@@ -239,6 +244,7 @@ const QuanLyNguoiDung: React.FC = () => {
           <Divider className="my-6" />
           <Table
             rowSelection={luaChonDong}
+            loading={loading}
             columns={cotBang}
             dataSource={duLieuLoc}
             rowKey={(record) => record.taiKhoan}

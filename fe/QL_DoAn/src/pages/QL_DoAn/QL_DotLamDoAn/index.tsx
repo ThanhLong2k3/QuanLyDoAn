@@ -26,6 +26,7 @@ export default function QuanLyDotLamDoAn() {
   const [GiangVien_Dot, setGiangVien_Dot] = useState<DotLamDoAn_GiangVien[]>([]);
   const [form] = Form.useForm();
   const [maDot_on,setMaDotOn]=useState("");
+  const [loading, setLoading] = useState(true);
 
   const [hienmodalSinhVien,setHienModalSinhVien]=useState(false);
   const[SinhVien,setSinhVien]=useState<DotLamDoAn_SinhVien[]>([]);
@@ -36,8 +37,16 @@ export default function QuanLyDotLamDoAn() {
   }, [])
 
   const GetAll_DotDoAn = async () => {
-    const data = await getAll_DotDoAn();
-    setDotLamDoAn(data);
+    try{
+      const data = await getAll_DotDoAn();
+      setDotLamDoAn(data);
+    }
+    catch{
+      message.error("Lỗi Sever!");
+    }
+    finally {
+      setLoading(false);
+    }
   }
 
   const hienThiModal = (banGhi?: DotLamDoAn) => {
@@ -241,6 +250,7 @@ export default function QuanLyDotLamDoAn() {
           </Row>
           <Divider className="my-6" />
           <Table
+            loading={loading}
             rowSelection={luaChonDong}
             columns={cotBang}
             dataSource={dotlamdoan.filter(

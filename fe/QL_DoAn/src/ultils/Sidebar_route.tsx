@@ -45,7 +45,7 @@ export const Sidebar_router: { [key: string]: SidebarItem } = {
   SUPPORT: { KEY: '12', ICON: <SolutionOutlined />, LINK: ROUTERS.DOAN.PHANCONG_HUONGDAN.PATH, TEXT: "Phân công hướng dẫn, Xem danh sách sinh viên", PERMISSION: ["ADD_PHANCONG","UP_PHANCONG"] },
   TBM_COMFILMPROJECT: { KEY: '13', ICON: <AuditOutlined />, LINK: "", TEXT: "Trưởng bộ môn xác nhận sinh viên đăng ký đề tài", PERMISSION: ["TBM_CONFIRM_PROJECT"] },
   VIEWTEACHER: { KEY: '14', ICON: <EyeOutlined />, LINK: "", TEXT: "Xem giảng viên phản biện và hội đồng", PERMISSION: ["VIEW_TEACHER"] },
-  LONGUPTOPIC: { KEY: '15', ICON: <FormOutlined />, LINK: "", TEXT: "Đăng ký đề tài đồ án tốt nghiệp", PERMISSION: ["REGISTER_TOPIC"] },
+  LONGUPTOPIC: { KEY: '15', ICON: <FormOutlined />, LINK: ROUTERS.DOAN.DEXUATDETAI.PATH, TEXT: "Đăng ký đề tài đồ án tốt nghiệp", PERMISSION: ["UP_THEMDETAI","ADD_THEMDETAI","DEL_XOADETAI"] },
   REPORT: { KEY: '16', ICON: <FileDoneOutlined />, LINK: "", TEXT: "Báo cáo kết quả làm đồ án tốt nghiệp", PERMISSION: ["SUBMIT_REPORT"] },
 };
 

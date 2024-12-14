@@ -562,6 +562,44 @@
         }
       }
     },
+    "/api/Dot_SinhVien/getall_Dot_taiKHoan": {
+      "get": {
+        "tags": [
+          "Dot_SinhVien"
+        ],
+        "parameters": [
+          {
+            "name": "tk",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Dot_SinhVien/getall_SinhVien": {
       "get": {
         "tags": [
@@ -2794,6 +2832,153 @@
         }
       }
     },
+    "/api/QL_DeTai_CTRL/getall": {
+      "get": {
+        "tags": [
+          "QL_DeTai_CTRL"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QL_DeTaiDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QL_DeTaiDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QL_DeTaiDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/QL_DeTai_CTRL/create-DeTai": {
+      "post": {
+        "tags": [
+          "QL_DeTai_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QL_DeTaiDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QL_DeTaiDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QL_DeTaiDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QL_DeTai_CTRL/update-DeTai": {
+      "post": {
+        "tags": [
+          "QL_DeTai_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QL_DeTaiDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QL_DeTaiDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QL_DeTaiDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QL_DeTai_CTRL/delete-DeTai": {
+      "delete": {
+        "tags": [
+          "QL_DeTai_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "ma",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/SinhVien_CTRL/getall": {
       "get": {
         "tags": [
@@ -3424,6 +3609,36 @@
             "nullable": true
           },
           "maQuyen": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QL_DeTaiDTO": {
+        "type": "object",
+        "properties": {
+          "maDeTai": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tenDeTai": {
+            "type": "string",
+            "nullable": true
+          },
+          "namHocApDung": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "maDot": {
+            "type": "string",
+            "nullable": true
+          },
+          "hinhThucBaoCaoBaoVe": {
+            "type": "string",
+            "nullable": true
+          },
+          "moTa": {
             "type": "string",
             "nullable": true
           }
