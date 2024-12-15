@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Layout, Menu, Button, Drawer } from "antd";
-import { MenuOutlined, AppstoreOutlined, SettingOutlined,CalendarOutlined } from "@ant-design/icons";
-import { Sidebar_router, Sidebar_router_DanhMuc,Sidebar_HeThong } from "../../ultils/Sidebar_route";
+import { MenuOutlined, AppstoreOutlined, SettingOutlined, CalendarOutlined } from "@ant-design/icons";
+import { Sidebar_router, Sidebar_router_DanhMuc, Sidebar_HeThong } from "../../ultils/Sidebar_route";
 
 const { Sider } = Layout;
 
@@ -15,8 +15,6 @@ const Sidebar: React.FC = () => {
   useEffect(() => {
     try {
       const permissions = JSON.parse(localStorage.getItem("ListQuyen") || "[]");
-      console.log(permissions);
-      debugger;
       setUserPermissions(permissions);
     } catch (error) {
       console.error("Failed to load permissions", error);
@@ -38,21 +36,25 @@ const Sidebar: React.FC = () => {
   };
 
   const renderMenuItems = () => {
-    debugger;
-    if (userPermissions.length === 0) return [];
+    const danhMucItems = Object.entries(Sidebar_router_DanhMuc)
+      .map(([key, item]) => ({
+        key: item.KEY,
+        icon: item.ICON,
+        label: <Link style={{ textDecoration: "none" }} to={item.LINK}>{item.TEXT}</Link>,
+      }));
 
-    const danhMucItems = Object.entries(Sidebar_router_DanhMuc).map(([key, item]) => ({
-      key: item.KEY,
-      icon: item.ICON,
-      label: <Link style={{ textDecoration: "none" }} to={item.LINK}>{item.TEXT}</Link>,
-    }));
-    
-    const HeThongItems = Object.entries(Sidebar_HeThong).map(([key, item]) => ({
-      key: item.KEY,
-      icon: item.ICON,
-      label: <Link style={{ textDecoration: "none" }} to={item.LINK}>{item.TEXT}</Link>,
-    }));
-    
+    const HeThongItems = Object.entries(Sidebar_HeThong)
+      .map(([key, item]) => {
+        if (item.PERMISSION.some((permission) => userPermissions.includes(permission))) {
+          return {
+            key: item.KEY,
+            icon: item.ICON,
+            label: <Link style={{ textDecoration: "none" }} to={item.LINK}>{item.TEXT}</Link>,
+          };
+        }
+        return null;
+      })
+      .filter((item): item is NonNullable<typeof item> => item !== null);
 
     const permissionItems = Object.entries(Sidebar_router)
       .map(([key, item]) => {
@@ -67,26 +69,36 @@ const Sidebar: React.FC = () => {
       })
       .filter((item): item is NonNullable<typeof item> => item !== null);
 
-    return [
-      {
+    const menuItems: Array<any> = [];
+
+    if (danhMucItems.length > 0) {
+      menuItems.push({
         key: 'danh-muc',
         icon: <AppstoreOutlined />,
         label: 'Danh Mục',
         children: danhMucItems,
-      },
-      {
+      });
+    }
+
+    if (permissionItems.length > 0) {
+      menuItems.push({
         key: 'do-an',
         icon: <CalendarOutlined />,
         label: 'Đồ Án',
         children: permissionItems,
-      },
-      {
+      });
+    }
+
+    if (HeThongItems.length > 0) {
+      menuItems.push({
         key: 'he-thong',
         icon: <SettingOutlined />,
         label: 'Hệ Thống',
         children: HeThongItems,
-      },
-    ];
+      });
+    }
+
+    return menuItems;
   };
 
   const menuItems = renderMenuItems();
@@ -161,4 +173,3 @@ const Sidebar: React.FC = () => {
 };
 
 export default Sidebar;
-

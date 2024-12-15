@@ -11,9 +11,11 @@ export const GetAll_PhanCong_MaDot =async (maDot:string) =>{
 
 export const addPhanCong= async(value:PhanCongHuongDan,callBack:()=>void)=>{
       const result= await add(URL.QLDOAN.PHANCONGHUONGDAN.CREATE(taiKhoan),value,true,false,callBack)as AxiosResponse<any>; 
+      debugger
       CustomNotification({ result: result.data });
 }
 export const editPhanCong= async(value:PhanCongHuongDan,callBack:()=>void)=>{
     const result= await edit(URL.QLDOAN.PHANCONGHUONGDAN.UPDATE(taiKhoan),value,true,false,callBack) as AxiosResponse<any>;
+    debugger
     CustomNotification({ result: result.data });
 }
