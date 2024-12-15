@@ -399,7 +399,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.String",
+        "Type": "DTO.QL_DoAn.DotLamDoAn_DTO.v_Dot_DETAI",
         "MediaTypes": [
           "text/plain",
           "application/json",

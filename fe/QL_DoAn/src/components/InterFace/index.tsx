@@ -130,3 +130,14 @@ export interface PhanCongHuongDan{
   maSinhVien:string,
   maGiangVien:string
 }
+
+export interface QL_DeTaiDoAn{
+  maDeTai: number,
+  tenDeTai: string,
+  namHocApDung: string,
+  maSinhVien:string,
+  trangThai: boolean,
+  maDot: string,
+  hinhThucBaoCaoBaoVe: string,
+  moTa: string
+}

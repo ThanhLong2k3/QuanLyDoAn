@@ -124,7 +124,7 @@ const AppHeader: React.FC = () => {
           position: 'relative'
         }}
       >
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Menu Toggle
         {isMobile && (
           <Button 
             type="text" 
@@ -137,21 +137,21 @@ const AppHeader: React.FC = () => {
               transform: 'translateY(-50%)' 
             }}
           />
-        )}
+        )} */}
 
         {/* Logo and System Name */}
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img
+          {/* <img
             src="/utehy-logo.png"
             alt="UTEHY Logo"
             style={{ height: '40px', marginRight: '10px' }}
-          />
+          /> */}
           <span style={{ color: '#1e88e5', fontSize: '18px', fontWeight: 'bold' }}>
             Hệ thống Quản lý Đồ án
           </span>
         </div>
 
-        {/* Desktop Menu */}
+        {/* Desktop Menu
         {!isMobile && (
           <Menu
             mode="horizontal"
@@ -163,7 +163,7 @@ const AppHeader: React.FC = () => {
               border: 'none'
             }}
           />
-        )}
+        )} */}
 
         {/* User Dropdown */}
         <Dropdown menu={{ items: dropdownMenuItems }} trigger={['click']}>

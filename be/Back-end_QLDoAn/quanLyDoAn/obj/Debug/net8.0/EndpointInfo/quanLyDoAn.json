@@ -582,17 +582,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/v_Dot_DETAI"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/v_Dot_DETAI"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/v_Dot_DETAI"
                 }
               }
             }
@@ -3628,7 +3628,14 @@
           },
           "namHocApDung": {
             "type": "string",
-            "format": "date-time"
+            "nullable": true
+          },
+          "maSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "trangThai": {
+            "type": "boolean"
           },
           "maDot": {
             "type": "string",
@@ -3801,6 +3808,20 @@
             "nullable": true
           },
           "tenQuyen": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "v_Dot_DETAI": {
+        "type": "object",
+        "properties": {
+          "maDot": {
+            "type": "string",
+            "nullable": true
+          },
+          "namApDung": {
             "type": "string",
             "nullable": true
           }

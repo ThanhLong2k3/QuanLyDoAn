@@ -22,6 +22,7 @@ const App: React.FC = () => {
     >
       <AntApp>
         <Layout style={{ minHeight: '100vh' }}>
+          <Sidebar/>
           <Layout className="site-layout">
             <Header />
             <Content className='mt-2 shadow' style={{ margin: '0 6px', backgroundColor:'white' }}>

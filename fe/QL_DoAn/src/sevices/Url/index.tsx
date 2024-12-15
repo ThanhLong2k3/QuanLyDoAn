@@ -112,7 +112,9 @@ export const URL = {
             UPDATE:(taiKhoan:string)=>`${LocalHot}api/PhanCongHuongDan_CTRL/update-PhanCongHuongDan?taiKhoan=${taiKhoan}`
         },
         QUANLYDETAI:{
-
+            ADD:(taikhoan:string)=>`${LocalHot}api/QL_DeTai_CTRL/create-DeTai?taikhoan=${taikhoan}`,
+            UPDATE:(taikhoan:string)=>`${LocalHot}api/QL_DeTai_CTRL/update-DeTai?taikhoan=${taikhoan}`,
+            DELETE:(maDeTai:number,taiKhoan:string)=>`${LocalHot}api/QL_DeTai_CTRL/delete-DeTai?ma=${maDeTai}&taikhoan=${taiKhoan}`,
         }
     }
 };

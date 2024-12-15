@@ -28,7 +28,7 @@ export const DangKyDeTai_Sv: ColumnType[] = [
       width: '25%',
     },
     {
-      title: 'Số lượng SV đang hướng dẫn',
+      title: 'Số lượng đang hướng dẫn',
       dataIndex: 'dangHuongDan',
       key: 'dangHuongDan',
       width: '15%',

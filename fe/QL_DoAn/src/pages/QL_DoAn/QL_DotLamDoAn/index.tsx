@@ -111,9 +111,10 @@ export default function QuanLyDotLamDoAn() {
   }, []);
 
   const updateSelectedGiangVien = useCallback(async(updatedGiangVien: DotLamDoAn_GiangVien[]) => {
+    debugger;
+
     console.log(maDot_on);
     const existingGiangVien = await getGiangVien_maDot(maDot_on);
-    debugger;
     for(let i=0;i<existingGiangVien.length;i++)
     {
       for(let j=0;j<updatedGiangVien.length;j++)
@@ -203,7 +204,6 @@ export default function QuanLyDotLamDoAn() {
         }
         await add_SinhVien_DotLamDoAn(data);
     }
-    message.success(`Cập nhập sinh viên thành công!`);
 };
   return (
     <div className="bg-gray-100 min-h-screen p-6">

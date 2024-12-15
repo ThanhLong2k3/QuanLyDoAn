@@ -11,22 +11,16 @@ namespace DAL.QL_DoAnRepository.QL_DotLamDoAnRepository
         {
             _dbHelper = dbHelper;
         }
-        public string GET_MADOT_TAIKHOAN(string taikhoan)
+        public v_Dot_DETAI GET_MADOT_TAIKHOAN(string taikhoan)
         {
             string msgError = "";
             string kq;
             try
             {
-                var dt = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "GET_DOT_TaiKhoan", "@TaiKhoan", taikhoan);
-                if (dt != null)
-                {
-                    kq = dt.ToString();
-                }
-                else
-                {
-                    kq = "Không có phản hồi từ server";
-                }
-                return kq;
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "GET_DOT_TaiKhoan", "@TaiKhoan", taikhoan);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<v_Dot_DETAI>().FirstOrDefault();
             }
             catch (Exception ex)
             {

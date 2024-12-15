@@ -22,6 +22,8 @@ namespace DAL.QL_DoAnRepository
                     "@NamHocApDung", model.NamHocApDung,
                     "@MaDot", model.maDot,
                     "@HinhThucBaoCaoBaoVe",model.HinhThucBaoCaoBaoVe,
+                    "@MaSinhVien",model.maSinhVien,
+                    "@TrangThai",model.TrangThai,
                     "@MoTa",model.MoTa,
                     "@TaiKhoan",taikhoan
                 );
@@ -95,6 +97,8 @@ namespace DAL.QL_DoAnRepository
                     "@NamHocApDung", model.NamHocApDung,
                     "@MaDot", model.maDot,
                     "@HinhThucBaoCaoBaoVe", model.HinhThucBaoCaoBaoVe,
+                    "@MaSinhVien", model.maSinhVien,
+                    "@TrangThai", model.TrangThai,
                     "@MoTa", model.MoTa,
                     "@TaiKhoan", taikhoan
                 );

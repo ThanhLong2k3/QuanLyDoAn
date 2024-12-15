@@ -116,10 +116,12 @@ CREATE TABLE dotLamDoAn (
 CREATE TABLE QuanLyDeTai(
 	MaDeTai INT IDENTITY(1,1) PRIMARY KEY ,
 	TenDeTai NVARCHAR(MAX) NOT NULL,
-	NamHocApDung Date NOT NULL,
+	NamHocApDung VARCHAR(50) NOT NULL,
 	maDot VARCHAR(50)  FOREIGN KEY REFERENCES dotLamDoAn(maDot),
 	HinhThucBaoCaoBaoVe NVARCHAR(50) NOT NULL,
+	maSinhVien NVARCHAR(50) FOREIGN KEY REFERENCES SinhVien(maSinhVien),
 	MoTa NVARCHAR(MAX),
+	TrangThai BIT,
 	IsDeleted int
 )
 
@@ -1871,6 +1873,13 @@ WHERE
     @maSinhVien NVARCHAR(50)
 AS
 BEGIN
+IF EXISTS (SELECT 1 FROM Dot_SinhVien 
+               WHERE maSinhVien = @maSinhVien  
+               AND IsDeleted = 1)
+    BEGIN
+        SELECT '4' AS TThongBao ; 
+    END
+    ELSE
     -- Check if the student exists in the specified batch with IsDeleted = 0
     IF EXISTS (SELECT 1 FROM Dot_SinhVien 
                WHERE maDot = @maDot 
@@ -1883,15 +1892,19 @@ BEGIN
         WHERE maDot = @maDot
         AND maSinhVien = @maSinhVien
         AND IsDeleted = 0;
+		select '1' AS ThongBao;
     END
     ELSE
     BEGIN
         -- If not exists, insert a new record
         INSERT INTO Dot_SinhVien (maDot, maSinhVien, IsDeleted)
         VALUES (@maDot, @maSinhVien, 1);
+		select '1' AS ThongBao;
     END
 END;
 GO
+
+
 CREATE  OR ALTER PROCEDURE Xoa_DotSinhVien
     @maDot VARCHAR(50),
     @maSinhVien NVARCHAR(50)
@@ -2020,11 +2033,13 @@ go
 
 CREATE OR ALTER PROCEDURE sp_ThemDeTai
     @TenDeTai NVARCHAR(MAX),
-    @NamHocApDung DATE,
+    @NamHocApDung VARCHAR(50),
     @MaDot VARCHAR(50),
     @HinhThucBaoCaoBaoVe NVARCHAR(50),
+	@MaSinhVien NVARCHAR(50),
     @MoTa NVARCHAR(MAX) = NULL,
-    @TaiKhoan NVARCHAR(50)
+    @TaiKhoan NVARCHAR(50),
+	@TrangThai BIT
 AS
 BEGIN
     DECLARE @CoQuyenThem BIT = 0;
@@ -2064,7 +2079,9 @@ BEGIN
             NamHocApDung, 
             maDot, 
             HinhThucBaoCaoBaoVe, 
+			maSinhVien ,
             MoTa,
+			TrangThai,
             IsDeleted
         )
         VALUES (
@@ -2072,7 +2089,9 @@ BEGIN
             @NamHocApDung, 
             @MaDot, 
             @HinhThucBaoCaoBaoVe, 
+			@MaSinhVien,
             @MoTa,
+			@TrangThai,
             1
         );
         
@@ -2088,11 +2107,13 @@ GO
 CREATE OR ALTER PROCEDURE sp_SuaDeTai
     @MaDeTai INT,
     @TenDeTai NVARCHAR(MAX) = NULL,
-    @NamHocApDung DATE = NULL,
+    @NamHocApDung VARCHAR(50) = NULL,
     @MaDot VARCHAR(50) = NULL,
     @HinhThucBaoCaoBaoVe NVARCHAR(50) = NULL,
+	@MaSinhVien NVARCHAR(50),
     @MoTa NVARCHAR(MAX) = NULL,
-    @TaiKhoan NVARCHAR(50)
+    @TaiKhoan NVARCHAR(50),
+	@TrangThai BIT
 AS
 BEGIN
     DECLARE @CoQuyenSua BIT = 0;
@@ -2128,7 +2149,9 @@ BEGIN
             NamHocApDung = COALESCE(@NamHocApDung, NamHocApDung),
             maDot = COALESCE(@MaDot, maDot),
             HinhThucBaoCaoBaoVe = COALESCE(@HinhThucBaoCaoBaoVe, HinhThucBaoCaoBaoVe),
-            MoTa = COALESCE(@MoTa, MoTa)
+            MoTa = COALESCE(@MoTa, MoTa),
+			TrangThai=@TrangThai,
+			maSinhVien=@MaSinhVien
         WHERE MaDeTai = @MaDeTai;
         
         SELECT N'1' AS ThongBao; 
@@ -2186,22 +2209,15 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @Result NVARCHAR(50);
-
-    SELECT TOP 1 @Result = d_sv.maDot 
+    SELECT TOP 1 d_sv.maDot,d.namApDung 
     FROM Dot_SinhVien D_SV 
-    INNER JOIN dotLamDoAn D ON D_SV.maDot = D.maDot 
+    INNER JOIN dotLamDoAn D ON D_SV.maDot = D.maDot
     WHERE D_SV.maSinhVien = @TaiKhoan 
       AND D.IsDeleted = 1 
-      AND D.trangThai = 1;
-
-    IF @Result IS NOT NULL
-    BEGIN
-        SELECT @Result AS ThongBao;
-    END
-    ELSE
-    BEGIN
-        SELECT '0' AS ThongBao;
-    END
+      AND D.trangThai = 1
+	  AND D_SV.IsDeleted=1;
 END
 	exec GET_DOT_TaiKhoan @TaiKhoan='10621306'
+
+	select*from QuanLyDeTai
+	delete from QuanLyDeTai

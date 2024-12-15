@@ -1,24 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Select, Radio ,FormInstance} from 'antd';
-
+import {getGiangVien_maDot} from "../../../sevices/Api/QL_DoAn/QL_DotLamDoAn/GiangVien_Dot-servives"
 const { Option } = Select;
+
+interface GiangVien {
+  maGiangVien: string;
+  tenGiangVien: string;
+  soLuongHuongDan: number;
+  soLuongDangHuongDan: number;
+}
 
 interface ReusableFormProps {
   formdulieu: FormInstance<any> | undefined;
-  maDot:string;
+  giangVienInDot:GiangVien[]
 }
-export const Form_DeXuatDeTai_SV: React.FC<ReusableFormProps> = ({formdulieu,maDot}) => (
+export const Form_DeXuatDeTai_SV: React.FC<ReusableFormProps> = ({formdulieu,giangVienInDot}) => {
+  
+  return(
     <Form form={formdulieu} layout="vertical">
       <Form.Item
-        name="ma_de_tai"
+        name="maDeTai"
         label="Mã đề tài"
-        rules={[{ required: true, message: 'Vui lòng nhập mã đề tài!' }]}
       >
-        <Input />
+        <Input disabled />
       </Form.Item>
 
       <Form.Item
-        name="ten_de_tai"
+        name="tenDeTai"
         label="Tên đề tài"
         rules={[{ required: true, message: 'Vui lòng nhập tên đề tài!' }]}
       >
@@ -26,36 +34,42 @@ export const Form_DeXuatDeTai_SV: React.FC<ReusableFormProps> = ({formdulieu,maD
       </Form.Item>
 
       <Form.Item
-        name="tieng_viet_bao_ve"
-        label="Tiếng Việt, bảo vệ tiếng Việt"
+        name="hinhThucBaoCaoBaoVe"
+        label="Hình thức báo cáo, bảo vệ"
         rules={[{ required: true }]}
       >
         <Radio.Group>
-          <Radio value="tieng_viet_bao_ve_tieng_viet">Tiếng Việt, bảo vệ tiếng Việt</Radio>
-          <Radio value="tieng_viet_bao_ve_tieng_anh">Tiếng Việt, bảo vệ tiếng anh</Radio>
-          <Radio value="tieng_anh_bao_ve_tieng_anh">Tiếng anh, bảo vệ tiếng anh</Radio>
+          <Radio value="Tiếng Việt, bảo vệ tiếng Việt">Tiếng Việt, bảo vệ tiếng Việt</Radio>
+          <Radio value="Tiếng Việt, bảo vệ tiếng anh">Tiếng Việt, bảo vệ tiếng anh</Radio>
+          <Radio value="Tiếng anh, bảo vệ tiếng anh">Tiếng anh, bảo vệ tiếng anh</Radio>
         </Radio.Group>
       </Form.Item>
 
       <Form.Item
-        name="ten_giang_vien"
+        name="maGiangVien"
         label="Tên giảng viên"
         rules={[{ required: true, message: 'Vui lòng chọn tên giảng viên!' }]}
       >
         <Select>
-          <Option value="giang_vien_1">Giảng viên 1</Option>
-          <Option value="giang_vien_2">Giảng viên 2</Option>
-          <Option value="giang_vien_3">Giảng viên 3</Option>
+        {giangVienInDot.map(gv => (
+                <Option 
+                  key={gv.maGiangVien} 
+                  value={gv.maGiangVien}
+                  disabled={gv.soLuongDangHuongDan === gv.soLuongHuongDan}
+                >
+                  {`${gv.maGiangVien} - ${gv.tenGiangVien} - ${gv.soLuongDangHuongDan}/${gv.soLuongHuongDan}`}
+                </Option>
+              ))}
         </Select>
       </Form.Item>
 
       <Form.Item
-        name="mo_ta_de_tai"
+        name="moTa"
         label="Mô tả đề tài"
         rules={[{ required: true, message: 'Vui lòng nhập mô tả đề tài!' }]}
       >
         <Input.TextArea />
       </Form.Item>
     </Form>
-  );
+)};
 

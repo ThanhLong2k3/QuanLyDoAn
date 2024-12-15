@@ -21,8 +21,8 @@ export const CustomNotification: React.FC<CustomNotificationProps> = ({
     message: 'Thông báo',
     duration: 3,
     style: {
-      width: '300px',
-      height: '80px'
+      width: '400px',
+      height: 'auto'
     },
     placement: 'topRight'
   };
@@ -56,6 +56,14 @@ export const CustomNotification: React.FC<CustomNotificationProps> = ({
       ...notificationConfig,
       message: 'Thông báo',
       description: "Trưởng bộ môn không cho phép sửa đề tài"
+    });
+    return null;
+  } 
+  if (result === 4) {
+    notification.error({
+      ...notificationConfig,
+      message: 'Thông báo',
+      description: "Sinh viên đang trong đợt làm đồ án khác!"
     });
     return null;
   } 
