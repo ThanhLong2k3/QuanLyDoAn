@@ -11,6 +11,11 @@ namespace BLL.QL_NguoiDung
         {
             _res = res;
         }
+
+        public List<V_DeTaiDTO> Search_DeTai(string? maDot, string? maGiangVien, string? maLop)
+        {
+            return _res.Search_DeTai(maDot,maGiangVien, maLop);
+        }
         public string Create(QL_DeTaiDTO model, string taikhoan)
         {
             return _res.Create(model, taikhoan);

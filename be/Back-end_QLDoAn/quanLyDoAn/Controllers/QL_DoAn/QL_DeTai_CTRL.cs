@@ -13,6 +13,13 @@ namespace quanLyDoAn.Controllers.QL_DoAn
         {
             _DeTaiBLL = DeTaiBLL;
         }
+        [Route("Search_DeTai")]
+        [HttpGet]
+        public List<V_DeTaiDTO> Search_DeTai(string? maDot,string? maGiangVien,string? maLop)
+        {
+            return _DeTaiBLL.Search_DeTai(maDot,maGiangVien,maLop);
+        }
+
         [Route("getall")]
         [HttpGet]
         public List<QL_DeTaiDTO> Getall()

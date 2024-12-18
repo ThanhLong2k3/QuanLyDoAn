@@ -121,7 +121,7 @@ CREATE TABLE QuanLyDeTai(
 	HinhThucBaoCaoBaoVe NVARCHAR(50) NOT NULL,
 	maSinhVien NVARCHAR(50) FOREIGN KEY REFERENCES SinhVien(maSinhVien),
 	MoTa NVARCHAR(MAX),
-	TrangThai BIT,
+	TrangThai int,
 	IsDeleted int
 )
 
@@ -632,18 +632,20 @@ CREATE OR ALTER PROCEDURE InsertHocHam
     @soLuongHuongDan INT
 AS
 BEGIN
-    IF EXISTS (SELECT 1 FROM HocHam WHERE maHocHam = @maHocHam AND IsDeleted = 1)
+    IF EXISTS (SELECT 1 FROM HocHam WHERE maHocHam = @maHocHam)
     BEGIN
-        SELECT N'Mã học hàm đã tồn tại!' AS ThongBao;
+        SELECT N'2' AS ThongBao;
     END
     ELSE
     BEGIN
         INSERT INTO HocHam(maHocHam, tenHocHam, kyHieu, moTa, soLuongHuongDan, IsDeleted)
         VALUES (@maHocHam, @tenHocHam, @kyHieu, @moTa, @soLuongHuongDan, 1);
         
-        SELECT N'Thêm học hàm thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
+GO
+
 GO
 
 
@@ -655,77 +657,78 @@ CREATE OR ALTER PROCEDURE InsertHocVi
     @soLuongHuongDan INT
 AS
 BEGIN
-    IF EXISTS (SELECT 1 FROM HocVi WHERE maHocVi = @maHocVi AND IsDeleted = 1)
+    IF EXISTS (SELECT 1 FROM HocVi WHERE maHocVi = @maHocVi)
     BEGIN
-        SELECT N'Mã học vị đã tồn tại!' AS ThongBao;
+        SELECT N'2' AS ThongBao;
     END
     ELSE
     BEGIN
         INSERT INTO HocVi(maHocVi, tenHocVi, kyHieu, moTa, soLuongHuongDan, IsDeleted)
         VALUES (@maHocVi, @tenHocVi, @kyHieu, @moTa, @soLuongHuongDan, 1);
         
-        SELECT N'Thêm học vị thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
-
 GO
+
 CREATE OR ALTER PROCEDURE InsertChucVu
     @maChucVu VARCHAR(50),
     @tenChucVu NVARCHAR(50),
     @moTa NVARCHAR(50)
 AS
 BEGIN
-    IF EXISTS (SELECT 1 FROM ChucVu WHERE maChucVu = @maChucVu AND IsDeleted = 1)
+    IF EXISTS (SELECT 1 FROM ChucVu WHERE maChucVu = @maChucVu)
     BEGIN
-        SELECT N'Mã chức vụ đã tồn tại!' AS ThongBao;
+        SELECT N'2' AS ThongBao;
     END
     ELSE
     BEGIN
         INSERT INTO ChucVu (maChucVu, tenChucVu, moTa, IsDeleted)
         VALUES (@maChucVu, @tenChucVu, @moTa, 1);
         
-        SELECT N'Thêm chức vụ thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
-
 GO
+
 CREATE OR ALTER PROCEDURE InsertKhoa
     @maKhoa VARCHAR(20),
     @tenKhoa NVARCHAR(50)
 AS
 BEGIN
-    IF EXISTS (SELECT 1 FROM Khoa WHERE maKhoa = @maKhoa AND IsDeleted = 1)
+    IF EXISTS (SELECT 1 FROM Khoa WHERE maKhoa = @maKhoa)
     BEGIN
-        SELECT N'Mã khoa đã tồn tại!' AS ThongBao;
+        SELECT N'2' AS ThongBao;
     END
     ELSE
     BEGIN
         INSERT INTO Khoa (maKhoa, tenKhoa, IsDeleted)
         VALUES (@maKhoa, @tenKhoa, 1);
         
-        SELECT N'Thêm khoa thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
-
 GO
+
 CREATE OR ALTER PROCEDURE InsertBoMon
     @maBoMon VARCHAR(50),
     @tenBoMon NVARCHAR(50),
-    @IDKhoa  NVARCHAR(20)
+    @IDKhoa NVARCHAR(20)
 AS
 BEGIN
-    IF EXISTS (SELECT 1 FROM BoMon WHERE maBoMon = @maBoMon AND IsDeleted = 1)
+    IF EXISTS (SELECT 1 FROM BoMon WHERE maBoMon = @maBoMon)
     BEGIN
-        SELECT N'Mã bộ môn đã tồn tại!' AS ThongBao;
+        SELECT N'2' AS ThongBao;
     END
     ELSE
     BEGIN
-        INSERT INTO BoMon (maBoMon, tenBoMon,IDKhoa, IsDeleted)
+        INSERT INTO BoMon (maBoMon, tenBoMon, IDKhoa, IsDeleted)
         VALUES (@maBoMon, @tenBoMon, @IDKhoa, 1);
         
-        SELECT N'Thêm bộ môn thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
+GO
 
 -- Update procedures
 GO
@@ -2036,10 +2039,11 @@ CREATE OR ALTER PROCEDURE sp_ThemDeTai
     @NamHocApDung VARCHAR(50),
     @MaDot VARCHAR(50),
     @HinhThucBaoCaoBaoVe NVARCHAR(50),
-	@MaSinhVien NVARCHAR(50),
+	@MaSinhVien NVARCHAR(50)=NULL,
+	@MaGiangVien NVARCHAR(50)=NULL,
     @MoTa NVARCHAR(MAX) = NULL,
     @TaiKhoan NVARCHAR(50),
-	@TrangThai BIT
+	@TrangThai int
 AS
 BEGIN
     DECLARE @CoQuyenThem BIT = 0;
@@ -2073,7 +2077,10 @@ BEGIN
             SELECT N'3' AS ThongBao; 
             RETURN;
         END
-        
+		IF @MaSinhVien IS NOT NULL AND @MaGiangVien IS NOT NULL
+BEGIN
+    INSERT INTO PhanCong_HuongDan VALUES (@MaDot, @MaSinhVien, @MaGiangVien, 1);
+END
         INSERT INTO QuanLyDeTai (
             TenDeTai, 
             NamHocApDung, 
@@ -2217,7 +2224,64 @@ BEGIN
       AND D.trangThai = 1
 	  AND D_SV.IsDeleted=1;
 END
-	exec GET_DOT_TaiKhoan @TaiKhoan='10621306'
+GO
 
-	select*from QuanLyDeTai
-	delete from QuanLyDeTai
+	CREATE OR ALTER PROCEDURE Srearch_DeTai_TenDot_MaGiangVien_MaLop
+    @MaDot VARCHAR(50) = NULL,
+    @MaGiangVien NVARCHAR(50) = NULL,
+    @MaLop NVARCHAR(50) = NULL
+AS
+BEGIN
+    DECLARE @SQL NVARCHAR(MAX)
+
+    -- Câu truy vấn chính
+    SET @SQL = N'
+    SELECT 
+		sv.maSinhVien,
+        sv.tenSinhVien, 
+        gv.maGiangVien,
+        gv.tenGiangVien,
+		sv.maLop,
+		ql.maDeTai,
+        ql.TenDeTai,
+		ql.trangThai
+    FROM 
+        Dot_SinhVien dsv
+    JOIN 
+        sinhVien sv ON dsv.maSinhVien = sv.maSinhVien
+    JOIN 
+        PhanCong_HuongDan pchd 
+        ON pchd.maSinhVien = sv.maSinhVien AND pchd.maDot = dsv.maDot
+    JOIN 
+        giangVien gv ON pchd.maGiangVien = gv.maGiangVien
+    JOIN 
+        QuanLyDeTai ql 
+        ON ql.maSinhVien = sv.maSinhVien AND ql.maDot = dsv.maDot
+    WHERE 
+        pchd.IsDeleted = 1
+        AND ql.IsDeleted = 1
+        AND dsv.IsDeleted = 1
+    '
+
+    IF @MaDot IS NOT NULL
+        SET @SQL += N' AND dsv.maDot = @MaDot'
+    IF @MaGiangVien IS NOT NULL
+        SET @SQL += N' AND gv.maGiangVien = @MaGiangVien'
+    IF @MaLop IS NOT NULL
+        SET @SQL += N' AND sv.maLop = @MaLop'
+
+    SET @SQL += N' ORDER BY ql.TenDeTai'
+
+    EXEC sp_executesql 
+        @SQL,
+        N'@MaDot VARCHAR(50), @MaGiangVien NVARCHAR(50), @MaLop NVARCHAR(50)',
+        @MaDot = @MaDot, 
+        @MaGiangVien = @MaGiangVien, 
+        @MaLop = @MaLop
+END
+GO
+
+
+
+EXEC Srearch_DeTai_TenDot_MaGiangVien_MaLop @MaDot='DOT1'
+select*from Khoa

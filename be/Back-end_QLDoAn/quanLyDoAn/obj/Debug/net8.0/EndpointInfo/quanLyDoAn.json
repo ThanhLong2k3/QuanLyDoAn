@@ -2832,6 +2832,67 @@
         }
       }
     },
+    "/api/QL_DeTai_CTRL/Search_DeTai": {
+      "get": {
+        "tags": [
+          "QL_DeTai_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "maDot",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maGiangVien",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maLop",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_DeTaiDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_DeTaiDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_DeTaiDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/QL_DeTai_CTRL/getall": {
       "get": {
         "tags": [
@@ -3634,6 +3695,10 @@
             "type": "string",
             "nullable": true
           },
+          "maGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
           "trangThai": {
             "type": "boolean"
           },
@@ -3682,6 +3747,43 @@
           "email": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V_DeTaiDTO": {
+        "type": "object",
+        "properties": {
+          "maSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "maGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "maLop": {
+            "type": "string",
+            "nullable": true
+          },
+          "maDeTai": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tenDeTai": {
+            "type": "string",
+            "nullable": true
+          },
+          "trangThai": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

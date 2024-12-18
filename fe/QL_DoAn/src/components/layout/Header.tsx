@@ -48,7 +48,7 @@ const AppHeader: React.FC = () => {
   }, []);
 
   const DangXuat = () => {
-    localStorage.setItem('taiKhoan', "");
+    localStorage.removeItem('taiKhoan');
     navigate(ROUTERS.AUTH.DEFAULT.PATH);
   };
 

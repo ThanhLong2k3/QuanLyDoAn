@@ -16,18 +16,22 @@ const Login: React.FC = () => {
   });
   const navigate = useNavigate();
   const handleLogin = async (e: React.FormEvent) => {
+   
+    localStorage.removeItem('taiKhoan');
     e.preventDefault();
     try {
+
         let login = await dangNhap(account);
+       
         if (login.data && login.data !== 0) {
             localStorage.setItem('taiKhoan', account.taiKhoan);
-
             const listQuyen = await getAllQuyen_TaiKhoan(account.taiKhoan);
             if (Array.isArray(listQuyen) && listQuyen.length > 0) {
                 const maQuyenArray = listQuyen.map(item => item.maQuyen);
 
                 localStorage.setItem('ListQuyen', JSON.stringify(maQuyenArray));
-
+                console.log(localStorage.getItem('taiKhoan'));
+                debugger;
                 navigate(ROUTERS.HOME.DEFAULT.PATH);
             } else {
                 alert("Không có quyền nào được gán cho tài khoản này!");
