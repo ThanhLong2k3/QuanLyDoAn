@@ -1663,6 +1663,42 @@
   },
   {
     "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DeTai_CTRL",
+    "Method": "Search_DeTai",
+    "RelativePath": "api/QL_DeTai_CTRL/Search_DeTai",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "maDot",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "maGiangVien",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "maLop",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.V_DeTaiDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_DeTai_CTRL",
     "Method": "UpdateItem",
     "RelativePath": "api/QL_DeTai_CTRL/update-DeTai",
     "HttpMethod": "POST",

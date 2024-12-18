@@ -49,19 +49,20 @@ export default function DangKyDeTai() {
   const [giangVienInDot, setGiangVienInDot] = useState<GiangVien[]>([]);
 
   useEffect(() => {
+    debugger;
     getall_data();
-  }, []);
+  },[]);
+
 
   const getall_data = async () => {
     try {
       setLoading(true);
-  
       const DotLamDoAn = await GetAll_MaDot_TK();
       setMaDot(DotLamDoAn.maDot || "");
       setnamApDung(DotLamDoAn.namApDung);
-  
       const ListGiangVien = await getGiangVien_maDot(DotLamDoAn.maDot);
       setGiangVienInDot(ListGiangVien);
+     
     } catch (error) {
       console.error("Error fetching data:", error);
       message.error("Không thể tải dữ liệu. Vui lòng thử lại sau.");
@@ -71,7 +72,8 @@ export default function DangKyDeTai() {
   };
   
 
-  const hienThiModal = () => {
+  const hienThiModal =async () => {
+    getall_data();
     setHienModal(true);
   };
 
@@ -83,16 +85,12 @@ export default function DangKyDeTai() {
       trangThai: false,
       maDot: maDot,
       hinhThucBaoCaoBaoVe: giatri.hinhThucBaoCaoBaoVe,
-      moTa: giatri.moTa,
+      maGiangVien: giatri.maGiangVien,
       namHocApDung: namApDung,
       maSinhVien: taiKhoan,
+      moTa:giatri.moTa,
     };
-    let data_PhanCong = {
-      maDot: maDot,
-      maSinhVien: taiKhoan,
-      maGiangVien: giatri.maGiangVien,
-    };
-    await add_DeTaiDoAn(data_PhanCong, data_DeTai, getall_data);
+    await add_DeTaiDoAn( data_DeTai, getall_data);
     setHienModal(false);
     form.resetFields();
     setKeyDangSua(null);

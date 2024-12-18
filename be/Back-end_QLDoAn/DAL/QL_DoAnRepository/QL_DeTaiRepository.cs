@@ -1,5 +1,6 @@
 ﻿using DAL.InterFace.QL_DoAn;
 using DTO.QL_DoAn;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace DAL.QL_DoAnRepository
 {
@@ -10,6 +11,24 @@ namespace DAL.QL_DoAnRepository
         public QL_DeTaiRepository(IDatabaseHelper dbHelper)
         {
             _dbHelper = dbHelper;
+        }
+        public List<V_DeTaiDTO> Search_DeTai(string? maDot, string? maGiangVien, string? maLop)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "Srearch_DeTai_TenDot_MaGiangVien_MaLop",
+                   "@MaDot",maDot,
+                   "@MaGiangVien",maGiangVien,
+                   "@MaLop",maLop);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<V_DeTaiDTO>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public string Create(QL_DeTaiDTO model, string taikhoan)
         {
@@ -23,6 +42,7 @@ namespace DAL.QL_DoAnRepository
                     "@MaDot", model.maDot,
                     "@HinhThucBaoCaoBaoVe",model.HinhThucBaoCaoBaoVe,
                     "@MaSinhVien",model.maSinhVien,
+                     "@MaGiangVien", model.maGiangVien,
                     "@TrangThai",model.TrangThai,
                     "@MoTa",model.MoTa,
                     "@TaiKhoan",taikhoan
@@ -98,6 +118,7 @@ namespace DAL.QL_DoAnRepository
                     "@MaDot", model.maDot,
                     "@HinhThucBaoCaoBaoVe", model.HinhThucBaoCaoBaoVe,
                     "@MaSinhVien", model.maSinhVien,
+                   
                     "@TrangThai", model.TrangThai,
                     "@MoTa", model.MoTa,
                     "@TaiKhoan", taikhoan

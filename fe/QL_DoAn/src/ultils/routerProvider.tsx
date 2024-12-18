@@ -19,8 +19,8 @@ import QuanLygiangvien from "../pages/QL_DoAn/QL_GiangVien"
 import QuanLySinhVien from "../pages/QL_DoAn/QL_SinhVien"
 import QuanLyDotLamDoAn from "../pages/QL_DoAn/QL_DotLamDoAn"
 import PhanCongHuongDan from "../pages/QL_DoAn/QL_PhanHuongDan"
-import DangKyDeTai from "../pages/QL_DoAn/QL_DeTai_SV/indext"
-
+import DangKyDeTai from "../pages/QL_DoAn/QL_DeTai_SV/DangKyDe"
+import XacNhanDeTai from "../pages/QL_DoAn/QL_DeTai_SV/XacNhanDeTai"
 
 const router = createBrowserRouter([
   {
@@ -83,6 +83,10 @@ const router = createBrowserRouter([
       {
         path: ROUTERS.DOAN.DEXUATDETAI.PATH,
         element: <DangKyDeTai />,
+      },
+      {
+        path: ROUTERS.DOAN.XACNHANDETAI.PATH,
+        element: <XacNhanDeTai />,
       },
     ],
   },
