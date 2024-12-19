@@ -3053,7 +3053,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SinhVienDTO"
+                    "$ref": "#/components/schemas/V_SinhVienDTO"
                   }
                 }
               },
@@ -3061,7 +3061,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SinhVienDTO"
+                    "$ref": "#/components/schemas/V_SinhVienDTO"
                   }
                 }
               },
@@ -3069,7 +3069,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SinhVienDTO"
+                    "$ref": "#/components/schemas/V_SinhVienDTO"
                   }
                 }
               }
@@ -3830,6 +3830,44 @@
             "nullable": true
           },
           "tenSinhVien": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V_SinhVienDTO": {
+        "type": "object",
+        "properties": {
+          "maSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "maLop": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngaySinh": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "maTrangThai": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "gioiTinh": {
+            "type": "string",
+            "nullable": true
+          },
+          "sDT": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
             "type": "string",
             "nullable": true
           }

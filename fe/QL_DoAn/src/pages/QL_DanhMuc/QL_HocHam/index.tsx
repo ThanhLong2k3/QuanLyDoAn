@@ -19,7 +19,7 @@ const QuanLyHocHam: React.FC = () => {
   const [duLieuLoc, setDuLieuLoc] = useState<HocHam[]>([]);
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const [isEditing, setIsEditing] = useState(false);
   const GetAll_HocHam = async () => {
     try {
       setLoading(true);
@@ -38,11 +38,15 @@ const QuanLyHocHam: React.FC = () => {
       setLoading(false);
     }
   };
-
+  const dongModal=()=>{
+    setHienModal(false);
+    setIsEditing(false);
+  }
   const hienThiModal = (banGhi?: HocHam) => {
     form.resetFields();
     if (banGhi) {
       form.setFieldsValue(banGhi);
+      setIsEditing(true);
       setKeyDangSua(banGhi.maHocHam);
     } else {
       setKeyDangSua(null);
@@ -179,12 +183,12 @@ const QuanLyHocHam: React.FC = () => {
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}
-        onCancel={() => setHienModal(false)}
+        onCancel={dongModal}
         keyDangSua={keyDangSua}
         add_Titel="Thêm Học hàm mới"
         update_Titel="Chỉnh sửa Học hàm"
       >
-        <FormHocHam formdulieu={form} />
+        <FormHocHam  formdulieu={form} isEditing={isEditing} />
       </ReusableModal>
     </div>
   );

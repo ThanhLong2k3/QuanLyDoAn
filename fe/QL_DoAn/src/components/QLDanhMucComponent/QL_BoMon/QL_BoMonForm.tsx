@@ -5,11 +5,12 @@ import { getAll_Khoa } from '../../../sevices/Api/QL_DanhMuc/QL_Khoa-sevives';
 
 interface ReusableFormProps {
   formdulieu: FormInstance<any> | undefined;
+  isEditing:Boolean;
 }
 
 const { Option } = Select;
 
-export const FormBoMon: React.FC<ReusableFormProps> = ({ formdulieu }) => {
+export const FormBoMon: React.FC<ReusableFormProps> = ({ formdulieu,isEditing }) => {
   const [danhSachKhoa, setDanhSachKhoa] = useState<Khoa[]>([]); // Đổi tên tránh trùng
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export const FormBoMon: React.FC<ReusableFormProps> = ({ formdulieu }) => {
         label="Mã bộ môn"
         rules={[{ required: true, message: 'Vui lòng nhập mã bộ môn!' }]}
       >
-        <Input />
+        <Input disabled={isEditing === true} />
       </Form.Item>
       <Form.Item
         name="tenBoMon"

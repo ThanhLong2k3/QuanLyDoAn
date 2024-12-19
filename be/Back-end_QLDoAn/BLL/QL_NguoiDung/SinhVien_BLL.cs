@@ -18,7 +18,7 @@ namespace BLL.QL_NguoiDung
         {
             _res = res;
         }
-        public List<SinhVienDTO> GetAll()
+        public List<V_SinhVienDTO> GetAll()
         {
             return _res.GetAll();
         }

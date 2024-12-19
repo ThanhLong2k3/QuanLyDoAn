@@ -19,6 +19,7 @@ const QuanLyKhoa: React.FC = () => {
   const [duLieuLoc, setDuLieuLoc] = useState<Khoa[]>([]);
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
 
   const GetAll_Khoa = async () => {
     try {
@@ -43,6 +44,7 @@ const QuanLyKhoa: React.FC = () => {
     form.resetFields();
     if (banGhi) {
       form.setFieldsValue(banGhi);
+      setIsEditing(true);
       setKeyDangSua(banGhi.maKhoa);
     } else {
       setKeyDangSua(null);
@@ -82,7 +84,10 @@ const QuanLyKhoa: React.FC = () => {
       message.error("Có lỗi xảy ra. Vui lòng thử lại.");
     }
   };
-
+  const dongModal=()=>{
+    setHienModal(false);
+    setIsEditing(false);
+  }
   const xuLyXoa = async (banGhi: Khoa) => {
     try {
       debugger;
@@ -175,12 +180,12 @@ const QuanLyKhoa: React.FC = () => {
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}
-        onCancel={() => setHienModal(false)}
+        onCancel={dongModal}
         keyDangSua={keyDangSua}
         add_Titel="Thêm Khoa mới"
         update_Titel="Chỉnh sửa Khoa"
       >
-        <FormKhoa formdulieu={form} />
+        <FormKhoa  formdulieu={form} isEditing={isEditing} />
       </ReusableModal>
     </div>
   );

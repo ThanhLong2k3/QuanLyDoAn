@@ -19,7 +19,7 @@ const QuanLyChucVu: React.FC = () => {
   const [duLieuLoc, setDuLieuLoc] = useState<ChucVu[]>([]);
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const [isEditing, setIsEditing] = useState(false);
   const GetAll_ChucVu = async () => {
     try {
       setLoading(true);
@@ -38,11 +38,15 @@ const QuanLyChucVu: React.FC = () => {
       setLoading(false);
     }
   };
-
+  const dongModal=()=>{
+    setHienModal(false);
+    setIsEditing(false);
+  }
   const hienThiModal = (banGhi?: ChucVu) => {
     form.resetFields();
     if (banGhi) {
       form.setFieldsValue(banGhi);
+      setIsEditing(true);
       setKeyDangSua(banGhi.maChucVu);
     } else {
       setKeyDangSua(null);
@@ -173,12 +177,12 @@ const QuanLyChucVu: React.FC = () => {
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}
-        onCancel={() => setHienModal(false)}
+        onCancel={dongModal}
         keyDangSua={keyDangSua}
         add_Titel="Thêm chức vụ mới"
         update_Titel="Chỉnh sửa chức vụ"
       >
-        <FormChucVu formdulieu={form} />
+        <FormChucVu  formdulieu={form} isEditing={isEditing} />
       </ReusableModal>
     </div>
   );

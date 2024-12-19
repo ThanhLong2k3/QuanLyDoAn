@@ -84,13 +84,20 @@ CREATE TABLE giangVien (
     FOREIGN KEY (IDHocHam) REFERENCES HocHam(maHocHam) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (IDHocVi) REFERENCES HocVi(maHocVi) ON DELETE CASCADE ON UPDATE CASCADE
 )
-
+CREATE TABLE TrangThaiLamDoAn(
+	MaTrangThai INT IDENTITY(1,1) PRIMARY KEY,
+	TenTrangThai NVARCHAR(100) NOT NULL,
+	MoTa NVARCHAR(100),
+	ThuTu int,
+	IsDelete int
+)
 -- sinhVien table
 CREATE TABLE sinhVien (
     maSinhVien NVARCHAR(50) PRIMARY KEY,
     tenSinhVien NVARCHAR(255),
     maLop VARCHAR(50),
     ngaySinh DATE,
+	MaTrangThai INT FOREIGN KEY REFERENCES TrangThaiLamDoAn(MaTrangThai) ON UPDATE CASCADE,
     gioiTinh NVARCHAR(10),
     sDT VARCHAR(15),
     email NVARCHAR(255),
@@ -363,7 +370,7 @@ CREATE PROCEDURE XoaNguoiDung
 		end
 		go
 
-CREATE PROCEDURE ThemNguoiDung
+CREATE OR ALTER PROCEDURE ThemNguoiDung
     @taiKhoan NVARCHAR(50),
     @hoTen NVARCHAR(50),
     @ngaySinh DATE,
@@ -376,7 +383,7 @@ BEGIN
     IF NOT EXISTS (SELECT 1 FROM nguoiDung WHERE taiKhoan = @taiKhoan)
     BEGIN
         INSERT INTO nguoiDung (taiKhoan, matKhau, hoTen, ngaySinh,gioiTinh, email, moTa, TrangThai,IsDeleted)
-        VALUES (@taiKhoan, '123456', @hoTen, @ngaySinh,@gioiTinh, @email, @moTa, N'Chưa xét duyệt',1);
+        VALUES (@taiKhoan, '123456', @hoTen, @ngaySinh,@gioiTinh, @email, @moTa, N'Đã xét duyệt',1);
 
         SELECT N'Thêm người dùng thành công' AS ThongBao;
     END
@@ -389,7 +396,7 @@ GO
 
 -- S?A NGU?I DÙNG
 
-CREATE PROCEDURE SuaNguoiDung
+CREATE  PROCEDURE SuaNguoiDung
     @taiKhoan NVARCHAR(50),
     @matKhau NVARCHAR(50) = NULL,  
     @hoTen NVARCHAR(50) = NULL,
@@ -410,8 +417,6 @@ BEGIN
         moTa = COALESCE(@moTa, moTa),
         TrangThai = COALESCE(@trangThai, TrangThai)
     WHERE taiKhoan = @taiKhoan and IsDeleted=1;
-
-    SELECT N'Sửa người dùng thành công' AS ThongBao;
 END;
 GO
 CREATE PROC DEL_NGUOIDUNG
@@ -740,7 +745,7 @@ AS
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM ChucVu WHERE maChucVu = @maChucVu AND IsDeleted = 1)
     BEGIN
-        SELECT N'Mã chức vụ không tồn tại!' AS ThongBao;
+        SELECT N'2' AS ThongBao;
     END
     ELSE
     BEGIN
@@ -749,7 +754,7 @@ BEGIN
             moTa = @moTa
         WHERE maChucVu = @maChucVu AND IsDeleted = 1;
         
-        SELECT N'Cập nhật chức vụ thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
 
@@ -761,7 +766,7 @@ AS
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM Khoa WHERE maKhoa = @maKhoa AND IsDeleted = 1)
     BEGIN
-        SELECT N'Mã khoa không tồn tại!' AS ThongBao;
+        SELECT N'2' AS ThongBao;
     END
     ELSE
     BEGIN
@@ -769,7 +774,7 @@ BEGIN
         SET tenKhoa = @tenKhoa
         WHERE maKhoa = @maKhoa AND IsDeleted = 1;
         
-        SELECT N'Cập nhật khoa thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
 
@@ -783,11 +788,11 @@ AS
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM BoMon WHERE maBoMon = @maBoMon AND IsDeleted = 1)
     BEGIN
-        SELECT N'Mã bộ môn không tồn tại!' AS ThongBao;
+        SELECT N'2' AS ThongBao;
     END
     ELSE IF NOT EXISTS (SELECT 1 FROM Khoa WHERE maKhoa = @IDKhoa AND IsDeleted = 1)
     BEGIN
-        SELECT N'Mã khoa không tồn tại!' AS ThongBao;
+        SELECT N'2' AS ThongBao;
     END
     ELSE
     BEGIN
@@ -796,7 +801,7 @@ BEGIN
             IDKhoa = @IDKhoa
         WHERE maBoMon = @maBoMon AND IsDeleted = 1;
         
-        SELECT N'Cập nhật bộ môn thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
 
@@ -812,7 +817,7 @@ AS
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM HocHam WHERE maHocHam = @maHocHam AND IsDeleted = 1)
     BEGIN
-        SELECT N'Mã học hàm không tồn tại!' AS ThongBao;
+        SELECT N'2' AS ThongBao;
     END
     ELSE
     BEGIN
@@ -823,7 +828,7 @@ BEGIN
             soLuongHuongDan = @soLuongHuongDan
         WHERE maHocHam = @maHocHam AND IsDeleted = 1;
         
-        SELECT N'Cập nhật học hàm thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
 
@@ -840,7 +845,7 @@ AS
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM HocVi WHERE maHocVi = @maHocVi AND IsDeleted = 1)
     BEGIN
-        SELECT N'Mã học vị không tồn tại!' AS ThongBao;
+        SELECT N'2' AS ThongBao;
     END
     ELSE
     BEGIN
@@ -851,7 +856,7 @@ BEGIN
             soLuongHuongDan = @soLuongHuongDan
         WHERE maHocVi = @maHocVi AND IsDeleted = 1;
         
-        SELECT N'Cập nhật học vị thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
 GO
@@ -861,13 +866,13 @@ AS
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM ChucVu WHERE maChucVu = @maChucVu AND IsDeleted = 1)
     BEGIN
-        SELECT N'Mã chức vụ không tồn tại!' AS ThongBao;
+        SELECT N'2' AS ThongBao;
     END
     ELSE
     BEGIN
         UPDATE ChucVu SET IsDeleted = 0 WHERE maChucVu = @maChucVu;
         
-        SELECT N'Xóa chức vụ thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
 
@@ -878,13 +883,13 @@ AS
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM Khoa WHERE maKhoa = @maKhoa AND IsDeleted = 1)
     BEGIN
-        SELECT N'Mã khoa không tồn tại!' AS ThongBao;
+        SELECT N'2' AS ThongBao;
     END
     ELSE
     BEGIN
         UPDATE Khoa SET IsDeleted = 0 WHERE maKhoa = @maKhoa;
         
-        SELECT N'Xóa khoa thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
 
@@ -901,7 +906,7 @@ BEGIN
     BEGIN
         UPDATE BoMon SET IsDeleted = 0 WHERE maBoMon = @maBoMon;
         
-        SELECT N'Xóa bộ môn thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
 
@@ -918,7 +923,7 @@ BEGIN
     BEGIN
         UPDATE HocHam SET IsDeleted = 0 WHERE maHocHam = @maHocHam;
         
-        SELECT N'Xóa học hàm thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
 GO
@@ -935,7 +940,7 @@ BEGIN
     BEGIN
         UPDATE HocVi SET IsDeleted = 0 WHERE maHocVi = @maHocVi;
         
-        SELECT N'Xóa học vị thành công!' AS ThongBao;
+        SELECT N'1' AS ThongBao;
     END
 END;
 GO
@@ -951,9 +956,10 @@ END;
 CREATE OR ALTER PROCEDURE GetAllSinhVien
 AS
 BEGIN
-    SELECT sv.maSinhVien, sv.tenSinhVien, l.tenLop, sv.ngaySinh, sv.gioiTinh, sv.sDT, sv.email,sv.maLop
+    SELECT sv.maSinhVien, sv.tenSinhVien, l.tenLop, sv.ngaySinh, sv.gioiTinh, sv.sDT, sv.email,sv.maLop,TrangThaiLamDoAn.TenTrangThai
     FROM sinhVien sv
     JOIN lop l ON sv.maLop = l.maLop
+	INNER JOIN TrangThaiLamDoAn ON TrangThaiLamDoAn.MaTrangThai=sv.MaTrangThai
     WHERE sv.IsDeleted = 1 ;
 END;
 	go
@@ -1100,10 +1106,9 @@ BEGIN
 
     IF @coQuyenThemGiangVien = 1
     BEGIN
-
+		INSERT INTO nguoiDung VALUES(@maGiangVien,'123456' , @tenGiangVien,  @ngaySinh,  @gioiTinh, @email, N'Giảng viên',N'Đã xét duyệt',1);
         INSERT INTO giangVien (maGiangVien, tenGiangVien, IDBoMon, IDChucVu, IDHocHam,IDHocVi, ngaySinh, gioiTinh, sDT, email, IsDeleted)
         VALUES (@maGiangVien, @tenGiangVien, @IDBoMon, @IDChucVu, @IDHocHam,@IDHocVi, @ngaySinh, @gioiTinh, @sDT, @email, 1);
-        EXEC ThemNguoiDung @taiKhoan = @maGiangVien, @hoTen = @tenGiangVien, @ngaySinh = @ngaySinh, @gioiTinh = @gioiTinh, @email = @email, @moTa = N'Giảng viên';
         
         SELECT N'1' AS ThongBao;
     END
@@ -1217,10 +1222,10 @@ BEGIN
 
     IF @coQuyenThemSinhVien = 1
     BEGIN
-        EXEC ThemNguoiDung @taiKhoan = @maSinhVien, @hoTen = @tenSinhVien, @ngaySinh = @ngaySinh, @gioiTinh = @gioiTinh, @email = @email, @moTa = N'Sinh viên';
+        INSERT INTO nguoiDung VALUES(@maSinhVien,'123456' , @tenSinhVien,  @ngaySinh,  @gioiTinh, @email,  N'Sinh viên',N'Đã xét duyệt',1);
 
-        INSERT INTO sinhVien (maSinhVien, tenSinhVien, maLop, ngaySinh, gioiTinh, sDT, email, IsDeleted)
-        VALUES (@maSinhVien, @tenSinhVien, @maLop, @ngaySinh, @gioiTinh, @sDT, @email, 1);
+        INSERT INTO sinhVien (maSinhVien, tenSinhVien, maLop, ngaySinh,MaTrangThai, gioiTinh, sDT, email, IsDeleted)
+        VALUES (@maSinhVien, @tenSinhVien, @maLop, @ngaySinh,1, @gioiTinh, @sDT, @email, 1);
 
         SELECT N'1' AS ThongBao;
     END
@@ -2285,3 +2290,10 @@ GO
 
 EXEC Srearch_DeTai_TenDot_MaGiangVien_MaLop @MaDot='DOT1'
 select*from Khoa
+
+SELECT *FROM TrangThaiLamDoAn
+INSERT INTO TrangThaiLamDoAn VALUES (N'	Chưa nhận đề tài',N'Chưa nhận đề tài',1,1)
+
+SELECT*FROM nguoiDung
+
+EXEC ThemNguoiDung @taiKhoan='ADMIN',@hoTen=N'Phạm Thanh Long',@ngaySinh='2003-04-30',@gioiTinh='Nam',@email='thanhlongmhhy2003004@gmail.com',@moTa='Admin'

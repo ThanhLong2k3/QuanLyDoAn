@@ -4,16 +4,17 @@ import { Form, Input, InputNumber, FormInstance } from 'antd';
 
 interface ReusableFormProps {
   formdulieu: FormInstance<any> | undefined;
+  isEditing:Boolean;
 }
 
-export const FormHocVi: React.FC<ReusableFormProps> = ({ formdulieu }) => (
+export const FormHocVi: React.FC<ReusableFormProps> = ({ formdulieu, isEditing}) => (
   <Form form={formdulieu} layout="vertical">
     <Form.Item
       name="maHocVi"
       label="Mã học vị"
       rules={[{ required: true, message: 'Vui lòng nhập mã học vị!' }]}
     >
-      <Input />
+        <Input disabled={isEditing === true} />
     </Form.Item>
     <Form.Item
       name="tenHocVi"
