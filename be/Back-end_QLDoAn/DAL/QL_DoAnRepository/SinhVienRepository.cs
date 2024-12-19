@@ -12,7 +12,7 @@ namespace DAL.QL_DoAnRepository
             _dbHelper = dbHelper;
         }
 
-        public List<SinhVienDTO> GetAll()
+        public List<V_SinhVienDTO> GetAll()
         {
             string msgError = "";
             try
@@ -20,7 +20,7 @@ namespace DAL.QL_DoAnRepository
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "GetAllSinhVien");
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<SinhVienDTO>().ToList();
+                return dt.ConvertTo<V_SinhVienDTO>().ToList();
             }
             catch (Exception ex)
             {

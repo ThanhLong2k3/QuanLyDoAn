@@ -9,7 +9,7 @@ namespace DAL.InterFace.QL_DoAn
 {
     public partial interface ISinhVienRepository
     {
-        public List<SinhVienDTO> GetAll();
+        public List<V_SinhVienDTO> GetAll();
         string Create(SinhVienDTO model, string taikhoan);
         string Update(SinhVienDTO model, string taikhoan);
         string Delete(string malop, string taikhoan);

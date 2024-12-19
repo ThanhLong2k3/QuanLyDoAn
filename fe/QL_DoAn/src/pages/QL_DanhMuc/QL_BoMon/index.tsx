@@ -19,6 +19,7 @@ const QuanLyBoMon: React.FC = () => {
   const [duLieuLoc, setDuLieuLoc] = useState<BoMon[]>([]);
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
 
   const GetAll_BoMon = async () => {
     try {
@@ -39,11 +40,17 @@ const QuanLyBoMon: React.FC = () => {
     }
   };
 
+  const dongModal=()=>{
+    setHienModal(false);
+    setIsEditing(false);
+  }
+
   const hienThiModal = (banGhi?: BoMon) => {
     form.resetFields();
     if (banGhi) {
       form.setFieldsValue(banGhi);
       setKeyDangSua(banGhi.maBoMon);
+      setIsEditing(true);
     } else {
       setKeyDangSua(null);
     }
@@ -175,12 +182,12 @@ const QuanLyBoMon: React.FC = () => {
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}
-        onCancel={() => setHienModal(false)}
+        onCancel={dongModal}
         keyDangSua={keyDangSua}
         add_Titel="Thêm bộ môn mới"
         update_Titel="Chỉnh sửa bộ môn"
       >
-        <FormBoMon formdulieu={form} />
+        <FormBoMon  formdulieu={form} isEditing={isEditing} />
       </ReusableModal>
     </div>
   );

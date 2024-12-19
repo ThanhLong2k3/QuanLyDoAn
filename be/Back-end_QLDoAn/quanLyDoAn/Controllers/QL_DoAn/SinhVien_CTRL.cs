@@ -16,7 +16,7 @@ namespace quanLyDoAn.Controllers.QL_DoAn
         }
         [Route("getall")]
         [HttpGet]
-        public List<SinhVienDTO> Getall()
+        public List<V_SinhVienDTO> Getall()
         {
             return _SinhVienBLL.GetAll();
         }

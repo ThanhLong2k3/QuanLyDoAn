@@ -19,7 +19,7 @@ const QuanLyHocVi: React.FC = () => {
   const [duLieuLoc, setDuLieuLoc] = useState<HocVi[]>([]);
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const [isEditing, setIsEditing] = useState(false);
   const GetALL_HocVi = async () => {
     try {
       setLoading(true);
@@ -38,11 +38,15 @@ const QuanLyHocVi: React.FC = () => {
       setLoading(false);
     }
   };
-
+  const dongModal=()=>{
+    setHienModal(false);
+    setIsEditing(false);
+  }
   const hienThiModal = (banGhi?: HocVi) => {
     form.resetFields();
     if (banGhi) {
       form.setFieldsValue(banGhi);
+      setIsEditing(true);
       setKeyDangSua(banGhi.maHocVi);
     } else {
       setKeyDangSua(null);
@@ -181,12 +185,12 @@ const QuanLyHocVi: React.FC = () => {
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}
-        onCancel={() => setHienModal(false)}
+        onCancel={dongModal}
         keyDangSua={keyDangSua}
         add_Titel="Thêm Học vị mới"
         update_Titel="Chỉnh sửa Học vị"
       >
-        <FormHocVi formdulieu={form} />
+        <FormHocVi formdulieu={form} isEditing={isEditing} />
       </ReusableModal>
     </div>
   );
