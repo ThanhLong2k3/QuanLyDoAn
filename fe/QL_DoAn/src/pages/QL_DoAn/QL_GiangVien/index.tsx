@@ -20,7 +20,7 @@ export default function QuanLygiangvien() {
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [timKiem, setTimKiem] = useState('');
   const [loading, setLoading] = useState(true);
-
+  const [isEditing, setIsEditing] = useState(false);
   useEffect(() => {
     document.title = 'Quản lý cán bộ, giảng viên'
     getAllGiangVien()
@@ -43,12 +43,16 @@ export default function QuanLygiangvien() {
     await delGiangVien(maGiangVien, getAllGiangVien);
     
   };
-
+  const dongModal=()=>{
+    setHienModal(false);
+    setIsEditing(false);
+  }
   const hienThiModal = useCallback(
     (banGhi?: GiangVien) => {
       debugger
       form.resetFields();
       if (banGhi) {
+        setIsEditing(true);
         const ngaySinhValue = banGhi.ngaySinh ? moment(banGhi.ngaySinh) : null;
         form.setFieldsValue({ ...banGhi, ngaySinh: ngaySinhValue });
         setKeyDangSua(banGhi.maGiangVien);
@@ -201,12 +205,12 @@ export default function QuanLygiangvien() {
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}
-        onCancel={() => setHienModal(false)}
+        onCancel={dongModal}
         keyDangSua={keyDangSua}
         add_Titel="Thêm cán bộ, giảng viên"
         update_Titel="Sửa cán bộ, giảng viên "
       >
-        <FormGiangVien formdulieu={form} />
+        <FormGiangVien formdulieu={form} isEditing={isEditing}/>
       </ReusableModal>
     </div>
   )

@@ -3,6 +3,7 @@ import { Form, Input, DatePicker, FormInstance, Switch, Row, Col, Select } from 
 
 interface ReusableFormProps {
   formdulieu: FormInstance<any> | undefined;
+  isEditing:Boolean;
 }
 
 const { Option } = Select;
@@ -10,7 +11,7 @@ const years = Array.from({ length: 10 }, (_, i) => 2021 + i).map(
   (year) => `${year}-${year + 1}`
 );
 
-export const FormDotLamDoAn: React.FC<ReusableFormProps> = ({ formdulieu }) => (
+export const FormDotLamDoAn: React.FC<ReusableFormProps> = ({ formdulieu,isEditing }) => (
   <Form
     form={formdulieu}
     layout="vertical"
@@ -30,7 +31,7 @@ export const FormDotLamDoAn: React.FC<ReusableFormProps> = ({ formdulieu }) => (
           label="Mã đợt"
           rules={[{ required: true, message: "Vui lòng nhập mã đợt!" }]}
         >
-          <Input />
+          <Input disabled={isEditing===true}/>
         </Form.Item>
       </Col>
       <Col span={12}>

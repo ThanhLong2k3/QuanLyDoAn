@@ -5,9 +5,10 @@ import { Lop } from '../../InterFace/index';
 
 interface SinhVienFormProps {
   formdulieu: FormInstance<any> | undefined;
+  isEditing:Boolean;
 }
 
-export const SinhVienForm: React.FC<SinhVienFormProps> = ({ formdulieu }) => {
+export const SinhVienForm: React.FC<SinhVienFormProps> = ({ formdulieu,isEditing }) => {
   const [lop, setLop] = useState<Lop[]>([]);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export const SinhVienForm: React.FC<SinhVienFormProps> = ({ formdulieu }) => {
             label="Mã sinh viên"
             rules={[{ required: true, message: "Vui lòng nhập mã sinh viên!" }]}
           >
-            <Input type="number" />
+            <Input type="number" disabled={isEditing===true}/>
           </Form.Item>
         </Col>
         <Col span={12}>

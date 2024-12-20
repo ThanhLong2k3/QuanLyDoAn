@@ -19,6 +19,7 @@ export default function QuanLySinhVien() {
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [timKiem, setTimKiem] = useState('');
   const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
   useEffect(()=>{
     document.title="Quản lý sinh viên";
     getall_SinhVienSinhVien();
@@ -37,10 +38,14 @@ export default function QuanLySinhVien() {
     }
   }
 
-
+  const dongModal=()=>{
+    setHienModal(false);
+    setIsEditing(false);
+  }
   const hienThiModal = (banGhi?: SinhVien) => {
     form.resetFields();
     if (banGhi) {
+      setIsEditing(true);
         const ngaySinhValue = banGhi.ngaySinh ? moment(banGhi.ngaySinh) : null;
         form.setFieldsValue({ ...banGhi, ngaySinh: ngaySinhValue });
         setKeyDangSua(banGhi.maSinhVien);
@@ -193,12 +198,12 @@ export default function QuanLySinhVien() {
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}
-        onCancel={() => setHienModal(false)}
+        onCancel={dongModal}
         keyDangSua={keyDangSua}
         add_Titel="Thêm Sinh Viên Mới"
         update_Titel="Chỉnh sửa Sinh Viên"
       >
-        <SinhVienForm formdulieu={form} />
+        <SinhVienForm formdulieu={form} isEditing={isEditing} />
       </ReusableModal>
     </div>
   )

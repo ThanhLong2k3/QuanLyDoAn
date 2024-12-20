@@ -119,7 +119,24 @@ CREATE TABLE dotLamDoAn (
     trangThai BIT,
     IsDeleted int
 )
-
+CREATE TABLE QuanLyDeTaiGV(
+	MaDeTai INT IDENTITY(1,1) PRIMARY KEY,
+	TenDeTai NVARCHAR(MAX) NOT NULL,
+	MaDot VARCHAR(50) FOREIGN KEY REFERENCES dotLamDoAn(maDot) ON UPDATE CASCADE,
+	MoTa NVARCHAR(MAX), 
+	TrangThai INT,
+	IsDelete INT
+)
+CREATE TABLE GiangVien_DeTai(
+	MaGiangVien NVARCHAR(50) FOREIGN KEY REFERENCES giangVien(maGiangVien) ON UPDATE CASCADE,
+	MaDeTai INT FOREIGN KEY REFERENCES QuanLyDeTaiGV(MaDeTai) ON UPDATE CASCADE,
+	PRIMARY KEY(MaGiangVien,MaDeTai)
+)
+CREATE TABLE SinhVien_DeTai(
+	MaSinhVien NVARCHAR(50) FOREIGN KEY REFERENCES sinhVien(maSinhVien) ON UPDATE CASCADE,
+	MaDeTai INT FOREIGN KEY REFERENCES QuanLyDeTaiGV(MaDeTai) ON UPDATE CASCADE,
+	PRIMARY KEY(MaSinhVien,MaDeTai)
+)
 CREATE TABLE QuanLyDeTai(
 	MaDeTai INT IDENTITY(1,1) PRIMARY KEY ,
 	TenDeTai NVARCHAR(MAX) NOT NULL,
@@ -2286,14 +2303,133 @@ BEGIN
 END
 GO
 
+GO
 
 
-EXEC Srearch_DeTai_TenDot_MaGiangVien_MaLop @MaDot='DOT1'
-select*from Khoa
 
-SELECT *FROM TrangThaiLamDoAn
-INSERT INTO TrangThaiLamDoAn VALUES (N'	Chưa nhận đề tài',N'Chưa nhận đề tài',1,1)
 
-SELECT*FROM nguoiDung
 
-EXEC ThemNguoiDung @taiKhoan='ADMIN',@hoTen=N'Phạm Thanh Long',@ngaySinh='2003-04-30',@gioiTinh='Nam',@email='thanhlongmhhy2003004@gmail.com',@moTa='Admin'
+CREATE OR ALTER PROCEDURE sp_ThemDeTai_SV
+    @TenDeTai NVARCHAR(MAX),
+    @MaDot VARCHAR(50),
+	@MaSinhVien NVARCHAR(50)=NULL,
+	@MaGiangVien NVARCHAR(50)=NULL,
+    @MoTa NVARCHAR(MAX) = NULL,
+    @TaiKhoan NVARCHAR(50),
+	@TrangThai int
+AS
+BEGIN
+    DECLARE @CoQuyenThem BIT = 0;
+    
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpq ON ndnq.maNhomQuyen = nqpq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @TaiKhoan AND nqpq.maQuyen = 'ADD_DEXUATDETAI_SV'
+    )
+    BEGIN
+        SET @CoQuyenThem = 1;
+    END
+    
+    IF @CoQuyenThem = 1
+    BEGIN
+        IF @TenDeTai IS NULL OR @TenDeTai = ''
+        BEGIN
+            SELECT N'2' AS ThongBao; 
+            RETURN;
+        END
+        
+     
+        IF NOT EXISTS (SELECT 1 FROM dotLamDoAn WHERE maDot = @MaDot AND choPhepGiangVienSuaDeTai=1)
+        BEGIN
+            SELECT N'3' AS ThongBao; 
+            RETURN;
+        END
+		IF @MaSinhVien IS NOT NULL AND @MaGiangVien IS NOT NULL
+BEGIN
+    INSERT INTO PhanCong_HuongDan VALUES (@MaDot, @MaSinhVien, @MaGiangVien, 1);
+END
+        INSERT INTO QuanLyDeTaiGV (
+            TenDeTai, 
+            maDot, 
+            MoTa,
+			TrangThai,
+			IsDelete
+        )
+        VALUES (
+            @TenDeTai, 
+            @MaDot, 
+            @MoTa,
+			@TrangThai,
+            1
+        );
+        INSERT INTO SinhVien_DeTai (@MaSinhVien,@MaDeTai);
+        SELECT N'1' AS ThongBao;
+    END
+    ELSE
+    BEGIN
+        SELECT N'0' AS ThongBao;
+    END
+END;
+GO
+
+CREATE OR ALTER PROCEDURE sp_ThemDeTai_GV
+    @TenDeTai NVARCHAR(MAX),
+    @MaDot VARCHAR(50),
+	@MaGiangVien NVARCHAR(50)=NULL,
+    @MoTa NVARCHAR(MAX) = NULL,
+    @TaiKhoan NVARCHAR(50),
+	@TrangThai int
+AS
+BEGIN
+    DECLARE @CoQuyenThem BIT = 0;
+    
+    IF EXISTS (
+        SELECT 1
+        FROM nguoiDung_nhomQuyen AS ndnq
+        JOIN nhomQuyen_phanQuyen AS nqpq ON ndnq.maNhomQuyen = nqpq.maNhomQuyen
+        WHERE ndnq.taiKhoan = @TaiKhoan AND nqpq.maQuyen = 'ADD_DETAI'
+    )
+    BEGIN
+        SET @CoQuyenThem = 1;
+    END
+    
+    IF @CoQuyenThem = 1
+    BEGIN
+        IF @TenDeTai IS NULL OR @TenDeTai = ''
+        BEGIN
+            SELECT N'2' AS ThongBao; 
+            RETURN;
+        END
+        
+     
+        IF NOT EXISTS (SELECT 1 FROM dotLamDoAn WHERE maDot = @MaDot AND choPhepGiangVienSuaDeTai=1)
+        BEGIN
+            SELECT N'3' AS ThongBao; 
+            RETURN;
+        END
+        INSERT INTO QuanLyDeTaiGV (
+            TenDeTai, 
+            maDot, 
+            MoTa,
+			TrangThai,
+			IsDelete
+        )
+        VALUES (
+            @TenDeTai, 
+            @MaDot, 
+            @MoTa,
+			@TrangThai,
+            1
+        );
+        INSERT INTO GiangVien_DeTai(@MaGiangVien,@MaDeTai);
+	
+        SELECT N'1' AS ThongBao;
+    END
+    ELSE
+    BEGIN
+        SELECT N'0' AS ThongBao;
+    END
+END;
+GO
+

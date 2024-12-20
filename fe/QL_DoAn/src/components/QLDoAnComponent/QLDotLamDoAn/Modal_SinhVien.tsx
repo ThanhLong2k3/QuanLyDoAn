@@ -37,6 +37,11 @@ const Modal_SinhVien_Dot: React.FC<ModalThemSinhVien> = ({
   
   const columns = [
     {
+      title: 'Mã sinh viên',
+      dataIndex: 'maSinhVien',
+      key: 'maSinhVien',
+    },
+    {
       title: 'Mã Lớp',
       dataIndex: 'maLop',
       key: 'maLop',
@@ -67,6 +72,11 @@ const Modal_SinhVien_Dot: React.FC<ModalThemSinhVien> = ({
   ];
 
   const columnsSelected = [
+    {
+      title: 'Mã sinh viên',
+      dataIndex: 'maSinhVien',
+      key: 'maSinhVien',
+    },
     {
         title: 'Mã Lớp',
         dataIndex: 'maLop',
