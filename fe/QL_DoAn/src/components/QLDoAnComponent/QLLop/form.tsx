@@ -5,9 +5,10 @@ const { Option } = Select;
 
 interface ReusableFormProps {
   formdulieu: FormInstance<any> | undefined;
+  isEditing:Boolean;
 }
 
-export const FormLop: React.FC<ReusableFormProps> = ({ formdulieu }) => (
+export const FormLop: React.FC<ReusableFormProps> = ({ formdulieu,isEditing }) => (
   <Form form={formdulieu} layout="vertical" >
     <Row gutter={16}>
       <Col span={12}>
@@ -16,7 +17,7 @@ export const FormLop: React.FC<ReusableFormProps> = ({ formdulieu }) => (
           label="Mã lớp"
           rules={[{ required: true, message: 'Vui lòng nhập mã lớp!' }]}
         >
-          <Input />
+          <Input disabled={isEditing===true}/>
         </Form.Item>
       </Col>
       <Col span={12}>

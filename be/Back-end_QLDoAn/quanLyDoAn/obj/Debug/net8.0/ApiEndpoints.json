@@ -1719,6 +1719,146 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QuanLyDeTai_CTRL",
+    "Method": "CreateItem",
+    "RelativePath": "api/QuanLyDeTai_CTRL/create-DeTai-GV",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.QL_DeTai_DTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QuanLyDeTai_CTRL",
+    "Method": "Create_SV",
+    "RelativePath": "api/QuanLyDeTai_CTRL/create-DeTai-SV",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.QL_DeTai_DTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QuanLyDeTai_CTRL",
+    "Method": "DeleteItem",
+    "RelativePath": "api/QuanLyDeTai_CTRL/delete-DeTai",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ma",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QuanLyDeTai_CTRL",
+    "Method": "Getall",
+    "RelativePath": "api/QuanLyDeTai_CTRL/getall",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.QL_DeTai_DTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QuanLyDeTai_CTRL",
+    "Method": "Search_DeTai",
+    "RelativePath": "api/QuanLyDeTai_CTRL/Search_DeTai",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "maDot",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "maGiangVien",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "maLop",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.QL_DeTai_DTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QuanLyDeTai_CTRL",
+    "Method": "UpdateItem",
+    "RelativePath": "api/QuanLyDeTai_CTRL/update-DeTai",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.QL_DeTai_DTO",
+        "IsRequired": true
+      },
+      {
+        "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.SinhVien_CTRL",
     "Method": "CreateItem",
     "RelativePath": "api/SinhVien_CTRL/create-SinhVien",

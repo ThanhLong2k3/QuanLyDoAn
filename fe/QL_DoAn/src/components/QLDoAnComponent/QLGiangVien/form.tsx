@@ -12,9 +12,10 @@ const { Option } = Select;
 interface ReusableFormProps {
   formdulieu: FormInstance<any>;
   initialValues?: any;
+  isEditing:Boolean;
 }
 
-export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu, initialValues }) => {
+export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu, initialValues,isEditing }) => {
   const [hocHam, setHocHam] = useState<HocHam[]>([]);
   const [hocVi, setHocVi] = useState<HocVi[]>([]);
   const [boMon, setBoMon] = useState<BoMon[]>([]);
@@ -73,7 +74,7 @@ export const FormGiangVien: React.FC<ReusableFormProps> = ({ formdulieu, initial
             label="Mã giảng viên"
             rules={[{ required: true, message: "Vui lòng nhập mã giảng viên!" }]}
           >
-            <Input />
+            <Input disabled={isEditing===true}/>
           </Form.Item>
         </Col>
         <Col span={12}>

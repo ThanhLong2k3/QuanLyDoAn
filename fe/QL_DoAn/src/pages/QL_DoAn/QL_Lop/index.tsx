@@ -18,6 +18,7 @@ export default function QuanLyLop() {
   const [cacDongDaChon, setCacDongDaChon] = useState<React.Key[]>([]);
   const [timKiem, setTimKiem] = useState('');
   const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
   useEffect(() => {
     document.title = 'Quản lý lớp'
     getAllLop()
@@ -40,11 +41,15 @@ export default function QuanLyLop() {
     await delLop(maLop, getAllLop);
     
   };
-
+  const dongModal=()=>{
+    setHienModal(false);
+    setIsEditing(false);
+  }
   const hienThiModal = useCallback(
     (banGhi?: Lop) => {
       form.resetFields();
       if (banGhi) {
+        setIsEditing(true);
         form.setFieldsValue(banGhi);
         setKeyDangSua(banGhi.maLop);
       } else {
@@ -193,12 +198,12 @@ export default function QuanLyLop() {
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}
-        onCancel={() => setHienModal(false)}
+        onCancel={dongModal}
         keyDangSua={keyDangSua}
         add_Titel="Thêm Lớp Mới"
         update_Titel="Chỉnh sửa Lớp"
       >
-        <FormLop formdulieu={form} />
+        <FormLop formdulieu={form} isEditing={isEditing} />
       </ReusableModal>
     </div>
   )

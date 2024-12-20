@@ -27,6 +27,8 @@ export default function QuanLyDotLamDoAn() {
   const [form] = Form.useForm();
   const [maDot_on,setMaDotOn]=useState("");
   const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+
 
   const [hienmodalSinhVien,setHienModalSinhVien]=useState(false);
   const[SinhVien,setSinhVien]=useState<DotLamDoAn_SinhVien[]>([]);
@@ -48,10 +50,14 @@ export default function QuanLyDotLamDoAn() {
       setLoading(false);
     }
   }
-
+  const dongModal=()=>{
+    setHienModal(false);
+    setIsEditing(false);
+  }
   const hienThiModal = (banGhi?: DotLamDoAn) => {
     form.resetFields();
     if (banGhi) {
+      setIsEditing(true);
       const ngayBatDau = banGhi.ngayBatDau ? moment(banGhi.ngayBatDau) : null;
       form.setFieldsValue({ ...banGhi, ngayBatDau: ngayBatDau });
       setMaDot(banGhi.maDot);
@@ -292,12 +298,12 @@ export default function QuanLyDotLamDoAn() {
       <ReusableModal
         visible={hienModal}
         onOk={xuLyDongY}
-        onCancel={() => setHienModal(false)}
+        onCancel={dongModal}
         keyDangSua={maDot}
         add_Titel="Thêm đợt làm đồ án"
         update_Titel="Sửa đợt làm đồ án"
       >
-        <FormDotLamDoAn formdulieu={form} />
+        <FormDotLamDoAn formdulieu={form}  isEditing={isEditing} />
       </ReusableModal>
     </div>
   )
