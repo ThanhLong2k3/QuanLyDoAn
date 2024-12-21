@@ -39,6 +39,8 @@ export const Sidebar_router: { [key: string]: SidebarItem } = {
   HOIDONG: { KEY: '4', ICON: <BookOutlined />, LINK: "ROUTERS.PATH.SUPERVISORS.PATH", TEXT: "Quản lý hội đồng", PERMISSION: ["MANAGE_HOIDONG"] },
   SINHVIEN: { KEY: '5', ICON: <UserOutlined />, LINK:  ROUTERS.DOAN.QL_SINHVIEN.PATH, TEXT: "Quản lý sinh viên", PERMISSION: ["ADD_SINHVIEN","UP_SINHVIEN","DEL_SINHVIEN"] },
   DOTLAMDOAN: { KEY: '6', ICON: <CalendarOutlined />, LINK: ROUTERS.DOAN.QL_DOTLAMDOAN.PATH, TEXT: 'Đợt làm đồ án tốt nghiệp', PERMISSION: ["ADD_DOTLAMDOAN","DEL_DOTLAMDOAN","UP_DOTLAMDOAN"] },
+  QUANLYDETAI: { KEY: '17', ICON: <OrderedListOutlined />, LINK:ROUTERS.DOAN.QL_DETAI.PATH, TEXT: "Quản lý đề tài", PERMISSION: ["ADD_DETAI"] },
+
   LISTSV: { KEY: '9', ICON: <OrderedListOutlined />, LINK: "", TEXT: "Danh sách sinh viên phản biện và hội đồng", PERMISSION: ["VIEW_LISTSV"] },
   REVIEWCOMMENT: { KEY: '10', ICON: <FileTextOutlined />, LINK: "", TEXT: "Giảng viên đánh giá, nhận xét báo cáo", PERMISSION: ["REVIEW_COMMENT"] },
   GV_COMFILMPROJECT: { KEY: '11', ICON: <CheckCircleOutlined />, LINK: "", TEXT: "Giảng viên xác nhận sinh viên đăng ký đề tài", PERMISSION: [""] },

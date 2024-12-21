@@ -17,14 +17,7 @@ import { Form_DeXuatDeTai_SV } from "../../../components/QLDoAnComponent/DangKyD
 import { useState, useEffect } from "react";
 import { mockDeTaiData } from "../../../components/QLDoAnComponent/DangKyDeTai_SV/mockdata";
 import { COLUMS } from "../../../components/QLDoAnComponent/DangKyDeTai_SV/Table_DangKyDeTai";
-import {
-  GetAll_MaDot_TK,
-  add_DeTaiDoAn,
-  del_DeTaiDoAn,
-  edit_DeTaiDoAn,
-} from "../../../sevices/Api/QL_DoAn/QL_DeTaiDoAn/DeXuatDeTai_SV";
-import { addPhanCong } from "../../../sevices/Api/QL_DoAn/PhanCongHuongDan-servives";
-
+import {DeXuatDeTai,DangKyDeTai_SV,Get_MaDot_TK,get_detai_madot_sv} from '../../../sevices/Api/QL_DoAn/QL_DeTaiDoAn/QL_DeTai'
 import { getGiangVien_maDot } from "../../../sevices/Api/QL_DoAn/QL_DotLamDoAn/GiangVien_Dot-servives";
 
 const { Title } = Typography;
@@ -34,7 +27,16 @@ interface GiangVien {
   soLuongHuongDan: number;
   soLuongDangHuongDan: number;
 }
-
+interface DeTai_SinhVien{
+        maDeTai:string,
+        tenDeTai:string,
+        maGiangVien:string,
+        tenGiangVien:string,
+        email:string,
+        sDT:string,
+        moTa:string,
+        huongdan:string
+}
 export default function DangKyDeTai() {
   var taiKhoan = localStorage.getItem("taiKhoan") || "";
 
@@ -45,11 +47,11 @@ export default function DangKyDeTai() {
   const [loading, setLoading] = useState(true);
   const [duLieuLoc, setDuLieuLoc] = useState(mockDeTaiData);
   const [maDot, setMaDot] = useState<string>("");
-  const [namApDung, setnamApDung] = useState<string>("a");
   const [giangVienInDot, setGiangVienInDot] = useState<GiangVien[]>([]);
+  const [DeTaDoAn,setDeTaiDoAn]=useState<DeTai_SinhVien[]>([]);
 
   useEffect(() => {
-    debugger;
+    document.title = 'Đăng ký đề tài';
     getall_data();
   },[]);
 
@@ -57,9 +59,10 @@ export default function DangKyDeTai() {
   const getall_data = async () => {
     try {
       setLoading(true);
-      const DotLamDoAn = await GetAll_MaDot_TK();
+      const DotLamDoAn = await Get_MaDot_TK();
       setMaDot(DotLamDoAn.maDot || "");
-      setnamApDung(DotLamDoAn.namApDung);
+      const DeTai=await get_detai_madot_sv(DotLamDoAn.maDot);
+      setDeTaiDoAn(DeTai);
       const ListGiangVien = await getGiangVien_maDot(DotLamDoAn.maDot);
       setGiangVienInDot(ListGiangVien);
      
@@ -80,24 +83,24 @@ export default function DangKyDeTai() {
   const xuLyDongY = async () => {
     const giatri = await form.validateFields();
     const data_DeTai = {
-      maDeTai: 0,
+      maDeTai: 'A',
       tenDeTai: giatri.tenDeTai,
-      trangThai: false,
       maDot: maDot,
       hinhThucBaoCaoBaoVe: giatri.hinhThucBaoCaoBaoVe,
       maGiangVien: giatri.maGiangVien,
-      namHocApDung: namApDung,
       maSinhVien: taiKhoan,
-      moTa:giatri.moTa,
+      trangThai: 0,
+      nguoiDeXuat: taiKhoan,
+      moTa: giatri.moTa
     };
-    await add_DeTaiDoAn( data_DeTai, getall_data);
+    await DeXuatDeTai( data_DeTai, getall_data);
     setHienModal(false);
     form.resetFields();
     setKeyDangSua(null);
   };
 
-  const xuLyDangKy = (maDeTai: string) => {
-    message.success(`Đăng ký đề tài ${maDeTai} thành công!`);
+  const xuLyDangKy =async (banghi:DeTai_SinhVien) => {
+    await DangKyDeTai_SV(banghi.maDeTai,taiKhoan,getall_data);
   };
 
   const handleSearch = (value: string) => {
@@ -156,8 +159,8 @@ export default function DangKyDeTai() {
           </Row>
           <Table
             columns={COLUMS(xuLyDangKy)}
-            dataSource={duLieuLoc}
-            rowKey="MaDeTai"
+            dataSource={DeTaDoAn}
+            rowKey="maDeTai"
             scroll={{ x: 768 }}
             loading={loading}
             className="shadow-sm rounded-md overflow-hidden"

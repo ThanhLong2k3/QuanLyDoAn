@@ -1,0 +1,5 @@
+trang thái đề tài:
+0:chờ giảng viên duyệt
+1:chờ trưởng bộ môn duyệt
+2:đã duyệt
+4:từ chối

@@ -13,6 +13,14 @@ namespace quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn
         {
             _DotLamDoAm_BLL = DotLamDoAmBLL;
         }
+
+        [Route("getByTaiKhoan")]
+        [HttpGet]
+        public List<DotLamDoAnDTO> Get_Dot_TK(string tk)
+        {
+            return _DotLamDoAm_BLL.Get_Dot_TK(tk);
+        }
+
         [Route("getall")]
         [HttpGet]
         public List<DotLamDoAnDTO> Getall()

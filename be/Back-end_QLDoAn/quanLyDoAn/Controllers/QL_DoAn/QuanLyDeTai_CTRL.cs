@@ -1,4 +1,5 @@
 ﻿using BLL.InterFace.QL_DoAn;
+using BLL.QL_NguoiDung;
 using DTO.QL_DoAn;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,18 +14,19 @@ namespace quanLyDoAn.Controllers.QL_DoAn
         {
             _DeTaiBLL = DeTaiBLL;
         }
-        [Route("Search_DeTai")]
+
+        [Route("get_detai_madot_SV")]
         [HttpGet]
-        public List<QL_DeTai_DTO> Search_DeTai(string? maDot, string? maGiangVien, string? maLop)
+        public List<V_QL_DETAI_SinhVien> GET_DETAI_MADOT_SinhVien(string maDot)
         {
-            return _DeTaiBLL.Search_DeTai(maDot, maGiangVien, maLop);
+            return _DeTaiBLL.GET_DETAI_MADOT_SinhVien(maDot);
         }
 
-        [Route("getall")]
+        [Route("get_detai_madot")]
         [HttpGet]
-        public List<QL_DeTai_DTO> Getall()
+        public List<V_QL_DETAI_GV> GET_DETAI_MADOT(string ? maDot,string?tenDeTai)
         {
-            return _DeTaiBLL.GetAll();
+            return _DeTaiBLL.GET_DETAI_MADOT(maDot,tenDeTai);
         }
 
         [Route("create-DeTai-GV")]
@@ -35,27 +37,34 @@ namespace quanLyDoAn.Controllers.QL_DoAn
             return Ok(result);
         }
 
-        [Route("create-DeTai-SV")]
+        [Route("DeXuatDeTai")]
         [HttpPost]
         public IActionResult Create_SV([FromBody] QL_DeTai_DTO model, string taikhoan)
         {
             string result = _DeTaiBLL.Create_SV(model, taikhoan);
             return Ok(result);
         }
-        [Route("update-DeTai")]
+        [Route("DangKyDeTai_sv")]
         [HttpPost]
-        public IActionResult UpdateItem([FromBody] QL_DeTai_DTO model, string taikhoan)
+        public IActionResult DangKyDeTai_SV( string MaDeTai,string MaSinhVien, string taikhoan)
         {
-            string result = _DeTaiBLL.Update(model, taikhoan);
+            string result = _DeTaiBLL.DangKyDeTai_SV(MaDeTai,MaSinhVien, taikhoan);
             return Ok(result);
         }
-        [Route("delete-DeTai")]
-        [HttpDelete]
-        public IActionResult DeleteItem(int ma, string taikhoan)
+        [Route("UPDATE_DETAI_GV")]
+        [HttpPost]
+        public IActionResult UPDATE([FromBody] QL_DeTai_DTO model, string taikhoan)
         {
-            string result = _DeTaiBLL.Delete(ma, taikhoan);
+            string result = _DeTaiBLL.updateDeTai(model, taikhoan);
             return Ok(result);
         }
 
+        [Route("delete-DeTai")]
+        [HttpDelete]
+        public IActionResult DeleteItem(string maDeTai, string taikhoan)
+        {
+            string result = _DeTaiBLL.DeleteDeTai(maDeTai, taikhoan);
+            return Ok(result);
+        }
     }
 }

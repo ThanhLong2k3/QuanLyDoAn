@@ -4,11 +4,15 @@ namespace DAL.InterFace.QL_DoAn
 {
     public interface IQuanLyDeTai_Repository
     {
-        public List<QL_DeTai_DTO> Search_DeTai(string? maDot, string? maGiangVien, string? maLop);
-        public List<QL_DeTai_DTO> GetAll();
+        List<V_QL_DETAI_SinhVien> GET_DETAI_MADOT_SinhVien(string maDot);
+
+        List<V_QL_DETAI_GV> GET_DETAI_MADOT(string? maDot,string ?tenDeTai);
+        string updateDeTai(QL_DeTai_DTO model, string taikhoan);
         string Create_SV(QL_DeTai_DTO model, string taikhoan);
+        string DangKyDeTai_SV(string MaDeTai,string MaSinhVien, string taikhoan);
+
         string Create_GV(QL_DeTai_DTO model, string taikhoan);
-        string Update(QL_DeTai_DTO model, string taikhoan);
-        string Delete(int maDeTai, string taikhoan);
+        string DeleteDeTai(string maDeTai, string taikhoan);
+
     }
 }

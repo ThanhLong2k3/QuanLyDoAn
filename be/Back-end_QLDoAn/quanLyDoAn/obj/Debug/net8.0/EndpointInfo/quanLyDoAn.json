@@ -744,6 +744,53 @@
         }
       }
     },
+    "/api/DotLamDoAn_CTRL/getByTaiKhoan": {
+      "get": {
+        "tags": [
+          "DotLamDoAn_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "tk",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DotLamDoAnDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DotLamDoAnDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DotLamDoAnDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/DotLamDoAn_CTRL/getall": {
       "get": {
         "tags": [
@@ -3040,7 +3087,54 @@
         }
       }
     },
-    "/api/QuanLyDeTai_CTRL/Search_DeTai": {
+    "/api/QuanLyDeTai_CTRL/get_detai_madot_SV": {
+      "get": {
+        "tags": [
+          "QuanLyDeTai_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "maDot",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_QL_DETAI_SinhVien"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_QL_DETAI_SinhVien"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_QL_DETAI_SinhVien"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/QuanLyDeTai_CTRL/get_detai_madot": {
       "get": {
         "tags": [
           "QuanLyDeTai_CTRL"
@@ -3054,14 +3148,7 @@
             }
           },
           {
-            "name": "maGiangVien",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "maLop",
+            "name": "tenDeTai",
             "in": "query",
             "schema": {
               "type": "string"
@@ -3076,7 +3163,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/QL_DeTai_DTO"
+                    "$ref": "#/components/schemas/V_QL_DETAI_GV"
                   }
                 }
               },
@@ -3084,7 +3171,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/QL_DeTai_DTO"
+                    "$ref": "#/components/schemas/V_QL_DETAI_GV"
                   }
                 }
               },
@@ -3092,45 +3179,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/QL_DeTai_DTO"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/QuanLyDeTai_CTRL/getall": {
-      "get": {
-        "tags": [
-          "QuanLyDeTai_CTRL"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/QL_DeTai_DTO"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/QL_DeTai_DTO"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/QL_DeTai_DTO"
+                    "$ref": "#/components/schemas/V_QL_DETAI_GV"
                   }
                 }
               }
@@ -3179,7 +3228,7 @@
         }
       }
     },
-    "/api/QuanLyDeTai_CTRL/create-DeTai-SV": {
+    "/api/QuanLyDeTai_CTRL/DeXuatDeTai": {
       "post": {
         "tags": [
           "QuanLyDeTai_CTRL"
@@ -3219,7 +3268,42 @@
         }
       }
     },
-    "/api/QuanLyDeTai_CTRL/update-DeTai": {
+    "/api/QuanLyDeTai_CTRL/DangKyDeTai_sv": {
+      "post": {
+        "tags": [
+          "QuanLyDeTai_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "MaDeTai",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "MaSinhVien",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QuanLyDeTai_CTRL/UPDATE_DETAI_GV": {
       "post": {
         "tags": [
           "QuanLyDeTai_CTRL"
@@ -3266,11 +3350,10 @@
         ],
         "parameters": [
           {
-            "name": "ma",
+            "name": "maDeTai",
             "in": "query",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           },
           {
@@ -3284,6 +3367,44 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SinhVien_CTRL/get_By_Id": {
+      "get": {
+        "tags": [
+          "SinhVien_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/V_SinhVienDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V_SinhVienDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V_SinhVienDTO"
+                }
+              }
+            }
           }
         }
       }
@@ -3461,6 +3582,54 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SinhVien_CTRL/update-SinhVien_SinhVien": {
+      "post": {
+        "tags": [
+          "SinhVien_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Up_SV_SINHVIENDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Up_SV_SINHVIENDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Up_SV_SINHVIENDTO"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -3969,14 +4138,18 @@
         "type": "object",
         "properties": {
           "maDeTai": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "nullable": true
           },
           "tenDeTai": {
             "type": "string",
             "nullable": true
           },
-          "maSinhVien": {
+          "maDot": {
+            "type": "string",
+            "nullable": true
+          },
+          "hinhThucBaoCaoBaoVe": {
             "type": "string",
             "nullable": true
           },
@@ -3984,10 +4157,15 @@
             "type": "string",
             "nullable": true
           },
-          "trangThai": {
-            "type": "boolean"
+          "maSinhVien": {
+            "type": "string",
+            "nullable": true
           },
-          "maDot": {
+          "trangThai": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nguoiDeXuat": {
             "type": "string",
             "nullable": true
           },
@@ -4026,6 +4204,36 @@
             "nullable": true
           },
           "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Up_SV_SINHVIENDTO": {
+        "type": "object",
+        "properties": {
+          "maSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "sDT": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngaySinh": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "gioiTinh": {
             "type": "string",
             "nullable": true
           }
@@ -4117,6 +4325,82 @@
         },
         "additionalProperties": false
       },
+      "V_QL_DETAI_GV": {
+        "type": "object",
+        "properties": {
+          "stt": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenDeTai": {
+            "type": "string",
+            "nullable": true
+          },
+          "maDot": {
+            "type": "string",
+            "nullable": true
+          },
+          "maDeTai": {
+            "type": "string",
+            "nullable": true
+          },
+          "hinhThucBaoCaoBaoVe": {
+            "type": "string",
+            "nullable": true
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          },
+          "sinhVienDangKy": {
+            "type": "string",
+            "nullable": true
+          },
+          "sinhVienDeXuat": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V_QL_DETAI_SinhVien": {
+        "type": "object",
+        "properties": {
+          "maDeTai": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenDeTai": {
+            "type": "string",
+            "nullable": true
+          },
+          "maGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          },
+          "sDT": {
+            "type": "string",
+            "nullable": true
+          },
+          "huongdan": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "V_SinhVienDTO": {
         "type": "object",
         "properties": {
@@ -4136,9 +4420,9 @@
             "type": "string",
             "format": "date-time"
           },
-          "maTrangThai": {
-            "type": "integer",
-            "format": "int32"
+          "tenTrangThai": {
+            "type": "string",
+            "nullable": true
           },
           "gioiTinh": {
             "type": "string",

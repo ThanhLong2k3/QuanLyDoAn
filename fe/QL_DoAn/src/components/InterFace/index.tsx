@@ -141,3 +141,13 @@ export interface QL_DeTaiDoAn{
   hinhThucBaoCaoBaoVe: string,
   moTa: string
 }
+
+export interface QL_DETAI_GV{
+  maDeTai: string,
+  tenDeTai: string,
+  trangThai: boolean,
+  maDot: string,
+  hinhThucBaoCaoBaoVe: string,
+  moTa: string
+}
+ 
