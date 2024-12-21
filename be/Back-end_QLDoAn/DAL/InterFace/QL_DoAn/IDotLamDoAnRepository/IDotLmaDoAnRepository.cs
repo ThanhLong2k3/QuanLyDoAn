@@ -11,7 +11,7 @@ namespace DAL.InterFace.QL_DoAn.IDotLamDoAnRepository
     {
         public List<DotLamDoAnDTO> GetAll();
         public List<DotLamDoAnDTO> GetBYID();
-
+        List<DotLamDoAnDTO> Get_Dot_TK(string tk);
         string Create(DotLamDoAnDTO model, string taikhoan);
         string Update(DotLamDoAnDTO model, string taikhoan);
         string Delete(string madot, string taikhoan);

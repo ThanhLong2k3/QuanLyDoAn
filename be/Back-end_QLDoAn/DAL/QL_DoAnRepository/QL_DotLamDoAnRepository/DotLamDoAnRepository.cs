@@ -18,6 +18,21 @@ namespace DAL.QL_DoAnRepository.QL_DotLamDoAnRepository
             _dbHelper = dbHelper;
         }
 
+        public List<DotLamDoAnDTO> Get_Dot_TK(string tk)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "GET_DOT_TAIKHOAN_GV", "@TaiKhoan",tk);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<DotLamDoAnDTO>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public List<DotLamDoAnDTO> GetAll()
         {
             string msgError = "";

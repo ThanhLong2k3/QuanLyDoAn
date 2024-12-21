@@ -1,18 +1,18 @@
 import { Button, Space, Popconfirm, Tooltip } from 'antd';
-import { EyeFilled } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import { ColumnType } from '../types';
 
 export const DangKyDeTai_Sv: ColumnType[] = [
     {
       title: 'Tên đề tài',
-      dataIndex: 'TenDeTai',
-      key: 'MaDeTai',
+      dataIndex: 'tenDeTai',
+      key: 'maDeTai',
       width: '20%',
     },
     {
       title: 'Tên giảng viên',
       dataIndex: 'tenGiangVien',
-      key: 'tenGiangVien',
+      key: 'maGiangVien',
       width: '15%',
     },
     {
@@ -29,15 +29,15 @@ export const DangKyDeTai_Sv: ColumnType[] = [
     },
     {
       title: 'Số lượng đang hướng dẫn',
-      dataIndex: 'dangHuongDan',
-      key: 'dangHuongDan',
+      dataIndex: 'huongdan',
+      key: 'huongdan',
       width: '15%',
     },
 ];
 
 const taoCotBang = (
   danhSachCot: Array<ColumnType>, 
-  xuLyDangKy: (maDeTai: string) => void
+  xuLyDangKy: (banghi:any) => void
 ) => {
   const cotCoBan = [...danhSachCot];
 
@@ -47,11 +47,15 @@ const taoCotBang = (
     width: '10%',
     render: (_: any, banGhi: any) => (
       <Space size="middle">
-        <Tooltip title="Đăng ký đề tài">
-          <Popconfirm title="Bạn có chắc chắn muốn đăng ký?" onConfirm={() => xuLyDangKy(banGhi.MaDeTai)}>
-            <Button type="primary" danger icon={<EyeFilled />}/>
+          <Popconfirm title="Bạn có chắc chắn muốn đăng ký?" onConfirm={() => xuLyDangKy(banGhi)}>
+            <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  className="bg-green-500 hover:bg-green-600 border-green-500 hover:border-green-600"
+                >
+                  Đăng ký đề tài
+                </Button>
           </Popconfirm>
-        </Tooltip>
       </Space>
     ),
   });
@@ -59,6 +63,6 @@ const taoCotBang = (
   return cotCoBan;
 };
 
-export const COLUMS = (xuLyDangKy: (maDeTai: string) => void) =>
+export const COLUMS = (xuLyDangKy: (banghi:any) => void) =>
   taoCotBang(DangKyDeTai_Sv, xuLyDangKy);
 

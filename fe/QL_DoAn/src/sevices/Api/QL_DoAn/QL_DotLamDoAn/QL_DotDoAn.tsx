@@ -7,6 +7,12 @@ export const getAll_DotDoAn =async () =>{
     return await getall(URL.QLDOAN.QL_DOTDOAN.GETALL);
 }
 
+export const GetDotByTaiKhoan =async () =>{
+    debugger;
+    let taiKhoan= localStorage.getItem('taiKhoan')|| '';
+    return await getall(URL.QLDOAN.QL_DOTDOAN.GetByTaiKhoan(taiKhoan));
+}
+
 export const add_DotDoAn= async(value:DotLamDoAn,callBack:()=>void)=>{
     let taiKhoan= localStorage.getItem('taiKhoan')|| '';
       const result= await add(URL.QLDOAN.QL_DOTDOAN.ADD(taiKhoan),value,true,false,callBack)as AxiosResponse<any>; 

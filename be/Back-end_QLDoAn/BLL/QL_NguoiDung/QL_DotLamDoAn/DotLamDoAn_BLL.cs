@@ -11,6 +11,10 @@ namespace BLL.QL_NguoiDung.QL_DotLamDoAn
         {
             _res = res;
         }
+        public List<DotLamDoAnDTO> Get_Dot_TK(string tk)
+        {
+            return _res.Get_Dot_TK(tk);
+        }
         public List<DotLamDoAnDTO> GetAll()
         {
             return _res.GetAll();

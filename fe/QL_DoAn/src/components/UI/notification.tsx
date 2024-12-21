@@ -4,18 +4,18 @@ import { ArgsProps } from 'antd/es/notification';
 import { App } from 'antd';
 interface CustomNotificationProps {
   result: any;
-  successMessage?: string;
-  errorMessage?: string;
-  quyenMessage?:string;
-  inerrorMessage?:string
+  MessageDone?: string;
+  MessageError?: string;
+  KhongCoQuyen?:string;
+  MaDaTonTai?:string
 }
 
 export const CustomNotification: React.FC<CustomNotificationProps> = ({
   result,
-  successMessage = 'Thao tác thành công',
-  errorMessage = 'Thao tác thất bại',
-  inerrorMessage='Mã đã tồn tại',
-  quyenMessage='Bạn không có quyền thực hiện tác vụ'
+  MessageDone = 'Thao tác thành công',
+  MessageError = 'Thao tác thất bại',
+  MaDaTonTai='Mã đã tồn tại',
+  KhongCoQuyen='Bạn không có quyền thực hiện tác vụ'
 }) => {
   const notificationConfig: ArgsProps = {
     message: 'Thông báo',
@@ -31,7 +31,7 @@ export const CustomNotification: React.FC<CustomNotificationProps> = ({
     notification.error({
       ...notificationConfig,
       message: 'Thông báo',
-      description: quyenMessage
+      description: KhongCoQuyen
     });
     return null;
   }
@@ -39,7 +39,7 @@ export const CustomNotification: React.FC<CustomNotificationProps> = ({
     notification.success({
       ...notificationConfig,
       message: 'Thông báo',
-      description: successMessage
+      description: MessageDone
     });
     return null;
   }
@@ -47,7 +47,7 @@ export const CustomNotification: React.FC<CustomNotificationProps> = ({
     notification.error({
       ...notificationConfig,
       message: 'Thông báo',
-      description: inerrorMessage
+      description: MaDaTonTai
     });
     return null;
   } 
@@ -67,11 +67,19 @@ export const CustomNotification: React.FC<CustomNotificationProps> = ({
     });
     return null;
   } 
+  if (result === 5) {
+    notification.error({
+      ...notificationConfig,
+      message: 'Thông báo',
+      description: "Bạn đã đề xuất đề tài rồi"
+    });
+    return null;
+  } 
  
     notification.error({
       ...notificationConfig,
       message: 'Lỗi',
-      description: errorMessage
+      description: MessageError
     });
   
 

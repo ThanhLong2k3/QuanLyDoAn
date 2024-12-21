@@ -11,10 +11,9 @@ namespace BLL.QL_NguoiDung
         {
             _res = res;
         }
-
-        public List<QL_DeTai_DTO> Search_DeTai(string? maDot, string? maGiangVien, string? maLop)
+        public List<V_QL_DETAI_GV> GET_DETAI_MADOT(string? maDot, string? tenDeTai)
         {
-            return _res.Search_DeTai(maDot, maGiangVien, maLop);
+            return _res.GET_DETAI_MADOT(maDot, tenDeTai);
         }
         public string Create_GV(QL_DeTai_DTO model, string taikhoan)
         {
@@ -24,20 +23,22 @@ namespace BLL.QL_NguoiDung
         {
             return _res.Create_SV(model, taikhoan);
         }
-
-        public string Delete(int maDeTai, string taikhoan)
+        public List<V_QL_DETAI_SinhVien> GET_DETAI_MADOT_SinhVien(string maDot)
         {
-            return _res.Delete(maDeTai, taikhoan);
+            return _res.GET_DETAI_MADOT_SinhVien(maDot);
         }
 
-        public List<QL_DeTai_DTO> GetAll()
+        public string DangKyDeTai_SV(string MaDeTai, string MaSinhVien, string taikhoan)
         {
-            return _res.GetAll();
+            return _res.DangKyDeTai_SV(MaDeTai, MaSinhVien, taikhoan);
         }
-
-        public string Update(QL_DeTai_DTO model, string taikhoan)
+        public string updateDeTai(QL_DeTai_DTO model, string taikhoan)
         {
-            return _res.Update(model, taikhoan);
+            return _res.updateDeTai(model, taikhoan);
+        }
+        public string DeleteDeTai(string maDeTai, string taikhoan)
+        {
+            return _res.DeleteDeTai(maDeTai,taikhoan);
         }
     }
 }

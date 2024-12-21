@@ -50,10 +50,15 @@ const AppHeader: React.FC = () => {
   const DangXuat = () => {
     localStorage.removeItem('taiKhoan');
     navigate(ROUTERS.AUTH.DEFAULT.PATH);
+  }; 
+
+  const ShowThongTin=()=> {
+   
+    navigate(ROUTERS.DOAN.THONGTINSINHVIEN.PATH);
   };
 
   const dropdownMenuItems: MenuProps['items'] = [
-    { key: '0', label: <span>Hồ sơ</span> },
+    { key: '0', label: <span onClick={ShowThongTin}>Hồ sơ</span> },
     { key: '1', label: <span>Cài đặt</span> },
     { type: 'divider' },
     { key: '3', label: <span onClick={DangXuat}>Đăng xuất</span> },

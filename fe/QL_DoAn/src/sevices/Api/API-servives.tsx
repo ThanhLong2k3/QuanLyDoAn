@@ -92,3 +92,28 @@ export const Delete_obj=async (url:string, giatri:{})=>{
         throw error;
     }
 }
+
+
+
+export const add_url=async (url:string, returnRespones:boolean,showMess:boolean,callBack?:()=> void): Promise<AxiosResponse<any> | void> =>{
+    try{
+         let kq= await axios.post(url);
+         if(showMess)
+         {
+            message.success("Thêm dữ liệu thành công !");
+         }
+         if(callBack)
+         {
+            callBack();
+         }
+         if(returnRespones)
+         {
+            return kq;
+         }
+    }
+    catch(error){
+         message.error("Thêm dữ liệu thất bại !");
+         throw error;
+    }
+    
+ }

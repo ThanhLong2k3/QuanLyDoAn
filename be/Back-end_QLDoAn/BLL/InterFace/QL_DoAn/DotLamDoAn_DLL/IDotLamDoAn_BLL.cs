@@ -11,6 +11,7 @@ namespace BLL.InterFace.QL_DoAn.DotLamDoAn_DLL
     {
         public List<DotLamDoAnDTO> GetAll();
         public List<DotLamDoAnDTO> GetBYID();
+        public List<DotLamDoAnDTO> Get_Dot_TK(string tk);
         string Create(DotLamDoAnDTO model, string taikhoan);
         string Update(DotLamDoAnDTO model, string taikhoan);
         string Delete(string malop, string taikhoan);

@@ -14,6 +14,16 @@ namespace quanLyDoAn.Controllers.QL_DoAn
         {
             _SinhVienBLL = SinhVienBLL;
         }
+
+
+        [Route("get_By_Id")]
+        [HttpGet]
+        public V_SinhVienDTO GET_SINHVIEN_ID(string taikhoan)
+        {
+            return _SinhVienBLL.GET_SINHVIEN_ID(taikhoan);
+        }
+
+
         [Route("getall")]
         [HttpGet]
         public List<V_SinhVienDTO> Getall()
@@ -38,6 +48,14 @@ namespace quanLyDoAn.Controllers.QL_DoAn
         public string DeleteItem(string ma, string taikhoan)
         {
             return _SinhVienBLL.Delete(ma, taikhoan);
+        }
+
+
+        [Route("update-SinhVien_SinhVien")]
+        [HttpPost]
+        public string Update([FromBody] Up_SV_SINHVIENDTO model)
+        {
+            return _SinhVienBLL.Update_SinhVien(model);
         }
 
     }
