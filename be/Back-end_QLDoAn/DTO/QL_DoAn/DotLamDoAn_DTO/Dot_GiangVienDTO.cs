@@ -13,5 +13,6 @@
         public string tenGiangVien { get; set; }
         public int soLuongHuongDan { get; set; }
         public int soLuongDangHuongDan { get; set; }
+        public int soLuongDeTaiChuaDangKy { get; set; }
     }
 }

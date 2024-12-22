@@ -115,7 +115,7 @@ const QuanLyChucVu: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-6">
+    <div >
       <Card className="shadow rounded-lg overflow-hidden">
         <div className="p-6">
           <Title level={2} className="text-center mb-8" style={{color: '#1e88e5', fontSize: '25px', fontWeight: 'bold'}}>

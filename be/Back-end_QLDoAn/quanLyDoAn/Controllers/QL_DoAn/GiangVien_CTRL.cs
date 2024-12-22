@@ -43,5 +43,12 @@ namespace quanLyDoAn.Controllers.QL_DoAn
             return Ok(result);
         }
 
+        [Route("Search_GiangVien")]
+        [HttpGet]
+        public List<GiangVienDTO> SearchGiangVien(string? tenGiangVien, string? maBoMon, string? maChucVu)
+        {
+            return _GiangVienBLL.SearchGiangVien(tenGiangVien, maBoMon, maChucVu);
+        }
+
     }
 }

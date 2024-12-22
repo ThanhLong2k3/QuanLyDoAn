@@ -93,13 +93,14 @@ import {
         trangThai: 1,
         nguoiDeXuat: taiKhoan,
         moTa: giatri.moTa,
-        maDeTai: keyDangSua,
+        maDeTai: keyDangSua=== null? '0': keyDangSua,
       };
-  
       if (keyDangSua != null) {
         await edit_DeTaiDoAn_GV(data_DeTai, getall_data);
+        getall_data();
       } else {
         await add_DeTaiDoAn_GV(data_DeTai, getall_data);
+        getall_data();
       }
       setHienModal(false);
       form.resetFields();
@@ -117,7 +118,7 @@ import {
     const cotBang = COLUMSDETAI(showModal, xuLyDangKy);
   
     return (
-      <div className="bg-gray-100 min-h-screen p-6">
+      <div>
         {ListDot.length > 0 ? (
           <Card className="shadow rounded-lg overflow-hidden">
             <div className="p-6">
@@ -163,6 +164,7 @@ import {
                   </Button>
                 </Col>
               </Row>
+              <Divider />
               <Table
                 columns={cotBang}
                 dataSource={duLieuLoc}

@@ -37,11 +37,17 @@ const Sidebar: React.FC = () => {
 
   const renderMenuItems = () => {
     const danhMucItems = Object.entries(Sidebar_router_DanhMuc)
-      .map(([key, item]) => ({
-        key: item.KEY,
-        icon: item.ICON,
-        label: <Link style={{ textDecoration: "none" }} to={item.LINK}>{item.TEXT}</Link>,
-      }));
+    .map(([key, item]) => {
+      if (item.PERMISSION.some((permission) => userPermissions.includes(permission))) {
+        return {
+          key: item.KEY,
+          icon: item.ICON,
+          label: <Link style={{ textDecoration: "none" }} to={item.LINK}>{item.TEXT}</Link>,
+        };
+      }
+      return null;
+    })
+    .filter((item): item is NonNullable<typeof item> => item !== null);
 
     const HeThongItems = Object.entries(Sidebar_HeThong)
       .map(([key, item]) => {

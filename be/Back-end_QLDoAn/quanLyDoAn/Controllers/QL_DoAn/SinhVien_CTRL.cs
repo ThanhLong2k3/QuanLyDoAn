@@ -58,5 +58,16 @@ namespace quanLyDoAn.Controllers.QL_DoAn
             return _SinhVienBLL.Update_SinhVien(model);
         }
 
+
+
+
+        [Route("Search_SinhVien")]
+        [HttpGet]
+        public List<V_SinhVienDTO> Search_sv(string? masinhvien, string? maLop, int? matrangthai, string? tensinhvien)
+        {
+            return _SinhVienBLL.Search_sv(masinhvien, maLop, matrangthai, tensinhvien);
+        }
+
+
     }
 }

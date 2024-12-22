@@ -22,3 +22,17 @@ export const editLop= async(value:Lop,callBack:()=>void)=>{
     const result= await edit(URL.QLDOAN.LQ_LOP.UPDATE(taiKhoan),value,true,false,callBack)as AxiosResponse<any>;
     CustomNotification({ result: result.data });
 }
+
+
+export const Search=async(tenLop?:string,tenChuyenNganh?:string,khoaHoc?:string)=>
+{
+    let url=URL.QLDOAN.LQ_LOP.SEARCH;
+    const params = new URLSearchParams();
+  
+    if (tenLop) params.append("tenLop", tenLop);
+    if (tenChuyenNganh) params.append("tenChuyenNganh", tenChuyenNganh);
+    if (khoaHoc) params.append("khoaHoc", khoaHoc);
+    
+    url += `?${params.toString()}`;
+    return await getall(url);
+}

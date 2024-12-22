@@ -23,3 +23,18 @@ export const editGiangVien= async(value:GiangVien,callBack:()=>void)=>{
     const result= await edit(URL.QLDOAN.QL_GIANGVIEN.UPDATE(taiKhoan),value,true,false,callBack) as AxiosResponse<any>;
     CustomNotification({ result: result.data });
 }
+
+
+
+export const Search=async(tenGiangVien?:string,maBoMon?:string,maChucVu?:string)=>
+    {
+        let url=URL.QLDOAN.QL_GIANGVIEN.SEARCH;
+        const params = new URLSearchParams();
+      
+        if (tenGiangVien) params.append("tenGiangVien", tenGiangVien);
+        if (maBoMon) params.append("maBoMon", maBoMon);
+        if (maChucVu) params.append("maChucVu", maChucVu);
+        
+        url += `?${params.toString()}`;
+        return await getall(url);
+    }

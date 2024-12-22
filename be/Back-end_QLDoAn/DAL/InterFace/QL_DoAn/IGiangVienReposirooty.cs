@@ -10,6 +10,7 @@ namespace DAL.InterFace.QL_DoAn
    public partial interface IGiangVienReposirooty
     {
         public List<GiangVienDTO> GetAll();
+        List<GiangVienDTO> SearchGiangVien(string? tenGiangVien, string? maBoMon, string? maChucVu);
         string Create(D_GiangVienDTO model,string taikhoan);
         string Update(D_GiangVienDTO model,string taikhoan);
         string Delete(string malop,string taikhoan);

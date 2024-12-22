@@ -66,5 +66,63 @@ namespace quanLyDoAn.Controllers.QL_DoAn
             string result = _DeTaiBLL.DeleteDeTai(maDeTai, taikhoan);
             return Ok(result);
         }
+
+
+        [Route("GiangVienXacNhanDeTai")]
+        [HttpPost]
+        public IActionResult Comfrim([FromBody] D_GiangVien_XacnhanDeTai model, string taikhoan)
+        {
+            string result = _DeTaiBLL.GiangVienXacNhanDeTai(model, taikhoan);
+            return Ok(result);
+        }
+
+
+        [Route("GiangVienTuChoiDeTai")]
+        [HttpPost]
+        public IActionResult REJECT([FromBody] D_GiangVien_XacnhanDeTai model, string taikhoan)
+        {
+            string result = _DeTaiBLL.GiangVienTuChoiDeTai(model, taikhoan);
+            return Ok(result);
+        }
+
+
+
+
+        [Route("get_detaisinhvien_giangvien")]
+        [HttpGet]
+        public List<V_GiangVien_XacnhanDeTai> GET_DETAI_SinhVien(string maDot)
+        {
+            return _DeTaiBLL.Get_DeTaiSinhVien_GiangVien(maDot);
+        }
+
+
+
+
+        [Route("TBMXacNhanDeTai")]
+        [HttpPost]
+        public IActionResult TBMComfrim([FromBody] D_GiangVien_XacnhanDeTai model, string taikhoan)
+        {
+            string result = _DeTaiBLL.TBMXacNhanDeTai(model, taikhoan);
+            return Ok(result);
+        }
+
+
+        [Route("TBMTuChoiDeTai")]
+        [HttpPost]
+        public IActionResult TBMREJECT([FromBody] D_GiangVien_XacnhanDeTai model, string taikhoan)
+        {
+            string result = _DeTaiBLL.TBMTuChoiDeTai(model, taikhoan);
+            return Ok(result);
+        }
+
+
+
+
+        [Route("get_detaisinhvien_TBM")]
+        [HttpGet]
+        public List<V_TBM_XacnhanDeTai> Get_DeTaiSinhVien_TBM(string? MaDot, string? MaGiangVien, string? MaLop)
+        {
+            return _DeTaiBLL.Get_DeTaiSinhVien_TBM(MaDot,MaGiangVien,MaLop);
+        }
     }
 }

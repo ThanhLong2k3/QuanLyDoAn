@@ -7,7 +7,7 @@ export const CotDeTai: ColumnType[] = [
     title: 'STT',
     dataIndex: 'stt',
     key: 'stt',
-    width: '10%',
+    width: '3%',
   },
   {
     title: 'Tên đề tài',

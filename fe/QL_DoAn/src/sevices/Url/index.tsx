@@ -73,6 +73,7 @@ export const URL = {
             UPDATE:(taiKhoan:string)=> `${LocalHot}api/Lop_CTRL/update-Lop?taikhoan=${taiKhoan}`,
             DELETE:(taiKhoan:string,maLop:string)=> `${LocalHot}api/Lop_CTRL/delete-Lop?ma=${maLop}&taikhoan=${taiKhoan}`,
             GETALL:`${LocalHot}api/Lop_CTRL/getall`,
+            SEARCH:`${LocalHot}api/Lop_CTRL/search`,
         },
         QL_SINHVIEN:{
             GET_BY_ID:(taikhoan:string)=>`${LocalHot}api/SinhVien_CTRL/get_By_Id?taikhoan=${taikhoan}`,
@@ -81,12 +82,14 @@ export const URL = {
             DELETE:(taiKhoan:string,maSinhVien:string)=> `${LocalHot}api/SinhVien_CTRL/delete-SinhVien?ma=${maSinhVien}&taikhoan=${taiKhoan}`,
             GETALL:`${LocalHot}api/SinhVien_CTRL/getall`,
             UPDATE_SINHVIEN_SINHVIEN:`${LocalHot}api/SinhVien_CTRL/update-SinhVien_SinhVien`,
+            SEARCH:`${LocalHot}api/SinhVien_CTRL/Search_SinhVien`,
         },
         QL_GIANGVIEN:{
             ADD:(taiKhoan:string)=> `${LocalHot}api/GiangVien_CTRL/create-GiangVien?taikhoan=${taiKhoan}`,
             UPDATE:(taiKhoan:string)=> `${LocalHot}api/GiangVien_CTRL/update-GiangVien?taikhoan=${taiKhoan}`,
             DELETE:(taiKhoan:string,maGiangVien:string)=> `${LocalHot}api/GiangVien_CTRL/delete-GiangVien?ma=${maGiangVien}&taikhoan=${taiKhoan}`,
             GETALL:`${LocalHot}api/GiangVien_CTRL/getall`,
+            SEARCH:`${LocalHot}api/GiangVien_CTRL/Search_GiangVien`,
         },
         QL_DOTDOAN:{
             GetByTaiKhoan:(taiKhoan:string)=>`${LocalHot}api/DotLamDoAn_CTRL/getByTaiKhoan?tk=${taiKhoan}`,
@@ -121,6 +124,17 @@ export const URL = {
             DANGKYDETAI:(MaDeTai:string,masinhvien:string,taikhoan:string)=>`${LocalHot}api/QuanLyDeTai_CTRL/DangKyDeTai_sv?MaDeTai=${MaDeTai}&MaSinhVien=${masinhvien} &taikhoan=${taikhoan}`,
             UPDATE_DT_GV:(taikhoan:string)=>`${LocalHot}api/QuanLyDeTai_CTRL/UPDATE_DETAI_GV?taikhoan=${taikhoan}`,
             GET_DETAI_MADOT_SV:(MaDot:string)=>`${LocalHot}api/QuanLyDeTai_CTRL/get_detai_madot_SV?maDot=${MaDot}`,
+
+            GIANGVIENXACNHANDETAI:{
+                GET_DETAISINHVIEN_MADOT:(MaDot:string)=>`${LocalHot}api/QuanLyDeTai_CTRL/get_detaisinhvien_giangvien?maDot=${MaDot}`,
+                GIANGVIEN_XACNHANDETAI:(TaiKhoan:string)=>`${LocalHot}api/QuanLyDeTai_CTRL/GiangVienXacNhanDeTai?taikhoan=${TaiKhoan}`,
+                GIANGVIEN_TUCHOIDETAI:(TaiKhoan:string)=>`${LocalHot}api/QuanLyDeTai_CTRL/GiangVienTuChoiDeTai?taikhoan=${TaiKhoan}`,
+            },
+            TBMXACNHANDETAI:{
+                GET_DETAISINHVIEN_MADOT:(MaDot:string)=>`${LocalHot}api/QuanLyDeTai_CTRL/get_detaisinhvien_TBM?maDot=${MaDot}`,
+                TBM_XACNHANDETAI:(TaiKhoan:string)=>`${LocalHot}api/QuanLyDeTai_CTRL/TBMXacNhanDeTai?taikhoan=${TaiKhoan}`,
+                TBM_TUCHOIDETAI:(TaiKhoan:string)=>`${LocalHot}api/QuanLyDeTai_CTRL/TBMTuChoiDeTai?taikhoan=${TaiKhoan}`,
+            }
         }
     }
 };

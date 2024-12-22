@@ -7,7 +7,9 @@ interface CustomNotificationProps {
   MessageDone?: string;
   MessageError?: string;
   KhongCoQuyen?:string;
-  MaDaTonTai?:string
+  MaDaTonTai?:string;
+  TruongBoMon?:string;
+  ERRORIN?:string;
 }
 
 export const CustomNotification: React.FC<CustomNotificationProps> = ({
@@ -15,7 +17,9 @@ export const CustomNotification: React.FC<CustomNotificationProps> = ({
   MessageDone = 'Thao tác thành công',
   MessageError = 'Thao tác thất bại',
   MaDaTonTai='Mã đã tồn tại',
-  KhongCoQuyen='Bạn không có quyền thực hiện tác vụ'
+  KhongCoQuyen='Bạn không có quyền thực hiện tác vụ',
+  TruongBoMon='Trưởng bộ môn không cho phép sửa đề tài',
+  ERRORIN='Bạn đã đề xuất đề tài rồi!',
 }) => {
   const notificationConfig: ArgsProps = {
     message: 'Thông báo',
@@ -55,7 +59,7 @@ export const CustomNotification: React.FC<CustomNotificationProps> = ({
     notification.error({
       ...notificationConfig,
       message: 'Thông báo',
-      description: "Trưởng bộ môn không cho phép sửa đề tài"
+      description: TruongBoMon
     });
     return null;
   } 
@@ -71,7 +75,7 @@ export const CustomNotification: React.FC<CustomNotificationProps> = ({
     notification.error({
       ...notificationConfig,
       message: 'Thông báo',
-      description: "Bạn đã đề xuất đề tài rồi"
+      description: ERRORIN
     });
     return null;
   } 

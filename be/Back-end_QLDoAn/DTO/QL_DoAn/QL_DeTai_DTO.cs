@@ -37,4 +37,32 @@
         public string huongdan {  get; set; }
       
     }
+
+    public class D_GiangVien_XacnhanDeTai
+    {
+        public string MaDeTai { get; set; }
+        public string MaSinhVien { get; set; }
+        public string? LyDoTuChoi { get; set; }
+    }
+    public class V_GiangVien_XacnhanDeTai
+    {
+        public string maSinhVien { get; set; }
+        public string tenSinhVien { get; set; }
+        public string maLop { get; set; }
+        public string TenDeTai { get; set; }
+        public string MaDeTai { get; set; }
+    }
+
+    public class V_TBM_XacnhanDeTai
+    {
+        public string MaSinhVien { get; set; }
+        public string TenSinhVien { get; set; }
+        public string MaGiangVien { get; set; }
+        public string TenGiangVien { get; set; }
+        public string TenDeTai { get; set; }
+        public string MaDeTai { get; set; }
+        public string MaDot { get; set; }
+        public string maLop { get; set; }
+
+    }
 }

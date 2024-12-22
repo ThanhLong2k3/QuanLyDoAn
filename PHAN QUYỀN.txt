@@ -1,0 +1,28 @@
+GIÁO VỤ KHOA :{
+	-I.	Quản lý lớp
+	II.	Quản lý cán bộ/ giảng viên
+	III.	Quản lý sinh viên
+	IV.	Đợt làm đồ án tốt nghiệp
+	V.	Quản lý hội đồng
+}	
+TRƯỞNG BỘ MÔN {
+	I.	Quy trình hướng dẫn
+	II.	Đợt làm đồ án tốt nghiệp
+	III.	TBM xác nhận sinh viên đăng ký đề tài
+	IV.	Phân công hướng dẫn và xem danh sách sinh viên đợt
+	V.	Phân công phản biện
+	VI.	Quản lý hội đồng
+}
+GIẢNG VIÊN{
+	I.	Quản lý đề tài đồ án tốt nghiệp
+	II.	Giảng viên xác nhận sinh viên đăng ký đề tài
+	III.	Giảng viên đánh giá nhận xét báo cáo
+	IV.	Danh sách sinh viên phản biện và hội đồng
+	V.	Quản lý hội đồng
+}
+SINH VIÊN:{
+	I.	Thông tin sinh viên
+	II.	Đăng ký đề tài đồ án tốt nghiệp
+	III.	Báo cáo kết quả làm đồ án tốt nghiệp
+	IV.	Xem giảng viên phản biện và hội đồng
+}

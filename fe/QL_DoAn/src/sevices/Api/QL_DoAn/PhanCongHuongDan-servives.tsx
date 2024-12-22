@@ -12,8 +12,8 @@ export const GetAll_PhanCong_MaDot =async (maDot:string) =>{
 export const addPhanCong= async(value:PhanCongHuongDan,callBack:()=>void)=>{
     let taiKhoan= localStorage.getItem('taiKhoan')|| '';
       const result= await add(URL.QLDOAN.PHANCONGHUONGDAN.CREATE(taiKhoan),value,true,false,callBack)as AxiosResponse<any>; 
-      debugger
-      CustomNotification({ result: result.data });
+      CustomNotification({ result: result.data,MessageDone:'Đã phân công và gán đề tài thành công!'
+                            ,MaDaTonTai:'Đã phân công nhưng không có đề tài!' });
 }
 export const editPhanCong= async(value:PhanCongHuongDan,callBack:()=>void)=>{
     let taiKhoan= localStorage.getItem('taiKhoan')|| '';
