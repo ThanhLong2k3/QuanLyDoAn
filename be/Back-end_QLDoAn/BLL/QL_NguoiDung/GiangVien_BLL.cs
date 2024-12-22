@@ -28,5 +28,9 @@ namespace BLL.QL_NguoiDung
             return _res.Delete(ma, taikhoan);
         }
 
+        public List<GiangVienDTO> SearchGiangVien(string? tenGiangVien, string? maBoMon, string? maChucVu)
+        {
+            return _res.SearchGiangVien(tenGiangVien, maBoMon, maChucVu);
+        }
     }
 }

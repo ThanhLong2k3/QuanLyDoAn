@@ -1,13 +1,6 @@
 ﻿using BLL.InterFace.QL_DoAn;
 using DAL.InterFace.QL_DoAn;
-using DAL.InterFace.QL_HeThong;
 using DTO.QL_DoAn;
-using DTO.QL_HeThong;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.QL_NguoiDung
 {
@@ -43,5 +36,9 @@ namespace BLL.QL_NguoiDung
             return _res.Delete(ma, taikhoan);
         }
 
+        public List<V_SinhVienDTO> Search_sv(string? masinhvien, string? maLop, int? matrangthai, string? tensinhvien)
+        {
+            return _res.Search_sv(masinhvien, maLop, matrangthai, tensinhvien);
+        }
     }
 }

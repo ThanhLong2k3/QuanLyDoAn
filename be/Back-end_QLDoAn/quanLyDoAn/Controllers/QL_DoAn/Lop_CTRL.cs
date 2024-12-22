@@ -44,5 +44,12 @@ namespace quanLyDoAn.Controllers.QL_DoAn
             return _LopBLL.Delete(ma, taikhoan);
         }
 
+        [HttpGet("search")]
+        public IActionResult SearchLop([FromQuery] string? tenLop, [FromQuery] string? tenChuyenNganh, [FromQuery] string? khoaHoc)
+        {
+                var result = _LopBLL.SearchLop(tenLop, tenChuyenNganh, khoaHoc);
+                return Ok(result);
+        }
+
     }
 }

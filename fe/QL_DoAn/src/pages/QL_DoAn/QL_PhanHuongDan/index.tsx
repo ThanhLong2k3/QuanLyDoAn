@@ -50,7 +50,7 @@ const PhanCongHuongDan: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen p-4 md:p-6">
+    <div>
       <Card 
         className="shadow-lg rounded-xl" 
         bordered={false}
@@ -103,6 +103,7 @@ const PhanCongHuongDan: React.FC = () => {
               </Select>
             </Col>
           </Row>
+          <Divider />
 
                <PhanCongHuongDanTable maDot={selectedDot} />
         </div>

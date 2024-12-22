@@ -83,10 +83,6 @@ builder.Services.AddTransient<IDot_SinhVien_BLL, Dot_SinhVien_BLL>();
 builder.Services.AddTransient<IPhanCongHuongDanRepository, PhanCongHuongDanRepository>();
 builder.Services.AddTransient<IPhanCongHuongDan_BLL, PhanCongHuongDan_BLL>();
 
-builder.Services.AddTransient<IQuanLyDeTaiRepository, QL_DeTaiRepository>();
-builder.Services.AddTransient<IQL_DeTai_BLL, QL_DeTai_BLL>();
-
-
 builder.Services.AddTransient<IQuanLyDeTai_Repository, QuanLyDeTai_Repository>();
 builder.Services.AddTransient<IQuanLyDeTai_BLL, QuanLyDeTai_BLL>();
 

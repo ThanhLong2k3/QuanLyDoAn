@@ -35,5 +35,9 @@ namespace BLL.QL_NguoiDung
             return _res.Delete(ma, taikhoan);
         }
 
+        public List<LopDTO> SearchLop(string? tenLop, string? tenChuyenNganh, string? khoaHoc)
+        {
+            return _res.SearchLop(tenLop, tenChuyenNganh, khoaHoc);
+        }
     }
 }

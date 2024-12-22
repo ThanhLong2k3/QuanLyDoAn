@@ -28,10 +28,21 @@ export const editSinhVien= async(value:SinhVien,callBack:()=>void)=>{
     CustomNotification({ result: result.data });
 }
 
+export const Search=async(maSinhVien?:string,tenSinhVien?:string,maLop?:string,matrangThai?:number)=>
+{
+    let url=URL.QLDOAN.QL_SINHVIEN.SEARCH;
+    const params = new URLSearchParams();
+  
+    if (maSinhVien) params.append("masinhvien", maSinhVien);
+    if (tenSinhVien) params.append("tensinhvien", tenSinhVien);
+    if (maLop) params.append("maLop", maLop);
+    if (matrangThai !== undefined) params.append("matrangthai", matrangThai.toString());
+    
+    url += `?${params.toString()}`;
+    return await getall(url);
+}
 
-
-
-export const editSinhVien_SinhVien= async(value:{},callBack:()=>void)=>{
+export const editSinhVien_SinhVien= async(value:{},callBack:()=>void)=>{//THÔNG TIN SINH VIÊN
     console.log(value);
     const result= await edit(URL.QLDOAN.QL_SINHVIEN.UPDATE_SINHVIEN_SINHVIEN,value,true,false,callBack)as AxiosResponse<any>;
     CustomNotification({ result: result.data });

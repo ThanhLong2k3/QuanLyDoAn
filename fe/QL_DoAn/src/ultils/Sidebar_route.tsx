@@ -43,27 +43,20 @@ export const Sidebar_router: { [key: string]: SidebarItem } = {
 
   LISTSV: { KEY: '9', ICON: <OrderedListOutlined />, LINK: "", TEXT: "Danh sách sinh viên phản biện và hội đồng", PERMISSION: ["VIEW_LISTSV"] },
   REVIEWCOMMENT: { KEY: '10', ICON: <FileTextOutlined />, LINK: "", TEXT: "Giảng viên đánh giá, nhận xét báo cáo", PERMISSION: ["REVIEW_COMMENT"] },
-  GV_COMFILMPROJECT: { KEY: '11', ICON: <CheckCircleOutlined />, LINK: "", TEXT: "Giảng viên xác nhận sinh viên đăng ký đề tài", PERMISSION: [""] },
+  GV_COMFILMPROJECT: { KEY: '11', ICON: <CheckCircleOutlined />, LINK:ROUTERS.DOAN.XACNHANDETAI.PATH, TEXT: "Giảng viên xác nhận sinh viên đăng ký đề tài", PERMISSION: ["GIANGVIEN_CONFIRM_DETAI","GIANGVIEN_REJECT_DETAI"] },
   SUPPORT: { KEY: '12', ICON: <SolutionOutlined />, LINK: ROUTERS.DOAN.PHANCONG_HUONGDAN.PATH, TEXT: "Phân công hướng dẫn, Xem danh sách sinh viên", PERMISSION: ["ADD_PHANCONG","UP_PHANCONG"] },
-  TBM_COMFILMPROJECT: { KEY: '13', ICON: <AuditOutlined />, LINK: ROUTERS.DOAN.XACNHANDETAI.PATH, TEXT: "Xác nhận sinh viên đăng ký đề tài", PERMISSION: ["TBM_CONFIRM_PROJECT"] },
+  TBM_COMFILMPROJECT: { KEY: '13', ICON: <AuditOutlined />, LINK: ROUTERS.DOAN.TBMXACNHANDETAI.PATH, TEXT: "TBM Xác nhận sinh viên đăng ký đề tài", PERMISSION: ["TBM_CONFIRM_DETAI","TBM_REJECT_DETAI"] },
   VIEWTEACHER: { KEY: '14', ICON: <EyeOutlined />, LINK: "", TEXT: "Xem giảng viên phản biện và hội đồng", PERMISSION: ["VIEW_TEACHER"] },
-  LONGUPTOPIC: { KEY: '15', ICON: <FormOutlined />, LINK: ROUTERS.DOAN.DEXUATDETAI.PATH, TEXT: "Đăng ký đề tài đồ án tốt nghiệp", PERMISSION: ["UP_THEMDETAI","ADD_THEMDETAI","DEL_XOADETAI"] },
+  LONGUPTOPIC: { KEY: '15', ICON: <FormOutlined />, LINK: ROUTERS.DOAN.DEXUATDETAI.PATH, TEXT: "Đăng ký đề tài đồ án tốt nghiệp", PERMISSION: ["REGISTER_DETAI","SUGGEST_DETAI"] },
   REPORT: { KEY: '16', ICON: <FileDoneOutlined />, LINK: "", TEXT: "Báo cáo kết quả làm đồ án tốt nghiệp", PERMISSION: ["SUBMIT_REPORT"] },
 };
 
-type SidebarItem_DanhMuc = {
-  KEY: string;
-  ICON: React.ReactNode;
-  LINK: string;
-  TEXT: string;
-};
-
-export const Sidebar_router_DanhMuc: { [key: string]: SidebarItem_DanhMuc } = {
-  QLKHOA: { KEY: '17', ICON: <BankOutlined />, LINK: ROUTERS.DANHMUC.QL_KHOA.PATH, TEXT: "Danh mục khoa"},
-  QLBOMON: { KEY: '18', ICON: <ClusterOutlined />, LINK: ROUTERS.DANHMUC.QL_BOMON.PATH, TEXT: 'Danh mục bộ môn'},
-  QLHOCVI: { KEY: '19', ICON: <TrophyOutlined />, LINK: ROUTERS.DANHMUC.QL_HOCVI.PATH, TEXT: "Danh Mục học vị"},
-  QLHOCHAM: { KEY: '21', ICON: <CrownOutlined />, LINK: ROUTERS.DANHMUC.QL_HOCHAM.PATH, TEXT: "Danh Mục học hàm"},
-  QLCHUCVU: { KEY: '20', ICON: <IdcardOutlined />, LINK: ROUTERS.DANHMUC.QL_CHUCVU.PATH, TEXT: "Danh mục chức vụ"},
+export const Sidebar_router_DanhMuc: { [key: string]: SidebarItem } = {
+  QLKHOA: { KEY: '17', ICON: <BankOutlined />, LINK: ROUTERS.DANHMUC.QL_KHOA.PATH, TEXT: "Danh mục khoa", PERMISSION: ["QL_DANHMUC"]},
+  QLBOMON: { KEY: '18', ICON: <ClusterOutlined />, LINK: ROUTERS.DANHMUC.QL_BOMON.PATH, TEXT: 'Danh mục bộ môn', PERMISSION: ["QL_DANHMUC"]},
+  QLHOCVI: { KEY: '19', ICON: <TrophyOutlined />, LINK: ROUTERS.DANHMUC.QL_HOCVI.PATH, TEXT: "Danh Mục học vị", PERMISSION: ["QL_DANHMUC"]},
+  QLHOCHAM: { KEY: '21', ICON: <CrownOutlined />, LINK: ROUTERS.DANHMUC.QL_HOCHAM.PATH, TEXT: "Danh Mục học hàm", PERMISSION: ["QL_DANHMUC"]},
+  QLCHUCVU: { KEY: '20', ICON: <IdcardOutlined />, LINK: ROUTERS.DANHMUC.QL_CHUCVU.PATH, TEXT: "Danh mục chức vụ", PERMISSION: ["QL_DANHMUC"]},
 };
 export const Sidebar_HeThong: { [key: string]: SidebarItem } = {
   PHANQUYEN: { KEY: '7', ICON: <SafetyCertificateOutlined />, LINK: ROUTERS.HETHONG.QL_NHOMQUYEN.PATH, TEXT: "Quản lý nhóm quyền", PERMISSION: ["ADD_NHOMQUYEN","UP_NHOMQUYEN","DEL_NHOMQUYEN"] },

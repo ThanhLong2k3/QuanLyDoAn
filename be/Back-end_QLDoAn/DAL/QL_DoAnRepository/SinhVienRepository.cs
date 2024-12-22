@@ -168,5 +168,24 @@ namespace DAL.QL_DoAnRepository
             }
         }
 
+        public List<V_SinhVienDTO> Search_sv(string? masinhvien, string? maLop, int? matrangthai, string? tensinhvien)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "SearchSinhVien",
+                    "@MaSinhVien", masinhvien,
+                    "@TenSinhVien",tensinhvien,
+                    "@MaLop",maLop,
+                   "@TrangThai",matrangthai);
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<V_SinhVienDTO>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

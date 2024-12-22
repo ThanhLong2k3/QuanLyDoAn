@@ -1083,6 +1083,67 @@
         }
       }
     },
+    "/api/GiangVien_CTRL/Search_GiangVien": {
+      "get": {
+        "tags": [
+          "GiangVien_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "tenGiangVien",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maBoMon",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maChucVu",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GiangVienDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GiangVienDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GiangVienDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/HocHam_CTRL/getall-HocHam": {
       "get": {
         "tags": [
@@ -1976,6 +2037,41 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/Lop_CTRL/search": {
+      "get": {
+        "tags": [
+          "Lop_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "tenLop",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tenChuyenNganh",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "khoaHoc",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -2879,214 +2975,6 @@
         }
       }
     },
-    "/api/QL_DeTai_CTRL/Search_DeTai": {
-      "get": {
-        "tags": [
-          "QL_DeTai_CTRL"
-        ],
-        "parameters": [
-          {
-            "name": "maDot",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "maGiangVien",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "maLop",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/V_DeTaiDTO"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/V_DeTaiDTO"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/V_DeTaiDTO"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/QL_DeTai_CTRL/getall": {
-      "get": {
-        "tags": [
-          "QL_DeTai_CTRL"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/QL_DeTaiDTO"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/QL_DeTaiDTO"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/QL_DeTaiDTO"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/QL_DeTai_CTRL/create-DeTai": {
-      "post": {
-        "tags": [
-          "QL_DeTai_CTRL"
-        ],
-        "parameters": [
-          {
-            "name": "taikhoan",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/QL_DeTaiDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/QL_DeTaiDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/QL_DeTaiDTO"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/QL_DeTai_CTRL/update-DeTai": {
-      "post": {
-        "tags": [
-          "QL_DeTai_CTRL"
-        ],
-        "parameters": [
-          {
-            "name": "taikhoan",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/QL_DeTaiDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/QL_DeTaiDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/QL_DeTaiDTO"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/QL_DeTai_CTRL/delete-DeTai": {
-      "delete": {
-        "tags": [
-          "QL_DeTai_CTRL"
-        ],
-        "parameters": [
-          {
-            "name": "ma",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "taikhoan",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/QuanLyDeTai_CTRL/get_detai_madot_SV": {
       "get": {
         "tags": [
@@ -3367,6 +3255,274 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QuanLyDeTai_CTRL/GiangVienXacNhanDeTai": {
+      "post": {
+        "tags": [
+          "QuanLyDeTai_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_GiangVien_XacnhanDeTai"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_GiangVien_XacnhanDeTai"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_GiangVien_XacnhanDeTai"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QuanLyDeTai_CTRL/GiangVienTuChoiDeTai": {
+      "post": {
+        "tags": [
+          "QuanLyDeTai_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_GiangVien_XacnhanDeTai"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_GiangVien_XacnhanDeTai"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_GiangVien_XacnhanDeTai"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QuanLyDeTai_CTRL/get_detaisinhvien_giangvien": {
+      "get": {
+        "tags": [
+          "QuanLyDeTai_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "maDot",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_GiangVien_XacnhanDeTai"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_GiangVien_XacnhanDeTai"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_GiangVien_XacnhanDeTai"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/QuanLyDeTai_CTRL/TBMXacNhanDeTai": {
+      "post": {
+        "tags": [
+          "QuanLyDeTai_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_GiangVien_XacnhanDeTai"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_GiangVien_XacnhanDeTai"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_GiangVien_XacnhanDeTai"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QuanLyDeTai_CTRL/TBMTuChoiDeTai": {
+      "post": {
+        "tags": [
+          "QuanLyDeTai_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_GiangVien_XacnhanDeTai"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_GiangVien_XacnhanDeTai"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/D_GiangVien_XacnhanDeTai"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/QuanLyDeTai_CTRL/get_detaisinhvien_TBM": {
+      "get": {
+        "tags": [
+          "QuanLyDeTai_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "MaDot",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "MaGiangVien",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "MaLop",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_TBM_XacnhanDeTai"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_TBM_XacnhanDeTai"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_TBM_XacnhanDeTai"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -3653,6 +3809,75 @@
           }
         }
       }
+    },
+    "/api/SinhVien_CTRL/Search_SinhVien": {
+      "get": {
+        "tags": [
+          "SinhVien_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "masinhvien",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maLop",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "matrangthai",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "tensinhvien",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_SinhVienDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_SinhVienDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_SinhVienDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3787,6 +4012,24 @@
             "nullable": true
           },
           "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "D_GiangVien_XacnhanDeTai": {
+        "type": "object",
+        "properties": {
+          "maDeTai": {
+            "type": "string",
+            "nullable": true
+          },
+          "maSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "lyDoTuChoi": {
             "type": "string",
             "nullable": true
           }
@@ -4093,47 +4336,6 @@
         },
         "additionalProperties": false
       },
-      "QL_DeTaiDTO": {
-        "type": "object",
-        "properties": {
-          "maDeTai": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tenDeTai": {
-            "type": "string",
-            "nullable": true
-          },
-          "namHocApDung": {
-            "type": "string",
-            "nullable": true
-          },
-          "maSinhVien": {
-            "type": "string",
-            "nullable": true
-          },
-          "maGiangVien": {
-            "type": "string",
-            "nullable": true
-          },
-          "trangThai": {
-            "type": "boolean"
-          },
-          "maDot": {
-            "type": "string",
-            "nullable": true
-          },
-          "hinhThucBaoCaoBaoVe": {
-            "type": "string",
-            "nullable": true
-          },
-          "moTa": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "QL_DeTai_DTO": {
         "type": "object",
         "properties": {
@@ -4240,43 +4442,6 @@
         },
         "additionalProperties": false
       },
-      "V_DeTaiDTO": {
-        "type": "object",
-        "properties": {
-          "maSinhVien": {
-            "type": "string",
-            "nullable": true
-          },
-          "tenSinhVien": {
-            "type": "string",
-            "nullable": true
-          },
-          "maGiangVien": {
-            "type": "string",
-            "nullable": true
-          },
-          "tenGiangVien": {
-            "type": "string",
-            "nullable": true
-          },
-          "maLop": {
-            "type": "string",
-            "nullable": true
-          },
-          "maDeTai": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tenDeTai": {
-            "type": "string",
-            "nullable": true
-          },
-          "trangThai": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
       "V_Dot_GiangVienDTO": {
         "type": "object",
         "properties": {
@@ -4299,6 +4464,10 @@
           "soLuongDangHuongDan": {
             "type": "integer",
             "format": "int32"
+          },
+          "soLuongDeTaiChuaDangKy": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -4319,6 +4488,32 @@
             "nullable": true
           },
           "tenSinhVien": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V_GiangVien_XacnhanDeTai": {
+        "type": "object",
+        "properties": {
+          "maSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "maLop": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenDeTai": {
+            "type": "string",
+            "nullable": true
+          },
+          "maDeTai": {
             "type": "string",
             "nullable": true
           }
@@ -4433,6 +4628,44 @@
             "nullable": true
           },
           "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "V_TBM_XacnhanDeTai": {
+        "type": "object",
+        "properties": {
+          "maSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "maGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenGiangVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenDeTai": {
+            "type": "string",
+            "nullable": true
+          },
+          "maDeTai": {
+            "type": "string",
+            "nullable": true
+          },
+          "maDot": {
+            "type": "string",
+            "nullable": true
+          },
+          "maLop": {
             "type": "string",
             "nullable": true
           }

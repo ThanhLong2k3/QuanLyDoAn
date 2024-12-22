@@ -12,5 +12,16 @@ namespace BLL.InterFace.QL_DoAn
         string Create_GV(QL_DeTai_DTO model, string taikhoan);
         string DeleteDeTai(string maDeTai, string taikhoan);
 
+
+        string GiangVienXacNhanDeTai(D_GiangVien_XacnhanDeTai model, string taikhoan);
+        string GiangVienTuChoiDeTai(D_GiangVien_XacnhanDeTai model, string taikhoan);
+        List<V_GiangVien_XacnhanDeTai> Get_DeTaiSinhVien_GiangVien(string MaDot);
+
+
+        string TBMXacNhanDeTai(D_GiangVien_XacnhanDeTai model, string taikhoan);
+        string TBMTuChoiDeTai(D_GiangVien_XacnhanDeTai model, string taikhoan);
+
+        List<V_TBM_XacnhanDeTai> Get_DeTaiSinhVien_TBM(string? MaDot, string? MaGiangVien, string? MaLop);
+
     }
 }

@@ -22,6 +22,7 @@ interface GiangVien {
   tenGiangVien: string;
   soLuongHuongDan: number;
   soLuongDangHuongDan: number;
+  soLuongDeTaiChuaDangKy:number;
 }
 
 interface PhanCongHuongDan {
@@ -39,64 +40,93 @@ const PhanCongHuongDanTable: React.FC<PhanCongHuongDanTableProps> = ({ maDot }) 
   const [giangVienList, setGiangVienList] = useState<GiangVien[]>([]);
   const [phanCong, setPhanCong] = useState<PhanCongHuongDan[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isPhanCongLoading, setIsPhanCongLoading] = useState<boolean>(true);
 
   const getall_data = async () => {
     try {
       setLoading(true);
+      setIsPhanCongLoading(true);
       const [ListSinhVien, ListGiangVien, ListPhanCong] = await Promise.all([
         getSinhVien_maDot(maDot),
         getGiangVien_maDot(maDot),
         GetAll_PhanCong_MaDot(maDot)
       ]);
+
       setSinhVienList(ListSinhVien);
       setGiangVienList(ListGiangVien);
-      setPhanCong(ListPhanCong);
+      setPhanCong(ListPhanCong.map((pc: PhanCongHuongDan) => ({
+        ...pc,
+        maSinhVien: pc.maSinhVien.toString().trim()
+      })));
+
     } catch (error) {
       console.error("Error fetching data:", error);
       message.error("Không thể tải dữ liệu. Vui lòng thử lại sau.");
     } finally {
       setLoading(false);
+      setIsPhanCongLoading(false);
     }
   };
 
   useEffect(() => {
     document.title = "Phân công giảng viên hướng dẫn";
+    console.log('Initial phanCong data:', phanCong);
     getall_data();
   }, [maDot]);
 
-  const themPhanCong = async (maSinhVien: string, maGiangVien: string) => {
+  const themPhanCong = async (maSinhVien: string, maGiangVien: string): Promise<void> => {
     try {
-      let data = {
-        maDot: maDot,
-        maSinhVien: maSinhVien,
-        maGiangVien: maGiangVien
+      const data: PhanCongHuongDan = {
+        maDot,
+        maSinhVien: maSinhVien.toString().trim(),
+        maGiangVien
       };
+      console.log('Adding new assignment:', data);
       await addPhanCong(data, getall_data);      
     } catch (error) {
+      console.error('Error adding assignment:', error);
       message.error('Thêm phân công thất bại');
     }
   };
 
-  const suaPhanCong = async (maSinhVien: string, maGiangVienMoi: string) => {
-      const data = {
-        maDot: maDot,
-        maSinhVien: maSinhVien,
+  const suaPhanCong = async (maSinhVien: string, maGiangVienMoi: string): Promise<void> => {
+    try {
+      const data: PhanCongHuongDan = {
+        maDot,
+        maSinhVien: maSinhVien.toString().trim(),
         maGiangVien: maGiangVienMoi
       };
-      
+      console.log('Updating assignment:', data);
       await editPhanCong(data, getall_data);
+    } catch (error) {
+      console.error('Error updating assignment:', error);
+      message.error('Sửa phân công thất bại');
+    }
   };
 
-  const handleChangeGiangVien = (maSinhVien: string, maGiangVienMoi: string) => {
-    const PhanCongNow=phanCong.find(pc=>pc.maSinhVien===maSinhVien);
+  const handleChangeGiangVien = (maSinhVien: string, maGiangVienMoi: string): void => {
+    console.log('Handling teacher change:', { maSinhVien, maGiangVienMoi });
     
-    const giangVienMoi = giangVienList.find(gv => gv.maGiangVien === maGiangVienMoi);
+    const phanCongHienTai = phanCong.find((pc: PhanCongHuongDan) => {
+      const normalizedPcMaSV = pc.maSinhVien.toString().trim();
+      const normalizedMaSV = maSinhVien.toString().trim();
+      console.log('Comparing in handleChange:', {
+        pcMaSV: normalizedPcMaSV,
+        maSV: normalizedMaSV,
+        isMatch: normalizedPcMaSV === normalizedMaSV
+      });
+      return normalizedPcMaSV === normalizedMaSV;
+    });
+    
+    console.log('Current assignment found:', phanCongHienTai);
+    
+    const giangVienMoi = giangVienList.find((gv: GiangVien) => gv.maGiangVien === maGiangVienMoi);
     if (giangVienMoi && giangVienMoi.soLuongDangHuongDan >= giangVienMoi.soLuongHuongDan) {
       message.warning('Giảng viên đã đủ số lượng hướng dẫn');
       return;
     }
 
-    if (!PhanCongNow?.maGiangVien) {
+    if (!phanCongHienTai) {
       themPhanCong(maSinhVien, maGiangVienMoi);
     } else {
       suaPhanCong(maSinhVien, maGiangVienMoi);
@@ -108,7 +138,11 @@ const PhanCongHuongDanTable: React.FC<PhanCongHuongDanTableProps> = ({ maDot }) 
       title: 'Mã Sinh Viên',
       dataIndex: 'maSinhVien',
       key: 'maSinhVien',
-      width: '10%'
+      width: '10%',
+      render: (text: string) => {
+        console.log('Rendering maSinhVien:', text);
+        return text;
+      }
     },
     {
       title: 'Tên Sinh Viên',
@@ -126,46 +160,55 @@ const PhanCongHuongDanTable: React.FC<PhanCongHuongDanTableProps> = ({ maDot }) 
       title: 'Chọn Giảng Viên Hướng Dẫn',
       key: 'giangVienHuongDan',
       render: (record: SinhVien) => {
-        const phanCongSinhVien = phanCong.find(pc => pc.maSinhVien === record.maSinhVien);
-        
+        console.log('Rendering teacher selection for student:', {
+          record,
+          type: typeof record.maSinhVien
+        });
+
+        const phanCongSinhVien = phanCong.find((pc: PhanCongHuongDan) => {
+          const normalizedPcMaSV = pc.maSinhVien.toString().trim();
+          const normalizedRecordMaSV = record.maSinhVien.toString().trim();      
+          return normalizedPcMaSV === normalizedRecordMaSV;
+        });
+
+
+        if (isPhanCongLoading) {
+          return <Select loading style={{ width: '100%' }} />;
+        }
+
         return (
           <Select
             style={{ width: '100%' }}
-            value={phanCongSinhVien ? phanCongSinhVien.maGiangVien : record.maGiangVien}
+            value={phanCongSinhVien?.maGiangVien}
             placeholder="Chọn giảng viên"
-            onChange={(value) => handleChangeGiangVien(record.maSinhVien, value)}
+            onChange={(value: string) => handleChangeGiangVien(record.maSinhVien, value)}
           >
-            {/* Hiển thị giảng viên đang được phân công trước tiên */}
             {phanCongSinhVien && (
-              <Option 
-                key={`current-${phanCongSinhVien.maGiangVien}`} 
-                value={phanCongSinhVien.maGiangVien}
-              >
-                {(() => {
-                  const gv = giangVienList.find(g => g.maGiangVien === phanCongSinhVien.maGiangVien);
-                  return gv 
-                    ? `${gv.maGiangVien} - ${gv.tenGiangVien} - ${gv.soLuongDangHuongDan}/${gv.soLuongHuongDan} (Giảng viên hiện tại)` 
-                    : phanCongSinhVien.maGiangVien
-                })()}
-              </Option>
+              <>
+                <Option 
+                  key={`current-${phanCongSinhVien.maGiangVien}`} 
+                  value={phanCongSinhVien.maGiangVien}
+                >
+                  {(() => {
+                    const gv = giangVienList.find((g: GiangVien) => g.maGiangVien === phanCongSinhVien.maGiangVien);
+                    return gv 
+                      ? `${gv.maGiangVien} - ${gv.tenGiangVien} - ${gv.soLuongDangHuongDan}/${gv.soLuongHuongDan} -  Có: ${gv.soLuongDeTaiChuaDangKy} Đề tài chưa phân công` 
+                      : phanCongSinhVien.maGiangVien;
+                  })()}
+                </Option>
+                <Option disabled>─────────────────────────────────────────────────────────────────────────────</Option>
+              </>
             )}
 
-            {/* Thêm một đường phân cách */}
-            {phanCongSinhVien && <Option disabled>─────────────────────────────────────────────────────────────────────────────</Option>}
-
-            {/* Hiển thị toàn bộ giảng viên khác */}
             {giangVienList
-              .filter(gv => 
-                // Loại bỏ giảng viên hiện tại khỏi danh sách để tránh trùng lặp
-                !phanCongSinhVien || gv.maGiangVien !== phanCongSinhVien.maGiangVien
-              )
-              .map(gv => (
+              .filter((gv: GiangVien) => !phanCongSinhVien || gv.maGiangVien !== phanCongSinhVien.maGiangVien)
+              .map((gv: GiangVien) => (
                 <Option 
                   key={gv.maGiangVien} 
                   value={gv.maGiangVien}
                   disabled={gv.soLuongDangHuongDan >= gv.soLuongHuongDan}
                 >
-                  {`${gv.maGiangVien} - ${gv.tenGiangVien} - ${gv.soLuongDangHuongDan}/${gv.soLuongHuongDan}`}
+                  {`${gv.maGiangVien} - ${gv.tenGiangVien} - ${gv.soLuongDangHuongDan}/${gv.soLuongHuongDan} -  Có: ${gv.soLuongDeTaiChuaDangKy} Đề tài chưa phân công`}
                 </Option>
               ))
             }

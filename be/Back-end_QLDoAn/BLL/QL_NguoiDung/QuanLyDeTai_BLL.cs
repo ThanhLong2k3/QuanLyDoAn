@@ -40,5 +40,34 @@ namespace BLL.QL_NguoiDung
         {
             return _res.DeleteDeTai(maDeTai,taikhoan);
         }
+
+        public string GiangVienXacNhanDeTai(D_GiangVien_XacnhanDeTai model, string taikhoan)
+        {
+            return _res.GiangVienXacNhanDeTai(model, taikhoan);
+        }
+
+        public string GiangVienTuChoiDeTai(D_GiangVien_XacnhanDeTai model, string taikhoan)
+        {
+            return _res.GiangVienTuChoiDeTai(model, taikhoan);
+        }
+        public List<V_GiangVien_XacnhanDeTai> Get_DeTaiSinhVien_GiangVien(string MaDot)
+        {
+            return _res.Get_DeTaiSinhVien_GiangVien(MaDot);
+        }
+
+        public string TBMXacNhanDeTai(D_GiangVien_XacnhanDeTai model, string taikhoan)
+        {
+            return _res.TBMXacNhanDeTai(model, taikhoan);
+        }
+
+        public string TBMTuChoiDeTai(D_GiangVien_XacnhanDeTai model, string taikhoan)
+        {
+            return _res.TBMTuChoiDeTai(model,taikhoan);
+        }
+
+        public List<V_TBM_XacnhanDeTai> Get_DeTaiSinhVien_TBM(string? MaDot, string? MaGiangVien, string? MaLop)
+        {
+            return _res.Get_DeTaiSinhVien_TBM(MaDot,MaGiangVien,MaLop);
+        }
     }
 }

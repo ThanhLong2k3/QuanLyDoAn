@@ -1,4 +1,4 @@
-import { Button, Space, Popconfirm, Tooltip } from "antd";
+import { Button, Space} from "antd";
 import { EditOutlined, DeleteOutlined, EyeTwoTone } from "@ant-design/icons";
 import { ColumnType } from "../types";
 
@@ -7,23 +7,38 @@ export const CotDeTai: ColumnType[] = [
     title: "Mã sinh viên",
     dataIndex: "maSinhVien",
     key: "maSinhVien",
+    align: "center",
   },
   {
     title: "Tên sinh viên",
     dataIndex: "tenSinhVien",
     key: "tenSinhVien",
+    align: "left",
+  },
+  {
+    title: "Mã giảng viên",
+    dataIndex: "maGiangVien",
+    key: "maGiangVien",
+    align: "center",
+  },
+  {
+    title: "Tên giảng viên",
+    dataIndex: "tenGiangVien",
+    key: "maGiangVien",
+    align: "left",
   },
 
   {
     title: "Mã lớp",
     dataIndex: "maLop",
     key: "maLop",
+    align: "center",
   },
   {
     title: "Tên đề tài",
     dataIndex: "tenDeTai",
     key: "maDeTai",
-    align: "center",
+    align: "left",
   },
   {
     title: "Tác vụ",

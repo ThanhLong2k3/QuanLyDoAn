@@ -116,6 +116,28 @@ namespace DAL.QL_DoAnRepository
             }
         }
 
+        public List<LopDTO> SearchLop(string? tenLop, string? tenChuyenNganh, string? khoaHoc)
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "SearchLop",
+                    "@TenLop", tenLop,
+                    "@TenChuyenNganh", tenChuyenNganh,
+                    "@KhoaHoc", khoaHoc);
+
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+
+                return dt.ConvertTo<LopDTO>().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in SearchLop: {ex.Message}");
+            }
+        }
+
+
     }
 
 
