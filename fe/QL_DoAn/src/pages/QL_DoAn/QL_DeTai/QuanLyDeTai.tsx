@@ -96,11 +96,9 @@ import {
         maDeTai: keyDangSua=== null? '0': keyDangSua,
       };
       if (keyDangSua != null) {
-        await edit_DeTaiDoAn_GV(data_DeTai, getall_data);
-        getall_data();
+        await edit_DeTaiDoAn_GV(data_DeTai, Search);
       } else {
-        await add_DeTaiDoAn_GV(data_DeTai, getall_data);
-        getall_data();
+        await add_DeTaiDoAn_GV(data_DeTai, Search);
       }
       setHienModal(false);
       form.resetFields();
