@@ -7,8 +7,8 @@ export const cotHocVi: ColumnType[] = [
     },
     {
       title: 'Tên học vị',
-      dataIndex: 'tenHocHam_HocVi',
-      key: 'tenHocHam_HocVi',
+      dataIndex: 'tenHocVi',
+      key: 'tenHocVi',
     },
     {
       title: 'Ký hiệu',

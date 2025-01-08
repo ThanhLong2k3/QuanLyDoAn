@@ -2736,7 +2736,7 @@ BEGIN
     IF @CoQuyenTuChoi = 1
     BEGIN
         -- Kiểm tra xem đề tài có tồn tại và đang ở trạng thái có thể từ chối
-        IF NOT EXISTS (SELECT 1 FROM QuanLyDeTaiGV WHERE MaDeTai = @MaDeTai AND TrangThai IN (0, 1)) -- 0: Chờ duyệt, 1: Đã duyệt
+        IF NOT EXISTS (SELECT 1 FROM QuanLyDeTaiGV WHERE MaDeTai = @MaDeTai AND TrangThai = 1) -- 0: Chờ duyệt, 1: Đã duyệt
         BEGIN
             SELECT N'3' AS ThongBao; -- Đề tài không tồn tại hoặc không ở trạng thái có thể từ chối
             RETURN;
@@ -2778,7 +2778,7 @@ BEGIN
         SELECT N'0' AS ThongBao; -- Không có quyền từ chối
     END
 END;
-
+EXEC TBM_TuChoi_DeTai @MaDeTai='QLSQÁ' ,@TaiKhoan='ADMIN', @LyDoTuChoi='0',@MaSinhVien='10119466'
 --=============================================SEARCH PROC
 
 --=========TÌM KIẾM SINH VIÊN
