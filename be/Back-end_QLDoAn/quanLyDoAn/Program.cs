@@ -1,20 +1,24 @@
 using BLL.InterFace.QL_DanhMuc;
 using BLL.InterFace.QL_DoAn;
 using BLL.InterFace.QL_DoAn.DotLamDoAn_DLL;
+using BLL.InterFace.QL_DoAn.NhomSinhVien_BLL;
 using BLL.InterFace.QL_HeThong;
 using BLL.QL_DanhMuc;
 using BLL.QL_HeThong;
 using BLL.QL_NguoiDung;
+using BLL.QL_NguoiDung.NhomSinhVien;
 using BLL.QL_NguoiDung.QL_DotLamDoAn;
 using DAL;
 using DAL.InterFace.QL_DanhMuc;
 using DAL.InterFace.QL_DoAn;
 using DAL.InterFace.QL_DoAn.IDotLamDoAnRepository;
 using DAL.InterFace.QL_DoAn.IHoiDongRepository;
+using DAL.InterFace.QL_DoAn.INhomSinhVienRepository;
 using DAL.InterFace.QL_HeThong;
 using DAL.QL_DanhMuc;
 using DAL.QL_DanhMucRepository;
 using DAL.QL_DoAnRepository;
+using DAL.QL_DoAnRepository.NhomSinhVienRepository;
 using DAL.QL_DoAnRepository.QL_DotLamDoAnRepository;
 using DAL.QL_DoAnRepository.QL_HoiDongRepository;
 using DAL.QL_HethongRepository;
@@ -85,6 +89,19 @@ builder.Services.AddTransient<IPhanCongHuongDan_BLL, PhanCongHuongDan_BLL>();
 
 builder.Services.AddTransient<IQuanLyDeTai_Repository, QuanLyDeTai_Repository>();
 builder.Services.AddTransient<IQuanLyDeTai_BLL, QuanLyDeTai_BLL>();
+
+
+builder.Services.AddTransient<INhom_Sinh_VienRepository, NhomSinhVienRepository>();
+builder.Services.AddTransient<INhomSinhVien_BLL, NhomSinhVien_BLL>();
+
+
+
+builder.Services.AddTransient<IThanhVienNhomRepository,ThanhVienNhomRepository>();
+builder.Services.AddTransient<IThanhVienNhom_BLL, ThanhVienNhom_BLL>();
+
+
+builder.Services.AddTransient<ILoiMoiThamGiaNhomRepository, LoiMoiThamGiaRepository>();
+builder.Services.AddTransient<ILoiMoiThamGiaNhom_BLL, LoiMoiThamGiaNhom_BLL>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

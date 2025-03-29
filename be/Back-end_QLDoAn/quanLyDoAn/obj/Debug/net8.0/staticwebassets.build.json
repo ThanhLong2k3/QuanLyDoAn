@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "b3b6qUXAvTJHQgD8Mq1/h78GhylXb5oMeJM8jxBEIC0=",
+  "Hash": "AwUSITABb+Jtrxwckh1X9MG7zn5KMPCIXdsSQI89zvs=",
   "Source": "quanLyDoAn",
   "BasePath": "_content/quanLyDoAn",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Users\\Phuong Linh\\Desktop\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj",
+      "Identity": "C:\\Users\\Phuong Linh\\Desktop\\Đồ án tốt nghiệp\\QuanLyDoAn\\be\\Back-end_QLDoAn\\Back-end_QLDoAn\\Back-end_QLDoAn.csproj",
       "Version": 2,
       "Source": "Back-end_QLDoAn",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",

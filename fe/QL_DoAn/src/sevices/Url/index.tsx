@@ -68,6 +68,22 @@ export const URL = {
         }
     },
     QLDOAN:{
+        QL_NHOMSINHVIEN:{
+            THANHVIEN:{
+                    GET_ID:(ID:string)=>`${LocalHot}api/ThanhVienNhom_CTRL/get_By_Id?taiKhoan=${ID}`,
+                    ADD:`${LocalHot}api/ThanhVienNhom_CTRL/add_thanhvien_nhom`,
+                    DELETE:(MaTruongNhom:string)=>`${LocalHot}api/ThanhVienNhom_CTRL/delete_thanhvien_nhom?matruongnhom=${MaTruongNhom}`,
+            },
+            THEMTHANHVIEN:{
+                GET_LOI_MOI:(maSV:string)=>`${LocalHot}api/LoiMoiThamGiaNhom_CTRL/get_By_masinhvien?taikhoan=${maSV}`,
+                GUILOIMOI:`${LocalHot}api/LoiMoiThamGiaNhom_CTRL/GuiLoiMoi`,
+                XULYLOIMOI:`${LocalHot}api/LoiMoiThamGiaNhom_CTRL/XuLyLoiMoi`
+            },
+            TAONHOM:{
+                GET_NHOM_MASV:(maSV:string)=>`${LocalHot}api/NhomSinhVien_CTRL/get_By_masinhvien?taikhoan=${maSV}`,
+                ADD_NHOM:`${LocalHot}api/NhomSinhVien_CTRL/create-NhomSinhVien`,
+            }
+        },
         LQ_LOP:{
             ADD:(taiKhoan:string)=> `${LocalHot}api/Lop_CTRL/create-Lop?taikhoan=${taiKhoan}`,
             UPDATE:(taiKhoan:string)=> `${LocalHot}api/Lop_CTRL/update-Lop?taikhoan=${taiKhoan}`,

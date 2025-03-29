@@ -23,7 +23,6 @@ namespace DTO.QL_DoAn
         public string tenSinhVien { get; set; }
         public string maLop { get; set; }
         public DateTime ngaySinh { get; set; }
-        public string TenTrangThai { get; set; }
         public string gioiTinh { get; set; }
         public string sDT { get; set; }
 

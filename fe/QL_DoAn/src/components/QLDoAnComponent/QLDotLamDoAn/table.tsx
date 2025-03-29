@@ -14,7 +14,7 @@ export const ColumDotLamDoAn: ColumnType[] = [
     key: 'tenDot',
   },
   {
-    title: 'Ngày bắt đầu làm đồ án',
+    title: 'Ngày bắt đầu Nghiên cứu Khoa Học',
     dataIndex: 'ngayBatDau',
     key: 'ngayBatDau',
     render: (text) => <span>{moment(text).format('DD/MM/YYYY')}</span>,
@@ -53,7 +53,7 @@ const taocotbangdotlamdoan = (
         <Tooltip title="Thêm giảng viên hướng dẫn">
           <Button type="primary" icon={<UserAddOutlined />} onClick={()=> showMoDAL_ADDGiangVien(banGhi.maDot)} />
         </Tooltip>
-        <Tooltip title="Thêm sinh viên vào đợt làm đồ án">
+        <Tooltip title="Thêm sinh viên vào đợt Nghiên cứu Khoa Học">
           <Button type="primary" icon={<TeamOutlined />} onClick={()=>showModal_ADDSinhVien(banGhi.maDot)}/>
         </Tooltip>
         <Tooltip title="Chỉnh sửa">

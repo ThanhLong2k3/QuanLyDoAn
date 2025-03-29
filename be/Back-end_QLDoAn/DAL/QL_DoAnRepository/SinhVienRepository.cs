@@ -176,8 +176,7 @@ namespace DAL.QL_DoAnRepository
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "SearchSinhVien",
                     "@MaSinhVien", masinhvien,
                     "@TenSinhVien",tensinhvien,
-                    "@MaLop",maLop,
-                   "@TrangThai",matrangthai);
+                    "@MaLop",maLop);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
                 return dt.ConvertTo<V_SinhVienDTO>().ToList();

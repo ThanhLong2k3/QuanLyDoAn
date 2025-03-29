@@ -157,7 +157,7 @@ const GiangVienXacNhanDeTai: React.FC = () => {
                 onChange={handleDotChange}
                 style={{ width: '100%' }}
                 loading={loading}
-                placeholder="Chọn đợt làm đồ án"
+                placeholder="Chọn đợt Nghiên cứu Khoa Học"
                 suffixIcon={<FilterOutlined />}
               >
                 {dotLamDoAn?.length > 0 ? (

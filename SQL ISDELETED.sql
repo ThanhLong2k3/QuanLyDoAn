@@ -84,6 +84,7 @@ CREATE TABLE giangVien (
     FOREIGN KEY (IDHocHam) REFERENCES HocHam(maHocHam) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (IDHocVi) REFERENCES HocVi(maHocVi) ON DELETE CASCADE ON UPDATE CASCADE
 )
+
 CREATE TABLE TrangThaiLamDoAn(
 	MaTrangThai INT IDENTITY(1,1) PRIMARY KEY,
 	TenTrangThai NVARCHAR(100) NOT NULL,
@@ -91,13 +92,13 @@ CREATE TABLE TrangThaiLamDoAn(
 	ThuTu int,
 	IsDelete int
 )
+
 -- sinhVien table
 CREATE TABLE sinhVien (
     maSinhVien NVARCHAR(50) PRIMARY KEY,
     tenSinhVien NVARCHAR(255),
     maLop VARCHAR(50),
     ngaySinh DATE,
-	MaTrangThai INT FOREIGN KEY REFERENCES TrangThaiLamDoAn(MaTrangThai) ON UPDATE CASCADE,
     gioiTinh NVARCHAR(10),
     sDT VARCHAR(15),
     email NVARCHAR(255),
@@ -120,6 +121,40 @@ CREATE TABLE dotLamDoAn (
     IsDeleted int
 )
 
+CREATE TABLE NhomSinhVien (
+    maNhom VARCHAR(50) PRIMARY KEY,
+    tenNhom NVARCHAR(100) NOT NULL,
+    maSinhVienTruong NVARCHAR(50) NOT NULL, -- Sinh viên trưởng nhóm
+    ngayTao DATETIME DEFAULT GETDATE(),
+    trangThai INT DEFAULT 1, -- 1: Hoạt động, 0: Đã hủy
+    FOREIGN KEY (maSinhVienTruong) REFERENCES sinhVien(maSinhVien)
+);
+
+CREATE TABLE ThanhVienNhom (
+    maNhom VARCHAR(50) NOT NULL,
+    maSinhVien NVARCHAR(50) NOT NULL,
+    ngayThamGia DATETIME DEFAULT GETDATE(),
+    vaiTro NVARCHAR(50) DEFAULT N'Thành viên',
+    PRIMARY KEY (maNhom, maSinhVien),
+    FOREIGN KEY (maNhom) REFERENCES NhomSinhVien(maNhom),
+    FOREIGN KEY (maSinhVien) REFERENCES sinhVien(maSinhVien)
+);
+
+CREATE TABLE LoiMoiThamGiaNhom (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    maNhom VARCHAR(50) NOT NULL,
+    maSinhVienMoi NVARCHAR(50) NOT NULL,
+    maNguoiMoi NVARCHAR(50) NOT NULL,
+    ngayMoi DATETIME DEFAULT GETDATE(),
+    ngayPhanHoi DATETIME NULL,
+    trangThai INT DEFAULT 0, -- 0: Chờ, 1: Chấp nhận, 2: Từ chối
+    ghiChu NVARCHAR(255) NULL,
+    FOREIGN KEY (maNhom) REFERENCES NhomSinhVien(maNhom),
+    FOREIGN KEY (maSinhVienMoi) REFERENCES sinhVien(maSinhVien),
+    FOREIGN KEY (maNguoiMoi) REFERENCES sinhVien(maSinhVien)
+);
+
+
 CREATE TABLE QuanLyDeTaiGV(
     MaDeTai NVARCHAR(50) PRIMARY KEY,
     TenDeTai NVARCHAR(MAX) NOT NULL,
@@ -137,12 +172,13 @@ CREATE TABLE GiangVien_DeTai(
     MaDeTai NVARCHAR(50) FOREIGN KEY REFERENCES QuanLyDeTaiGV(MaDeTai) ON UPDATE CASCADE,
     PRIMARY KEY(MaGiangVien, MaDeTai)
 )
-
 CREATE TABLE SinhVien_DeTai(
-    MaSinhVien NVARCHAR(50) FOREIGN KEY REFERENCES sinhVien(maSinhVien) ON UPDATE CASCADE,
-    MaDeTai NVARCHAR(50) FOREIGN KEY REFERENCES QuanLyDeTaiGV(MaDeTai) ON UPDATE CASCADE,
-    PRIMARY KEY(MaSinhVien, MaDeTai)
-)
+    MaNhom VARCHAR(50) NOT NULL,
+    MaDeTai NVARCHAR(50) NOT NULL,
+    PRIMARY KEY(MaNhom, MaDeTai),
+    FOREIGN KEY (MaNhom) REFERENCES NhomSinhVien(maNhom),
+    FOREIGN KEY (MaDeTai) REFERENCES QuanLyDeTaiGV(MaDeTai)
+);
 
 CREATE TABLE Dot_GiangVien (
     maDot VARCHAR(50) NOT NULL,
@@ -184,46 +220,28 @@ CREATE TABLE QuyTrinhHuongDan(
 	ThuTu int ,
 	DuongDanBieuMau NVARCHAR(MAX),
 );
--- hoiDong table
-CREATE TABLE hoiDong (
-    maHoiDong VARCHAR(50) PRIMARY KEY,
-    tenHoiDong NVARCHAR(255),
-    maDot VARCHAR(50),
-    thuocLop VARCHAR(50),
-    phong NVARCHAR(50),
-    ngayDuKien DATE,
-    IsDeleted int,
-    FOREIGN KEY (maDot) REFERENCES dotLamDoAn(maDot) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    FOREIGN KEY (thuocLop) REFERENCES lop(maLop) ON DELETE NO ACTION ON UPDATE NO ACTION
-)
-CREATE TABLE hoiDongLop (
-    maHoiDong VARCHAR(50),
-    maLop VARCHAR(50),
-    PRIMARY KEY (maHoiDong, maLop),
-    FOREIGN KEY (maHoiDong) REFERENCES hoiDong(maHoiDong) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (maLop) REFERENCES lop(maLop) ON DELETE CASCADE ON UPDATE CASCADE
-);
--- hoiDong_GiangVien table
-CREATE TABLE hoiDong_GiangVien (
-    maHoiDong VARCHAR(50),
-    maGiangVien NVARCHAR(50),
-    nhiemVu NVARCHAR(50) NULL,
-    IsDeleted int,
-    PRIMARY KEY (maHoiDong, maGiangVien),
-    FOREIGN KEY (maHoiDong) REFERENCES hoiDong(maHoiDong) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    FOREIGN KEY (maGiangVien) REFERENCES giangVien(maGiangVien) ON DELETE NO ACTION ON UPDATE NO ACTION
-)
-
--- hoiDong_SinhVien table
-CREATE TABLE hoiDong_SinhVien (
-    maHoiDong VARCHAR(50),
-    maSinhVien NVARCHAR(50),
-    IsDeleted int,
-    PRIMARY KEY (maHoiDong, maSinhVien),
-    FOREIGN KEY (maHoiDong) REFERENCES hoiDong(maHoiDong) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    FOREIGN KEY (maSinhVien) REFERENCES sinhVien(maSinhVien) ON DELETE NO ACTION ON UPDATE NO ACTION
-)
-
+-- Trigger kiểm tra số lượng thành viên trong nhóm
+CREATE TRIGGER trg_CheckGroupSize
+ON ThanhVienNhom
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @maxMembers INT = 5; -- Số thành viên tối đa mỗi nhóm
+    DECLARE @maNhom VARCHAR(50);
+    DECLARE @currentCount INT;
+    
+    SELECT @maNhom = maNhom FROM inserted;
+    
+    SELECT @currentCount = COUNT(*) 
+    FROM ThanhVienNhom 
+    WHERE maNhom = @maNhom;
+    
+    IF @currentCount > @maxMembers
+    BEGIN
+        ROLLBACK TRANSACTION;
+        RAISERROR('Mỗi nhóm không được vượt quá %d thành viên', 16, 1, @maxMembers);
+    END
+END;
 go
 CREATE TRIGGER trg_GenerateMaDeTai
 ON QuanLyDeTaiGV
@@ -1010,10 +1028,9 @@ END;
 CREATE OR ALTER PROCEDURE GetAllSinhVien
 AS
 BEGIN
-    SELECT sv.maSinhVien, sv.tenSinhVien, l.tenLop, sv.ngaySinh, sv.gioiTinh, sv.sDT, sv.email,sv.maLop,TrangThaiLamDoAn.TenTrangThai
+    SELECT sv.maSinhVien, sv.tenSinhVien, l.tenLop, sv.ngaySinh, sv.gioiTinh, sv.sDT, sv.email,sv.maLop
     FROM sinhVien sv
     JOIN lop l ON sv.maLop = l.maLop
-	INNER JOIN TrangThaiLamDoAn ON TrangThaiLamDoAn.MaTrangThai=sv.MaTrangThai
     WHERE sv.IsDeleted = 1 ;
 END;
 	go
@@ -2786,8 +2803,7 @@ GO
 CREATE OR ALTER PROCEDURE SearchSinhVien
 	@MaSinhVien NVARCHAR(50)=NULL,
     @TenSinhVien NVARCHAR(100) = NULL,
-    @MaLop NVARCHAR(50) = NULL,
-    @TrangThai INT = NULL
+    @MaLop NVARCHAR(50) = NULL
 AS
 BEGIN
     SELECT 
@@ -2798,20 +2814,16 @@ BEGIN
         sv.gioiTinh, 
         sv.sDT, 
         sv.email,
-        sv.maLop,
-        TrangThaiLamDoAn.TenTrangThai
+        sv.maLop
     FROM 
         sinhVien sv
     JOIN 
         lop l ON sv.maLop = l.maLop
-    INNER JOIN 
-        TrangThaiLamDoAn ON TrangThaiLamDoAn.MaTrangThai = sv.MaTrangThai
     WHERE 
         sv.IsDeleted = 1 
 		AND (@MaSinhVien IS NULL OR sv.maSinhVien LIKE '%' +@MaSinhVien+'%')
         AND (@TenSinhVien IS NULL OR sv.tenSinhVien LIKE '%' + @TenSinhVien + '%')
-        AND (@MaLop IS NULL OR sv.maLop = @MaLop)
-        AND (@TrangThai IS NULL OR sv.MaTrangThai = @TrangThai);
+        AND (@MaLop IS NULL OR sv.maLop = @MaLop);
 END;
 GO
 
@@ -2876,3 +2888,320 @@ BEGIN
         AND (@TenChuyenNganh IS NULL OR tenChuyenNganh LIKE '%' + @TenChuyenNganh + '%')
         AND (@KhoaHoc IS NULL OR khoaHoc = @KhoaHoc);
 END;
+
+go
+----------TẠO NHÓM SINH VIÊN
+CREATE PROCEDURE sp_LayLoiMoiChoXacNhan
+    @maSinhVien NVARCHAR(50)
+AS
+BEGIN
+    BEGIN TRY
+        -- Kiểm tra sinh viên tồn tại
+        IF NOT EXISTS (SELECT 1 FROM sinhVien WHERE maSinhVien = @maSinhVien AND IsDeleted = 1)
+        BEGIN
+            SELECT '0' AS KetQua, N'Sinh viên không tồn tại hoặc đã bị xóa' AS ThongBao;
+            RETURN;
+        END
+        
+        -- Lấy danh sách lời mời đang chờ xác nhận
+        SELECT 
+            lm.id AS MaLoiMoi,
+            lm.maNhom,
+            n.tenNhom,
+            lm.maNguoiMoi,
+            sv.tenSinhVien AS TenNguoiMoi,
+            n.maSinhVienTruong,
+            svt.tenSinhVien AS TenTruongNhom,
+            lm.ngayMoi,
+            (SELECT COUNT(*) FROM ThanhVienNhom WHERE maNhom = lm.maNhom) AS SoThanhVienHienTai,
+            (SELECT STRING_AGG(sv.tenSinhVien, ', ') 
+             FROM ThanhVienNhom tv
+             JOIN sinhVien sv ON tv.maSinhVien = sv.maSinhVien
+             WHERE tv.maNhom = lm.maNhom) AS DanhSachThanhVien
+        FROM 
+            LoiMoiThamGiaNhom lm
+            INNER JOIN NhomSinhVien n ON lm.maNhom = n.maNhom
+            INNER JOIN sinhVien sv ON lm.maNguoiMoi = sv.maSinhVien
+            INNER JOIN sinhVien svt ON n.maSinhVienTruong = svt.maSinhVien
+        WHERE 
+            lm.maSinhVienMoi = @maSinhVien
+            AND lm.trangThai = 0 -- Chỉ lấy lời mời chờ xác nhận
+        ORDER BY 
+            lm.ngayMoi DESC;
+        
+        SELECT '1' AS KetQua, N'Lấy danh sách lời mời chờ xác nhận thành công' AS ThongBao;
+    END TRY
+    BEGIN CATCH
+        SELECT '0' AS KetQua, 
+               N'Lỗi: ' + ERROR_MESSAGE() AS ThongBao;
+    END CATCH
+END;
+GO
+-- GỬI LỜI MỜI 
+CREATE PROCEDURE sp_GuiLoiMoiThamGiaNhom
+    @maNhom VARCHAR(50),
+    @maSinhVienMoi NVARCHAR(50),
+    @maNguoiMoi NVARCHAR(50)
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- Kiểm tra điều kiện
+        IF NOT EXISTS (SELECT 1 FROM NhomSinhVien WHERE maNhom = @maNhom AND trangThai = 1)
+        BEGIN
+            SELECT '0' AS KetQua, N'Nhóm không tồn tại hoặc đã bị hủy' AS ThongBao;
+            ROLLBACK;
+            RETURN;
+        END
+        
+        IF EXISTS (SELECT 1 FROM ThanhVienNhom WHERE maNhom = @maNhom AND maSinhVien = @maSinhVienMoi)
+        BEGIN
+            SELECT '0' AS KetQua, N'Sinh viên đã là thành viên của nhóm' AS ThongBao;
+            ROLLBACK;
+            RETURN;
+        END
+        
+        -- Thêm lời mời mới
+        INSERT INTO LoiMoiThamGiaNhom (maNhom, maSinhVienMoi, maNguoiMoi)
+        VALUES (@maNhom, @maSinhVienMoi, @maNguoiMoi);
+        
+        SELECT '1' AS KetQua, N'Đã gửi lời mời tham gia nhóm thành công' AS ThongBao;
+        
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        SELECT '0' AS KetQua, N'Lỗi: ' + ERROR_MESSAGE() AS ThongBao;
+        IF @@TRANCOUNT > 0 ROLLBACK;
+    END CATCH
+END;
+-- CHẤP NHẬN LỜI MỜI 
+GO
+CREATE PROCEDURE sp_XuLyLoiMoiThamGia
+    @idLoiMoi INT,
+    @maSinhVien NVARCHAR(50),
+    @chapNhan BIT -- 1: Đồng ý, 0: Từ chối
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        DECLARE @maNhom VARCHAR(50), @trangThai INT;
+        
+        -- Lấy thông tin lời mời
+        SELECT @maNhom = maNhom, @trangThai = trangThai 
+        FROM LoiMoiThamGiaNhom 
+        WHERE id = @idLoiMoi AND maSinhVienMoi = @maSinhVien;
+        
+        -- Kiểm tra lời mời
+        IF @maNhom IS NULL
+        BEGIN
+            SELECT '0' AS KetQua, N'Lời mời không tồn tại' AS ThongBao;
+            ROLLBACK;
+            RETURN;
+        END
+        
+        IF @trangThai <> 0
+        BEGIN
+            SELECT '0' AS KetQua, N'Lời mời đã được xử lý trước đó' AS ThongBao;
+            ROLLBACK;
+            RETURN;
+        END
+        
+        -- Cập nhật trạng thái lời mời
+        UPDATE LoiMoiThamGiaNhom 
+        SET trangThai = CASE WHEN @chapNhan = 1 THEN 1 ELSE 2 END,
+            ngayPhanHoi = GETDATE()
+        WHERE id = @idLoiMoi;
+        
+        -- Nếu đồng ý thì thêm vào nhóm
+        IF @chapNhan = 1
+        BEGIN
+            -- Kiểm tra số lượng thành viên
+            IF (SELECT COUNT(*) FROM ThanhVienNhom WHERE maNhom = @maNhom) >= 5
+            BEGIN
+                SELECT '0' AS KetQua, N'Nhóm đã đạt số lượng thành viên tối đa' AS ThongBao;
+                ROLLBACK;
+                RETURN;
+            END
+            
+            -- Thêm vào nhóm
+            INSERT INTO ThanhVienNhom (maNhom, maSinhVien)
+            VALUES (@maNhom, @maSinhVien);
+            
+            SELECT '1' AS KetQua, N'Đã tham gia nhóm thành công' AS ThongBao;
+        END
+        ELSE
+        BEGIN
+            SELECT '1' AS KetQua, N'Đã từ chối lời mời tham gia nhóm' AS ThongBao;
+        END
+        
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        SELECT '0' AS KetQua, N'Lỗi: ' + ERROR_MESSAGE() AS ThongBao;
+        IF @@TRANCOUNT > 0 ROLLBACK;
+    END CATCH
+END;
+GO;
+
+
+CREATE PROCEDURE sp_LayNhomTheoSinhVien
+    @maSinhVien NVARCHAR(50)
+AS
+BEGIN
+    BEGIN TRY
+        -- Kiểm tra sinh viên tồn tại
+        IF NOT EXISTS (SELECT 1 FROM sinhVien WHERE maSinhVien = @maSinhVien AND IsDeleted = 1)
+        BEGIN
+            SELECT '0' AS KetQua, N'Sinh viên không tồn tại hoặc đã bị xóa' AS ThongBao;
+            RETURN;
+        END
+        
+        -- Lấy thông tin các nhóm sinh viên tham gia
+        SELECT 
+            n.maNhom,
+            n.tenNhom,
+            n.maSinhVienTruong,
+            sv.tenSinhVien AS tenTruongNhom,
+            n.ngayTao,
+            CASE n.trangThai 
+                WHEN 1 THEN N'Hoạt động' 
+                ELSE N'Đã hủy' 
+            END AS trangThai,
+            tv.vaiTro,
+            tv.ngayThamGia,
+            (SELECT COUNT(*) FROM ThanhVienNhom WHERE maNhom = n.maNhom) AS soThanhVien
+        FROM 
+            NhomSinhVien n
+            INNER JOIN ThanhVienNhom tv ON n.maNhom = tv.maNhom
+            INNER JOIN sinhVien sv ON n.maSinhVienTruong = sv.maSinhVien
+        WHERE 
+            tv.maSinhVien = @maSinhVien
+        ORDER BY 
+            n.ngayTao DESC;
+        
+        -- Trả về kết quả thành công
+        SELECT '1' AS KetQua, N'Lấy thông tin nhóm thành công' AS ThongBao;
+    END TRY
+    BEGIN CATCH
+        SELECT '0' AS KetQua, 
+               N'Lỗi: ' + ERROR_MESSAGE() AS ThongBao;
+    END CATCH
+END;
+go
+
+CREATE PROCEDURE sp_TaoNhomSinhVien
+    @maNhom VARCHAR(50),
+    @tenNhom NVARCHAR(100),
+    @maSinhVienTruong NVARCHAR(50)
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- Kiểm tra sinh viên tồn tại
+        IF NOT EXISTS (SELECT 1 FROM sinhVien WHERE maSinhVien = @maSinhVienTruong AND IsDeleted = 1)
+        BEGIN
+            SELECT '0' AS KetQua, N'Sinh viên không tồn tại hoặc đã bị xóa' AS ThongBao;
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+        
+        -- Kiểm tra nhóm chưa tồn tại
+        IF EXISTS (SELECT 1 FROM NhomSinhVien WHERE maNhom = @maNhom)
+        BEGIN
+            SELECT '0' AS KetQua, N'Mã nhóm đã tồn tại' AS ThongBao;
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+        
+        -- Thêm nhóm mới
+        INSERT INTO NhomSinhVien (maNhom, tenNhom, maSinhVienTruong)
+        VALUES (@maNhom, @tenNhom, @maSinhVienTruong);
+        
+        -- Thêm sinh viên trưởng nhóm
+        INSERT INTO ThanhVienNhom (maNhom, maSinhVien, vaiTro)
+        VALUES (@maNhom, @maSinhVienTruong, N'Trưởng nhóm');
+        
+        -- Trả về kết quả thành công
+        SELECT '1' AS KetQua, N'Tạo nhóm thành công' AS ThongBao;
+        
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        SELECT '0' AS KetQua, 
+               N'Lỗi: ' + ERROR_MESSAGE() AS ThongBao;
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+
+GO
+
+GO
+CREATE PROCEDURE sp_XoaThanhVienNhom
+    @maNhom VARCHAR(50),
+    @maSinhVienCanXoa NVARCHAR(50),
+    @maTruongNhom NVARCHAR(50) -- Người thực hiện xóa (phải là trưởng nhóm)
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- 1. Kiểm tra nhóm có tồn tại
+        IF NOT EXISTS (SELECT 1 FROM NhomSinhVien WHERE maNhom = @maNhom AND trangThai = 1)
+        BEGIN
+            SELECT '0' AS KetQua, N'Nhóm không tồn tại hoặc đã bị hủy' AS ThongBao;
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+        
+        -- 2. Kiểm tra người thực hiện có phải là trưởng nhóm không
+        DECLARE @truongNhomHienTai NVARCHAR(50);
+        SELECT @truongNhomHienTai = maSinhVienTruong FROM NhomSinhVien WHERE maNhom = @maNhom;
+        
+        IF @maTruongNhom <> @truongNhomHienTai
+        BEGIN
+            SELECT '0' AS KetQua, N'Chỉ trưởng nhóm mới có quyền xóa thành viên' AS ThongBao;
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+        
+        -- 3. Kiểm tra thành viên cần xóa có trong nhóm không
+        IF NOT EXISTS (SELECT 1 FROM ThanhVienNhom WHERE maNhom = @maNhom AND maSinhVien = @maSinhVienCanXoa)
+        BEGIN
+            SELECT '0' AS KetQua, N'Thành viên không có trong nhóm này' AS ThongBao;
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+        
+        -- 4. Không cho xóa chính trưởng nhóm
+        IF @maSinhVienCanXoa = @truongNhomHienTai
+        BEGIN
+            SELECT '0' AS KetQua, N'Không thể xóa trưởng nhóm. Hãy chuyển quyền trưởng nhóm trước.' AS ThongBao;
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+        
+        -- 5. Xóa thành viên khỏi nhóm
+        DELETE FROM ThanhVienNhom 
+        WHERE maNhom = @maNhom AND maSinhVien = @maSinhVienCanXoa;
+        
+        SELECT '1' AS KetQua, N'Đã xóa thành viên khỏi nhóm thành công' AS ThongBao;
+        
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        SELECT '0' AS KetQua, 
+               N'Lỗi: ' + ERROR_MESSAGE() AS ThongBao;
+        ROLLBACK TRANSACTION;
+    END CATCH
+END;
+
+go
+create proc get_member_id
+	@Id_group nvarchar(50)
+	as
+begin
+	select*from ThanhVienNhom TV inner join sinhVien SV ON TV.maSinhVien=SV.maSinhVien WHERE TV.maNhom=@Id_group AND SV.IsDeleted=1;
+END

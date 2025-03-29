@@ -7,7 +7,7 @@ const { Title } = Typography;
 const Dashboard: React.FC = () => {
   return (
     <div>
-      <Title level={2}>Trang chủ - Hệ thống Quản lý Đồ án UTEHY</Title>
+      <Title level={2}>Trang chủ - Nghiên cứu Khoa Học UTEHY</Title>
       <Row gutter={16}>
         <Col span={6}>
           <Card>

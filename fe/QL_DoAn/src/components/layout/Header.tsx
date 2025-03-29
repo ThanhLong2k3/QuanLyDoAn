@@ -152,7 +152,7 @@ const AppHeader: React.FC = () => {
             style={{ height: '40px', marginRight: '10px' }}
           /> */}
           <span style={{ color: '#1e88e5', fontSize: '18px', fontWeight: 'bold' }}>
-            Hệ thống Quản lý Đồ án
+            Nghiên cứu Khoa Học
           </span>
         </div>
 

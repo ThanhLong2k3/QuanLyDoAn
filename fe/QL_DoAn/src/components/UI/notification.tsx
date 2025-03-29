@@ -67,7 +67,7 @@ export const CustomNotification: React.FC<CustomNotificationProps> = ({
     notification.error({
       ...notificationConfig,
       message: 'Thông báo',
-      description: "Sinh viên đang trong đợt làm đồ án khác!"
+      description: "Sinh viên đang trong đợt Nghiên cứu Khoa Học khác!"
     });
     return null;
   } 

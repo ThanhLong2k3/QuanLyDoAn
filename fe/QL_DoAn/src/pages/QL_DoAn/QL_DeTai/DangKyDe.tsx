@@ -188,7 +188,7 @@ export default function DangKyDeTai() {
     </div>
   ) : (
     <div>
-      <h1>Bạn không thuộc đợt làm đồ án nào</h1>
+      <h1>Bạn không thuộc đợt Nghiên cứu Khoa Học nào</h1>
     </div>
   );
 }

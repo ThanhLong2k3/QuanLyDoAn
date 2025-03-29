@@ -1844,6 +1844,115 @@
         }
       }
     },
+    "/api/LoiMoiThamGiaNhom_CTRL/get_By_masinhvien": {
+      "get": {
+        "tags": [
+          "LoiMoiThamGiaNhom_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LoiMoiThamGiaNhom_DTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LoiMoiThamGiaNhom_DTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LoiMoiThamGiaNhom_DTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/LoiMoiThamGiaNhom_CTRL/GuiLoiMoi": {
+      "post": {
+        "tags": [
+          "LoiMoiThamGiaNhom_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuiLoiMoi_DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuiLoiMoi_DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuiLoiMoi_DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/LoiMoiThamGiaNhom_CTRL/XuLyLoiMoi": {
+      "post": {
+        "tags": [
+          "LoiMoiThamGiaNhom_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/XuLyLoiMoi_DTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/XuLyLoiMoi_DTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/XuLyLoiMoi_DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Lop_CTRL/getall": {
       "get": {
         "tags": [
@@ -2752,6 +2861,84 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/NhomQuyenPhanQuyen_DTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/NhomSinhVien_CTRL/get_By_masinhvien": {
+      "get": {
+        "tags": [
+          "NhomSinhVien_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_NhomSinhVien_DTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_NhomSinhVien_DTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/V_NhomSinhVien_DTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/NhomSinhVien_CTRL/create-NhomSinhVien": {
+      "post": {
+        "tags": [
+          "NhomSinhVien_CTRL"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NhomSinhVienDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NhomSinhVienDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NhomSinhVienDTO"
               }
             }
           }
@@ -3878,6 +4065,133 @@
           }
         }
       }
+    },
+    "/api/ThanhVienNhom_CTRL/get_By_Id": {
+      "get": {
+        "tags": [
+          "ThanhVienNhom_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "taikhoan",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Get_ThanhVienNhom_DTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Get_ThanhVienNhom_DTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Get_ThanhVienNhom_DTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ThanhVienNhom_CTRL/add_thanhvien_nhom": {
+      "post": {
+        "tags": [
+          "ThanhVienNhom_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "matruongnhom",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThanhVienNhomDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThanhVienNhomDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThanhVienNhomDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ThanhVienNhom_CTRL/delete-thanhvien_nhom": {
+      "delete": {
+        "tags": [
+          "ThanhVienNhom_CTRL"
+        ],
+        "parameters": [
+          {
+            "name": "matruongnhom",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThanhVienNhomDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThanhVienNhomDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThanhVienNhomDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -4109,6 +4423,28 @@
         },
         "additionalProperties": false
       },
+      "Get_ThanhVienNhom_DTO": {
+        "type": "object",
+        "properties": {
+          "maNhom": {
+            "type": "string",
+            "nullable": true
+          },
+          "maSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "vaiTro": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenSinhVien": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "GiangVienDTO": {
         "type": "object",
         "properties": {
@@ -4165,6 +4501,24 @@
             "nullable": true
           },
           "idHocHam": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GuiLoiMoi_DTO": {
+        "type": "object",
+        "properties": {
+          "maNhom": {
+            "type": "string",
+            "nullable": true
+          },
+          "maSinhVienMoi": {
+            "type": "string",
+            "nullable": true
+          },
+          "maNguoiMoi": {
             "type": "string",
             "nullable": true
           }
@@ -4268,6 +4622,36 @@
         },
         "additionalProperties": false
       },
+      "LoiMoiThamGiaNhom_DTO": {
+        "type": "object",
+        "properties": {
+          "maLoiMoi": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maNhom": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenNhom": {
+            "type": "string",
+            "nullable": true
+          },
+          "maNguoiMoi": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenNguoiMoi": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngayMoi": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
       "LopDTO": {
         "type": "object",
         "properties": {
@@ -4330,6 +4714,24 @@
             "nullable": true
           },
           "maQuyen": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NhomSinhVienDTO": {
+        "type": "object",
+        "properties": {
+          "maNhom": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenNhom": {
+            "type": "string",
+            "nullable": true
+          },
+          "maSinhVienTruong": {
             "type": "string",
             "nullable": true
           }
@@ -4406,6 +4808,20 @@
             "nullable": true
           },
           "email": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ThanhVienNhomDTO": {
+        "type": "object",
+        "properties": {
+          "maNhom": {
+            "type": "string",
+            "nullable": true
+          },
+          "maSinhVien": {
             "type": "string",
             "nullable": true
           }
@@ -4520,6 +4936,24 @@
         },
         "additionalProperties": false
       },
+      "V_NhomSinhVien_DTO": {
+        "type": "object",
+        "properties": {
+          "maNhom": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenNhom": {
+            "type": "string",
+            "nullable": true
+          },
+          "soThanhVien": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "V_QL_DETAI_GV": {
         "type": "object",
         "properties": {
@@ -4615,10 +5049,6 @@
             "type": "string",
             "format": "date-time"
           },
-          "tenTrangThai": {
-            "type": "string",
-            "nullable": true
-          },
           "gioiTinh": {
             "type": "string",
             "nullable": true
@@ -4668,6 +5098,24 @@
           "maLop": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "XuLyLoiMoi_DTO": {
+        "type": "object",
+        "properties": {
+          "maLoiMoi": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maSinhVien": {
+            "type": "string",
+            "nullable": true
+          },
+          "traLoi": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

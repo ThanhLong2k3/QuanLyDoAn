@@ -38,7 +38,7 @@ export const Sidebar_router: { [key: string]: SidebarItem } = {
   LOP: { KEY: '3', ICON: <TeamOutlined />, LINK: ROUTERS.DOAN.QL_LOP.PATH, TEXT: "Quản lý lớp", PERMISSION: ["ADD_LOP", "UP_LOP", "DEL_LOP"] },
   HOIDONG: { KEY: '4', ICON: <BookOutlined />, LINK: "ROUTERS.PATH.SUPERVISORS.PATH", TEXT: "Quản lý hội đồng", PERMISSION: ["MANAGE_HOIDONG"] },
   SINHVIEN: { KEY: '5', ICON: <UserOutlined />, LINK:  ROUTERS.DOAN.QL_SINHVIEN.PATH, TEXT: "Quản lý sinh viên", PERMISSION: ["ADD_SINHVIEN","UP_SINHVIEN","DEL_SINHVIEN"] },
-  DOTLAMDOAN: { KEY: '6', ICON: <CalendarOutlined />, LINK: ROUTERS.DOAN.QL_DOTLAMDOAN.PATH, TEXT: 'Đợt làm đồ án tốt nghiệp', PERMISSION: ["ADD_DOTLAMDOAN","DEL_DOTLAMDOAN","UP_DOTLAMDOAN"] },
+  DOTLAMDOAN: { KEY: '6', ICON: <CalendarOutlined />, LINK: ROUTERS.DOAN.QL_DOTLAMDOAN.PATH, TEXT: 'Đợt Nghiên cứu Khoa Học tốt nghiệp', PERMISSION: ["ADD_DOTLAMDOAN","DEL_DOTLAMDOAN","UP_DOTLAMDOAN"] },
   QUANLYDETAI: { KEY: '17', ICON: <OrderedListOutlined />, LINK:ROUTERS.DOAN.QL_DETAI.PATH, TEXT: "Quản lý đề tài", PERMISSION: ["ADD_DETAI"] },
 
   LISTSV: { KEY: '9', ICON: <OrderedListOutlined />, LINK: "", TEXT: "Danh sách sinh viên phản biện và hội đồng", PERMISSION: ["VIEW_LISTSV"] },
@@ -48,7 +48,8 @@ export const Sidebar_router: { [key: string]: SidebarItem } = {
   TBM_COMFILMPROJECT: { KEY: '13', ICON: <AuditOutlined />, LINK: ROUTERS.DOAN.TBMXACNHANDETAI.PATH, TEXT: "TBM Xác nhận sinh viên đăng ký đề tài", PERMISSION: ["TBM_CONFIRM_DETAI","TBM_REJECT_DETAI"] },
   VIEWTEACHER: { KEY: '14', ICON: <EyeOutlined />, LINK: "", TEXT: "Xem giảng viên phản biện và hội đồng", PERMISSION: ["VIEW_TEACHER"] },
   LONGUPTOPIC: { KEY: '15', ICON: <FormOutlined />, LINK: ROUTERS.DOAN.DEXUATDETAI.PATH, TEXT: "Đăng ký đề tài đồ án tốt nghiệp", PERMISSION: ["REGISTER_DETAI","SUGGEST_DETAI"] },
-  REPORT: { KEY: '16', ICON: <FileDoneOutlined />, LINK: "", TEXT: "Báo cáo kết quả làm đồ án tốt nghiệp", PERMISSION: ["SUBMIT_REPORT"] },
+  MANAGE_GROUP: { KEY: '21', ICON: <FormOutlined />, LINK: ROUTERS.DOAN.QL_NHOMSINHVIEN.PATH, TEXT: "Nhóm Nghiên cứu khoa học", PERMISSION: ["REGISTER_DETAI","SUGGEST_DETAI"] },
+  REPORT: { KEY: '16', ICON: <FileDoneOutlined />, LINK: "", TEXT: "Báo cáo kết quả Nghiên cứu Khoa Học tốt nghiệp", PERMISSION: ["SUBMIT_REPORT"] },
 };
 
 export const Sidebar_router_DanhMuc: { [key: string]: SidebarItem } = {

@@ -110,7 +110,7 @@ const Modal_SinhVien_Dot: React.FC<ModalThemSinhVien> = ({
     <Modal
       title={
         <Title level={3} style={{ margin: 0 }}>
-          <UserAddOutlined /> Quản lý Sinh viên - Đợt làm đồ án
+          <UserAddOutlined /> Quản lý Sinh viên - Đợt Nghiên cứu Khoa Học
         </Title>
       }
       open={hienmodalSinhVien}

@@ -79,7 +79,7 @@ const Login: React.FC = () => {
               Đăng nhập
             </h2>
             <p className="text-center">
-              Truy cập Hệ thống Quản lý Đồ Án UTEHY
+              Truy cập Nghiên cứu Khoa Học UTEHY
             </p>
           </Card.Header>
           <Card.Body>
