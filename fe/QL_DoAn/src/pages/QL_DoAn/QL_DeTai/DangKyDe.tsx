@@ -19,6 +19,7 @@ import { mockDeTaiData } from "../../../components/QLDoAnComponent/DangKyDeTai_S
 import { COLUMS } from "../../../components/QLDoAnComponent/DangKyDeTai_SV/Table_DangKyDeTai";
 import {DeXuatDeTai,DangKyDeTai_SV,Get_MaDot_TK,get_detai_madot_sv} from '../../../sevices/Api/QL_DoAn/QL_DeTaiDoAn/QL_DeTai'
 import { getGiangVien_maDot } from "../../../sevices/Api/QL_DoAn/QL_DotLamDoAn/GiangVien_Dot-servives";
+import { get_GROUP_ID } from "../../../sevices/Api/QL_DoAn/QL_NhomSinhVien";
 
 const { Title } = Typography;
 interface GiangVien {
@@ -49,10 +50,11 @@ export default function DangKyDeTai() {
   const [maDot, setMaDot] = useState<string>("");
   const [giangVienInDot, setGiangVienInDot] = useState<GiangVien[]>([]);
   const [DeTaDoAn,setDeTaiDoAn]=useState<DeTai_SinhVien[]>([]);
-
+  const [listGroup,setListGroup]=useState<any[]>([]);
   useEffect(() => {
     document.title = 'Đăng ký đề tài';
     getall_data();
+    getGroupByIDStudent();
   },[]);
 
 
@@ -80,6 +82,19 @@ export default function DangKyDeTai() {
     setHienModal(true);
   };
 
+  const getGroupByIDStudent = async () => {
+    setLoading(true);
+    try {
+      const data = await get_GROUP_ID(1);
+      setListGroup(data || []);
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+      message.error("Không thể tải danh sách nhóm");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const xuLyDongY = async () => {
     const giatri = await form.validateFields();
     const data_DeTai = {
@@ -88,7 +103,7 @@ export default function DangKyDeTai() {
       maDot: maDot,
       hinhThucBaoCaoBaoVe: giatri.hinhThucBaoCaoBaoVe,
       maGiangVien: giatri.maGiangVien,
-      maSinhVien: taiKhoan,
+      maNhom: giatri.maNhom,
       trangThai: 0,
       nguoiDeXuat: taiKhoan,
       moTa: giatri.moTa
@@ -97,6 +112,7 @@ export default function DangKyDeTai() {
     setHienModal(false);
     form.resetFields();
     setKeyDangSua(null);
+    getGroupByIDStudent();
   };
 
   const xuLyDangKy =async (banghi:DeTai_SinhVien) => {
@@ -183,7 +199,7 @@ export default function DangKyDeTai() {
         add_Titel="Đề xuất đề tài"
         update_Titel="Chỉnh sửa đề tài"
       >
-        <Form_DeXuatDeTai_SV formdulieu={form} giangVienInDot={giangVienInDot || ""} />
+        <Form_DeXuatDeTai_SV formdulieu={form} giangVienInDot={giangVienInDot || ""}  listGroup={listGroup}/>
       </ReusableModal>
     </div>
   ) : (

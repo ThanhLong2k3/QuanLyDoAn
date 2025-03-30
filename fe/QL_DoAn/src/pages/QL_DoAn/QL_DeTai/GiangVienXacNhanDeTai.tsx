@@ -30,6 +30,7 @@ interface DOT {
   maDeTai: string;
   maSinhVien: string;
   lyDoTuChoi: string;
+  maNhom:string;
   tenDeTai: string;
 }
 
@@ -80,7 +81,7 @@ const GiangVienXacNhanDeTai: React.FC = () => {
   const DongY = async (banGhi: DOT) => {
     const data = {
       maDeTai: banGhi.maDeTai,
-      maSinhVien: banGhi.maSinhVien,
+      maNhom: banGhi.maNhom,
       lyDoTuChoi: ""
     }
     await GIANGVIEN_XACNHANDETAI(data, fetchDotDoAn);

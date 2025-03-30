@@ -4,13 +4,12 @@ import { ColumnType } from "../types";
 
 export const CotDeTai: ColumnType[] = [
   {
-    title: "Mã sinh viên",
-    dataIndex: "maSinhVien",
-    key: "maSinhVien",
-    align: "center",
+    title: "Tên nhóm",
+    dataIndex: "tenNhom",
+    key: "tenNhom",
   },
   {
-    title: "Tên sinh viên",
+    title: "Tên trưởng nhóm",
     dataIndex: "tenSinhVien",
     key: "tenSinhVien",
     align: "left",

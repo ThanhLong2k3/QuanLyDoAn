@@ -39,6 +39,7 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 import { Search } from "../../../sevices/Api/QL_DoAn/QL_SinhVien-servives";
+import CustomNotification from "../../../components/UI/notification";
 
 const { Header, Content: LayoutContent } = Layout;
 const { Title, Text } = Typography;
@@ -49,7 +50,9 @@ interface GroupData {
   maNhom: string;
   tenNhom: string;
   soThanhVien: number;
-  truongNhom?: string;
+  tenTruongNhom?: string;
+  maSinhVienTruong?:string;
+  trangThai?:string;
   ngayTao?: string;
 }
 
@@ -99,7 +102,7 @@ export default function QuanLyNhomSinhVien() {
   const getGroupByIDStudent = async () => {
     setLoading(true);
     try {
-      const data = await get_GROUP_ID();
+      const data = await get_GROUP_ID(0);
       setListGroup(data);
     } catch (error) {
       console.error("Error fetching groups:", error);
@@ -179,7 +182,6 @@ export default function QuanLyNhomSinhVien() {
                 maNhom: currentGroup.maNhom,
                 ...values
               },
-          await get_MemberGROUP_ID(currentGroup.maNhom)
         );
 
         
@@ -195,26 +197,33 @@ export default function QuanLyNhomSinhVien() {
     }
   };
 
-  const handleRemoveMember = async (memberId: string) => {
+  const handleRemoveMember = async (value: any) => {
+    debugger;
     try {
       if (currentGroup) {
-        
+        var taiKhoan= localStorage.getItem('taiKhoan')|| '';
         const refreshMembers = async () => {
           await getGroupMembers(currentGroup.maNhom);
         };
+        if(currentGroup.maSinhVienTruong===taiKhoan){
+          await del_Member_Group(
+            {
+              maNhom: currentGroup.maNhom,
+              maSinhVien: value.maSinhVien,
+            },
+            refreshMembers
+          ); 
+  
+          
+          await getGroupByIDStudent();
+  
+          CustomNotification({ result: 1, MessageDone:"Xóa thành viên thành công!"});
 
-        await del_Member_Group(
-          {
-            maNhom: currentGroup.maNhom,
-            maSinhVien: memberId,
-          },
-          refreshMembers
-        ); 
-
+        }
+        else{
+           CustomNotification({ result: 0, KhongCoQuyen:"Bạn không phải là trưởng nhóm, không thể xóa thành viên!"});
+        }
         
-        await getGroupByIDStudent();
-
-        message.success("Xóa thành viên thành công");
       }
     } catch (error) {
       console.error("Error removing member:", error);
@@ -264,7 +273,7 @@ export default function QuanLyNhomSinhVien() {
         <Popconfirm
           title="Xóa thành viên"
           description="Bạn có chắc muốn xóa thành viên này không?"
-          onConfirm={() => handleRemoveMember(record.maSinhVien)}
+          onConfirm={() => handleRemoveMember(record)}
           okText="Xóa"
           cancelText="Hủy"
         >
@@ -382,7 +391,7 @@ export default function QuanLyNhomSinhVien() {
                         <Title level={4} style={{ margin: 0 }}>
                           {group.tenNhom}
                         </Title>
-                        <Text type="secondary">Mã nhóm: {group.maNhom}</Text>
+                        <Tag color="blue">{group.trangThai}</Tag>
                       </div>
                     </div>
 
@@ -399,7 +408,7 @@ export default function QuanLyNhomSinhVien() {
                             style={{ marginRight: 8, color: "#1890ff" }}
                           />
                           <Text>
-                            Trưởng nhóm: {group.truongNhom || "Chưa có"}
+                            Trưởng nhóm: {group.tenTruongNhom || "Chưa có"}
                           </Text>
                         </div>
                         <div>

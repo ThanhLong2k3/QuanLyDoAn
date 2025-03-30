@@ -30,6 +30,7 @@ interface DOT {
   maDeTai: string;
   maSinhVien: string;
   lyDoTuChoi: string;
+  maNhom:string;
   tenDeTai: string;
 }
 
@@ -86,7 +87,7 @@ const TBMXacNhanDeTai: React.FC = () => {
     try {
       const data = {
         maDeTai: banGhi.maDeTai,
-        maSinhVien: banGhi.maSinhVien,
+        maNhom: banGhi.maNhom,
         lyDoTuChoi: ""
       };
       await TBM_XACNHANDETAI(data,fetchDotDoAn);
