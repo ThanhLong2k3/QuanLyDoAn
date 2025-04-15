@@ -53,7 +53,7 @@ namespace DAL.QL_DoAnRepository
                     "@MaGiangVien",model.MaGiangVien,
                     "@MaDot", model.MaDot,
                     "@HinhThucBaoCao", model.HinhThucBaoCaoBaoVe,
-                    "@MaSinhVien", model.MaSinhVien,
+                    "@MaNhom", model.maNhom,
                     "@MoTa", model.MoTa,
                     "@TaiKhoan", taikhoan
                 );
@@ -173,7 +173,7 @@ namespace DAL.QL_DoAnRepository
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_DangKy_DeTai_SV",
                     "@TaiKhoan", taikhoan,
-                    "@MaSinhVien",MaSinhVien,
+                    "@MaNhom",MaSinhVien,
                     "@MaDeTai",MaDeTai
                 );
 
@@ -205,7 +205,7 @@ namespace DAL.QL_DoAnRepository
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "GiangVien_XacNhanSVDangKyDeTai",
                     "@MaDeTai", model.MaDeTai,
-                    "@MaSinhVien", model.MaSinhVien,
+                    "@MaNhom", model.maNhom,
                     "@TaiKhoan", taikhoan
                 );
 
@@ -234,7 +234,7 @@ namespace DAL.QL_DoAnRepository
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_TuChoi_DeTai",
                     "@MaDeTai", model.MaDeTai,
-                    "@MaSinhVien", model.MaSinhVien,
+                    "@MaNhom", model.maNhom,
                     "@LyDoTuChoi",model.LyDoTuChoi,
                     "@TaiKhoan", taikhoan
                 );
@@ -279,7 +279,7 @@ namespace DAL.QL_DoAnRepository
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "TBM_XacNhanSVDangKyDeTai",
                     "@MaDeTai", model.MaDeTai,
-                    "@MaSinhVien", model.MaSinhVien,
+                    "@MaNhom", model.maNhom,
                     "@TaiKhoan", taikhoan
                 );
 
@@ -307,7 +307,7 @@ namespace DAL.QL_DoAnRepository
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "TBM_TuChoi_DeTai",
                     "@MaDeTai", model.MaDeTai,
-                    "@MaSinhVien", model.MaSinhVien,
+                    "@MaNhom", model.maNhom,
                     "@LyDoTuChoi", model.LyDoTuChoi,
                     "@TaiKhoan", taikhoan
                 );

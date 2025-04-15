@@ -43,18 +43,17 @@ namespace DAL.QL_DoAnRepository.NhomSinhVienRepository
             }
         }
 
-        public string Delete(ThanhVienNhomDTO model, string matruongnhom)
+        public string Delete(ThanhVienNhomDTO model, string maTruongNhom)
         {
             string msgError = "";
             string kq = "";
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedure(out msgError, "sp_XoaThanhVienNhom",
-                   "@maNhom", model.maNhom,
-                  "@@maSinhVienCanXoa", model.maSinhVien,
-                  "@maTruongNhom", matruongnhom
-                    );
-
+                    "@maNhom", model.maNhom,
+                    "@maSinhVienCanXoa", model.maSinhVien,
+                    "@maTruongNhom", maTruongNhom
+                );
                 if (result != null)
                 {
                     kq = result.ToString();

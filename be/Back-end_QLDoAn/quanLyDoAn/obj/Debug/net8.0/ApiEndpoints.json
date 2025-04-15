@@ -1,5 +1,83 @@
 [
   {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.BaoCaoTuan_CTRL",
+    "Method": "CreateItem",
+    "RelativePath": "api/BaoCaoTuan_CTRL/create-BaoCao",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.BaoCaoTuanDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.BaoCaoTuan_CTRL",
+    "Method": "Getall",
+    "RelativePath": "api/BaoCaoTuan_CTRL/getall_MaDeTai",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[DTO.QL_DoAn.BaoCaoTuanDTO, DTO, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.BaoCaoTuan_CTRL",
+    "Method": "UpdateItem",
+    "RelativePath": "api/BaoCaoTuan_CTRL/update-BaoCao",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "DTO.QL_DoAn.BaoCaoTuanDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "quanLyDoAn.Controllers.QL_DanhMuc.BoMon_CTRL",
     "Method": "CreateItem",
     "RelativePath": "api/BoMon_CTRL/create-BoMon",
@@ -1649,6 +1727,27 @@
   },
   {
     "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_NhomSinhVien.NhomSinhVien_CTRL",
+    "Method": "DeleteItem",
+    "RelativePath": "api/NhomSinhVien_CTRL/delete-NhomSinhVien",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "manhom",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "matruongnhom",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "quanLyDoAn.Controllers.QL_DoAn.QL_NhomSinhVien.NhomSinhVien_CTRL",
     "Method": "getNhombymaSinhVien",
     "RelativePath": "api/NhomSinhVien_CTRL/get_By_masinhvien",
     "HttpMethod": "GET",
@@ -1657,6 +1756,21 @@
     "Parameters": [
       {
         "Name": "taikhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "isTruongNhom",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "maDot",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "maGiangVien",
         "Type": "System.String",
         "IsRequired": false
       }

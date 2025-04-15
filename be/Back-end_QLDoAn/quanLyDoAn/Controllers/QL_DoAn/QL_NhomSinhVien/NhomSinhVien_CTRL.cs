@@ -1,4 +1,5 @@
 ﻿using BLL.InterFace.QL_DoAn.NhomSinhVien_BLL;
+using BLL.QL_NguoiDung.NhomSinhVien;
 using DTO.QL_DoAn;
 using DTO.QL_DoAn.NhomSinhVien;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,9 @@ namespace quanLyDoAn.Controllers.QL_DoAn.QL_NhomSinhVien
         }
         [Route("get_By_masinhvien")]
         [HttpGet]
-        public List< V_NhomSinhVien_DTO> getNhombymaSinhVien(string taikhoan)
+        public List< V_NhomSinhVien_DTO> getNhombymaSinhVien(string? taikhoan, int? isTruongNhom, string? maDot, string ? maGiangVien)
         {
-            return _NhomSinhVien_BLL.getNhombymaSinhVien(taikhoan);
+            return _NhomSinhVien_BLL.getNhombymaSinhVien(taikhoan, isTruongNhom, maDot,maGiangVien);
         }
 
         [Route("create-NhomSinhVien")]
@@ -26,6 +27,14 @@ namespace quanLyDoAn.Controllers.QL_DoAn.QL_NhomSinhVien
         public IActionResult CreateItem([FromBody] NhomSinhVienDTO model)
         {
             string result = _NhomSinhVien_BLL.Create(model);
+            return Ok(result);
+        }
+
+        [Route("delete-NhomSinhVien")]
+        [HttpDelete]
+        public IActionResult DeleteItem(string manhom, string matruongnhom)
+        {
+            string result = _NhomSinhVien_BLL.Delete(manhom, matruongnhom);
             return Ok(result);
         }
     }

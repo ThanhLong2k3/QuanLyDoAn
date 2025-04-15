@@ -103,6 +103,10 @@ builder.Services.AddTransient<IThanhVienNhom_BLL, ThanhVienNhom_BLL>();
 builder.Services.AddTransient<ILoiMoiThamGiaNhomRepository, LoiMoiThamGiaRepository>();
 builder.Services.AddTransient<ILoiMoiThamGiaNhom_BLL, LoiMoiThamGiaNhom_BLL>();
 
+
+builder.Services.AddTransient<IBaoCaoTuanReponsitory, BaoCaoTuanRepository>();
+builder.Services.AddTransient<IBaoCaoTuan_BLL, BaoCaoTuan_BLL>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

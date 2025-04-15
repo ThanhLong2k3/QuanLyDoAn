@@ -127,6 +127,8 @@ CREATE TABLE NhomSinhVien (
     maSinhVienTruong NVARCHAR(50) NOT NULL, -- Sinh viên trưởng nhóm
     ngayTao DATETIME DEFAULT GETDATE(),
     trangThai INT DEFAULT 1, -- 1: Hoạt động, 0: Đã hủy
+	maTrangThai INT DEFAULT 1, -- Mặc định trạng thái ban đầu là 1
+    FOREIGN KEY (maTrangThai) REFERENCES TrangThaiLamDoAn(MaTrangThai),
     FOREIGN KEY (maSinhVienTruong) REFERENCES sinhVien(maSinhVien)
 );
 
@@ -218,8 +220,29 @@ CREATE TABLE QuyTrinhHuongDan(
 	NamHocApDung VARCHAR(20),
 	TenChuyenNganh NVARCHAR(50),
 	ThuTu int ,
-	DuongDanBieuMau NVARCHAR(MAX),
+	DuongDanBieuMau NVARCHAR(MAX) NULL,
+
 );
+
+CREATE TABLE BAOCAOTUAN(
+    MaBaoCao INT IDENTITY(1,1) PRIMARY KEY,
+    MaDeTai NVARCHAR(50) NOT NULL, 
+    SoTuan INT NOT NULL, 
+    TuNgay DATE NULL, 
+    DenNgay DATE NULL, 
+    CongViec NVARCHAR(255) NULL,
+    NoiDungThucHien NVARCHAR(MAX) NULL,  -- Nếu không quá lớn, có thể thay NVARCHAR(MAX) bằng NVARCHAR(4000)
+    KetQuaDatDuoc NVARCHAR(255) NULL,
+    NoiDungBaoCao NVARCHAR(MAX) NULL,  -- Tương tự như trên
+    DuongDanBaoCao NVARCHAR(255) NULL,
+    NhanXetCuaGiangVien NVARCHAR(255) NULL,
+    Diem FLOAT NULL, 
+    CONSTRAINT FK_BaoCaoDeTai FOREIGN KEY (MaDeTai) REFERENCES QuanLyDeTaiGV(MaDeTai),
+    CONSTRAINT UNIQUE_Week UNIQUE(MaDeTai, SoTuan)  -- Đảm bảo mỗi tuần của 1 đề tài chỉ có 1 báo cáo
+);
+
+
+go
 -- Trigger kiểm tra số lượng thành viên trong nhóm
 CREATE TRIGGER trg_CheckGroupSize
 ON ThanhVienNhom
@@ -313,7 +336,9 @@ INSERT INTO nhomQuyen (maNhomQuyen, tenNhomQuyen, loai, moTa, soLuong) VALUES
 
 -- Thêm dữ liệu vào bảng phanQuyen
 INSERT INTO phanQuyen (maQuyen,tenQuyen)
-VALUES
+VALUES ('TEACHER_REPORT',N'Giảng viên đánh giá, nhận xét báo cáo'),
+	('SUBMIT_REPORT',N'Báo cáo kết quả Nghiên cứu khoa học'),
+	('VIEW_HOME',N'Trang chủ'),
 	('QL_DANHMUC',N'Quản lý danh mục'),
 	('TBM_CONFIRM_DETAI',N'Trưởng bộ môn xác nhận đề tài'),
 	('TBM_REJECT_DETAI',N'Trưởng bộ môn từ chối đề tài'),
@@ -1052,7 +1077,7 @@ CREATE or alter PROC GET_SinhVien_By_Id
 	@MaSinhVien NVARCHAR(50)
 	AS	
 		BEGIN
-			SELECT sv.*,tt.TenTrangThai FROM sinhVien sv inner join TrangThaiLamDoAn tt on sv.MaTrangThai=tt.MaTrangThai WHERE maSinhVien=@MaSinhVien ;
+			SELECT sv.* FROM sinhVien sv  WHERE maSinhVien=@MaSinhVien ;
 		END
 	GO
 --==========================LỚP============
@@ -1985,13 +2010,6 @@ END;
     @maSinhVien NVARCHAR(50)
 AS
 BEGIN
-IF EXISTS (SELECT 1 FROM Dot_SinhVien 
-               WHERE maSinhVien = @maSinhVien  
-               AND IsDeleted = 1)
-    BEGIN
-        SELECT '4' AS TThongBao ; 
-    END
-    ELSE
     -- Check if the student exists in the specified batch with IsDeleted = 0
     IF EXISTS (SELECT 1 FROM Dot_SinhVien 
                WHERE maDot = @maDot 
@@ -2218,6 +2236,7 @@ GO
 GO
 
 GO
+GO
 CREATE OR ALTER PROC GET_DETAI_MADOT
     @MaDot VARCHAR(50) = NULL,
     @TenDeTai NVARCHAR(255) = NULL
@@ -2225,27 +2244,34 @@ AS
 BEGIN
     SELECT 
         ROW_NUMBER() OVER (ORDER BY DT.MaDeTai) AS STT,
-		DT.MaDot,
+        DT.MaDot,
         DT.MaDeTai,
         DT.TenDeTai,
         DT.HinhThucBaoCaoBaoVe,
         DT.MoTa,
-        CONCAT(DT_SV.MaSinhVien, ': ', SV.tenSinhVien) AS SinhVienDangKy,
+        DT.TrangThai,
+        DT.PhanHoi,
+        TT.TenTrangThai AS TrangThaiDeTai,
+        NSV.tenNhom AS TenNhom,
+        CONCAT(DT_SV.MaNhom, ': ', NSV.tenNhom) AS NhomDangKy,
         CONCAT(DT.NguoiDeXuat, ': ', SV_DeXuat.tenSinhVien) AS SinhVienDeXuat
     FROM QuanLyDeTaiGV DT
     LEFT JOIN SinhVien_DeTai DT_SV ON DT.MaDeTai = DT_SV.MaDeTai 
-    LEFT JOIN SinhVien SV ON DT_SV.MaSinhVien = SV.maSinhVien
-    LEFT JOIN SinhVien SV_DeXuat ON DT.NguoiDeXuat = SV_DeXuat.maSinhVien
+    LEFT JOIN NhomSinhVien NSV ON DT_SV.MaNhom = NSV.maNhom 
+    LEFT JOIN TrangThaiLamDoAn TT ON DT.TrangThai = TT.MaTrangThai
+    LEFT JOIN sinhVien SV_DeXuat ON DT.NguoiDeXuat = SV_DeXuat.maSinhVien
     WHERE DT.IsDelete = 1
         AND (@MaDot IS NULL OR DT.MaDot = @MaDot)
         AND (@TenDeTai IS NULL OR DT.TenDeTai LIKE '%' + @TenDeTai + '%');
 END;
+GO
+
 go
 CREATE OR ALTER PROCEDURE sp_DeXuat_DeTai_SV
     @TenDeTai NVARCHAR(MAX),
     @MaDot VARCHAR(50),
     @MaGiangVien NVARCHAR(50),
-    @MaSinhVien NVARCHAR(50),
+    @MaNhom VARCHAR(50),
     @HinhThucBaoCao NVARCHAR(50),
     @MoTa NVARCHAR(MAX) = NULL,
     @TaiKhoan NVARCHAR(50)
@@ -2253,6 +2279,7 @@ AS
 BEGIN
     DECLARE @CoQuyenDeXuat BIT = 0;
     DECLARE @MaDeTai NVARCHAR(50);
+    DECLARE @MaSinhVienTruong NVARCHAR(50);
     
     -- Kiểm tra quyền đề xuất đề tài
     IF EXISTS (
@@ -2281,17 +2308,20 @@ BEGIN
             RETURN;
         END
 
-        -- Kiểm tra sinh viên đã đăng ký đề tài chưa và đề tài đó không ở trạng thái từ chối
+        -- Lấy mã sinh viên trưởng nhóm
+        SELECT @MaSinhVienTruong = maSinhVienTruong FROM NhomSinhVien WHERE maNhom = @MaNhom;
+        
+        -- Kiểm tra nhóm đã đăng ký đề tài chưa và đề tài đó không ở trạng thái từ chối
         IF EXISTS (
             SELECT 1
             FROM SinhVien_DeTai svdt
             JOIN QuanLyDeTaiGV qldt ON svdt.MaDeTai = qldt.MaDeTai
-            WHERE svdt.MaSinhVien = @MaSinhVien
+            WHERE svdt.MaNhom = @MaNhom
             AND qldt.MaDot = @MaDot
             AND qldt.TrangThai != 4 -- Không phải trạng thái từ chối
         )
         BEGIN
-            SELECT N'5' AS ThongBao; -- Sinh viên đã đăng ký đề tài và đề tài đó chưa bị từ chối
+            SELECT N'5' AS ThongBao; -- Nhóm đã đăng ký đề tài và đề tài đó chưa bị từ chối
             RETURN;
         END
 
@@ -2299,6 +2329,7 @@ BEGIN
             BEGIN TRANSACTION;
                 -- Thêm đề tài với trạng thái chờ duyệt
                 INSERT INTO QuanLyDeTaiGV (
+                    MaDeTai,
                     TenDeTai, 
                     MaDot,
                     HinhThucBaoCaoBaoVe,
@@ -2308,6 +2339,7 @@ BEGIN
                     IsDelete
                 )
                 VALUES (
+                    dbo.GenerateMaDeTai(@TenDeTai),
                     @TenDeTai, 
                     @MaDot,
                     @HinhThucBaoCao,
@@ -2316,20 +2348,36 @@ BEGIN
                     0,  -- Mặc định là chờ duyệt
                     1
                 );
-				UPDATE sinhVien SET MaTrangThai=2 WHERE maSinhVien=@MaSinhVien;
+                
+                -- Cập nhật trạng thái nhóm
+                UPDATE NhomSinhVien SET maTrangThai = 2 WHERE maNhom = @MaNhom;
+                
+                -- Lấy mã đề tài vừa tạo
                 SET @MaDeTai = dbo.GenerateMaDeTai(@TenDeTai);
-				
+                
                 -- Thêm vào bảng SinhVien_DeTai
                 INSERT INTO SinhVien_DeTai (
-                    MaSinhVien,
+                    MaNhom,
                     MaDeTai
                 )
                 VALUES (
-                    @MaSinhVien,
+                    @MaNhom,
                     @MaDeTai
                 );
                 
-                INSERT INTO PhanCong_HuongDan VALUES(@MaDot,@MaSinhVien,@MaGiangVien,1);
+                -- Thêm vào bảng GiangVien_DeTai
+                INSERT INTO GiangVien_DeTai (
+                    MaGiangVien,
+                    MaDeTai
+                )
+                VALUES (
+                    @MaGiangVien,
+                    @MaDeTai
+                );
+                
+                -- Thêm phân công hướng dẫn (nếu bảng này tồn tại)
+                -- INSERT INTO PhanCong_HuongDan VALUES(@MaDot, @MaNhom, @MaGiangVien, 1);
+                
             COMMIT TRANSACTION;
             SELECT N'1' AS ThongBao;
         END TRY
@@ -2345,12 +2393,10 @@ BEGIN
         SELECT N'0' AS ThongBao;
     END
 END;
-
-
 GO
 CREATE OR ALTER PROCEDURE sp_DangKy_DeTai_SV
     @MaDeTai NVARCHAR(50),
-    @MaSinhVien NVARCHAR(50),
+    @MaNhom VARCHAR(50),
     @TaiKhoan NVARCHAR(50)
 AS
 BEGIN
@@ -2359,6 +2405,7 @@ BEGIN
     DECLARE @CoQuyenDangKy BIT = 0;
     DECLARE @MaDot NVARCHAR(50);
     DECLARE @MaGiangVien NVARCHAR(50);
+    DECLARE @MaSinhVienTruong NVARCHAR(50);
     
     -- Kiểm tra quyền đăng ký đề tài
     IF EXISTS (
@@ -2386,12 +2433,17 @@ BEGIN
             RETURN;
         END
 
-        -- Kiểm tra sinh viên đã đăng ký đề tài nào trong đợt này chưa
+        -- Lấy sinh viên trưởng nhóm
+        SELECT @MaSinhVienTruong = maSinhVienTruong 
+        FROM NhomSinhVien 
+        WHERE maNhom = @MaNhom;
+
+        -- Kiểm tra nhóm đã đăng ký đề tài nào trong đợt này chưa
         IF EXISTS (
             SELECT 1 
             FROM SinhVien_DeTai svdt
             JOIN QuanLyDeTaiGV qldt ON svdt.MaDeTai = qldt.MaDeTai
-            WHERE svdt.MaSinhVien = @MaSinhVien 
+            WHERE svdt.MaNhom = @MaNhom 
             AND qldt.MaDot = @MaDot
         )
         BEGIN
@@ -2416,19 +2468,19 @@ BEGIN
 
         BEGIN TRY
             BEGIN TRANSACTION;
-                -- Cập nhật trạng thái sinh viên
-                UPDATE sinhVien 
-                SET MaTrangThai = 3 
-                WHERE maSinhVien = @MaSinhVien;
-				    -- Thêm phân công hướng dẫn
-                INSERT INTO PhanCong_HuongDan (MaDot, MaSinhVien, MaGiangVien, IsDeleted)
-                VALUES (@MaDot, @MaSinhVien, @MaGiangVien, 1);
-                -- Thêm đăng ký
-                INSERT INTO SinhVien_DeTai (MaSinhVien, MaDeTai)
-                VALUES (@MaSinhVien, @MaDeTai);
-				
-            
-
+                -- Cập nhật trạng thái nhóm
+                UPDATE NhomSinhVien 
+                SET maTrangThai = 3 
+                WHERE maNhom = @MaNhom;
+                
+                -- Thêm phân công hướng dẫn (nếu bảng này tồn tại)
+                -- INSERT INTO PhanCong_HuongDan (MaDot, MaNhom, MaGiangVien, IsDeleted)
+                -- VALUES (@MaDot, @MaNhom, @MaGiangVien, 1);
+                
+                -- Thêm đăng ký đề tài cho nhóm
+                INSERT INTO SinhVien_DeTai (MaNhom, MaDeTai)
+                VALUES (@MaNhom, @MaDeTai);
+                
             COMMIT TRANSACTION;
             SELECT N'1' AS ThongBao;
         END TRY
@@ -2496,15 +2548,15 @@ INSERT INTO TrangThaiLamDoAn VALUES (N'Giảng viên đã duyệt đề tài ch�
 INSERT INTO TrangThaiLamDoAn VALUES (N'Bộ môn đã duyệt',N'	Bộ môn đã duyệt',4,1);
 INSERT INTO TrangThaiLamDoAn VALUES (N'Đã bảo vệ trượt',N'Đã bảo vệ trượt',5,1);
 INSERT INTO TrangThaiLamDoAn VALUES (N'	Đã bảo vệ đỗ',N'Đã bảo vệ đỗ',6,1);
-
 GO
 CREATE OR ALTER PROC GiangVien_XacNhanSVDangKyDeTai
     @MaDeTai NVARCHAR(50),
     @TaiKhoan NVARCHAR(50),
-	@MaSinhVien NVARCHAR(50)
+    @MaNhom VARCHAR(50)
 AS
 BEGIN
     DECLARE @CoQuyenXacNhan BIT = 0;
+    DECLARE @MaSinhVienTruong NVARCHAR(50);
     
     -- Kiểm tra quyền xác nhận đăng ký đề tài
     IF EXISTS (
@@ -2519,19 +2571,38 @@ BEGIN
     
     IF @CoQuyenXacNhan = 1
     BEGIN
-        -- Kiểm tra xem đề tài có tồn tại và đang ở trạng thái chờ xác nhận
-        IF NOT EXISTS (SELECT 1 FROM QuanLyDeTaiGV WHERE MaDeTai = @MaDeTai AND TrangThai = 0)
+        -- Lấy sinh viên trưởng nhóm
+        SELECT @MaSinhVienTruong = maSinhVienTruong 
+        FROM NhomSinhVien 
+        WHERE maNhom = @MaNhom;
+
+        -- Kiểm tra xem đề tài có tồn tại và đang ở trạng thái chờ xác nhận (0)
+        -- Và có được đăng ký bởi nhóm này không
+        IF NOT EXISTS (
+            SELECT 1 
+            FROM QuanLyDeTaiGV dt
+            JOIN SinhVien_DeTai svdt ON dt.MaDeTai = svdt.MaDeTai
+            WHERE dt.MaDeTai = @MaDeTai 
+            AND dt.TrangThai = 0
+            AND svdt.MaNhom = @MaNhom
+        )
         BEGIN
-            SELECT N'3' AS ThongBao; -- Đề tài không tồn tại hoặc không ở trạng thái chờ xác nhận
+            SELECT N'3' AS ThongBao; -- Đề tài không tồn tại, không ở trạng thái chờ, hoặc không thuộc nhóm này
             RETURN;
         END
 
         BEGIN TRY
             BEGIN TRANSACTION;
+                -- Cập nhật trạng thái đề tài thành đã duyệt (1)
                 UPDATE QuanLyDeTaiGV 
                 SET TrangThai = 1 
                 WHERE MaDeTai = @MaDeTai;
-				UPDATE sinhVien SET MaTrangThai=3 WHERE maSinhVien=@MaSinhVien;
+                
+                -- Cập nhật trạng thái nhóm thành đã đăng ký đề tài (3)
+                UPDATE NhomSinhVien 
+                SET maTrangThai = 3 
+                WHERE maNhom = @MaNhom;
+                
                 -- Kiểm tra xem cập nhật có thành công không
                 IF @@ROWCOUNT = 0
                 BEGIN
@@ -2556,15 +2627,15 @@ BEGIN
     END
 END;
 GO
-
 CREATE OR ALTER PROCEDURE sp_TuChoi_DeTai
     @MaDeTai NVARCHAR(50),
     @TaiKhoan NVARCHAR(50),
     @LyDoTuChoi NVARCHAR(MAX) = NULL,
-	@MaSinhVien nvarchar(50)
+    @MaNhom VARCHAR(50)
 AS
 BEGIN
     DECLARE @CoQuyenTuChoi BIT = 0;
+    DECLARE @MaSinhVienTruong NVARCHAR(50);
     
     -- Kiểm tra quyền từ chối đề tài
     IF EXISTS (
@@ -2579,15 +2650,29 @@ BEGIN
     
     IF @CoQuyenTuChoi = 1
     BEGIN
-        -- Kiểm tra xem đề tài có tồn tại và đang ở trạng thái có thể từ chối
-        IF NOT EXISTS (SELECT 1 FROM QuanLyDeTaiGV WHERE MaDeTai = @MaDeTai AND TrangThai IN (0, 1)) -- 0: Chờ duyệt, 1: Đã duyệt
+        -- Lấy sinh viên trưởng nhóm
+        SELECT @MaSinhVienTruong = maSinhVienTruong 
+        FROM NhomSinhVien 
+        WHERE maNhom = @MaNhom;
+
+        -- Kiểm tra xem đề tài có tồn tại, đang ở trạng thái có thể từ chối (0 hoặc 1)
+        -- Và có được đăng ký bởi nhóm này không
+        IF NOT EXISTS (
+            SELECT 1 
+            FROM QuanLyDeTaiGV dt
+            JOIN SinhVien_DeTai svdt ON dt.MaDeTai = svdt.MaDeTai
+            WHERE dt.MaDeTai = @MaDeTai 
+            AND dt.TrangThai IN (0, 1) -- 0: Chờ duyệt, 1: Đã duyệt
+            AND svdt.MaNhom = @MaNhom
+        )
         BEGIN
-            SELECT N'3' AS ThongBao; -- Đề tài không tồn tại hoặc không ở trạng thái có thể từ chối
+            SELECT N'3' AS ThongBao; -- Đề tài không tồn tại, không ở trạng thái có thể từ chối, hoặc không thuộc nhóm này
             RETURN;
         END
 
         BEGIN TRY
             BEGIN TRANSACTION;
+                -- Cập nhật trạng thái đề tài thành từ chối (4) và ghi lý do
                 UPDATE QuanLyDeTaiGV 
                 SET TrangThai = 4, -- 4: Từ chối
                     PhanHoi = @LyDoTuChoi
@@ -2601,12 +2686,18 @@ BEGIN
                     RETURN;
                 END
 
-                -- Xóa liên kết sinh viên với đề tài bị từ chối
-                DELETE FROM SinhVien_DeTai WHERE MaDeTai = @MaDeTai;
-				UPDATE sinhVien SET MaTrangThai=0 WHERE maSinhVien=@MaSinhVien;
-                -- Xóa phân công hướng dẫn liên quan đến đề tài bị từ chối
-                DELETE FROM PhanCong_HuongDan WHERE maSinhVien = @MaSinhVien;
-				
+                -- Xóa liên kết nhóm với đề tài bị từ chối
+                DELETE FROM SinhVien_DeTai 
+                WHERE MaDeTai = @MaDeTai AND MaNhom = @MaNhom;
+                
+                -- Cập nhật trạng thái nhóm về trạng thái ban đầu (0 hoặc 1 tùy theo yêu cầu)
+                UPDATE NhomSinhVien 
+                SET maTrangThai = 1 -- Hoặc 0 tùy theo yêu cầu nghiệp vụ
+                WHERE maNhom = @MaNhom;
+
+                -- Xóa phân công hướng dẫn liên quan đến nhóm (nếu có)
+                -- DELETE FROM PhanCong_HuongDan WHERE maNhom = @MaNhom;
+                
             COMMIT TRANSACTION;
             SELECT N'1' AS ThongBao; -- Từ chối thành công
         END TRY
@@ -2622,20 +2713,33 @@ BEGIN
         SELECT N'0' AS ThongBao; -- Không có quyền từ chối
     END
 END;
-
+GO
 GO
 CREATE OR ALTER PROC GET_DETAISINHVIEN_GIANGVIENXACNHAN
-		@MaDot VARCHAR(50)
-	AS
-		BEGIN
-			SELECT SV.maSinhVien,SV.tenSinhVien,SV.maLop,DT.TenDeTai,DT.MaDeTai FROM QuanLyDeTaiGV DT INNER JOIN SinhVien_DeTai DT_SV ON DT.MaDeTai=DT_SV.MaDeTai
-			INNER JOIN sinhVien SV ON DT_SV.MaSinhVien=SV.maSinhVien WHERE DT.MaDot=@MaDot AND TrangThai=0;
-		END
+    @MaDot VARCHAR(50)
+AS
+BEGIN
+    SELECT 
+        NSV.maNhom,
+        NSV.tenNhom,
+        SV.maSinhVien,
+        SV.tenSinhVien,
+        SV.maLop,
+        DT.TenDeTai,
+        DT.MaDeTai
+    FROM QuanLyDeTaiGV DT
+    INNER JOIN SinhVien_DeTai DT_SV ON DT.MaDeTai = DT_SV.MaDeTai
+    INNER JOIN NhomSinhVien NSV ON DT_SV.MaNhom = NSV.maNhom
+    INNER JOIN sinhVien SV ON NSV.maSinhVienTruong = SV.maSinhVien -- Lấy thông tin trưởng nhóm
+    WHERE DT.MaDot = @MaDot 
+          AND DT.TrangThai = 0; -- Chỉ lấy đề tài chưa được xác nhận
+END
 GO
+
 
 
 --========================================TRUONG BỘ MÔN XÁC NHẬN ĐỀ TÀI
-
+GO
 CREATE OR ALTER PROC GET_DETAIGIANGVIEN_TBMXACNHAN
     @MaDot VARCHAR(50) = NULL,
     @MaGiangVien NVARCHAR(50) = NULL,
@@ -2645,21 +2749,23 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT 
-        COALESCE(sv.maSinhVien, 'NULL') AS MaSinhVien,
-        COALESCE(sv.tenSinhVien, 'NULL') AS TenSinhVien,
+        COALESCE(nsv.maNhom, 'NULL') AS MaNhom,
+        COALESCE(nsv.tenNhom, 'NULL') AS TenNhom,
         COALESCE(gv.maGiangVien, pch.maGiangVien, 'NULL') AS MaGiangVien,
         COALESCE(gv.tenGiangVien, gv_pch.tenGiangVien, 'NULL') AS TenGiangVien,
-		dt.MaDeTai,
+        dt.MaDeTai,
         dt.TenDeTai,
         dt.MaDot,
+		sv.tenSinhVien,
         sv.maLop
     FROM 
         QuanLyDeTaiGV dt
     LEFT JOIN SinhVien_DeTai svdt ON dt.MaDeTai = svdt.MaDeTai
-    inner JOIN sinhVien sv ON svdt.MaSinhVien = sv.maSinhVien
+    INNER JOIN NhomSinhVien nsv ON svdt.MaNhom = nsv.maNhom
+    INNER JOIN sinhVien sv ON nsv.maSinhVienTruong = sv.maSinhVien
     LEFT JOIN GiangVien_DeTai gvdt ON dt.MaDeTai = gvdt.MaDeTai
     LEFT JOIN giangVien gv ON gvdt.MaGiangVien = gv.maGiangVien
-    LEFT JOIN PhanCong_HuongDan pch ON dt.MaDot = pch.maDot AND sv.maSinhVien = pch.maSinhVien
+    LEFT JOIN PhanCong_HuongDan pch ON dt.MaDot = pch.maDot AND nsv.maSinhVienTruong = pch.maSinhVien
     LEFT JOIN giangVien gv_pch ON pch.maGiangVien = gv_pch.maGiangVien
     WHERE 
         dt.TrangThai = 1
@@ -2667,17 +2773,19 @@ BEGIN
         AND (@MaGiangVien IS NULL OR gv.maGiangVien = @MaGiangVien OR pch.maGiangVien = @MaGiangVien)
         AND (@MaLop IS NULL OR sv.maLop = @MaLop)
     ORDER BY 
-        dt.MaDot, sv.maLop, sv.maSinhVien;
+        dt.MaDot, sv.maLop, nsv.maNhom;
 END
+GO
 
 GO
 CREATE OR ALTER PROC TBM_XacNhanSVDangKyDeTai
     @MaDeTai NVARCHAR(50),
     @TaiKhoan NVARCHAR(50),
-	@MaSinhVien NVARCHAR(50)
+    @MaNhom VARCHAR(50)
 AS
 BEGIN
     DECLARE @CoQuyenXacNhan BIT = 0;
+    DECLARE @MaSinhVienTruong NVARCHAR(50);
     
     -- Kiểm tra quyền xác nhận đăng ký đề tài
     IF EXISTS (
@@ -2692,19 +2800,38 @@ BEGIN
     
     IF @CoQuyenXacNhan = 1
     BEGIN
-        -- Kiểm tra xem đề tài có tồn tại và đang ở trạng thái chờ xác nhận
-        IF NOT EXISTS (SELECT 1 FROM QuanLyDeTaiGV WHERE MaDeTai = @MaDeTai AND TrangThai = 1)
+        -- Lấy sinh viên trưởng nhóm
+        SELECT @MaSinhVienTruong = maSinhVienTruong 
+        FROM NhomSinhVien 
+        WHERE maNhom = @MaNhom;
+
+        -- Kiểm tra xem đề tài có tồn tại, đang ở trạng thái đã duyệt bởi GV (1)
+        -- Và có được đăng ký bởi nhóm này không
+        IF NOT EXISTS (
+            SELECT 1 
+            FROM QuanLyDeTaiGV dt
+            JOIN SinhVien_DeTai svdt ON dt.MaDeTai = svdt.MaDeTai
+            WHERE dt.MaDeTai = @MaDeTai 
+            AND dt.TrangThai = 1  -- Đã duyệt bởi GV
+            AND svdt.MaNhom = @MaNhom
+        )
         BEGIN
-            SELECT N'3' AS ThongBao; -- Đề tài không tồn tại hoặc không ở trạng thái chờ xác nhận
+            SELECT N'3' AS ThongBao; -- Đề tài không tồn tại hoặc không ở trạng thái chờ xác nhận TBM
             RETURN;
         END
 
         BEGIN TRY
             BEGIN TRANSACTION;
+                -- Cập nhật trạng thái đề tài thành đã duyệt bởi TBM (2)
                 UPDATE QuanLyDeTaiGV 
                 SET TrangThai = 2 
                 WHERE MaDeTai = @MaDeTai;
-				UPDATE sinhVien SET MaTrangThai=4 WHERE maSinhVien=@MaSinhVien;
+                
+                -- Cập nhật trạng thái nhóm thành đã duyệt (4)
+                UPDATE NhomSinhVien 
+                SET maTrangThai = 4 
+                WHERE maNhom = @MaNhom;
+                
                 -- Kiểm tra xem cập nhật có thành công không
                 IF @@ROWCOUNT = 0
                 BEGIN
@@ -2728,16 +2855,17 @@ BEGIN
         SELECT N'0' AS ThongBao; -- Không có quyền xác nhận
     END
 END;
-
+GO
 go
 CREATE OR ALTER PROCEDURE TBM_TuChoi_DeTai
     @MaDeTai NVARCHAR(50),
     @TaiKhoan NVARCHAR(50),
     @LyDoTuChoi NVARCHAR(MAX) = NULL,
-	@MaSinhVien nvarchar(50)=null
+    @MaNhom VARCHAR(50)
 AS
 BEGIN
     DECLARE @CoQuyenTuChoi BIT = 0;
+    DECLARE @MaSinhVienTruong NVARCHAR(50);
     
     -- Kiểm tra quyền từ chối đề tài
     IF EXISTS (
@@ -2752,8 +2880,21 @@ BEGIN
     
     IF @CoQuyenTuChoi = 1
     BEGIN
-        -- Kiểm tra xem đề tài có tồn tại và đang ở trạng thái có thể từ chối
-        IF NOT EXISTS (SELECT 1 FROM QuanLyDeTaiGV WHERE MaDeTai = @MaDeTai AND TrangThai = 1) -- 0: Chờ duyệt, 1: Đã duyệt
+        -- Lấy sinh viên trưởng nhóm
+        SELECT @MaSinhVienTruong = maSinhVienTruong 
+        FROM NhomSinhVien 
+        WHERE maNhom = @MaNhom;
+
+        -- Kiểm tra xem đề tài có tồn tại, đang ở trạng thái đã duyệt bởi GV (1)
+        -- Và có được đăng ký bởi nhóm này không
+        IF NOT EXISTS (
+            SELECT 1 
+            FROM QuanLyDeTaiGV dt
+            JOIN SinhVien_DeTai svdt ON dt.MaDeTai = svdt.MaDeTai
+            WHERE dt.MaDeTai = @MaDeTai 
+            AND dt.TrangThai = 1  -- Đã duyệt bởi GV
+            AND svdt.MaNhom = @MaNhom
+        )
         BEGIN
             SELECT N'3' AS ThongBao; -- Đề tài không tồn tại hoặc không ở trạng thái có thể từ chối
             RETURN;
@@ -2761,11 +2902,24 @@ BEGIN
 
         BEGIN TRY
             BEGIN TRANSACTION;
+                -- Cập nhật trạng thái đề tài thành từ chối (4) và ghi lý do
                 UPDATE QuanLyDeTaiGV 
                 SET TrangThai = 4, -- 4: Từ chối
                     PhanHoi = @LyDoTuChoi
                 WHERE MaDeTai = @MaDeTai;
 
+                -- Xóa liên kết nhóm với đề tài bị từ chối
+                DELETE FROM SinhVien_DeTai 
+                WHERE MaDeTai = @MaDeTai AND MaNhom = @MaNhom;
+                
+                -- Cập nhật trạng thái nhóm về trạng thái ban đầu (0)
+                UPDATE NhomSinhVien 
+                SET maTrangThai = 1 
+                WHERE maNhom = @MaNhom;
+
+                -- Xóa phân công hướng dẫn liên quan đến nhóm (nếu có)
+                -- DELETE FROM PhanCong_HuongDan WHERE maNhom = @MaNhom;
+                
                 -- Kiểm tra xem cập nhật có thành công không
                 IF @@ROWCOUNT = 0
                 BEGIN
@@ -2774,12 +2928,6 @@ BEGIN
                     RETURN;
                 END
 
-                -- Xóa liên kết sinh viên với đề tài bị từ chối
-                DELETE FROM SinhVien_DeTai WHERE MaDeTai = @MaDeTai;
-				UPDATE sinhVien SET MaTrangThai=0 WHERE maSinhVien=@MaSinhVien;
-                -- Xóa phân công hướng dẫn liên quan đến đề tài bị từ chối
-                DELETE FROM PhanCong_HuongDan WHERE maSinhVien = @MaSinhVien;
-				
             COMMIT TRANSACTION;
             SELECT N'1' AS ThongBao; -- Từ chối thành công
         END TRY
@@ -2787,7 +2935,11 @@ BEGIN
             IF @@TRANCOUNT > 0
                 ROLLBACK TRANSACTION;
             
-            SELECT N'2' AS ThongBao; -- Lỗi khi thực hiện từ chối
+            SELECT N'2' AS ThongBao,
+			 ERROR_MESSAGE() AS LoiChiTiet,  -- Thêm dòng này để biết lỗi gì
+        ERROR_LINE() AS DongLoi,
+        ERROR_PROCEDURE() AS ThuTuc,
+        ERROR_NUMBER() AS MaLoi;-- Lỗi khi thực hiện từ chối
         END CATCH;
     END
     ELSE
@@ -2795,7 +2947,8 @@ BEGIN
         SELECT N'0' AS ThongBao; -- Không có quyền từ chối
     END
 END;
-EXEC TBM_TuChoi_DeTai @MaDeTai='QLSQÁ' ,@TaiKhoan='ADMIN', @LyDoTuChoi='0',@MaSinhVien='10119466'
+GO
+
 --=============================================SEARCH PROC
 
 --=========TÌM KIẾM SINH VIÊN
@@ -2937,6 +3090,7 @@ BEGIN
     END CATCH
 END;
 GO
+
 -- GỬI LỜI MỜI 
 CREATE PROCEDURE sp_GuiLoiMoiThamGiaNhom
     @maNhom VARCHAR(50),
@@ -2976,6 +3130,7 @@ BEGIN
     END CATCH
 END;
 -- CHẤP NHẬN LỜI MỜI 
+
 GO
 CREATE PROCEDURE sp_XuLyLoiMoiThamGia
     @idLoiMoi INT,
@@ -3045,51 +3200,53 @@ BEGIN
 END;
 GO;
 
-
-CREATE PROCEDURE sp_LayNhomTheoSinhVien
-    @maSinhVien NVARCHAR(50)
+CREATE OR ALTER PROCEDURE sp_LayNhomTheoSinhVien
+    @maSinhVien NVARCHAR(50) = null,
+    @isTruongNhom BIT = 0, -- Nếu = 1, chỉ lấy nhóm mà sinh viên là trưởng nhóm và trạng thái = 1
+	@maDot NVARCHAR(250) = NULL,
+	@maGiangVien NVARCHAR(250)=NULL
 AS
 BEGIN
-    BEGIN TRY
-        -- Kiểm tra sinh viên tồn tại
-        IF NOT EXISTS (SELECT 1 FROM sinhVien WHERE maSinhVien = @maSinhVien AND IsDeleted = 1)
-        BEGIN
-            SELECT '0' AS KetQua, N'Sinh viên không tồn tại hoặc đã bị xóa' AS ThongBao;
-            RETURN;
-        END
-        
-        -- Lấy thông tin các nhóm sinh viên tham gia
+        -- Lấy thông tin nhóm mà sinh viên tham gia hoặc là trưởng nhóm
         SELECT 
             n.maNhom,
             n.tenNhom,
             n.maSinhVienTruong,
             sv.tenSinhVien AS tenTruongNhom,
             n.ngayTao,
-            CASE n.trangThai 
-                WHEN 1 THEN N'Hoạt động' 
-                ELSE N'Đã hủy' 
-            END AS trangThai,
+            tld.TenTrangThai AS trangThai, -- Lấy trạng thái từ bảng TrangThaiLamDoAn
             tv.vaiTro,
             tv.ngayThamGia,
+			n.maTrangThai,
+			dt_gv.TenDeTai,
+			dt_gv.MaDeTai,
+			gv.tenGiangVien,
+			DT.maDot,
+			DT.tenDot,
+			DT.ngayBatDau,
+			DT.choPhepGiangVienBaoCaoKhacTuanHienTai,
             (SELECT COUNT(*) FROM ThanhVienNhom WHERE maNhom = n.maNhom) AS soThanhVien
         FROM 
             NhomSinhVien n
             INNER JOIN ThanhVienNhom tv ON n.maNhom = tv.maNhom
             INNER JOIN sinhVien sv ON n.maSinhVienTruong = sv.maSinhVien
+            LEFT JOIN TrangThaiLamDoAn tld ON n.maTrangThai = tld.MaTrangThai
+			LEFT JOIN SinhVien_DeTai sv_dt ON n.maNhom=sv_dt.MaNhom
+			LEFT JOIN QuanLyDeTaiGV dt_gv ON sv_dt.MaDeTai=dt_gv.MaDeTai
+			LEFT JOIN GiangVien_DeTai gv_dt ON dt_gv.MaDeTai=gv_dt.MaDeTai
+			LEFT JOIN giangVien gv ON gv_dt.MaGiangVien=gv.maGiangVien
+			LEFT JOIN dotLamDoAn DT ON dt_gv.MaDot=DT.maDot
         WHERE 
-            tv.maSinhVien = @maSinhVien
+			(@maSinhVien IS NULL OR tv.maSinhVien = @maSinhVien )
+		   AND (@maDot IS NULL OR DT.maDot = @maDot) AND (@maGiangVien IS NULL OR gv_dt.MaGiangVien = @maGiangVien)
+            AND (@isTruongNhom = 0 OR (n.maSinhVienTruong = @maSinhVien AND n.maTrangThai = 1)) -- Chỉ lọc trưởng nhóm có trạng thái = 1
         ORDER BY 
             n.ngayTao DESC;
-        
+
         -- Trả về kết quả thành công
         SELECT '1' AS KetQua, N'Lấy thông tin nhóm thành công' AS ThongBao;
-    END TRY
-    BEGIN CATCH
-        SELECT '0' AS KetQua, 
-               N'Lỗi: ' + ERROR_MESSAGE() AS ThongBao;
-    END CATCH
 END;
-go
+GO;
 
 CREATE PROCEDURE sp_TaoNhomSinhVien
     @maNhom VARCHAR(50),
@@ -3199,9 +3356,201 @@ BEGIN
 END;
 
 go
-create proc get_member_id
+create  proc get_member_id
 	@Id_group nvarchar(50)
 	as
 begin
 	select*from ThanhVienNhom TV inner join sinhVien SV ON TV.maSinhVien=SV.maSinhVien WHERE TV.maNhom=@Id_group AND SV.IsDeleted=1;
 END
+go
+CREATE PROCEDURE sp_XoaNhomCungNeuLaTruongNhom
+    @maNhom NVARCHAR(50),
+    @maSinhVien NVARCHAR(50)
+AS
+BEGIN
+    BEGIN TRY
+        -- Kiểm tra nhóm tồn tại
+        IF NOT EXISTS (SELECT 1 FROM NhomSinhVien WHERE maNhom = @maNhom)
+        BEGIN
+            SELECT '0' AS KetQua, N'Nhóm không tồn tại' AS ThongBao;
+            RETURN;
+        END
+
+        -- Kiểm tra sinh viên có phải là trưởng nhóm không
+        DECLARE @isTruongNhom BIT;
+        SELECT @isTruongNhom = CASE WHEN maSinhVienTruong = @maSinhVien THEN 1 ELSE 0 END
+        FROM NhomSinhVien
+        WHERE maNhom = @maNhom;
+
+        IF @isTruongNhom = 0
+        BEGIN
+            SELECT '0' AS KetQua, N'Chỉ trưởng nhóm mới có quyền xóa nhóm' AS ThongBao;
+            RETURN;
+        END
+
+        -- Xóa các lời mời liên quan
+        DELETE FROM LoiMoiThamGiaNhom
+        WHERE maNhom = @maNhom;
+
+        -- Xóa thành viên nhóm
+        DELETE FROM ThanhVienNhom
+        WHERE maNhom = @maNhom;
+
+        -- Xóa nhóm
+        DELETE FROM NhomSinhVien
+        WHERE maNhom = @maNhom;
+
+        SELECT '1' AS KetQua, N'Xóa nhóm thành công' AS ThongBao;
+    END TRY
+    BEGIN CATCH
+        SELECT '0' AS KetQua, N'Lỗi: ' + ERROR_MESSAGE() AS ThongBao;
+    END CATCH
+END;
+GO
+
+--- thêm báo cáo
+CREATE OR ALTER PROC GET_BAOCAO_MADETAI
+	@MaDeTai Nvarchar(50)
+AS
+	BEGIN 
+		SELECT*FROM BAOCAOTUAN WHERE MaDeTai= @MaDeTai;
+	END
+GO
+
+CREATE PROCEDURE sp_ThemBaoCaoTuan
+    @MaDeTai NVARCHAR(50),
+    @SoTuan INT,
+    @TuNgay DATE = NULL,
+    @DenNgay DATE = NULL,
+    @CongViec NVARCHAR(255) = NULL,
+    @NoiDungThucHien NVARCHAR(MAX) = NULL,
+    @KetQuaDatDuoc NVARCHAR(255) = NULL,
+    @NoiDungBaoCao NVARCHAR(MAX) = NULL,
+    @DuongDanBaoCao NVARCHAR(255) = NULL,
+    @NhanXetCuaGiangVien NVARCHAR(255) = NULL,
+    @Diem FLOAT = NULL
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- Kiểm tra đề tài tồn tại
+        IF NOT EXISTS (SELECT 1 FROM QuanLyDeTaiGV WHERE MaDeTai = @MaDeTai)
+        BEGIN
+            SELECT N'0' AS ThongBao;
+            RETURN;
+        END
+        
+        -- Kiểm tra báo cáo tuần đã tồn tại chưa
+        IF EXISTS (SELECT 1 FROM BAOCAOTUAN WHERE MaDeTai = @MaDeTai AND SoTuan = @SoTuan)
+        BEGIN
+            SELECT N'0' AS ThongBao;
+            RETURN;
+        END
+        
+        -- Thêm báo cáo mới
+        INSERT INTO BAOCAOTUAN (
+            MaDeTai, SoTuan, TuNgay, DenNgay, CongViec, 
+            NoiDungThucHien, KetQuaDatDuoc, NoiDungBaoCao, 
+            DuongDanBaoCao, NhanXetCuaGiangVien, Diem
+        )
+        VALUES (
+            @MaDeTai, @SoTuan, @TuNgay, @DenNgay, @CongViec, 
+            @NoiDungThucHien, @KetQuaDatDuoc, @NoiDungBaoCao, 
+            @DuongDanBaoCao, @NhanXetCuaGiangVien, @Diem
+        );
+        
+        COMMIT TRANSACTION;
+        SELECT N'1' AS ThongBao;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        
+        SELECT N'0' AS ThongBao;
+    END CATCH
+END;
+GO
+CREATE PROCEDURE sp_SuaBaoCaoTuan
+    @MaBaoCao INT,
+    @MaDeTai NVARCHAR(50) = NULL,
+    @SoTuan INT = NULL,
+    @TuNgay DATE = NULL,
+    @DenNgay DATE = NULL,
+    @CongViec NVARCHAR(255) = NULL,
+    @NoiDungThucHien NVARCHAR(MAX) = NULL,
+    @KetQuaDatDuoc NVARCHAR(255) = NULL,
+    @NoiDungBaoCao NVARCHAR(MAX) = NULL,
+    @DuongDanBaoCao NVARCHAR(255) = NULL,
+    @NhanXetCuaGiangVien NVARCHAR(255) = NULL,
+    @Diem FLOAT = NULL
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- Kiểm tra báo cáo tồn tại
+        IF NOT EXISTS (SELECT 1 FROM BAOCAOTUAN WHERE MaBaoCao = @MaBaoCao)
+        BEGIN
+            SELECT N'0' AS ThongBao, N'Báo cáo không tồn tại' AS ErrorMessage;
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+        
+        -- Kiểm tra ràng buộc UNIQUE(MaDeTai, SoTuan) nếu cập nhật MaDeTai hoặc SoTuan
+        IF @MaDeTai IS NOT NULL OR @SoTuan IS NOT NULL
+        BEGIN
+            DECLARE @CurrentMaDeTai NVARCHAR(50);
+            DECLARE @CurrentSoTuan INT;
+            
+            -- Lấy giá trị hiện tại
+            SELECT @CurrentMaDeTai = MaDeTai, @CurrentSoTuan = SoTuan
+            FROM BAOCAOTUAN
+            WHERE MaBaoCao = @MaBaoCao;
+            
+            -- Gán giá trị mới hoặc giữ nguyên
+            DECLARE @NewMaDeTai NVARCHAR(50) = ISNULL(@MaDeTai, @CurrentMaDeTai);
+            DECLARE @NewSoTuan INT = ISNULL(@SoTuan, @CurrentSoTuan);
+            
+            -- Kiểm tra trùng lặp
+            IF EXISTS (
+                SELECT 1 
+                FROM BAOCAOTUAN 
+                WHERE MaDeTai = @NewMaDeTai 
+                AND SoTuan = @NewSoTuan 
+                AND MaBaoCao != @MaBaoCao
+            )
+            BEGIN
+                SELECT N'0' AS ThongBao, N'Tuần này của đề tài đã có báo cáo' AS ErrorMessage;
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+        END
+        
+        -- Cập nhật báo cáo
+        UPDATE BAOCAOTUAN
+        SET 
+            MaDeTai = ISNULL(@MaDeTai, MaDeTai),
+            SoTuan = ISNULL(@SoTuan, SoTuan),
+            TuNgay = ISNULL(@TuNgay, TuNgay),
+            DenNgay = ISNULL(@DenNgay, DenNgay),
+            CongViec = ISNULL(@CongViec, CongViec),
+            NoiDungThucHien = ISNULL(@NoiDungThucHien, NoiDungThucHien),
+            KetQuaDatDuoc = ISNULL(@KetQuaDatDuoc, KetQuaDatDuoc),
+            NoiDungBaoCao = ISNULL(@NoiDungBaoCao, NoiDungBaoCao),
+            DuongDanBaoCao = ISNULL(@DuongDanBaoCao, DuongDanBaoCao),
+            NhanXetCuaGiangVien = ISNULL(@NhanXetCuaGiangVien, NhanXetCuaGiangVien),
+            Diem = ISNULL(@Diem, Diem)
+        WHERE MaBaoCao = @MaBaoCao;
+        
+        COMMIT TRANSACTION;
+        SELECT N'1' AS ThongBao, N'Cập nhật báo cáo thành công' AS Message;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+        
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        SELECT N'0' AS ThongBao, @ErrorMessage AS ErrorMessage;
+    END CATCH
+END;

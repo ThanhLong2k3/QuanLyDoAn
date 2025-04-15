@@ -63,11 +63,10 @@ namespace DAL.QL_DoAnRepository.NhomSinhVienRepository
             try
             {
                 var result = _dbHelper.ExecuteScalarSProcedureWithTransaction(out msgError, "sp_XuLyLoiMoiThamGia",
-                    " @idLoiMoi", model.MaLoiMoi,
+                    "@idLoiMoi", model.MaLoiMoi,
                     "@maSinhVien", model.MaSinhVien,
                     "@chapNhan", model.TraLoi
                 );
-
                 if (result != null)
                 {
                     kq = result.ToString();
@@ -80,7 +79,7 @@ namespace DAL.QL_DoAnRepository.NhomSinhVienRepository
             }
             catch (Exception ex)
             {
-                throw new Exception("Đã xảy ra lỗi trong quá trình trình gửi lời mời: " + ex.Message, ex);
+                throw new Exception("Đã xảy ra lỗi trong quá trình xử lý lời mời: " + ex.Message, ex);
             }
         }
     }

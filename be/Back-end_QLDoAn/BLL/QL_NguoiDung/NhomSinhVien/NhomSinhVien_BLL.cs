@@ -12,13 +12,18 @@ namespace BLL.QL_NguoiDung.NhomSinhVien
         {
             _repository = repository;
         }
-        public List<V_NhomSinhVien_DTO> getNhombymaSinhVien(string masinhvien)
+        public List<V_NhomSinhVien_DTO> getNhombymaSinhVien(string? masinhvien, int? isTruongNhom, string? maDot, string? maGiangVien)
         {
-            return _repository.getNhombymaSinhVien(masinhvien);
+            return _repository.getNhombymaSinhVien(masinhvien, isTruongNhom,maDot,maGiangVien);
         }
         public string Create(NhomSinhVienDTO model)
         {
             return _repository.Create(model);
+        }
+
+        public string Delete(string manhom, string maTruongNhom)
+        {
+           return _repository.Delete(manhom, maTruongNhom);
         }
     }
 }
