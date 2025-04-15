@@ -14,11 +14,6 @@ export const CotSinhVien: ColumnType[] = [
       key: 'tenSinhVien',
     },
     {
-      title: 'Trạng Thái',
-      dataIndex: 'tenTrangThai',
-      key: 'tenTrangThai',
-    },
-    {
       title: 'Mã Lớp',
       dataIndex: 'maLop',
       key: 'maLop',

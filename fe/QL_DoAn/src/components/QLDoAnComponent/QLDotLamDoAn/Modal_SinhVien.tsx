@@ -1,4 +1,4 @@
-import React, { useState,useRef,useCallback } from 'react';
+import React, { useState,useRef } from 'react';
 import { Modal, Card, Table, Button, Input, Typography, Space } from 'antd';
 import { DeleteOutlined, UserAddOutlined, SearchOutlined } from '@ant-design/icons';
 import { DotLamDoAn_SinhVien } from "../../InterFace";
@@ -27,7 +27,6 @@ const Modal_SinhVien_Dot: React.FC<ModalThemSinhVien> = ({
   
 }) => {
   const [searchText, setSearchText] = useState('');
-  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const filteredSinhVien = SinhVien.filter(SinhVien => 
     SinhVien.maSinhVien.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -110,7 +109,7 @@ const Modal_SinhVien_Dot: React.FC<ModalThemSinhVien> = ({
     <Modal
       title={
         <Title level={3} style={{ margin: 0 }}>
-          <UserAddOutlined /> Quản lý Sinh viên - Đợt làm đồ án
+          <UserAddOutlined /> Quản lý Sinh viên - Đợt Nghiên cứu Khoa Học
         </Title>
       }
       open={hienmodalSinhVien}

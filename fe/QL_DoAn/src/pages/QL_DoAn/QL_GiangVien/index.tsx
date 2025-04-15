@@ -7,7 +7,6 @@ import {
   Row,
   Col,
   Input,
-  Space,
   Typography,
   Divider,
   message,
@@ -72,7 +71,7 @@ export default function QuanLygiangvien() {
     } catch (error) {
       message.error("Lỗi khi tìm kiếm, vui lòng thử lại!");
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -100,12 +99,10 @@ export default function QuanLygiangvien() {
     await delGiangVien(maGiangVien, getAllGiangVien);
   };
 
-
   const dongModal = () => {
     setHienModal(false);
     setIsEditing(false);
   };
-
 
   const hienThiModal = useCallback(
     (banGhi?: GiangVien) => {
@@ -176,23 +173,18 @@ export default function QuanLygiangvien() {
     }
     setCacDongDaChon([]);
   };
-  const handleBoMonChange =async (value: string) => {
+  const handleBoMonChange = async (value: string) => {
     const data = await Search(undefined, value, undefined);
-      setGiangVien(data);
+    setGiangVien(data);
     setSelectedBoMon(value);
   };
-  const handleChucVuChange =async (value: string) => {
-    const data = await Search(undefined, undefined, value);
-      setGiangVien(data);
-    setSelectedChucVu(value);
+
+  const Search_Name = async (e: any) => {
+    let name = e.target.value;
+    const data = await Search(name, undefined, undefined);
+    setGiangVien(data);
+    setTimKiem(name);
   };
- 
-const Search_Name = async (e:any) => {
-  let name = e.target.value;
-  const data = await Search(name, undefined, undefined);
-  setGiangVien(data);
-  setTimKiem(name);
-}
   const xuLyXuatExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(giangVien);
     const workbook = XLSX.utils.book_new();
@@ -203,7 +195,10 @@ const Search_Name = async (e:any) => {
 
   return (
     <div>
-      <Card className="shadow rounded-lg overflow-hidden">
+      <Card
+        className="shadow rounded-lg overflow-hidden"
+        style={{ height: "91vh" }}
+      >
         <div className="p-6">
           <Title
             level={2}
@@ -213,25 +208,24 @@ const Search_Name = async (e:any) => {
             QUẢN LÝ CÁN BỘ, GIẢNG VIÊN
           </Title>
           <hr />
-          <Row gutter={[16, 16]} className="mb-6">
-            {/* Khu vực tìm kiếm */}
-            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+          <Row gutter={[16, 16]} align="middle">
+            <Col>
               <Input
                 placeholder="Tìm kiếm theo tên giảng viên"
                 value={timKiem}
                 onChange={(e) => Search_Name(e)}
                 prefix={<SearchOutlined className="text-gray-400" />}
-                className="w-full"
+                className="w-full rounded-md"
               />
             </Col>
-            <Col xs={24} sm={12} md={6} lg={6} xl={6}>
+            <Col>
               <Select
                 value={selectedBoMon}
                 onChange={handleBoMonChange}
-                style={{ width: "100%" }}
                 loading={loading}
                 placeholder="Chọn bộ môn"
                 suffixIcon={<FilterOutlined />}
+                style={{width:"180px"}}
               >
                 {ListBoMon?.length > 0 ? (
                   ListBoMon.map((item) => (
@@ -244,47 +238,16 @@ const Search_Name = async (e:any) => {
                 )}
               </Select>
             </Col>
-            <Col xs={24} sm={12} md={6} lg={6} xl={6}>
-              <Select
-                value={selectedChucVu}
-                onChange={handleChucVuChange}
-                style={{ width: "100%" }}
-                loading={loading}
-                placeholder="Chọn chức vụ"
-                suffixIcon={<FilterOutlined />}
-              >
-                {ListChucVu?.length > 0 ? (
-                  ListChucVu.map((item) => (
-                    <Option key={item.maChucVu} value={item.maChucVu}>
-                      {item.tenChucVu}
-                    </Option>
-                  ))
-                ) : (
-                  <Option disabled>Không có dữ liệu</Option>
-                )}
-              </Select>
-            </Col>
-            <Col
-              xs={24}
-              sm={24}
-              md={6}
-              lg={6}
-              xl={6}
-              className="flex items-center"
-            >
+            <Col>
               <Button
                 type="primary"
                 icon={<SearchOutlined />}
                 onClick={SEARCH}
-                className="w-full bg-blue-500 hover:bg-blue-600 border-blue-500 hover:border-blue-600"
+                className="w-full bg-blue-500 hover:bg-blue-600 rounded-md"
               >
                 Tìm kiếm
               </Button>
             </Col>
-          </Row>
-
-          <Row gutter={[16, 16]} className="mb-6" justify="end">
-            {/* Khu vực hành động */}
             <Col>
               {cacDongDaChon.length > 0 && (
                 <Popconfirm
@@ -293,8 +256,13 @@ const Search_Name = async (e:any) => {
                   okText="Đồng ý"
                   cancelText="Hủy"
                 >
-                  <Button type="primary" danger icon={<DeleteOutlined />}>
-                    Xóa {cacDongDaChon.length} mục
+                  <Button
+                    type="primary"
+                    danger
+                    icon={<DeleteOutlined />}
+                    className="w-full bg-red-500 hover:bg-red-600 rounded-md"
+                  >
+                    Xóa {cacDongDaChon.length}
                   </Button>
                 </Popconfirm>
               )}
@@ -304,9 +272,9 @@ const Search_Name = async (e:any) => {
                 type="primary"
                 icon={<PlusOutlined />}
                 onClick={() => hienThiModal()}
-                className="bg-green-500 hover:bg-green-600 border-green-500 hover:border-green-600"
+                className="w-full bg-green-500 hover:bg-green-600 rounded-md"
               >
-                Thêm cán bộ, giảng viên
+                Thêm
               </Button>
             </Col>
             <Col>
@@ -315,15 +283,25 @@ const Search_Name = async (e:any) => {
                 showUploadList={false}
                 beforeUpload={xuLyNhapExcel}
               >
-                <Button icon={<DownloadOutlined />}>Nhập Excel</Button>
+                <Button
+                  icon={<DownloadOutlined />}
+                  className="w-full rounded-md"
+                >
+                  Nhập Excel
+                </Button>
               </Upload>
             </Col>
             <Col>
-              <Button icon={<UploadOutlined />} onClick={xuLyXuatExcel}>
+              <Button
+                icon={<UploadOutlined />}
+                onClick={xuLyXuatExcel}
+                className="w-full rounded-md"
+              >
                 Xuất Excel
               </Button>
             </Col>
           </Row>
+
           <Divider className="my-6" />
           <Table
             rowSelection={luaChonDong}
@@ -331,7 +309,7 @@ const Search_Name = async (e:any) => {
             loading={loading}
             dataSource={giangVien}
             rowKey="maGiangVien"
-            scroll={{ x: 768 }}
+            scroll={{ x: 768, y: 400 }}
             className="shadow-sm rounded-md overflow-hidden"
             pagination={{
               pageSize: 10,

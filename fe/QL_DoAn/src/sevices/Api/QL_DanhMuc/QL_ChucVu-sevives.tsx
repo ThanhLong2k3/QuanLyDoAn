@@ -2,7 +2,6 @@ import  { AxiosResponse } from "axios";
 import {getall,add,Delete,edit} from "../API-servives"
 import {URL} from "../../Url"
 import {ChucVu} from "../../../components/InterFace"
-import { message } from "antd";
 import {CustomNotification} from "../../../components/UI/notification"
 
 

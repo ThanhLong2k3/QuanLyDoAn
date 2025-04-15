@@ -1,0 +1,87 @@
+// IndustryReportPage.scss
+.industry-report-layout {
+    min-height: 100vh;
+    
+    .header {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      padding: 0 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      height: 50px;
+      line-height: 50px;
+      
+      .logo {
+        font-weight: bold;
+        font-size: 16px;
+        margin-right: 40px;
+        
+        .anticon {
+          margin-right: 8px;
+        }
+      }
+      
+      .header-menu {
+        font-size: 14px;
+        color: #1890ff;
+      }
+    }
+    
+    .main-content {
+      background: #f0f2f5;
+      
+      .breadcrumb {
+        margin-bottom: 16px;
+      }
+      
+      .form-card, .table-card {
+        border-radius: 4px;
+      }
+      
+      .section-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+      
+      .form-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 300px;
+        margin-bottom: 16px;
+      }
+      
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 24px;
+      }
+      
+      .mt-3 {
+        margin-top: 16px;
+      }
+      
+      .editor-toolbar {
+        background-color: #fafafa;
+        border: 1px solid #d9d9d9;
+        border-bottom: none;
+        padding: 8px;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+        
+        .ant-btn-group {
+          margin-right: 8px;
+        }
+      }
+      
+      .ant-form-item-control-input-content textarea {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+  }
+
+  

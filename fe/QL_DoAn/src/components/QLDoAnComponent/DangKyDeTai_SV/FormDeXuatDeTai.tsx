@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Form, Input, Select, Radio, FormInstance } from "antd";
-import { getGiangVien_maDot } from "../../../sevices/Api/QL_DoAn/QL_DotLamDoAn/GiangVien_Dot-servives";
 const { Option } = Select;
 
 interface GiangVien {
@@ -13,15 +12,28 @@ interface GiangVien {
 interface ReusableFormProps {
   formdulieu: FormInstance<any> | undefined;
   giangVienInDot: GiangVien[];
+  listGroup: any[];
 }
 export const Form_DeXuatDeTai_SV: React.FC<ReusableFormProps> = ({
   formdulieu,
   giangVienInDot,
+  listGroup,
 }) => {
   return (
     <Form form={formdulieu} layout="vertical">
-      <Form.Item name="maDeTai" label="Mã đề tài">
-        <Input disabled />
+      <Form.Item name="maNhom" label="Chọn nhóm nghiên cứu khoa học">
+        <Select
+          options={
+            listGroup
+              ? listGroup.map((group) => ({
+                  label: group.tenNhom,
+                  value: group.maNhom,
+                }))
+              : []
+          }
+          notFoundContent="Bạn không là trưởng nhóm của nhóm nào!"
+          placeholder="Chọn nhóm"
+        />
       </Form.Item>
 
       <Form.Item

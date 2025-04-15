@@ -124,7 +124,7 @@ export default function QuanLyLop() {
 
   return (
     <div>
-      <Card className="shadow rounded-lg overflow-hidden">
+      <Card className="shadow rounded-lg overflow-hidden"  style={{ height: "91vh" }}>
         <div className="p-6">
           <Title level={2} className="text-center custom-blue mb-8" style={{color: '#1e88e5', fontSize: '25px', fontWeight: 'bold'}}>
             QUẢN LÝ LỚP
@@ -185,7 +185,7 @@ export default function QuanLyLop() {
             dataSource={lop}
             loading={loading}
             rowKey="maLop"
-            scroll={{ x: 768 }}
+            scroll={{ x: 768,y:400 }}
             className="shadow-sm rounded-md overflow-hidden"
             pagination={{
               pageSize: 10,

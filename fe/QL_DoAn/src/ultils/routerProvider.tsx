@@ -1,10 +1,7 @@
 import { createBrowserRouter } from "react-router-dom"
 import Dashboard from '../pages/Dashboard'
 import QuanLyHocVi from '../pages/QL_DanhMuc/QL_HocVi'
-import Projects from '../pages/Projects'
-import Students from '../pages/students'
-import Supervisors from '../pages/Supervisors'
-import Class from "../pages/Classs"
+
 import QuanLyChucVu from "../pages/QL_DanhMuc/QL_ChucVu"
 import QuanLyBoMon from "../pages/QL_DanhMuc/QL_BoMon"
 import QuanLyKhoa from "../pages/QL_DanhMuc/QL_Khoa"
@@ -25,6 +22,9 @@ import TBMXacNhanDeTai from "../pages/QL_DoAn/QL_DeTai/TruongBoMonXacNhan"
 
 import QuanLyDeTai from "../pages/QL_DoAn/QL_DeTai/QuanLyDeTai"
 import ThongTinSinhVien from '../pages/QL_DoAn/ThongTinSinhVien'
+import QuanLyNhomSinhVien from "../pages/QL_DoAn/QL_NhomSinhVien"
+import IndustryReportPage from "../pages/QL_DoAn/IndustryReportPage/indext"
+import TeacherReportPage from "../pages/QL_DoAn/GV_DanhGia_NhanXet/indext"
 const router = createBrowserRouter([
   {
     path: ROUTERS.HOME.DEFAULT.PATH,  
@@ -102,6 +102,18 @@ const router = createBrowserRouter([
       {
         path: ROUTERS.DOAN.TBMXACNHANDETAI.PATH,
         element: <TBMXacNhanDeTai />,
+      },
+      {
+        path: ROUTERS.DOAN.QL_NHOMSINHVIEN.PATH,
+        element: <QuanLyNhomSinhVien />,
+      },
+      {
+        path: ROUTERS.DOAN.IndustryReportPage.PATH,
+        element: <IndustryReportPage />,
+      },
+      {
+        path: ROUTERS.DOAN.GIANGVIEN_DANHGIA_NHANXET.PATH,
+        element: <TeacherReportPage />,
       },
     ],
   },

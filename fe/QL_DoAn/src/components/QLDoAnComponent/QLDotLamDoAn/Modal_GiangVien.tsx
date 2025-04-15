@@ -133,7 +133,7 @@ const Modal_GiangVien_Dot: React.FC<ModalThemGiangVien> = ({
     <Modal
       title={
         <Title level={3} style={{ margin: 0 }}>
-          <UserAddOutlined /> Quản lý giảng viên - Đợt làm đồ án
+          <UserAddOutlined /> Quản lý giảng viên - Đợt Nghiên cứu Khoa Học
         </Title>
       }
       open={hienmodalGiangVien}

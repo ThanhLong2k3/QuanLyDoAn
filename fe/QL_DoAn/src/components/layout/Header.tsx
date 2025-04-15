@@ -1,19 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Layout, Menu, MenuProps, Dropdown, Avatar, Button } from "antd";
+import { Layout, Menu, MenuProps, Dropdown, Avatar, Button, Badge, List, Popover, message, Space, Typography } from "antd";
 import { 
   UserOutlined, 
   AppstoreOutlined, 
   SettingOutlined, 
   CalendarOutlined,
-  MenuOutlined 
+  BellOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined
 } from "@ant-design/icons";
 import { Sidebar_router, Sidebar_router_DanhMuc, Sidebar_HeThong } from "../../ultils/Sidebar_route";
 import ROUTERS from "../../router/Path";
 import { useNavigate } from "react-router-dom";
 import { getAll_NguoiDung_TaiKhoan } from "../../sevices/Api/QL_HeThong/QL_NguoiDung";
+import { get_LoiMoi_Id, XuLyLoiMoi } from "../../sevices/Api/QL_DoAn/QL_NhomSinhVien";
 
 const { Header } = Layout;
+const { Text, Title } = Typography;
+
+
+
+
+interface LoiMoi {
+  maLoiMoi: number;
+  maNhom: string;
+  tenNhom: string;
+  maNguoiMoi: string;
+  tenNguoiMoi: string;
+  ngayMoi: string;
+}
 
 const AppHeader: React.FC = () => {
   const [name, setName] = useState("");
@@ -21,7 +37,8 @@ const AppHeader: React.FC = () => {
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const navigate = useNavigate();
-
+  const [listLoiMoi, setListLoiMoi] = useState<LoiMoi[]>([]);
+  
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -52,8 +69,7 @@ const AppHeader: React.FC = () => {
     navigate(ROUTERS.AUTH.DEFAULT.PATH);
   }; 
 
-  const ShowThongTin=()=> {
-   
+  const ShowThongTin = () => {
     navigate(ROUTERS.DOAN.THONGTINSINHVIEN.PATH);
   };
 
@@ -116,6 +132,104 @@ const AppHeader: React.FC = () => {
 
   const menuItems = renderMenuItems();
 
+  useEffect(() => {
+    getLoiMoi();
+  }, []);
+  
+  const getLoiMoi = async () => {
+    const data = await get_LoiMoi_Id();
+    setListLoiMoi(data || []);
+  };
+
+  // Xử lý xác nhận lời mời
+  const handleXacNhan = async (values:any) => {
+    try {
+        await XuLyLoiMoi(1,values,getLoiMoi);
+        setListLoiMoi(prevList => prevList.filter(item => item.maLoiMoi !== values.maLoiMoi));
+    } catch (error) {
+      message.error("Có lỗi xảy ra khi xác nhận lời mời!");
+    }
+  };
+
+  // Xử lý từ chối lời mời
+  const handleTuChoi = async (values: any) => {
+    try {
+      await XuLyLoiMoi(0,values,getLoiMoi);
+      setListLoiMoi(prevList => prevList.filter(item => item.maLoiMoi !== values.maLoiMoi));
+    } catch (error) {
+      message.error("Có lỗi xảy ra khi từ chối lời mời!");
+    }
+  };
+
+  // Format thời gian
+  const formatTime = (timeString: string): string => {
+    const date = new Date(timeString);
+    const now = new Date();
+    
+    const diffInMillis = now.getTime() - date.getTime();
+    const diffInMinutes = Math.floor(diffInMillis / (1000 * 60));
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+    
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes} phút trước`;
+    } else if (diffInHours < 24) {
+      return `${diffInHours} giờ trước`;
+    } else {
+      return `${diffInDays} ngày trước`;
+    }
+  };
+
+  // Nội dung popover thông báo
+  const notificationContent = (
+    <div style={{ width: 320, maxHeight: 400, overflow: 'auto' }}>
+      {listLoiMoi.length > 0 ? (
+        <List
+          itemLayout="vertical"
+          dataSource={listLoiMoi}
+          renderItem={(item) => (
+            <List.Item
+              key={item.maLoiMoi}
+              style={{ borderBottom: '1px solid #f0f0f0', padding: '12px 0' }}
+            >
+              <div>
+                <Text strong>Lời mời tham gia nhóm: {item.tenNhom}</Text>
+                <div style={{ fontSize: '13px', color: '#888', margin: '4px 0' }}>
+                  Người mời: {item.tenNguoiMoi}
+                </div>
+                <div style={{ fontSize: '12px', color: '#999', marginBottom: '8px' }}>
+                  {formatTime(item.ngayMoi)}
+                </div>
+                <Space>
+                  <Button 
+                    type="primary" 
+                    size="small" 
+                    icon={<CheckCircleOutlined />}
+                    onClick={() => handleXacNhan(item)}
+                  >
+                    Xác nhận
+                  </Button>
+                  <Button 
+                    danger 
+                    size="small" 
+                    icon={<CloseCircleOutlined />}
+                    onClick={() => handleTuChoi(item)}
+                  >
+                    Từ chối
+                  </Button>
+                </Space>
+              </div>
+            </List.Item>
+          )}
+        />
+      ) : (
+        <div style={{ padding: '20px', textAlign: 'center' }}>
+          <Text type="secondary">Bạn không có thông báo mới</Text>
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <>
       <Header 
@@ -129,57 +243,39 @@ const AppHeader: React.FC = () => {
           position: 'relative'
         }}
       >
-        {/* Mobile Menu Toggle
-        {isMobile && (
-          <Button 
-            type="text" 
-            icon={<MenuOutlined />} 
-            onClick={() => setMobileMenuVisible(!mobileMenuVisible)}
-            style={{ 
-              position: 'absolute', 
-              left: 10, 
-              top: '50%', 
-              transform: 'translateY(-50%)' 
-            }}
-          />
-        )} */}
-
-        {/* Logo and System Name */}
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          {/* <img
-            src="/utehy-logo.png"
-            alt="UTEHY Logo"
-            style={{ height: '40px', marginRight: '10px' }}
-          /> */}
           <span style={{ color: '#1e88e5', fontSize: '18px', fontWeight: 'bold' }}>
-            Hệ thống Quản lý Đồ án
+            Nghiên cứu Khoa Học
           </span>
         </div>
 
-        {/* Desktop Menu
-        {!isMobile && (
-          <Menu
-            mode="horizontal"
-            items={menuItems}
-            style={{ 
-              flex: 1, 
-              marginLeft: '20px', 
-              marginRight: '20px',
-              border: 'none'
-            }}
-          />
-        )} */}
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {/* Phần thông báo */}
+          <Popover 
+            placement="bottomRight" 
+            title={
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Title level={5} style={{ margin: 0 }}>Thông báo</Title>
+              </div>
+            } 
+            content={notificationContent} 
+            trigger="click"
+          >
+            <Badge count={listLoiMoi.length} offset={[-5, 5]}>
+              <Button type="text" icon={<BellOutlined style={{ fontSize: '18px' }} />} style={{ marginRight: 16 }} />
+            </Badge>
+          </Popover>
 
-        {/* User Dropdown */}
-        <Dropdown menu={{ items: dropdownMenuItems }} trigger={['click']}>
-          <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-            <Avatar icon={<UserOutlined />} /> 
-            <span style={{ marginLeft: '8px', color: '#333' }}>{name}</span>
-          </div>
-        </Dropdown>
+          {/* Thông tin người dùng */}
+          <Dropdown menu={{ items: dropdownMenuItems }} trigger={['click']}>
+            <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <Avatar icon={<UserOutlined />} /> 
+              <span style={{ marginLeft: '8px', color: '#333' }}>{name}</span>
+            </div>
+          </Dropdown>
+        </div>
       </Header>
 
-      {/* Mobile Drawer Menu */}
       {isMobile && mobileMenuVisible && (
         <div 
           style={{ 

@@ -158,8 +158,8 @@ export default function QuanLySinhVien() {
         setSelectedLop(value);
     };
   return (
-    <div>
-      <Card className="shadow rounded-lg overflow-hidden">
+    <div  >
+      <Card className="shadow rounded-lg overflow-hidden"  style={{ height: "91vh" }}>
         <div className="p-6">
           <Title
             level={2}
@@ -249,7 +249,7 @@ export default function QuanLySinhVien() {
             dataSource={sinhVien}
             loading={loading}
             rowKey="maSinhVien"
-            scroll={{ x: 768 }}
+            scroll={{ x: 768 , y:400 }}
             className="shadow-sm rounded-md overflow-hidden"
             pagination={{
               pageSize: 10,

@@ -34,7 +34,7 @@ export default function QuanLyDotLamDoAn() {
   const[SinhVien,setSinhVien]=useState<DotLamDoAn_SinhVien[]>([]);
   const[SinhVien_Dot,setSinhVien_Dot]=useState<DotLamDoAn_SinhVien[]>([]);
   useEffect(() => {
-    document.title = 'Quản lý đợt làm đồ án'
+    document.title = 'Quản lý đợt Nghiên cứu Khoa Học'
     GetAll_DotDoAn()
   }, [])
 
@@ -213,10 +213,10 @@ export default function QuanLyDotLamDoAn() {
 };
   return (
     <div>
-      <Card className="shadow rounded-lg overflow-hidden">
+      <Card className="shadow rounded-lg overflow-hidden"  style={{ height: "91vh" }}>
         <div className="p-6">
           <Title level={2} className="text-center custom-blue mb-8" style={{ color: '#1e88e5', fontSize: '25px', fontWeight: 'bold' }}>
-            QUẢN LÝ ĐỢT LÀM ĐỒ ÁN
+            QUẢN LÝ ĐỢT NGHIÊN CỨU KHOA HỌC
           </Title>
           <hr />
           <Row gutter={16} className="mb-6">
@@ -249,7 +249,7 @@ export default function QuanLyDotLamDoAn() {
                   onClick={() => hienThiModal()}
                   className="bg-green-500 hover:bg-green-600 border-green-500 hover:border-green-600"
                 >
-                  Thêm đợt làm đồ án
+                  Thêm đợt Nghiên cứu Khoa Học
                 </Button>
               </Space>
             </Col>
@@ -300,8 +300,8 @@ export default function QuanLyDotLamDoAn() {
         onOk={xuLyDongY}
         onCancel={dongModal}
         keyDangSua={maDot}
-        add_Titel="Thêm đợt làm đồ án"
-        update_Titel="Sửa đợt làm đồ án"
+        add_Titel="Thêm đợt Nghiên cứu Khoa Học"
+        update_Titel="Sửa đợt Nghiên cứu Khoa Học"
       >
         <FormDotLamDoAn formdulieu={form}  isEditing={isEditing} />
       </ReusableModal>

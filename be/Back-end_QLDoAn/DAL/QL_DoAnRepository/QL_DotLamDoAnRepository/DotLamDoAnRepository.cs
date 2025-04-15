@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL.InterFace.QL_DoAn.IDotLamDoAnRepository;
+﻿using DAL.InterFace.QL_DoAn.IDotLamDoAnRepository;
 using DTO.QL_DoAn.DotLamDoAn_DTO;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DAL.QL_DoAnRepository.QL_DotLamDoAnRepository
 {

@@ -217,7 +217,7 @@ const QuanLyNhomQuyen: React.FC = () => {
   };
   return (
     <>
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden" style={{height:"90vh"}}>
         <div className="p-6">
           <Title
             level={2}

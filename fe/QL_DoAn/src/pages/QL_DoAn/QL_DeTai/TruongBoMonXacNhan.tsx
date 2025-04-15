@@ -30,6 +30,9 @@ interface DOT {
   maDeTai: string;
   maSinhVien: string;
   lyDoTuChoi: string;
+  tenSinhVien:string;
+  tenNhom:string;
+  maNhom:string;
   tenDeTai: string;
 }
 
@@ -86,7 +89,7 @@ const TBMXacNhanDeTai: React.FC = () => {
     try {
       const data = {
         maDeTai: banGhi.maDeTai,
-        maSinhVien: banGhi.maSinhVien,
+        maNhom: banGhi.maNhom,
         lyDoTuChoi: ""
       };
       await TBM_XACNHANDETAI(data,fetchDotDoAn);
@@ -109,7 +112,7 @@ const TBMXacNhanDeTai: React.FC = () => {
       if (selectedDeTai) {
         const data = {
           maDeTai: selectedDeTai.maDeTai,
-          maSinhVien: selectedDeTai.maSinhVien,
+          maNhom: selectedDeTai.maNhom,
           lyDoTuChoi: values.lyDoTuChoi
         };
         await TBM_TUCHOIDETAI(data,fetchDotDoAn);
@@ -149,6 +152,7 @@ const TBMXacNhanDeTai: React.FC = () => {
       <Card 
         className="shadow-lg rounded-xl" 
         bordered={false}
+        style={{ height: "91vh" }}
       >
         <div className="p-4 md:p-6">
           <Title 
@@ -183,7 +187,7 @@ const TBMXacNhanDeTai: React.FC = () => {
                 onChange={handleDotChange}
                 style={{ width: '100%' }}
                 loading={loading}
-                placeholder="Chọn đợt làm đồ án"
+                placeholder="Chọn đợt Nghiên cứu Khoa Học"
                 suffixIcon={<FilterOutlined />}
               >
                 {dotLamDoAn?.length > 0 ? (
@@ -203,7 +207,7 @@ const TBMXacNhanDeTai: React.FC = () => {
             columns={Table_DeTai}
             dataSource={filteredListDeTai}
             rowKey="maDeTai"
-            scroll={{ x: 768 }}
+            scroll={{ x: 768, y:400 }}
             className="shadow-sm rounded-md overflow-hidden"
             pagination={{
               pageSize: 10,
@@ -232,9 +236,9 @@ const TBMXacNhanDeTai: React.FC = () => {
           </Form.Item>
           {selectedDeTai && (
             <div>
-              <p><strong>Mã đề tài:</strong> {selectedDeTai.maDeTai}</p>
+              <p><strong>Tên trưởng nhóm:</strong> {selectedDeTai.tenSinhVien}</p>
               <p><strong>Tên đề tài:</strong> {selectedDeTai.tenDeTai}</p>
-              <p><strong>Mã sinh viên:</strong> {selectedDeTai.maSinhVien}</p>
+              <p><strong>Tên nhóm:</strong> {selectedDeTai.tenNhom}</p>
             </div>
           )}
         </Form>
