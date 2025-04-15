@@ -68,6 +68,11 @@ export const URL = {
         }
     },
     QLDOAN:{
+        BAO_CAO_TUAN:{
+            GET_BAOCAOTUAN_MADETAI:(ID:string)=>`${LocalHot}api/BaoCaoTuan_CTRL/getall_MaDeTai?id=${ID}`,
+            ADD_BAOCAO:`${LocalHot}api/BaoCaoTuan_CTRL/create-BaoCao`,
+            UPDATE_BAOCAO:`${LocalHot}api/BaoCaoTuan_CTRL/update-BaoCao`,
+        },
         QL_NHOMSINHVIEN:{
             LOIMOI:{
                 GET_LOIMOI_ID:(ID:string)=>`${LocalHot}api/LoiMoiThamGiaNhom_CTRL/get_By_masinhvien?taikhoan=${ID}`,
@@ -85,8 +90,33 @@ export const URL = {
                 XULYLOIMOI:`${LocalHot}api/LoiMoiThamGiaNhom_CTRL/XuLyLoiMoi`
             },
             TAONHOM:{
-                GET_NHOM_MASV:(maSV:string,isTruongNhom:number)=>`${LocalHot}api/NhomSinhVien_CTRL/get_By_masinhvien?taikhoan=${maSV}&isTruongNhom=${isTruongNhom}`,
+                GET_NHOM_MASV: (
+                    maSV?: string,
+                    isTruongNhom?: number,
+                    maDot?: string,
+                    maGiangVien?: string
+                  ) => {
+                    let baseUrl = `${LocalHot}api/NhomSinhVien_CTRL/get_By_masinhvien?`;
+                    const params: string[] = [];
+                  
+                    if (maSV) {
+                      params.push(`taikhoan=${encodeURIComponent(maSV)}`);
+                    }
+                    if (isTruongNhom !== undefined) {
+                      params.push(`isTruongNhom=${isTruongNhom}`);
+                    }
+                    if (maDot) {
+                      params.push(`maDot=${encodeURIComponent(maDot)}`);
+                    }
+                    if (maGiangVien) {
+                      params.push(`maGiangVien=${encodeURIComponent(maGiangVien)}`);
+                    }
+                  
+                    return baseUrl + params.join('&');
+                  },
+                  
                 ADD_NHOM:`${LocalHot}api/NhomSinhVien_CTRL/create-NhomSinhVien`,
+                DELETE:(manhom:string, matruongnhom:string)=>`${LocalHot}api/NhomSinhVien_CTRL/delete-NhomSinhVien?manhom=${manhom}&matruongnhom=${matruongnhom}`,
             }
         },
         LQ_LOP:{

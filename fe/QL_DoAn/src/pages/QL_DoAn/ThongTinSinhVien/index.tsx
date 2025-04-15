@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Descriptions, Typography, Spin, message, Button, Form, Input, Modal, DatePicker, Select, Empty, Result } from 'antd';
+import { Card, Descriptions, Typography, Spin, message, Button, Form, Input, Modal, DatePicker, Select, Result } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { SinhVien } from '../../../components/InterFace';
 import { get_SinhVien_ID,editSinhVien_SinhVien } from '../../../sevices/Api/QL_DoAn/QL_SinhVien-servives';
@@ -7,10 +7,6 @@ import dayjs from 'dayjs';
 
 const { Title } = Typography;
 const { Option } = Select;
-
-interface EditFormValues extends Omit<SinhVien, 'ngaySinh'> {
-    ngaySinh: dayjs.Dayjs;
-}
 
 const ThongTinSinhVien: React.FC = () => {
     const [sinhVien, setSinhVien] = useState<SinhVien | undefined>();

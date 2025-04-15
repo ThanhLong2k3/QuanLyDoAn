@@ -119,7 +119,7 @@ const QuanLyKhoa: React.FC = () => {
 
   return (
     <div>
-      <Card className="shadow rounded-lg overflow-hidden">
+      <Card className="shadow rounded-lg overflow-hidden" style={{height:"90vh"}}>
         <div className="p-6">
           <Title level={2} className="text-center mb-8" style={{color: '#1e88e5', fontSize: '25px', fontWeight: 'bold'}}>
             QUẢN LÝ KHOA

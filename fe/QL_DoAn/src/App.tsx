@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom';
 import { Layout, ConfigProvider, App as AntApp } from 'antd';
 import Header from './components/layout/Header';
 import Sidebar from './components/layout/Sidebar';
-import Footer from './components/layout/Footer';
 
 const { Content } = Layout;
 
@@ -21,16 +20,15 @@ const App: React.FC = () => {
       }}
     >
       <AntApp>
-        <Layout style={{ minHeight: '100vh' }}>
+        <Layout style={{ height: '100vh' }}>
           <Sidebar/>
           <Layout className="site-layout">
             <Header />
-            <Content className="bg-gray-50 min-h-screen p-4 md:p-6">
+            <Content style={{height:"80vh", margin:"10px"}}>
               
                <Outlet/>
             
             </Content>
-            <Footer />
           </Layout>
         </Layout>
       </AntApp>

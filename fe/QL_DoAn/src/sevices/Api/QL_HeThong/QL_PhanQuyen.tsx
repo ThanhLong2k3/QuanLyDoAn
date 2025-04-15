@@ -1,4 +1,4 @@
-import {getall,add,Delete,edit,Delete_obj} from "../API-servives"
+import {getall,add,Delete_obj} from "../API-servives"
 
 import {URL} from "../../Url"
 import {NhomQuyen_PhanQuyen} from "../../../components/InterFace"

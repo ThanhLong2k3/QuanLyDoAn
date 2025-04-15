@@ -17,7 +17,7 @@ import { Form_DeXuatDeTai_SV } from "../../../components/QLDoAnComponent/DangKyD
 import { useState, useEffect } from "react";
 import { mockDeTaiData } from "../../../components/QLDoAnComponent/DangKyDeTai_SV/mockdata";
 import { COLUMS } from "../../../components/QLDoAnComponent/DangKyDeTai_SV/Table_DangKyDeTai";
-import {DeXuatDeTai,DangKyDeTai_SV,Get_MaDot_TK,get_detai_madot_sv} from '../../../sevices/Api/QL_DoAn/QL_DeTaiDoAn/QL_DeTai'
+import {DeXuatDeTai,Get_MaDot_TK,get_detai_madot_sv} from '../../../sevices/Api/QL_DoAn/QL_DeTaiDoAn/QL_DeTai'
 import { getGiangVien_maDot } from "../../../sevices/Api/QL_DoAn/QL_DotLamDoAn/GiangVien_Dot-servives";
 import { get_GROUP_ID } from "../../../sevices/Api/QL_DoAn/QL_NhomSinhVien";
 
@@ -115,9 +115,6 @@ export default function DangKyDeTai() {
     getGroupByIDStudent();
   };
 
-  const xuLyDangKy =async (banghi:DeTai_SinhVien) => {
-    await DangKyDeTai_SV(banghi.maDeTai,taiKhoan,getall_data);
-  };
 
   const handleSearch = (value: string) => {
     const filteredData = mockDeTaiData.filter(
@@ -130,7 +127,7 @@ export default function DangKyDeTai() {
 
   return maDot ? (
     <div>
-      <Card className="shadow rounded-lg overflow-hidden">
+      <Card className="shadow rounded-lg overflow-hidden" style={{height:'90vh'}}>
         <div className="p-6">
           <Title
             level={2}
@@ -175,7 +172,7 @@ export default function DangKyDeTai() {
           </Row>
           <Divider />
           <Table
-            columns={COLUMS(xuLyDangKy)}
+            columns={COLUMS()}
             dataSource={DeTaDoAn}
             rowKey="maDeTai"
             scroll={{ x: 768 }}

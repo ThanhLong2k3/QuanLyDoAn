@@ -21,7 +21,9 @@ type router = {
       DEXUATDETAI:{PATH:"nckh/dangkydetai"},
       XACNHANDETAI:{PATH:"nckh/xacnhandetai"},
       THONGTINSINHVIEN:{PATH:"sinhvien/thongtincanhan"},
-      TBMXACNHANDETAI:{PATH:"tbm/xacnhandetai"}
+      TBMXACNHANDETAI:{PATH:"tbm/xacnhandetai"},
+      IndustryReportPage:{PATH:'nckh/reportPage'},
+      GIANGVIEN_DANHGIA_NHANXET:{PATH:'nckh/teachr-report'},
     },
     HETHONG:{
       QL_NGUOIDUNG:{PATH:"hethong/nguoidung"},

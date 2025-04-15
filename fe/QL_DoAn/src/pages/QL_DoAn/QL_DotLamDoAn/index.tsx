@@ -213,10 +213,10 @@ export default function QuanLyDotLamDoAn() {
 };
   return (
     <div>
-      <Card className="shadow rounded-lg overflow-hidden">
+      <Card className="shadow rounded-lg overflow-hidden"  style={{ height: "91vh" }}>
         <div className="p-6">
           <Title level={2} className="text-center custom-blue mb-8" style={{ color: '#1e88e5', fontSize: '25px', fontWeight: 'bold' }}>
-            QUẢN LÝ ĐỢT Nghiên cứu Khoa Học
+            QUẢN LÝ ĐỢT NGHIÊN CỨU KHOA HỌC
           </Title>
           <hr />
           <Row gutter={16} className="mb-6">

@@ -30,7 +30,9 @@ interface DOT {
   maDeTai: string;
   maSinhVien: string;
   lyDoTuChoi: string;
+  tenSinhVien:string;
   maNhom:string;
+  tenNhom:string;
   tenDeTai: string;
 }
 
@@ -85,11 +87,14 @@ const GiangVienXacNhanDeTai: React.FC = () => {
       lyDoTuChoi: ""
     }
     await GIANGVIEN_XACNHANDETAI(data, fetchDotDoAn);
+    await handleDotChange(searchTerm);
   }
 
-  const KhongDongY = (banGhi: DOT) => {
+  const KhongDongY = async(banGhi: DOT) => {
     setSelectedDeTai(banGhi);
     setIsModalVisible(true);
+    await handleDotChange(searchTerm);
+
   }
 
   const handleModalOk = async () => {
@@ -98,7 +103,7 @@ const GiangVienXacNhanDeTai: React.FC = () => {
       if (selectedDeTai) {
         const data = {
           maDeTai: selectedDeTai.maDeTai,
-          maSinhVien: selectedDeTai.maSinhVien,
+          maNhom: selectedDeTai.maNhom,
           lyDoTuChoi: values.lyDoTuChoi
         };
         await GIANGVIEN_TUCHOIDETAI(data, fetchDotDoAn);
@@ -208,9 +213,9 @@ const GiangVienXacNhanDeTai: React.FC = () => {
           </Form.Item>
           {selectedDeTai && (
             <div>
-              <p><strong>Mã đề tài:</strong> {selectedDeTai.maDeTai}</p>
+              <p><strong>Tên trưởng nhóm:</strong> {selectedDeTai.tenSinhVien}</p>
               <p><strong>Tên đề tài:</strong> {selectedDeTai.tenDeTai}</p>
-              <p><strong>Mã sinh viên:</strong> {selectedDeTai.maSinhVien}</p>
+              <p><strong>Tên nhóm:</strong> {selectedDeTai.tenNhom}</p>
             </div>
           )}
         </Form>

@@ -26,6 +26,7 @@ import {
   get_MemberGROUP_ID,
   add_Member_Group,
   del_Member_Group,
+  delete_Group,
 } from "../../../sevices/Api/QL_DoAn/QL_NhomSinhVien";
 import {
   AppstoreAddOutlined,
@@ -45,14 +46,14 @@ const { Header, Content: LayoutContent } = Layout;
 const { Title, Text } = Typography;
 const { Option } = Select;
 
-
 interface GroupData {
   maNhom: string;
   tenNhom: string;
+  tenDeTai: string | null;
   soThanhVien: number;
   tenTruongNhom?: string;
-  maSinhVienTruong?:string;
-  trangThai?:string;
+  maSinhVienTruong?: string;
+  trangThai?: string;
   ngayTao?: string;
 }
 
@@ -64,40 +65,36 @@ interface MemberData {
   vaiTro: string;
 }
 
-
-
 export default function QuanLyNhomSinhVien() {
   const [listGroup, setListGroup] = useState<GroupData[]>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isMemberModalVisible, setIsMemberModalVisible] =
-    useState<boolean>(false);
-  const [isAddMemberModalVisible, setIsAddMemberModalVisible] =
     useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [membersLoading, setMembersLoading] = useState<boolean>(false);
   const [currentGroup, setCurrentGroup] = useState<GroupData | null>(null);
   const [groupMembers, setGroupMembers] = useState<MemberData[]>([]);
   const [form] = Form.useForm();
-  const [memberForm] = Form.useForm();
-  const [students, setStudents] = useState([]); 
+  const [students, setStudents] = useState([]);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+
   useEffect(() => {
+    document.title="Nhóm nghiên cứu khoa học"
     getGroupByIDStudent();
   }, []);
 
-  
   const fetchStudents = async (searchTerm: string) => {
-    if (!searchTerm) return; 
+    if (!searchTerm) return;
     setLoading(true);
     try {
-      const response = await Search(undefined,searchTerm);
-      setStudents(response || []); 
+      const response = await Search(undefined, searchTerm);
+      setStudents(response || []);
     } catch (error) {
       console.error("Lỗi khi tìm kiếm sinh viên:", error);
     } finally {
       setLoading(false);
     }
   };
-
 
   const getGroupByIDStudent = async () => {
     setLoading(true);
@@ -115,7 +112,6 @@ export default function QuanLyNhomSinhVien() {
   const getGroupMembers = async (groupId: string) => {
     setMembersLoading(true);
     try {
-      
       const data = await get_MemberGROUP_ID(groupId);
       setGroupMembers(data || []);
     } catch (error) {
@@ -136,15 +132,6 @@ export default function QuanLyNhomSinhVien() {
     setIsMemberModalVisible(true);
   };
 
-  const showAddMemberModal = async () => {
-    try {
-      setIsAddMemberModalVisible(true);
-    } catch (error) {
-      console.error("Error fetching available students:", error);
-      message.error("Không thể tải danh sách sinh viên");
-    }
-  };
-
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
@@ -152,6 +139,7 @@ export default function QuanLyNhomSinhVien() {
       setIsModalVisible(false);
       form.resetFields();
       message.success("Tạo nhóm thành công");
+      getGroupByIDStudent();
     } catch (error) {
       console.error("Error creating group:", error);
       message.error("Không thể tạo nhóm");
@@ -166,64 +154,61 @@ export default function QuanLyNhomSinhVien() {
   const handleMemberModalCancel = () => {
     setIsMemberModalVisible(false);
     setCurrentGroup(null);
-  };
-
-  const handleAddMemberModalCancel = () => {
-    setIsAddMemberModalVisible(false);
-    memberForm.resetFields();
+    setSelectedStudent(null);
   };
 
   const handleAddMember = async () => {
     try {
-      const values = await memberForm.validateFields();
-      if (currentGroup) {
-        await add_Member_Group(
-            {
-                maNhom: currentGroup.maNhom,
-                ...values
-              },
-        );
-
-        
-        await getGroupByIDStudent();
-
-        setIsAddMemberModalVisible(false);
-        memberForm.resetFields();
-        message.success("Thêm thành viên thành công");
+      if (!selectedStudent || !currentGroup) {
+        message.error("Vui lòng chọn sinh viên");
+        return;
       }
+
+      await add_Member_Group({
+        maNhom: currentGroup.maNhom,
+        maSinhVien: selectedStudent,
+      });
+
+      await getGroupMembers(currentGroup.maNhom);
+      await getGroupByIDStudent();
+
+      setSelectedStudent(null);
+      message.success("Mời thành viên thành công");
     } catch (error) {
       console.error("Error adding member:", error);
-      message.error("Không thể thêm thành viên");
+      message.error("Không thể mời thành viên");
     }
   };
 
   const handleRemoveMember = async (value: any) => {
-    debugger;
     try {
       if (currentGroup) {
-        var taiKhoan= localStorage.getItem('taiKhoan')|| '';
+        var taiKhoan = localStorage.getItem("taiKhoan") || "";
         const refreshMembers = async () => {
           await getGroupMembers(currentGroup.maNhom);
         };
-        if(currentGroup.maSinhVienTruong===taiKhoan){
+        if (currentGroup.maSinhVienTruong === taiKhoan) {
           await del_Member_Group(
             {
               maNhom: currentGroup.maNhom,
               maSinhVien: value.maSinhVien,
             },
             refreshMembers
-          ); 
-  
-          
-          await getGroupByIDStudent();
-  
-          CustomNotification({ result: 1, MessageDone:"Xóa thành viên thành công!"});
+          );
 
+          await getGroupByIDStudent();
+
+          CustomNotification({
+            result: 1,
+            MessageDone: "Xóa thành viên thành công!",
+          });
+        } else {
+          CustomNotification({
+            result: 0,
+            KhongCoQuyen:
+              "Bạn không phải là trưởng nhóm, không thể xóa thành viên!",
+          });
         }
-        else{
-           CustomNotification({ result: 0, KhongCoQuyen:"Bạn không phải là trưởng nhóm, không thể xóa thành viên!"});
-        }
-        
       }
     } catch (error) {
       console.error("Error removing member:", error);
@@ -257,7 +242,6 @@ export default function QuanLyNhomSinhVien() {
       dataIndex: "tenSinhVien",
       key: "tenSinhVien",
     },
-
     {
       title: "Vai trò",
       dataIndex: "vaiTro",
@@ -289,9 +273,11 @@ export default function QuanLyNhomSinhVien() {
       ),
     },
   ];
-
+  const deleteGroup = async (manhom: string) => {
+    await delete_Group(manhom, getGroupByIDStudent);
+  };
   return (
-    <Layout style={{ minHeight: "100vh", background: "#f5f7fa" }}>
+    <Layout style={{ minHeight: "90vh", background: "#f5f7fa" }}>
       <Header
         style={{
           background: "#fff",
@@ -355,9 +341,15 @@ export default function QuanLyNhomSinhVien() {
                       overflow: "hidden",
                     }}
                     actions={[
-                      <Button type="text" icon={<InfoCircleOutlined />}>
-                        Chi tiết
-                      </Button>,
+                      <Popconfirm title="Bạn có chắc chắn muốn xóa?" onConfirm={() => deleteGroup(group.maNhom)}>
+                              <Button
+                                type="text"
+                                color="danger"
+                                icon={<InfoCircleOutlined />}>
+                              Xóa nhóm
+                              </Button>
+                      </Popconfirm>,
+                     
                       <Button
                         type="text"
                         icon={<SettingOutlined />}
@@ -392,6 +384,11 @@ export default function QuanLyNhomSinhVien() {
                           {group.tenNhom}
                         </Title>
                         <Tag color="blue">{group.trangThai}</Tag>
+                        <Tag color="blue">
+                          {group.tenDeTai === null
+                            ? "Chưa đăng ký đề tài"
+                            : group.tenDeTai}
+                        </Tag>
                       </div>
                     </div>
 
@@ -506,13 +503,41 @@ export default function QuanLyNhomSinhVien() {
             Tổng số thành viên:{" "}
             <strong>{currentGroup?.soThanhVien || 0}</strong>
           </Text>
-          <Button
-            type="primary"
-            icon={<UserAddOutlined />}
-            onClick={showAddMemberModal}
-          >
-            Thêm Thành Viên
-          </Button>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <Select
+              showSearch
+              placeholder="Tìm sinh viên"
+              style={{ width: 300 }}
+              onSearch={fetchStudents}
+              onChange={(value) => {
+                setSelectedStudent(value);
+                console.log("Sinh viên được chọn:", value);
+              }}
+              onDropdownVisibleChange={(open) => {
+                if (open && students.length === 0) {
+                  fetchStudents("");
+                }
+              }}
+              notFoundContent={
+                loading ? <Spin size="small" /> : "Không tìm thấy sinh viên"
+              }
+            >
+              {students.map((student: any) => (
+                <Option key={student.maSinhVien} value={student.maSinhVien}>
+                  {student.tenSinhVien} ({student.maSinhVien})
+                </Option>
+              ))}
+            </Select>
+
+            <Button
+              type="primary"
+              icon={<UserAddOutlined />}
+              onClick={handleAddMember}
+              disabled={!selectedStudent}
+            >
+              Mời Thành Viên
+            </Button>
+          </div>
         </div>
 
         <Table
@@ -523,54 +548,6 @@ export default function QuanLyNhomSinhVien() {
           pagination={{ pageSize: 5 }}
           scroll={{ x: 800 }}
         />
-      </Modal>
-
-      {/* Add Member Modal */}
-      <Modal
-        title="Thêm Thành Viên Mới"
-        open={isAddMemberModalVisible}
-        onOk={handleAddMember}
-        onCancel={handleAddMemberModalCancel}
-        okText="Thêm"
-        cancelText="Hủy"
-        centered
-      >
-        <Form form={memberForm} layout="vertical">
-          <Form.Item
-            name="maSinhVien"
-            label="Sinh viên"
-            rules={[{ required: true, message: "Vui lòng chọn sinh viên!" }]}
-          >
-            <Select
-              showSearch
-              placeholder="Chọn sinh viên"
-              onSearch={fetchStudents} 
-              onChange={(value) => console.log("Đã chọn:", value)}
-              notFoundContent={
-                loading ? <Spin size="small" /> : "Không tìm thấy sinh viên"
-              }
-              style={{ width: 300 }}
-            >
-              {students.map((student:any) => (
-                <Option key={student.maSinhVien} value={student.maSinhVien}>
-                  {student.tenSinhVien} ({student.maSinhVien})
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="vaiTro"
-            label="Vai trò"
-            initialValue="Thành viên"
-            rules={[{ required: true, message: "Vui lòng chọn vai trò!" }]}
-          >
-            <Select placeholder="Chọn vai trò">
-              <Option value="Thành viên">Thành viên</Option>
-              <Option value="Trưởng nhóm">Trưởng nhóm</Option>
-            </Select>
-          </Form.Item>
-        </Form>
       </Modal>
     </Layout>
   );

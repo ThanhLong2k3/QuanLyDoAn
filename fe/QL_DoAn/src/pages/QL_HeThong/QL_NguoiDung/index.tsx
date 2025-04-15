@@ -184,7 +184,7 @@ const QuanLyNguoiDung: React.FC = () => {
 
   return (
     <>
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden"  style={{ height: "91vh" }}>
         <div className="p-6">
           <Title
             level={2}
@@ -248,7 +248,7 @@ const QuanLyNguoiDung: React.FC = () => {
             columns={cotBang}
             dataSource={duLieuLoc}
             rowKey={(record) => record.taiKhoan}
-            scroll={{ x: 768 }}
+            scroll={{ x: 768, y:400 }}
             className="shadow-sm rounded-md overflow-hidden"
             pagination={{
               pageSize: 10,

@@ -151,3 +151,31 @@ export interface QL_DETAI_GV{
   moTa: string
 }
  
+export interface BAO_CAO_TUAN{
+  maBaoCao?:number | null,
+  maDeTai: string,
+  soTuan: number,
+  tuNgay: string,
+  denNgay: string,
+  congViec: string,
+  noiDungThucHien: string,
+  ketQuaDatDuoc: string,
+  noiDungBaoCao: string,
+  duongDanBaoCao: string,
+  nhanXetCuaGiangVien?: string | null,
+  diem?: number | null
+}
+export interface WeekReport {
+  key: string;
+  id: number;
+  title: string;
+  content: string;
+  work: string;
+  taskContent: string;
+  result: string;
+  url: string;
+  fromDate: string;
+  toDate: string;
+  comment?: string;
+  evaluation?: string;
+}

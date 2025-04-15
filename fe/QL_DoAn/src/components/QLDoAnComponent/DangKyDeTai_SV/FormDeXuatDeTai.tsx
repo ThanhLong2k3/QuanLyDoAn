@@ -21,12 +21,18 @@ export const Form_DeXuatDeTai_SV: React.FC<ReusableFormProps> = ({
 }) => {
   return (
     <Form form={formdulieu} layout="vertical">
-      <Form.Item name="maNhom" label="Mã nhóm">
+      <Form.Item name="maNhom" label="Chọn nhóm nghiên cứu khoa học">
         <Select
-          options={listGroup.map((group) => ({
-            label: group.tenNhom, // Tên nhóm hiển thị
-            value: group.maNhom, // Giá trị khi chọn
-          }))}
+          options={
+            listGroup
+              ? listGroup.map((group) => ({
+                  label: group.tenNhom,
+                  value: group.maNhom,
+                }))
+              : []
+          }
+          notFoundContent="Bạn không là trưởng nhóm của nhóm nào!"
+          placeholder="Chọn nhóm"
         />
       </Form.Item>
 

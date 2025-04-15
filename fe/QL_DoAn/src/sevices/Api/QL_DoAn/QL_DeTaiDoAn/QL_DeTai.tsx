@@ -43,9 +43,9 @@ export const DeXuatDeTai= async(value:{},callBack:()=>void)=>{
 }
 
 
-export const DangKyDeTai_SV= async(maDeTai:string,maSinhVien:string,callBack:()=>void)=>{
+export const DangKyDeTai_SV= async(maDeTai:string,manhom:string,callBack:()=>void)=>{
     let taiKhoan= localStorage.getItem('taiKhoan')|| '';
-    const result= await add_url(URL.QLDOAN.QUANLYDETAI.DANGKYDETAI(maDeTai,maSinhVien,taiKhoan),true,false,callBack)as AxiosResponse<any>;
+    const result= await add_url(URL.QLDOAN.QUANLYDETAI.DANGKYDETAI(maDeTai,manhom,taiKhoan),true,false,callBack)as AxiosResponse<any>;
     CustomNotification({ result: result.data ,TruongBoMon:"Trưởng bộ môn không cho phép đăng ký đề tài",ERRORIN:'Bạn đã đăng ký đề tài rồi!'});
 }
 

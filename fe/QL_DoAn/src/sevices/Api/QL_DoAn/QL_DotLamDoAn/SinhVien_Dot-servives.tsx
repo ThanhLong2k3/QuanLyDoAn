@@ -1,5 +1,5 @@
 import  { AxiosResponse } from "axios";
-import {getall,add,Delete,edit} from "../../API-servives"
+import {getall,add,Delete} from "../../API-servives"
 import {URL} from "../../../Url"
 import {CustomNotification} from "../../../../components/UI/notification"
 
