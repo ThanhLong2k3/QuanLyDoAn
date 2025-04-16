@@ -11,7 +11,7 @@ namespace DAL.QL_DoAnRepository.QL_DotLamDoAnRepository
         {
             _dbHelper = dbHelper;
         }
-        public v_Dot_DETAI GET_MADOT_TAIKHOAN(string taikhoan)
+        public   List<v_Dot_DETAI> GET_MADOT_TAIKHOAN(string taikhoan)
         {
             string msgError = "";
             string kq;
@@ -20,7 +20,7 @@ namespace DAL.QL_DoAnRepository.QL_DotLamDoAnRepository
                 var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "GET_DOT_TaiKhoan", "@TaiKhoan", taikhoan);
                 if (!string.IsNullOrEmpty(msgError))
                     throw new Exception(msgError);
-                return dt.ConvertTo<v_Dot_DETAI>().FirstOrDefault();
+                return dt.ConvertTo<v_Dot_DETAI>().ToList();
             }
             catch (Exception ex)
             {

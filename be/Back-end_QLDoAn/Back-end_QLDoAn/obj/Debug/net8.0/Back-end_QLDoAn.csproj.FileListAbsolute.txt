@@ -135,7 +135,6 @@ C:\Users\Phuong Linh\Desktop\Đồ án tốt nghiệp\QuanLyDoAn\be\Back-end_QLD
 C:\Users\Phuong Linh\Desktop\Đồ án tốt nghiệp\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Back-end_QLDoAn.props
 C:\Users\Phuong Linh\Desktop\Đồ án tốt nghiệp\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Back-end_QLDoAn.props
 C:\Users\Phuong Linh\Desktop\Đồ án tốt nghiệp\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\Phuong Linh\Desktop\Đồ án tốt nghiệp\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\Phuong Linh\Desktop\Đồ án tốt nghiệp\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end.D53BE0EA.Up2Date
 C:\Users\Phuong Linh\Desktop\Đồ án tốt nghiệp\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\Back-end_QLDoAn.dll
 C:\Users\Phuong Linh\Desktop\Đồ án tốt nghiệp\QuanLyDoAn\be\Back-end_QLDoAn\Back-end_QLDoAn\obj\Debug\net8.0\refint\Back-end_QLDoAn.dll

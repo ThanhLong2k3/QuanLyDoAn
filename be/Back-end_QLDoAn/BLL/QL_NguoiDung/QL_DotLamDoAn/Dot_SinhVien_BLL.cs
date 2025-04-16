@@ -11,7 +11,7 @@ namespace BLL.QL_NguoiDung.QL_DotLamDoAn
         {
             _res = res;
         }
-        public v_Dot_DETAI GET_MADOT_TAIKHOAN(string taikhoan)
+        public  List<v_Dot_DETAI> GET_MADOT_TAIKHOAN(string taikhoan)
         {
             return _res.GET_MADOT_TAIKHOAN(taikhoan);
         }

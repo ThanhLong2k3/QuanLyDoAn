@@ -16,7 +16,7 @@ namespace quanLyDoAn.Controllers.QL_DoAn.QL_DotLamDoAn
         }
         [Route("getall_Dot_taiKHoan")]
         [HttpGet]
-        public v_Dot_DETAI Get_Dot_TK(string tk)
+        public  List<v_Dot_DETAI> Get_Dot_TK(string tk)
         {
             return _Dot_SinhVien_BLL.GET_MADOT_TAIKHOAN(tk);
         }

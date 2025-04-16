@@ -54,6 +54,7 @@ interface GroupData {
   tenTruongNhom?: string;
   maSinhVienTruong?: string;
   trangThai?: string;
+  tenGiangVien?: string;
   ngayTao?: string;
 }
 
@@ -79,7 +80,7 @@ export default function QuanLyNhomSinhVien() {
   const [selectedStudent, setSelectedStudent] = useState(null);
 
   useEffect(() => {
-    document.title="Nhóm nghiên cứu khoa học"
+    document.title = "Nhóm nghiên cứu khoa học";
     getGroupByIDStudent();
   }, []);
 
@@ -277,7 +278,7 @@ export default function QuanLyNhomSinhVien() {
     await delete_Group(manhom, getGroupByIDStudent);
   };
   return (
-    <Layout style={{ minHeight: "90vh", background: "#f5f7fa" }}>
+    <Layout style={{ minHeight: "90vh", background: "#ffffff" }}>
       <Header
         style={{
           background: "#fff",
@@ -341,15 +342,19 @@ export default function QuanLyNhomSinhVien() {
                       overflow: "hidden",
                     }}
                     actions={[
-                      <Popconfirm title="Bạn có chắc chắn muốn xóa?" onConfirm={() => deleteGroup(group.maNhom)}>
-                              <Button
-                                type="text"
-                                color="danger"
-                                icon={<InfoCircleOutlined />}>
-                              Xóa nhóm
-                              </Button>
+                      <Popconfirm
+                        title="Bạn có chắc chắn muốn xóa?"
+                        onConfirm={() => deleteGroup(group.maNhom)}
+                      >
+                        <Button
+                          type="text"
+                          color="danger"
+                          icon={<InfoCircleOutlined />}
+                        >
+                          Xóa nhóm
+                        </Button>
                       </Popconfirm>,
-                     
+
                       <Button
                         type="text"
                         icon={<SettingOutlined />}
@@ -397,20 +402,100 @@ export default function QuanLyNhomSinhVien() {
                     <div>
                       <Space
                         direction="vertical"
-                        size="small"
-                        style={{ width: "100%" }}
+                        size="middle"
+                        style={{
+                          width: "100%",
+                          padding: "0 8px",
+                        }}
                       >
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                          <UserOutlined
-                            style={{ marginRight: 8, color: "#1890ff" }}
-                          />
-                          <Text>
-                            Trưởng nhóm: {group.tenTruongNhom || "Chưa có"}
-                          </Text>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "12px",
+                            flexWrap: "wrap",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "8px",
+                              backgroundColor: "#e6f7ff",
+                              padding: "6px 12px",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <UserOutlined
+                              style={{
+                                fontSize: "16px",
+                                color: "#1890ff",
+                              }}
+                            />
+                            <Text
+                              style={{
+                                fontSize: "14px",
+                                color: "#1e88e5",
+                                fontWeight: "500",
+                              }}
+                            >
+                              Giảng viên: {group.tenGiangVien || "Chưa có"}
+                            </Text>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "8px",
+                              backgroundColor: "#f0fff4",
+                              padding: "6px 12px",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            <UserOutlined
+                              style={{
+                                fontSize: "16px",
+                                color: "#52c41a",
+                              }}
+                            />
+                            <Text
+                              style={{
+                                fontSize: "14px",
+                                color: "#52c41a",
+                                fontWeight: "500",
+                              }}
+                            >
+                              Trưởng nhóm: {group.tenTruongNhom || "Chưa có"}
+                            </Text>
+                          </div>
                         </div>
-                        <div>
-                          <Text type="secondary">
-                            Ngày tạo: {group.ngayTao || "N/A"}
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: "12px",
+                              color: "#8c8c8c",
+                              fontStyle: "italic",
+                            }}
+                          >
+                            Ngày tạo:{" "}
+                            {group.ngayTao
+                              ? new Date(group.ngayTao).toLocaleString(
+                                  "vi-VN",
+                                  {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  }
+                                )
+                              : "N/A"}
                           </Text>
                         </div>
                       </Space>

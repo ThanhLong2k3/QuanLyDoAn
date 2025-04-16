@@ -725,17 +725,26 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/v_Dot_DETAI"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/v_Dot_DETAI"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v_Dot_DETAI"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/v_Dot_DETAI"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/v_Dot_DETAI"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/v_Dot_DETAI"
+                  }
                 }
               }
             }
@@ -3907,6 +3916,35 @@
         }
       }
     },
+    "/api/SinhVien_CTRL/ThongKeDashboard": {
+      "get": {
+        "tags": [
+          "SinhVien_CTRL"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThongKeDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThongKeDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThongKeDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/SinhVien_CTRL/get_By_Id": {
       "get": {
         "tags": [
@@ -5075,6 +5113,28 @@
           "maSinhVien": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ThongKeDTO": {
+        "type": "object",
+        "properties": {
+          "tongDoAn": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tongSinhVien": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tongGiangVien": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tongKhoa": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

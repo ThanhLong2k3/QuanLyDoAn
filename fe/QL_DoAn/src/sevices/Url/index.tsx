@@ -134,6 +134,7 @@ export const URL = {
             GETALL:`${LocalHot}api/SinhVien_CTRL/getall`,
             UPDATE_SINHVIEN_SINHVIEN:`${LocalHot}api/SinhVien_CTRL/update-SinhVien_SinhVien`,
             SEARCH:`${LocalHot}api/SinhVien_CTRL/Search_SinhVien`,
+            THONGKEDASHBOARD:`${LocalHot}api/SinhVien_CTRL/ThongKeDashboard`,
         },
         QL_GIANGVIEN:{
             ADD:(taiKhoan:string)=> `${LocalHot}api/GiangVien_CTRL/create-GiangVien?taikhoan=${taiKhoan}`,

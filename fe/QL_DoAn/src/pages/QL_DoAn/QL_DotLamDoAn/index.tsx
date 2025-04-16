@@ -117,10 +117,8 @@ export default function QuanLyDotLamDoAn() {
   }, []);
 
   const updateSelectedGiangVien = useCallback(async(updatedGiangVien: DotLamDoAn_GiangVien[]) => {
-    debugger;
 
-    console.log(maDot_on);
-    const existingGiangVien = await getGiangVien_maDot(maDot_on);
+    const existingGiangVien = await getGiangVien_maDot(updatedGiangVien[0].maDot);
     for(let i=0;i<existingGiangVien.length;i++)
     {
       for(let j=0;j<updatedGiangVien.length;j++)
