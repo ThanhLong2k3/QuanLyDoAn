@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "AwUSITABb+Jtrxwckh1X9MG7zn5KMPCIXdsSQI89zvs=",
+  "Hash": "A/CCnyPx6W6n5hJ0UbXMLuLpK0jPpsNotBZYjxkXkGc=",
   "Source": "quanLyDoAn",
   "BasePath": "_content/quanLyDoAn",
   "Mode": "Default",
@@ -11,10 +11,10 @@
       "Version": 2,
       "Source": "Back-end_QLDoAn",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
-      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishProperties": "",
       "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework",
       "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
-      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildProperties": "",
       "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework"
     }
   ],

@@ -138,6 +138,12 @@ const AppHeader: React.FC = () => {
   
   const getLoiMoi = async () => {
     const data = await get_LoiMoi_Id();
+    debugger;
+    if(data.length===0 ||  data[0].maLoiMoi===0)
+    {
+      setListLoiMoi([]);
+    }
+
     setListLoiMoi(data || []);
   };
 

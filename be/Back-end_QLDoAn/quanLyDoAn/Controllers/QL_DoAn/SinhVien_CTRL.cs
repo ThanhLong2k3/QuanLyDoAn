@@ -14,6 +14,12 @@ namespace quanLyDoAn.Controllers.QL_DoAn
         {
             _SinhVienBLL = SinhVienBLL;
         }
+        [Route("ThongKeDashboard")]
+        [HttpGet]
+        public ThongKeDTO ThongKeDashboard()
+        {
+            return _SinhVienBLL.ThongKeDashboard();
+        }
 
 
         [Route("get_By_Id")]

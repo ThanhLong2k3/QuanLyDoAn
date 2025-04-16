@@ -11,5 +11,6 @@ namespace DAL.InterFace.QL_DoAn
         string Update(SinhVienDTO model, string taikhoan);
         string Update_SinhVien(Up_SV_SINHVIENDTO model); 
         string Delete(string malop, string taikhoan);
+        ThongKeDTO ThongKeDashboard();
     }
 }

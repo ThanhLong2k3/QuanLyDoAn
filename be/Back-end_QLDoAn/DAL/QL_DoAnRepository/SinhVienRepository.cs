@@ -186,5 +186,21 @@ namespace DAL.QL_DoAnRepository
                 throw ex;
             }
         }
+
+        public ThongKeDTO ThongKeDashboard()
+        {
+            string msgError = "";
+            try
+            {
+                var dt = _dbHelper.ExecuteSProcedureReturnDataTable(out msgError, "sp_ThongKeTongQuan");
+                if (!string.IsNullOrEmpty(msgError))
+                    throw new Exception(msgError);
+                return dt.ConvertTo<ThongKeDTO>().FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

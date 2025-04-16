@@ -71,6 +71,7 @@ const GiangVienXacNhanDeTai: React.FC = () => {
   }
 
   const handleDotChange = async (value: string) => {
+    debugger;
     setSelectedDot(value);
     let data = await Get_DeTaiSinhVien_MaDot(value);
     setListDeTai(data);
@@ -93,8 +94,6 @@ const GiangVienXacNhanDeTai: React.FC = () => {
   const KhongDongY = async(banGhi: DOT) => {
     setSelectedDeTai(banGhi);
     setIsModalVisible(true);
-    await handleDotChange(searchTerm);
-
   }
 
   const handleModalOk = async () => {
@@ -109,6 +108,7 @@ const GiangVienXacNhanDeTai: React.FC = () => {
         await GIANGVIEN_TUCHOIDETAI(data, fetchDotDoAn);
         setIsModalVisible(false);
         form.resetFields();
+        await handleDotChange(searchTerm);
         message.success('Đã từ chối đề tài thành công');
       }
     } catch (error) {

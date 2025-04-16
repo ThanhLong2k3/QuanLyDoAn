@@ -266,31 +266,61 @@ BEGIN
     END
 END;
 go
-CREATE TRIGGER trg_GenerateMaDeTai
+CREATE OR ALTER TRIGGER trg_GenerateMaDeTai
 ON QuanLyDeTaiGV
 INSTEAD OF INSERT
 AS
 BEGIN
-    INSERT INTO QuanLyDeTaiGV(
-        MaDeTai,
-        TenDeTai,
-        MaDot,
-        HinhThucBaoCaoBaoVe,
-        MoTa,
-        NguoiDeXuat,
-        TrangThai,
-        IsDelete
-    )
-    SELECT 
-        dbo.GenerateMaDeTai(TenDeTai),
-        TenDeTai,
-        MaDot,
-        HinhThucBaoCaoBaoVe,
-        MoTa,
-        NguoiDeXuat,
-        TrangThai,
-        IsDelete
-    FROM inserted
+    DECLARE @MaDeTai NVARCHAR(50)
+    DECLARE @TenDeTai NVARCHAR(MAX)
+    DECLARE @Counter INT
+    
+    DECLARE insert_cursor CURSOR FOR
+    SELECT TenDeTai FROM inserted
+    
+    OPEN insert_cursor
+    FETCH NEXT FROM insert_cursor INTO @TenDeTai
+    
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        SET @Counter = 1
+        SET @MaDeTai = dbo.GenerateMaDeTai(@TenDeTai)
+        
+        -- Kiểm tra và tạo mã mới nếu trùng
+        WHILE EXISTS (SELECT 1 FROM QuanLyDeTaiGV WHERE MaDeTai = @MaDeTai)
+        BEGIN
+            SET @MaDeTai = dbo.GenerateMaDeTai(@TenDeTai + CAST(@Counter AS NVARCHAR(10)))
+            SET @Counter = @Counter + 1
+        END
+        
+        -- Chèn bản ghi với mã đã kiểm tra
+        INSERT INTO QuanLyDeTaiGV(
+            MaDeTai,
+            TenDeTai,
+            MaDot,
+            HinhThucBaoCaoBaoVe,
+            MoTa,
+            NguoiDeXuat,
+            TrangThai,
+            IsDelete
+        )
+        SELECT 
+            @MaDeTai,
+            TenDeTai,
+            MaDot,
+            HinhThucBaoCaoBaoVe,
+            MoTa,
+            NguoiDeXuat,
+            TrangThai,
+            IsDelete
+        FROM inserted 
+        WHERE TenDeTai = @TenDeTai
+        
+        FETCH NEXT FROM insert_cursor INTO @TenDeTai
+    END
+    
+    CLOSE insert_cursor
+    DEALLOCATE insert_cursor
 END
 -- ========================================QUAN LY HỆ THỐNG===========================================
 
@@ -1965,40 +1995,45 @@ END;
 
 go
 CREATE OR ALTER PROC GET_GiangVien_MaDot
-@MaDot VARCHAR(50)
+    @MaDot VARCHAR(50)
 AS
 BEGIN
+    SET NOCOUNT ON;
+
     SELECT 
         D.maDot,
         gv.maGiangVien,
         gv.tenGiangVien,
         D.soLuongHuongDan,
-        ISNULL((
-            SELECT COUNT(*) 
-            FROM PhanCong_HuongDan PCHD 
-            WHERE PCHD.maGiangVien = gv.maGiangVien
-              AND PCHD.maDot = D.maDot
-        ), 0) AS soLuongDangHuongDan,
-        ISNULL((
-            SELECT COUNT(*)
-            FROM QuanLyDeTaiGV dt
-            INNER JOIN GiangVien_DeTai gvdt ON gvdt.MaDeTai = dt.MaDeTai
-            WHERE gvdt.MaGiangVien = gv.maGiangVien
-              AND dt.MaDot = D.maDot
-              AND dt.TrangThai = 1  -- Đề tài còn hoạt động
-              AND NOT EXISTS (
-                  SELECT 1 
-                  FROM SinhVien_DeTai svdt 
-                  WHERE svdt.MaDeTai = dt.MaDeTai
-              )
-        ), 0) AS soLuongDeTaiChuaDangKy
+        COUNT(DISTINCT CASE 
+           WHEN dt.TrangThai = 1 
+         AND dt.IsDelete = 1 
+    THEN dt.MaDeTai 
+        END) AS soLuongDangHuongDan, -- Đếm đề tài có nhóm sinh viên đăng ký
+        COUNT(DISTINCT CASE 
+            WHEN dt.TrangThai = 1 
+                 AND svdt.MaDeTai IS NULL 
+            THEN dt.MaDeTai 
+        END) AS soLuongDeTaiChuaDangKy -- Đếm đề tài chưa có nhóm sinh viên đăng ký
     FROM 
         Dot_GiangVien D
-    INNER JOIN 
-        giangVien gv ON D.maGiangVien = gv.maGiangVien
+        INNER JOIN giangVien gv ON D.maGiangVien = gv.maGiangVien
+        LEFT JOIN GiangVien_DeTai gvdt ON gvdt.MaGiangVien = gv.maGiangVien
+        LEFT JOIN QuanLyDeTaiGV dt ON dt.MaDeTai = gvdt.MaDeTai 
+            AND dt.MaDot = D.maDot
+            AND dt.IsDelete = 1 -- Chỉ lấy đề tài chưa bị xóa
+        LEFT JOIN SinhVien_DeTai svdt ON svdt.MaDeTai = dt.MaDeTai
     WHERE 
         D.maDot = @MaDot 
-        AND D.IsDeleted = 1;
+        AND (D.IsDeleted = 1 OR D.IsDeleted IS NULL) -- Chỉ lấy bản ghi chưa bị xóa
+        AND (gv.IsDeleted = 1 OR gv.IsDeleted IS NULL) -- Chỉ lấy giảng viên chưa bị xóa
+    GROUP BY 
+        D.maDot, 
+        gv.maGiangVien, 
+        gv.tenGiangVien, 
+        D.soLuongHuongDan
+    ORDER BY 
+        gv.tenGiangVien;
 END;
 
 
@@ -2216,13 +2251,13 @@ CREATE OR ALTER PROC GET_DOT_TAIKHOAN_GV
 
 go
 
-CREATE  PROCEDURE GET_DOT_TaiKhoan
+CREATE OR ALTER PROCEDURE GET_DOT_TaiKhoan
     @TaiKhoan NVARCHAR(50)
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    SELECT TOP 1 d_sv.maDot,d.namApDung 
+    SELECT *, d_sv.maDot,d.namApDung 
     FROM Dot_SinhVien D_SV 
     INNER JOIN dotLamDoAn D ON D_SV.maDot = D.maDot
     WHERE D_SV.maSinhVien = @TaiKhoan 
@@ -2265,7 +2300,14 @@ BEGIN
         AND (@TenDeTai IS NULL OR DT.TenDeTai LIKE '%' + @TenDeTai + '%');
 END;
 GO
-
+EXEC sp_DeXuat_DeTai_SV 
+    @TenDeTai = N'Phân Tích Hình Anhr',
+    @MaDot = 'DOT1',
+    @MaGiangVien = '1719',
+    @MaNhom = 'cd8032bc-0762-46d9-8038-871a67d85c65',
+    @HinhThucBaoCao = N'Tiếng Việt, bảo vệ tiếng Việt',
+    @MoTa = N'sadsad',
+    @TaiKhoan = '10621306'
 go
 CREATE OR ALTER PROCEDURE sp_DeXuat_DeTai_SV
     @TenDeTai NVARCHAR(MAX),
@@ -3554,3 +3596,16 @@ BEGIN
         SELECT N'0' AS ThongBao, @ErrorMessage AS ErrorMessage;
     END CATCH
 END;
+
+go
+CREATE PROCEDURE sp_ThongKeTongQuan
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        (SELECT COUNT(*) FROM QuanLyDeTaiGV WHERE IsDelete = 1 and TrangThai <> 4) AS TongDoAn,
+        (SELECT COUNT(*) FROM Dot_SinhVien WHERE IsDeleted = 1) AS TongSinhVien,
+        (SELECT COUNT(*) FROM Dot_GiangVien WHERE IsDeleted = 1) AS TongGiangVien,
+        (SELECT COUNT(*) FROM Khoa WHERE IsDeleted = 1) AS TongKhoa
+END

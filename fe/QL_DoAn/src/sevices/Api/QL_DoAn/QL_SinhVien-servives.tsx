@@ -7,6 +7,9 @@ import {CustomNotification} from "../../../components/UI/notification"
 export const getall_SinhVien =async () =>{
     return await getall(URL.QLDOAN.QL_SINHVIEN.GETALL);
 }
+export const ThongKeDashboard =async () =>{
+    return await getall(URL.QLDOAN.QL_SINHVIEN.THONGKEDASHBOARD);
+}
 export const get_SinhVien_ID =async () =>{
     var taiKhoan= localStorage.getItem('taiKhoan')|| '';
     return await getall(URL.QLDOAN.QL_SINHVIEN.GET_BY_ID(taiKhoan));

@@ -40,5 +40,10 @@ namespace BLL.QL_NguoiDung
         {
             return _res.Search_sv(masinhvien, maLop, matrangthai, tensinhvien);
         }
+
+        public ThongKeDTO ThongKeDashboard()
+        {
+            return _res.ThongKeDashboard();
+        }
     }
 }

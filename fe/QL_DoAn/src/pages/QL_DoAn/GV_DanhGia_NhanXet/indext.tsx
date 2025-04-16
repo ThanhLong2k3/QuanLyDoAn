@@ -71,7 +71,7 @@ const TeacherReportPage: React.FC = () => {
     setSelectedDot(value);
     setLoading(true);
     try {
-      const data = await get_GROUP_MaDot(0, value);
+      const data = await get_GROUP_MaDot(0, value?value:searchTerm);
       setListDeTai(data);
     } catch (error) {
       console.error("Lỗi tải danh sách đề tài:", error);
